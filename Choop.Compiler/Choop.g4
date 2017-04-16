@@ -7,6 +7,7 @@ grammar Choop;
 // Entry point
 root
 	: ( sprite
+	  | module
 	  )*
 	  EOF
 	;
