@@ -2,7 +2,7 @@
 multiple lines */
 
 // Single line comment
-const myConst = 12; 
+const myConst = 12;
 
 var myVar = 10; // Inline comment
 
@@ -20,7 +20,7 @@ sprite mySprite {
 		}
 		
 		// Should throw a compile error: (out of scope)
-		// test = 3 
+		// test = 3;
 	}
 
 	atomic void myVoid(param1, param2, param3 = 10) {
@@ -44,5 +44,18 @@ module myModule {
 	
 	inline void SayHello() {
 		Say("Hello");
+	}
+
+	function GetInput() {
+		var answer = Ask("Are you a person?");
+
+		switch (answer) {
+			case "Yes":
+				return true;
+			case "No":
+				return false;
+			case default:
+				return false;
+		}
 	}
 }
