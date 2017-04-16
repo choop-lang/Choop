@@ -13,7 +13,7 @@ namespace Choop.Demo
     {
         static void Main(string[] args)
         {
-            AntlrInputStream input = new AntlrInputStream("sprite hello{}");
+            AntlrInputStream input = new AntlrInputStream("sprite hello {\r\nconst hello = true;\r\n}");
 
             ChoopLexer lexer = new ChoopLexer(input);
 

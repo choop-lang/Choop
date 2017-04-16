@@ -22,7 +22,30 @@ module
 
 sprite_body
 	: Brace_Open
+	  ( global_declaration
+	  )*
 	  Brace_Close
+	;
+
+global_declaration
+	: ( const_declaration
+	  )
+	;
+
+const_declaration
+	: Decl_Const
+	  Identifier
+	  Assign
+	  constant
+	  Terminator
+	;
+
+constant
+	: ( Const_True
+	  | Const_False
+	  | Const_Pi
+	  | Const_E
+	  )
 	;
 
 /*
