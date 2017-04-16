@@ -1,7 +1,34 @@
+Ask is now a function that returns a string.
+Sprites default to (0, 0), size 100, no colour effects, etc. on load
+However, they retain their settings if the green flag is clicked again
+Strings have character escaping (\r, \n, \\)
+
+Resources files contain paths to the costume and sounds files within the
+project for the sprite.
+
+A Sprite defintion represents the code for 1 sprite.
+A Module definition represents an independent set of variables, constants, etc. that
+can be added onto a sprite (via the Import attribute)
+
+Not case sensitive
+Array indexes are 0 based
+PascalCase names
+No spaces in variables names (use underscore if necessary)
+There is no 'this' keyword - names cannot have any conflicts
+
+Variables have scope
+Variables outside a sprite / module definition are global
+Variables inside a sprite / module defintion are local
+Variables inside a method are scoped only to that method
+etc.
+
+Sprites can access other sprites
+Local variables can be accessed using the (var v) of (sprite v) block
+Events can be raised using broadcast blocks
+
 Consts get auto inlined
 The "inline" option on a void causes the code to be placed directly inside the caller - a custom block will not be created
-
-
+The "atomic" option on a method causes the method to run without screen refresh
 
 TODO:
 Way to make loops single frame
