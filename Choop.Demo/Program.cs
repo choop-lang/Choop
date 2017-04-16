@@ -13,7 +13,7 @@ namespace Choop.Demo
     {
         static void Main(string[] args)
         {
-            AntlrInputStream input = new AntlrInputStream("sprite 0hello{}");
+            AntlrInputStream input = new AntlrInputStream("sprite hello{}");
 
             ChoopLexer lexer = new ChoopLexer(input);
 
@@ -21,7 +21,9 @@ namespace Choop.Demo
 
             ChoopParser parser = new ChoopParser(tokens);
 
-            Console.WriteLine(parser.compilation_unit().ToStringTree(parser));
+            ChoopParser.RootContext root = parser.root();
+            
+            Console.WriteLine(root.ToStringTree(parser));
 
             Console.ReadLine();
         }

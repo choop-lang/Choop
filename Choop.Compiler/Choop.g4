@@ -5,7 +5,7 @@ grammar Choop;
  */
 
 // Entry point
-compilation_unit
+root
 	: ( sprite
 	  )*
 	  EOF
@@ -17,6 +17,7 @@ sprite
 
 module
 	: Module_Tag Identifier block
+	;
 
 block
 	: Brace_Open Brace_Close
