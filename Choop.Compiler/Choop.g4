@@ -15,6 +15,9 @@ sprite
 	: Sprite_Tag Identifier block
 	;
 
+module
+	: Module_Tag Identifier block
+
 block
 	: Brace_Open Brace_Close
 	;
