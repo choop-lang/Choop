@@ -43,8 +43,6 @@ const_declaration
 constant
 	: ( Const_True
 	  | Const_False
-	  | Const_Pi
-	  | Const_E
 	  )
 	;
 
@@ -54,8 +52,6 @@ constant
 
 Const_True		: 'true';
 Const_False		: 'false';
-Const_Pi		: 'pi';
-Const_E			: 'e';
 
 Op_Equals		: '==';
 Op_GT			: '>';
