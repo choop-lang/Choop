@@ -47,10 +47,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Choop.g4.lexer.cs">
+      <DependentUpon>Choop.g4</DependentUpon>
+    </Compile>
+    <Compile Include="Choop.g4.parser.cs">
+      <DependentUpon>Choop.g4</DependentUpon>
+    </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Antlr4 Include="Choop.g4">
+      <Generator>MSBuild:Compile</Generator>
+      <CustomToolNamespace>Choop.Compiler</CustomToolNamespace>
+    </Antlr4>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
