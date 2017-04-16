@@ -9,6 +9,7 @@ project for the sprite.
 A Sprite defintion represents the code for 1 sprite.
 A Module definition represents an independent set of variables, constants, etc. that
 can be added onto a sprite (via the Import attribute)
+Modules should be independent from each other
 
 Not case sensitive
 Array indexes are 0 based
