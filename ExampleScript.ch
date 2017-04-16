@@ -2,18 +2,18 @@
 multiple lines */
 
 // Single line comment
-const myConst = 12;
+const MyConst = 12;
 
-var myVar = 10; // Inline comment
+var MyVar = 10; // Inline comment
 
 [ResourcesFile(mySprite.res)]
 [Import(myModule)]
-sprite mySprite {
-	event greenFlag() {
-		myVoid(10, 20);
+sprite Sprite1 {
+	event GreenFlag() {
+		MyVoid(10, 20);
 	}
 
-	event keyPressed<space>() {
+	event KeyPressed<space>() {
 		{
 			// Mini scope
 			var test = 2;
@@ -21,26 +21,30 @@ sprite mySprite {
 		
 		// Should throw a compile error: (out of scope)
 		// test = 3;
+
+		if (GetInput()) {
+			Move(10);
+		}
 	}
 
-	atomic void myVoid(param1, param2, param3 = 10) {
+	atomic void MyVoid(param1, param2, param3 = 10) {
 		SayHello();
 		
-		someVar = 0;
+		SomeVar = 0;
 		
 		if (param1 > param2) {
-			myVar = param1 - param2;
+			MyVar = param1 - param2;
 		} elseif (param2 > param1) {
-			myVar = param2 - param1;
+			MyVar = param2 - param1;
 		} else {
-			myVar = 0;
-			someVar = 1;
+			MyVar = 0;
+			SomeVar = 1;
 		}
 	}
 }
 
-module myModule {
-	var someVar = 10;
+module MyModule {
+	var SomeVar = 10;
 	
 	inline void SayHello() {
 		Say("Hello");
