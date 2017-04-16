@@ -29,11 +29,20 @@ sprite_body
 
 global_declaration
 	: ( const_declaration
+	  | var_global_declaration
 	  )
 	;
 
 const_declaration
 	: Decl_Const
+	  Identifier
+	  Assign
+	  constant
+	  Terminator
+	;
+
+var_global_declaration
+	: Decl_Var
 	  Identifier
 	  Assign
 	  constant

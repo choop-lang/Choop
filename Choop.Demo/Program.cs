@@ -13,7 +13,11 @@ namespace Choop.Demo
     {
         static void Main(string[] args)
         {
-            AntlrInputStream input = new AntlrInputStream("sprite hello {\r\nconst hello = true;\r\n}");
+            string code = "sprite hello {\r\n\tconst hello = true;\r\n\tvar T20 = false;\r\n}";
+
+            Console.WriteLine(code);
+
+            AntlrInputStream input = new AntlrInputStream(code);
 
             ChoopLexer lexer = new ChoopLexer(input);
 
