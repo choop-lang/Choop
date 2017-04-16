@@ -4,14 +4,41 @@ grammar Choop;
  * Parser Rules
  */
 
-compileUnit
-	:	EOF
+// Entry point
+compilation_unit
+	: EOF
+	;
+
+sprite
+	:	{  }
 	;
 
 /*
  * Lexer Rules
  */
 
-WS
-	:	' ' -> channel(HIDDEN)
-	;
+Identifier
+    :   [\w]*
+    ;
+
+Whitespace
+    :   [ \t]+
+        -> skip
+    ;
+
+Newline
+    :   (   '\r' '\n'?
+        |   '\n'
+        )
+        -> skip
+    ;
+
+BlockComment
+    :   '/*' .*? '*/'
+        -> skip
+    ;
+
+LineComment
+    :   '//' ~[\r\n]*
+        -> skip
+    ;
