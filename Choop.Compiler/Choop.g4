@@ -8,6 +8,7 @@ grammar Choop;
 root
 	: ( sprite
 	  | module
+      | global_declaration
 	  )*
 	  EOF
 	;
@@ -126,8 +127,8 @@ Repeat_Tag		: 'repeat';
 Return_Tag		: 'return';
 
 Identifier
-    :   Nondigit
-		(	Nondigit
+    :   Letter
+		(	Letter
 		|	Digit
 		)*
     ;
@@ -142,7 +143,7 @@ LineComment
         -> skip
     ;
 
-Nondigit
+Letter
     :   [a-zA-Z_]
     ;
 
