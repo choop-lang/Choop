@@ -6,7 +6,9 @@ grammar Choop;
 
 // Entry point
 compilation_unit
-	: EOF
+	: ( sprite
+	  )*
+	  EOF
 	;
 
 sprite
