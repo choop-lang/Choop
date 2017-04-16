@@ -13,15 +13,16 @@ root
 	;
 
 sprite
-	: Sprite_Tag Identifier block
+	: Sprite_Tag Identifier sprite_body
 	;
 
 module
-	: Module_Tag Identifier block
+	: Module_Tag Identifier sprite_body
 	;
 
-block
-	: Brace_Open Brace_Close
+sprite_body
+	: Brace_Open
+	  Brace_Close
 	;
 
 /*
