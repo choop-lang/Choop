@@ -1,0 +1,7 @@
+Consts get auto inlined
+The "inline" option on a void causes the code to be placed directly inside the caller - a custom block will not be created
+
+
+
+TODO:
+Way to make loops single frame
