@@ -6,152 +6,152 @@ grammar Choop;
 
 // Entry point
 root
-	: ( sprite
+    : ( sprite
       | module
       | global_declaration
-	  )*
-	  EOF
-	;
+      )*
+      EOF
+    ;
 
 sprite
-	: Sprite_Tag Identifier sprite_body
-	;
+    : Sprite_Tag Identifier sprite_body
+    ;
 
 module
-	: Module_Tag Identifier sprite_body
-	;
+    : Module_Tag Identifier sprite_body
+    ;
 
 sprite_body
-	: Brace_Open
-	  ( global_declaration
-	  )*
-	  Brace_Close
-	;
+    : Brace_Open
+      ( global_declaration
+      )*
+      Brace_Close
+    ;
 
 global_declaration
-	: ( const_declaration
-	  | var_global_declaration
-	  )
-	;
+    : ( const_declaration
+      | var_global_declaration
+      )
+    ;
 
 const_declaration
-	: Decl_Const
-	  Identifier
-	  Assign
-	  constant
-	  Terminator
-	;
+    : Decl_Const
+      Identifier
+      Assign
+      constant
+      Terminator
+    ;
 
 var_global_declaration
-	: Decl_Var
-	  Identifier
-	  Assign
-	  constant
-	  Terminator
-	;
+    : Decl_Var
+      Identifier
+      Assign
+      constant
+      Terminator
+    ;
 
 constant
-	: ( Const_True
-	  | Const_False
-	  )
-	;
+    : ( Const_True
+      | Const_False
+      )
+    ;
 
 /*
  * Lexer Rules
  */
 
-Const_True		: 'true';
-Const_False		: 'false';
+Const_True      : 'true';
+Const_False     : 'false';
 
-Op_Equals		: '==';
-Op_GT			: '>';
-Op_LT			: '<';
-Op_GTE			: '>=';
-Op_LTE			: '<=';
-Op_And			: '&&';
-Op_Or			: '||';
-Op_Not			: '!';
-Op_Concat		: '.';
-Op_Plus			: '+';
-Op_Minus		: '-';
-Op_Divide		: '/';
-Op_Mult			: '*';
-Op_Mod			: '%';
-Op_Pow			: '^';
-Op_LShift		: '<<';
-Op_RShift		: '>>';
+Op_Equals       : '==';
+Op_GT           : '>';
+Op_LT           : '<';
+Op_GTE          : '>=';
+Op_LTE          : '<=';
+Op_And          : '&&';
+Op_Or           : '||';
+Op_Not          : '!';
+Op_Concat       : '.';
+Op_Plus	        : '+';
+Op_Minus        : '-';
+Op_Divide       : '/';
+Op_Mult         : '*';
+Op_Mod          : '%';
+Op_Pow          : '^';
+Op_LShift       : '<<';
+Op_RShift       : '>>';
 
-Bracket_Open	: '(';
-Bracket_Close	: ')';
-Brace_Open		: '{';
-Brace_Close		: '}';
-Square_Open		: '[';
-Square_Close	: ']';
-Angle_Open		: '<';
-Angle_Close		: '>';
-Separator		: ',';
-Terminator		: ';';
+Bracket_Open    : '(';
+Bracket_Close   : ')';
+Brace_Open      : '{';
+Brace_Close     : '}';
+Square_Open	    : '[';
+Square_Close    : ']';
+Angle_Open      : '<';
+Angle_Close     : '>';
+Separator       : ',';
+Terminator      : ';';
 
-Decl_Const		: 'const';
-Decl_Var		: 'var';
-Decl_Array		: 'array';
+Decl_Const      : 'const';
+Decl_Var        : 'var';
+Decl_Array      : 'array';
 
-Assign			: '=';
-Assign_Add		: '+=';
-Assign_Sub		: '-=';
-Assign_Concat	: '.=';
-Assing_Inc		: '++';
-Assing_Dec		: '--';
+Assign	        : '=';
+Assign_Add	    : '+=';
+Assign_Sub      : '-=';
+Assign_Concat   : '.=';
+Assing_Inc      : '++';
+Assing_Dec      : '--';
 
-Sprite_Tag		: 'sprite';
-Module_Tag		: 'module';
+Sprite_Tag      : 'sprite';
+Module_Tag      : 'module';
 
-Void_Tag		: 'void';
-Function_Tag	: 'function';
-Event_Tag		: 'event';
-Atomic_Tag		: 'atomic';
-Inline_Tag		: 'inline';
+Void_Tag        : 'void';
+Function_Tag    : 'function';
+Event_Tag       : 'event';
+Atomic_Tag      : 'atomic';
+Inline_Tag      : 'inline';
 
-If_Tag			: 'if';
-Else_Tag		: 'else';
-ElseIf_Tag		: 'else if';
+If_Tag          : 'if';
+Else_Tag        : 'else';
+ElseIf_Tag      : 'else if';
 
-Switch_Tag		: 'switch';
-Case_Tag		: 'case';
-Default_Tag		: 'default';
+Switch_Tag      : 'switch';
+Case_Tag        : 'case';
+Default_Tag     : 'default';
 
-For_Tag			: 'for';
-While_Tag		: 'while';
-Repeat_Tag		: 'repeat';
+For_Tag         : 'for';
+While_Tag       : 'while';
+Repeat_Tag      : 'repeat';
 
-Return_Tag		: 'return';
+Return_Tag      : 'return';
 
 Identifier
     : Letter
-	  ( Letter
-	  | Digit
+      ( Letter
+      | Digit
       )*
     ;
 
 BlockComment
-    :   '/*' .*? '*/'
-        -> skip
+    : '/*' .*? '*/'
+      -> skip
     ;
 
 LineComment
-    :   '//' ~[\r\n]*
-        -> skip
+    : '//' ~[\r\n]*
+      -> skip
     ;
 
 fragment
 Letter
-    :   [a-zA-Z_]
+    : [a-zA-Z_]
     ;
 
 fragment
 Digit
-	: [0-9]
-	;
+    : [0-9]
+    ;
 
 WS
     : [ \t\r\n]+
