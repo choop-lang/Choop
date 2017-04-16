@@ -7,7 +7,7 @@ grammar Choop;
 // Entry point
 root
 	: ( sprite
-	  | module
+      | module
       | global_declaration
 	  )*
 	  EOF
@@ -127,10 +127,10 @@ Repeat_Tag		: 'repeat';
 Return_Tag		: 'return';
 
 Identifier
-    :   Letter
-		(	Letter
-		|	Digit
-		)*
+    : Letter
+	  ( Letter
+	  | Digit
+      )*
     ;
 
 BlockComment
@@ -143,15 +143,17 @@ LineComment
         -> skip
     ;
 
+fragment
 Letter
     :   [a-zA-Z_]
     ;
 
+fragment
 Digit
 	: [0-9]
 	;
 
 WS
-    :   [ \t\r\n]+
-        -> skip
+    : [ \t\r\n]+
+      -> skip
     ;
