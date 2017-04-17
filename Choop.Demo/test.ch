@@ -12,7 +12,14 @@ sprite MySprite {
 	var StringTest1 = " !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 	var StringTest2 = ' !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
 
-	void Test(param1) {
+	void Test1() {
 		var test = "27";
+	}
+
+	void Test2(param1) {
+		const Scoped_Const = 43;
+	}
+
+	void Test3(param1, param2) {
 	}
 }
