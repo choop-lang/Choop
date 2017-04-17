@@ -68,8 +68,11 @@ void_declaration
       Void_Tag
       Identifier
       Bracket_Open
-      ( Identifier
-      )*
+      ( ( Identifier
+          Separator
+        )*
+        Identifier
+      )?
       Bracket_Close
       method_body
     ;
