@@ -74,10 +74,10 @@ void_declaration
         Identifier
       )?
       Bracket_Close
-      method_body
+      scope_body
     ;
 
-method_body
+scope_body
     : Brace_Open
       ( scoped_declaration
       )*
