@@ -53,6 +53,7 @@ var_global_declaration
 constant
     : ( Const_True
       | Const_False
+      | StringLiteral
       )
     ;
 
@@ -133,6 +134,17 @@ Identifier
       )*
     ;
 
+StringLiteral
+    : '"'
+      CharSequence
+      '"'
+    ;
+
+CharSequence
+    : ( PrintableChar
+      )+
+    ;
+
 BlockComment
     : '/*' .*? '*/'
       -> skip
@@ -141,6 +153,11 @@ BlockComment
 LineComment
     : '//' ~[\r\n]*
       -> skip
+    ;
+
+fragment
+PrintableChar
+    : [ -~]
     ;
 
 fragment
