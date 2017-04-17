@@ -28,6 +28,7 @@ module
 sprite_body
     : Brace_Open
       ( global_declaration
+      | void_declaration
       )*
       Brace_Close
     ;
@@ -59,6 +60,30 @@ constant
       | Const_False
       | StringLiteral
       | NumericLiteral
+      )
+    ;
+
+void_declaration
+    : Atomic_Tag?
+      Void_Tag
+      Identifier
+      Bracket_Open
+      ( Identifier
+      )*
+      Bracket_Close
+      method_body
+    ;
+
+method_body
+    : Brace_Open
+      ( scoped_declaration
+      )*
+      Brace_Close
+    ;
+
+scoped_declaration
+    : ( const_declaration
+      | var_global_declaration
       )
     ;
 
@@ -143,6 +168,7 @@ NumericLiteral
     : ( HexNumber
       | SciNumber
       | Decimal
+      | Integer
       )
     ;
 
@@ -157,7 +183,8 @@ HexNumber
 
 fragment
 SciNumber
-    : Decimal
+    : ( Decimal
+      | Integer)
       'e'
       Integer
     ;
