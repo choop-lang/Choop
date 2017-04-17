@@ -144,6 +144,17 @@ StringLiteral
       '"'
     ;
 
+fragment
+CharSequence
+    : ( PrintableChar
+      )+
+    ;
+
+fragment
+PrintableChar
+    : [ -~]
+    ;
+
 BlockComment
     : '/*' .*? '*/'
       -> skip
@@ -167,15 +178,4 @@ Digit
 WS
     : [ \t\r\n]+
       -> skip
-    ;
-
-
-CharSequence
-    : ( PrintableChar
-      )+
-    ;
-
-fragment
-PrintableChar
-    : [a-z]
     ;
