@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Antlr4.Runtime;
@@ -13,23 +14,26 @@ namespace Choop.Demo
     {
         static void Main(string[] args)
         {
-            string code = "// This is a comment\r\nsprite hello {\r\n\tconst hello = -3.2e-2;\r\n\tvar T20 = 'Home time';\r\n}";
+            using (StreamReader reader = new StreamReader("test.ch"))
+            {
+                string code = reader.ReadToEnd();
 
-            Console.WriteLine(code);
+                Console.WriteLine(code);
 
-            AntlrInputStream input = new AntlrInputStream(code);
+                AntlrInputStream input = new AntlrInputStream(code);
 
-            ChoopLexer lexer = new ChoopLexer(input);
+                ChoopLexer lexer = new ChoopLexer(input);
 
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-            ChoopParser parser = new ChoopParser(tokens);
+                ChoopParser parser = new ChoopParser(tokens);
 
-            ChoopParser.RootContext root = parser.root();
-            
-            Console.WriteLine(root.ToStringTree(parser));
+                ChoopParser.RootContext root = parser.root();
 
-            Console.ReadLine();
+                Console.WriteLine(root.ToStringTree(parser));
+
+                Console.ReadLine();
+            }
         }
     }
 }
