@@ -80,6 +80,7 @@ void_declaration
 scope_body
     : Brace_Open
       ( scoped_declaration
+      | method_call
       )*
       Brace_Close
     ;
@@ -88,6 +89,22 @@ scoped_declaration
     : ( const_declaration
       | var_global_declaration
       )
+    ;
+
+method_call
+    : Identifier
+      Bracket_Open
+      ( ( primary_expression
+          Separator
+        )*
+        primary_expression
+      )?
+      Bracket_Close
+      Terminator
+    ;
+
+primary_expression
+    : constant
     ;
 
 /*

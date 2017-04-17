@@ -14,6 +14,8 @@ sprite MySprite {
 
 	void Test1() {
 		var test = "27";
+		Test2(3);
+		Test3("test", true);
 	}
 
 	void Test2(param1) {
