@@ -58,6 +58,7 @@ constant
     : ( Const_True
       | Const_False
       | StringLiteral
+      | NumericLiteral
       )
     ;
 
@@ -138,6 +139,51 @@ Identifier
       )*
     ;
 
+NumericLiteral
+    : ( HexNumber
+      | SciNumber
+      | Decimal
+      )
+    ;
+
+fragment
+HexNumber
+    : ( Op_Minus
+      )?
+      '0'
+      [xX]
+      HexDigit+
+    ;
+
+fragment
+SciNumber
+    : Decimal
+      'e'
+      Integer
+    ;
+
+fragment
+Decimal
+    : ( Op_Minus
+      )?
+      UInteger
+      '.'
+      UInteger
+    ;
+
+fragment
+Integer
+    : ( Op_Minus
+      )?
+      UInteger
+    ;
+
+fragment
+UInteger
+    : ( Digit
+      )+
+    ;
+
 StringLiteral
     : '"'
       CharSequence
@@ -173,6 +219,11 @@ Letter
 fragment
 Digit
     : [0-9]
+    ;
+
+fragment
+HexDigit
+    : [0-9a-fA-F]
     ;
 
 WS
