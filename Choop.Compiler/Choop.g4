@@ -207,12 +207,12 @@ PrintableChar
 
 BlockComment
     : '/*' .*? '*/'
-      -> skip
+      -> channel(HIDDEN)
     ;
 
 LineComment
     : '//' ~[\r\n]*
-      -> skip
+      -> channel(HIDDEN)
     ;
 
 fragment
