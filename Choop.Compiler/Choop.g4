@@ -185,9 +185,13 @@ UInteger
     ;
 
 StringLiteral
-    : '"'
-      CharSequence
-      '"'
+    : ( '"'
+        CharSequence
+        '"'
+      | '\''
+        CharSequence
+        '\''
+      )
     ;
 
 fragment

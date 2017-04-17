@@ -13,7 +13,7 @@ namespace Choop.Demo
     {
         static void Main(string[] args)
         {
-            string code = "sprite hello {\r\n\tconst hello = -3.2e-2;\r\n\tvar T20 = \"Home time\";\r\n}";
+            string code = "sprite hello {\r\n\tconst hello = -3.2e-2;\r\n\tvar T20 = 'Home time';\r\n}";
 
             Console.WriteLine(code);
 
