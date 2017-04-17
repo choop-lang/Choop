@@ -14,11 +14,15 @@ root
     ;
 
 sprite
-    : Sprite_Tag Identifier sprite_body
+    : Sprite_Tag
+      Identifier
+      sprite_body
     ;
 
 module
-    : Module_Tag Identifier sprite_body
+    : Module_Tag
+      Identifier
+      sprite_body
     ;
 
 sprite_body
@@ -140,11 +144,6 @@ StringLiteral
       '"'
     ;
 
-CharSequence
-    : ( PrintableChar
-      )+
-    ;
-
 BlockComment
     : '/*' .*? '*/'
       -> skip
@@ -153,11 +152,6 @@ BlockComment
 LineComment
     : '//' ~[\r\n]*
       -> skip
-    ;
-
-fragment
-PrintableChar
-    : [ -~]
     ;
 
 fragment
@@ -173,4 +167,15 @@ Digit
 WS
     : [ \t\r\n]+
       -> skip
+    ;
+
+
+CharSequence
+    : ( PrintableChar
+      )+
+    ;
+
+fragment
+PrintableChar
+    : [a-z]
     ;
