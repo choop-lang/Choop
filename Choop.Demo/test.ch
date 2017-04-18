@@ -68,7 +68,7 @@ sprite MySprite {
 		} else if (false) {
 			newtest = 2;
 		} else if (true) {
-			newtest = 3;
+			newtest = (3);
 		}
 
 		switch (newtest) {

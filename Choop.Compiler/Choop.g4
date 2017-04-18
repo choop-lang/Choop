@@ -314,6 +314,9 @@ primary_expression
     : ( constant
       | method_call
       | Identifier
+      | Bracket_Open
+        primary_expression
+        Bracket_Close
       )
     ;
 
