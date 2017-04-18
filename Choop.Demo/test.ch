@@ -41,6 +41,12 @@ sprite MySprite {
 		if (false) {
 			return;
 		}
+
+		if (true) {
+			var testing = 1;
+		} else {
+			test = 20;
+		}
 	}
 
 	atomic void Test2(param1) {

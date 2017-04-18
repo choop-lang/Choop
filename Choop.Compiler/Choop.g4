@@ -188,6 +188,9 @@ if_stmt
       primary_expression
       Bracket_Close
       ( scope_body
+        ( Else_Tag
+          scope_body
+        )?
       | statement
       )
     ;
