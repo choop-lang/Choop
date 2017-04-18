@@ -38,6 +38,7 @@ sprite_body
 global_declaration
     : ( const_declaration
       | var_global_declaration
+      | array_global_declaration
       )
     ;
 
@@ -54,6 +55,21 @@ var_global_declaration
       Identifier
       ( Assign
         constant
+      )?
+      Terminator
+    ;
+
+array_global_declaration
+    : Decl_Array
+      Square_Open
+      UInteger
+      Square_Close
+      Identifier
+      ( Assign
+        Brace_Open
+        ( constant
+        )*
+        Brace_Close
       )?
       Terminator
     ;
@@ -141,6 +157,7 @@ statement
 scoped_declaration
     : ( const_declaration
       | var_declaration
+      | array_declaration
       )
     ;
 
@@ -149,6 +166,21 @@ var_declaration
       Identifier
       ( Assign
         primary_expression
+      )?
+      Terminator
+    ;
+
+array_declaration
+    : Decl_Array
+      Square_Open
+      UInteger
+      Square_Close
+      Identifier
+      ( Assign
+        Brace_Open
+        ( primary_expression
+        )*
+        Brace_Close
       )?
       Terminator
     ;
@@ -166,6 +198,10 @@ method_call
 
 assignment
     : Identifier
+      ( Square_Open
+        primary_expression
+        Square_Close
+      )?
       ( ( Assign
         | Assign_Add
         | Assign_Sub
