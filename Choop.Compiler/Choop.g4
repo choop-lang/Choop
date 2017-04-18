@@ -68,13 +68,27 @@ void_declaration
       Void_Tag
       Identifier
       Bracket_Open
-      ( ( Identifier
+      ( parameter
+        Separator
+      )*
+      ( ( optional_parameter
           Separator
         )*
-        Identifier
+        optional_parameter
+      | parameter
       )?
       Bracket_Close
       scope_body
+    ;
+
+optional_parameter
+    : Identifier
+      Assign
+      constant
+    ;
+
+parameter
+    : Identifier
     ;
 
 scope_body
@@ -249,7 +263,7 @@ CharSequence
 
 fragment
 PrintableChar
-    : [ -~]
+    : [ !#-&(-~]
     ;
 
 BlockComment

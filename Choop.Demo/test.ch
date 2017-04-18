@@ -9,8 +9,8 @@ sprite MySprite {
 	var NumberTest2 = 3.159;
 	var NumberTest3 = 27e3;
 
-	var StringTest1 = " !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-	var StringTest2 = ' !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
+	var StringTest1 = " !#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+	var StringTest2 = ' !#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
 
 	void Test1() {
 		var test = "27";
@@ -23,5 +23,8 @@ sprite MySprite {
 	}
 
 	void Test3(param1, param2) {
+	}
+
+	void Test4(param1, param3 = 3) {
 	}
 }
