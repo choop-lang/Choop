@@ -14,7 +14,8 @@ root
     ;
 
 sprite
-    : Sprite_Tag
+    : attribute*
+      Sprite_Tag
       Identifier
       sprite_body
     ;
@@ -23,6 +24,31 @@ module
     : Module_Tag
       Identifier
       sprite_body
+    ;
+
+attribute
+    : Square_Open
+      ( ( Attr_Resources
+        | Attr_Location
+        | Attr_Size
+        | Attr_Rotation
+        | Attr_Visible
+        | Attr_Costume
+        | Attr_RotStyle
+        | Attr_Draggable
+        )
+        Bracket_Open
+        ( constant
+          Separator
+        )?
+        constant
+        Bracket_Close
+      | Attr_Import
+        Bracket_Open
+        Identifier
+        Bracket_Close
+      )
+      Square_Close
     ;
 
 sprite_body
