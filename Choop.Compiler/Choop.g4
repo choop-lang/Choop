@@ -288,13 +288,13 @@ switch_stmt
           constant
           Colon
         )+
-        statement+
+        statement*
         Break_Tag
         Terminator
       )+
       ( Default_Tag
         Colon
-        statement+
+        statement*
         Break_Tag
         Terminator
       )?

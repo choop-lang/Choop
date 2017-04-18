@@ -79,6 +79,8 @@ sprite MySprite {
 			case "3":
 				Test2(2);
 				break;
+			case 4:
+				break;
 			default:
 				Test2(3);
 				break;
