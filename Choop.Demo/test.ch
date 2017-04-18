@@ -37,6 +37,8 @@ sprite MySprite {
 		test -= 1;
 
 		test2 .= " world";
+
+		return;
 	}
 
 	atomic void Test2(param1) {
@@ -48,6 +50,7 @@ sprite MySprite {
 	}
 
 	atomic function Test4(param1, param2 = 3, param = -4e2) {
+		return 3;
 	}
 	
 	event GreenFlag() {

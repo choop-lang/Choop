@@ -123,6 +123,7 @@ scope_body
       | method_call
         Terminator
       | assignment
+      | return_stmt
       )*
       Brace_Close
     ;
@@ -164,6 +165,12 @@ assignment
         | Assign_Dec
         )
       )
+      Terminator
+    ;
+
+return_stmt
+    : Return_Tag
+      primary_expression?
       Terminator
     ;
 
