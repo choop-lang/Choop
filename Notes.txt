@@ -31,5 +31,15 @@ Consts get auto inlined
 The "inline" option on a void causes the code to be placed directly inside the caller - a custom block will not be created
 The "atomic" option on a method causes the method to run without screen refresh
 
+Each custom block gets an extra thread and thread start parameter
+The thread indicates the list to use as the stack for all scoped variables
+A new thread ID is used for each event handler
+(Dynamic thread ID values by incrementing and decrementing active threads variable?)
+The thread start parameter indicates the index of the first local variable in the stack
+Arrays take up multiple elements in the stack and have fixed size
+Lists are stored in an external, indexed heap and the index to their index is stored in
+the stack
+When an item is added / removed from the heap, all the indexes in the heap must be updated
+
 TODO:
 Way to make loops single frame
