@@ -119,15 +119,22 @@ parameter
 
 scope_body
     : Brace_Open
-      ( scoped_declaration
+      ( statement
+      )*
+      Brace_Close
+    ;
+
+statement
+    : ( scoped_declaration
       | method_call
         Terminator
       | assignment
       | return_stmt
+      | if_stmt
       | scope_body
-      )*
-      Brace_Close
+      )
     ;
+
 
 scoped_declaration
     : ( const_declaration
@@ -173,6 +180,16 @@ return_stmt
     : Return_Tag
       primary_expression?
       Terminator
+    ;
+
+if_stmt
+    : If_Tag
+      Bracket_Open
+      primary_expression
+      Bracket_Close
+      ( scope_body
+      | statement
+      )
     ;
 
 primary_expression

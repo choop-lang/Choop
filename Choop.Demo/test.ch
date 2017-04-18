@@ -38,7 +38,9 @@ sprite MySprite {
 
 		test2 .= " world";
 
-		return;
+		if (false) {
+			return;
+		}
 	}
 
 	atomic void Test2(param1) {
@@ -55,6 +57,9 @@ sprite MySprite {
 	}
 
 	atomic function Test4(param1, param2 = 3, param = -4e2) {
+		if (true)
+			return false;
+
 		return 3;
 	}
 	
