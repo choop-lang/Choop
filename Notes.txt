@@ -41,5 +41,20 @@ Lists are stored in an external, indexed heap and the index to their index is st
 the stack
 When an item is added / removed from the heap, all the indexes in the heap must be updated
 
+Type validation is compile-time only
+Each variable is given an initial type
+(Method parameters natively support this anyway)
+A variable can only be assigned if the type of the RHS matches the variable type
+Type conversions can be done using operators
+Operators will always accept objects as inputs
+However, they have a fixed output type
+Eg. + will always be an number, . will always give a string
+Number to string:   myNum . ''
+Number to boolean:  myNum == 1
+String to number:   myString + 0
+String to boolean:  myString == 'true'
+Boolean to number:  myBool + 0
+Boolean to string:  myBool . ''
+
 TODO:
 Way to make loops single frame
