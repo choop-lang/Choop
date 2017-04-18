@@ -1,6 +1,14 @@
-﻿// This is a comment
+﻿// This is a single-line comment
+
+/* This
+   is
+   a
+   multiline
+   comment
+*/
+
 sprite MySprite {
-	const NumericTest = -3.1e-2;
+	const NumericTest = -3.1e-2; // Inline comment
 
 	var BoolTest1 = false;
 	var BoolTest2 = true;
