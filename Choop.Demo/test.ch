@@ -64,7 +64,7 @@ sprite MySprite {
 		}
 
 		var newtest;
-		if (true) {
+		if (!true) {
 			newtest = 1;
 		} else if (false) {
 			newtest = 2;

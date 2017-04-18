@@ -320,25 +320,31 @@ primary_expression
       )
     ;
 
+unary_expression
+    : ( Op_Not
+      )?
+      primary_expression
+    ;
+
 expression
-    :   primary_expression
-    |   expression Op_Pow primary_expression
-    |   expression Op_Mult primary_expression
-    |   expression Op_Divide primary_expression
-    |   expression Op_Mod primary_expression
-    |   expression Op_Concat primary_expression
-    |   expression Op_Plus primary_expression
-    |   expression Op_Minus primary_expression
-    |   expression Op_LShift primary_expression
-    |   expression Op_RShift primary_expression
-    |   expression Op_LT primary_expression
-    |   expression Op_GT primary_expression
-    |   expression Op_LTE primary_expression
-    |   expression Op_GTE primary_expression
-    |   expression Op_Equals primary_expression
-    |   expression Op_NEquals primary_expression
-    |   expression Op_And primary_expression
-    |   expression Op_Or primary_expression
+    :   unary_expression
+    |   expression Op_Pow unary_expression
+    |   expression Op_Mult unary_expression
+    |   expression Op_Divide unary_expression
+    |   expression Op_Mod unary_expression
+    |   expression Op_Concat unary_expression
+    |   expression Op_Plus unary_expression
+    |   expression Op_Minus unary_expression
+    |   expression Op_LShift unary_expression
+    |   expression Op_RShift unary_expression
+    |   expression Op_LT unary_expression
+    |   expression Op_GT unary_expression
+    |   expression Op_LTE unary_expression
+    |   expression Op_GTE unary_expression
+    |   expression Op_Equals unary_expression
+    |   expression Op_NEquals unary_expression
+    |   expression Op_And unary_expression
+    |   expression Op_Or unary_expression
     ;
 
 
