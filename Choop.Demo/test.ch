@@ -35,4 +35,10 @@ sprite MySprite {
 
 	atomic function Test4(param1, param2 = 3, param = -4e2) {
 	}
+	
+	event GreenFlag() {
+	}
+
+	event KeyPressed<"space">() {
+	}
 }

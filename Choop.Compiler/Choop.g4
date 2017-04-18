@@ -30,6 +30,7 @@ sprite_body
       ( global_declaration
       | void_declaration
       | function_declaration
+      | event_handler
       )*
       Brace_Close
     ;
@@ -77,6 +78,18 @@ function_declaration
       Function_Tag
       Identifier
       parameter_set
+      scope_body
+    ;
+
+event_handler
+    : Event_Tag
+      Identifier
+      ( Op_LT
+        constant
+        Op_GT
+      )?
+      Bracket_Open
+      Bracket_Close
       scope_body
     ;
 
