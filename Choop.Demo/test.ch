@@ -95,6 +95,10 @@ sprite MySprite {
 		inline repeat(10) {
 			count--;
 		}
+
+		while (count < 10) {
+			count++;
+		}
 	}
 
 	atomic void Test2(param1) {

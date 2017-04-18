@@ -198,6 +198,7 @@ statement
       | repeat_loop
       | for_loop
       | forever_loop
+      | while_loop
       | scope_body
       )
     ;
@@ -357,6 +358,14 @@ for_loop
 
 forever_loop
     : Forever_Tag
+      scope_body
+    ;
+
+while_loop
+    : While_Tag
+      Bracket_Open
+      expression
+      Bracket_Close
       scope_body
     ;
 
