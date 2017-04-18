@@ -253,6 +253,7 @@ method_call
 var_assignment
     : Identifier
       assignment_suffix
+      Terminator
     ;
 
 array_assignment
@@ -261,6 +262,7 @@ array_assignment
       expression
       Square_Close
       assignment_suffix
+      Terminator
     ;
 
 array_full_assignment
@@ -281,7 +283,6 @@ assignment_suffix
         | Assign_Dec
         )
       )
-      Terminator
     ;
 
 return_stmt
@@ -347,7 +348,8 @@ for_stmt
       var_declaration
       expression
       Terminator
-      var_assignment
+      Identifier
+      assignment_suffix
       Bracket_Close
       scope_body
     ;

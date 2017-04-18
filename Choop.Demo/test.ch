@@ -129,7 +129,7 @@ sprite MySprite {
 		var a = 5;
 		var b = 4;
 		var res = 0;
-		for (var i = 1; i < a; i++;) {
+		for (var i = 1; i < a; i++) {
 			res += b;
 		}
 	}
