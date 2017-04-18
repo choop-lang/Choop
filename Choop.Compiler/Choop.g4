@@ -189,11 +189,14 @@ statement
     : ( scoped_declaration
       | method_call
         Terminator
-      | assignment
+      | var_assignment
+      | array_assignment
+      | array_full_assignment
       | return_stmt
       | if_stmt
       | switch_stmt
       | repeat_stmt
+      | for_stmt
       | scope_body
       )
     ;
@@ -222,17 +225,19 @@ array_declaration
       Square_Close
       Identifier
       ( Assign
-        Brace_Open
-        ( expression
-          Separator
-        )*
-        expression
-        Brace_Close
+        array_literal
       )?
       Terminator
     ;
 
-
+array_literal
+    : Brace_Open
+      ( expression
+        Separator
+      )*
+      expression
+      Brace_Close
+    ;
 
 method_call
     : Identifier
@@ -245,13 +250,28 @@ method_call
       Bracket_Close
     ;
 
-assignment
+var_assignment
     : Identifier
-      ( Square_Open
-        expression
-        Square_Close
-      )?
-      ( ( Assign
+      assignment_suffix
+    ;
+
+array_assignment
+    : Identifier
+      Square_Open
+      expression
+      Square_Close
+      assignment_suffix
+    ;
+
+array_full_assignment
+    : Identifier
+      Assign
+      array_literal
+      Terminator
+    ;
+
+assignment_suffix
+    : ( ( Assign
         | Assign_Add
         | Assign_Sub
         | Assign_Concat
@@ -260,8 +280,6 @@ assignment
       | ( Assign_Inc
         | Assign_Dec
         )
-      | Assign
-
       )
       Terminator
     ;
@@ -319,6 +337,17 @@ repeat_stmt
       Repeat_Tag
       Bracket_Open
       UInteger
+      Bracket_Close
+      scope_body
+    ;
+
+for_stmt
+    : For_Tag
+      Bracket_Open
+      var_declaration
+      expression
+      Terminator
+      var_assignment
       Bracket_Close
       scope_body
     ;

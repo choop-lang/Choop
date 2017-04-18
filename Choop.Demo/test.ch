@@ -121,9 +121,17 @@ sprite MySprite {
 		array[2] myArray = {1, 2};
 
 		myArray[0] = -3;
+
+		myArray = {3, 4};
 	}
 
 	event KeyPressed<"space">() {
+		var a = 5;
+		var b = 4;
+		var res = 0;
+		for (var i = 1; i < a; i++;) {
+			res += b;
+		}
 	}
 
 	event Clicked() {
