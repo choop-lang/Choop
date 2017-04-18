@@ -98,3 +98,11 @@ sprite MySprite {
 	event KeyPressed<"space">() {
 	}
 }
+
+module Module1 {
+	const e = 2.718;
+
+	function Subtract(input1, input2) {
+		return input1;
+	}
+}
