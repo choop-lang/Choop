@@ -106,11 +106,14 @@ constant
     : ( Const_True
       | Const_False
       | StringLiteral
-      | HexNumber
-      | SciNumber
-      | Decimal
-      | NegInteger
-      | UInteger
+      | Op_Minus?
+        HexNumber
+      | Op_Minus?
+        USciNumber
+      | Op_Minus?
+        UDecimal
+      | Op_Minus?
+        UInteger
       )
     ;
 
@@ -310,8 +313,19 @@ switch_stmt
       Brace_Close
     ;
 
+uconstant
+    : ( Const_True
+      | Const_False
+      | StringLiteral
+      | HexNumber
+      | USciNumber
+      | UDecimal
+      | UInteger
+      )
+    ;
+
 primary_expression
-    : ( constant
+    : ( uconstant
       | method_call
       | Identifier
       | Bracket_Open
@@ -450,40 +464,28 @@ Identifier
     ;
 
 HexNumber
-    : ( Op_Minus
-      )?
-      '0'
+    : '0'
       [xX]
       HexDigit+
     ;
 
-SciNumber
-    : ( Decimal
+USciNumber
+    : ( UDecimal
       | UInteger
-      | NegInteger
       )
       'e'
-      ( UInteger
-      | NegInteger
-      )
+      Op_Minus?
+      UInteger
     ;
 
-Decimal
-    : ( Op_Minus
-      )?
-      UInteger
+UDecimal
+    : UInteger
       '.'
       UInteger
     ;
 
-NegInteger
-    : Op_Minus
-      UInteger
-    ;
-
 UInteger
-    : ( Digit
-      )+
+    : Digit+
     ;
 
 StringLiteral
@@ -498,8 +500,7 @@ StringLiteral
 
 fragment
 CharSequence
-    : ( PrintableChar
-      )+
+    : PrintableChar+
     ;
 
 fragment
