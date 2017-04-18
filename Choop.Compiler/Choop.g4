@@ -67,7 +67,12 @@ void_declaration
     : Atomic_Tag?
       Void_Tag
       Identifier
-      Bracket_Open
+      parameter_set
+      scope_body
+    ;
+
+parameter_set
+    : Bracket_Open
       ( parameter
         Separator
       )*
@@ -78,7 +83,6 @@ void_declaration
       | parameter
       )?
       Bracket_Close
-      scope_body
     ;
 
 optional_parameter
