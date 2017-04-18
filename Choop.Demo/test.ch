@@ -7,6 +7,9 @@
    comment
 */
 
+var globalVar = true;
+const Pi = 3.141593;
+
 sprite MySprite {
 	const NumericTest = -3.1e-2; // Inline comment
 
