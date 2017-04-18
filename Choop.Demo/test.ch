@@ -127,6 +127,11 @@ sprite MySprite {
 		myArray[0] = -3;
 
 		myArray = {3, 4};
+
+		var total = 0;
+		foreach (var item in myArray) {
+			total = total + item;
+		}
 	}
 
 	event KeyPressed<"space">() {

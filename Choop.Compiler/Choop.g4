@@ -197,6 +197,7 @@ statement
       | switch_stmt
       | repeat_loop
       | for_loop
+      | foreach_loop
       | forever_loop
       | while_loop
       | scope_body
@@ -356,6 +357,17 @@ for_loop
       scope_body
     ;
 
+foreach_loop
+    : Foreach_Tag
+      Bracket_Open
+      Decl_Var
+      Identifier
+      In_Tag
+      Identifier
+      Bracket_Close
+      scope_body
+    ;
+
 forever_loop
     : Forever_Tag
       scope_body
@@ -417,7 +429,6 @@ expression
     |   expression Op_And unary_expression
     |   expression Op_Or unary_expression
     ;
-
 
 /*
  * Lexer Rules
@@ -507,6 +518,8 @@ Default_Tag     : 'default';
 Break_Tag       : 'break';
 
 Forever_Tag     : 'forever';
+Foreach_Tag     : 'foreach';
+In_Tag          : 'in';
 For_Tag         : 'for';
 While_Tag       : 'while';
 Repeat_Tag      : 'repeat';
