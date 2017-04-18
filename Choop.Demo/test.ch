@@ -60,6 +60,15 @@ sprite MySprite {
 		} else if (true) {
 			newtest = 3;
 		}
+
+		switch (3) {
+			case 1, 2:
+				Test2(1);
+			case "3":
+				Test2(2);
+			case default:
+				Test2(3);
+		}
 	}
 
 	atomic void Test2(param1) {

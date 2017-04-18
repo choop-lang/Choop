@@ -132,6 +132,7 @@ statement
       | assignment
       | return_stmt
       | if_stmt
+      | switch_stmt
       | scope_body
       )
     ;
@@ -203,6 +204,30 @@ if_stmt
       )
     ;
 
+switch_stmt
+    : Switch_Tag
+      Bracket_Open
+      primary_expression
+      Bracket_Close
+      Brace_Open
+      ( Case_Tag
+        ( constant
+          Separator
+        )*
+        constant
+        Colon
+        ( statement
+        )+
+      )+
+      ( Case_Tag
+        Default_Tag
+        Colon
+        ( statement
+        )+
+      )
+      Brace_Close
+    ;
+
 primary_expression
     : ( constant
       | method_call
@@ -242,6 +267,7 @@ Square_Open	    : '[';
 Square_Close    : ']';
 Separator       : ',';
 Terminator      : ';';
+Colon           : ':';
 
 Decl_Const      : 'const';
 Decl_Var        : 'var';
