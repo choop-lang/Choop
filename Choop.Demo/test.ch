@@ -18,13 +18,13 @@ sprite MySprite {
 		Test3("test", true);
 	}
 
-	void Test2(param1) {
+	atomic void Test2(param1) {
 		const Scoped_Const = 43;
 	}
 
 	void Test3(param1, param2 = "test1") {
 	}
 
-	function Test4(param1, param2 = 3, param = -4e2) {
+	atomic function Test4(param1, param2 = 3, param = -4e2) {
 	}
 }
