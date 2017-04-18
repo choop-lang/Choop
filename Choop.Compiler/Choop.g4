@@ -194,6 +194,7 @@ Terminator      : ';';
 Decl_Const      : 'const';
 Decl_Var        : 'var';
 Decl_Array      : 'array';
+Decl_List       : 'list';
 
 Assign	        : '=';
 Assign_Add	    : '+=';
