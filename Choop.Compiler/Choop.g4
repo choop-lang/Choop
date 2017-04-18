@@ -108,7 +108,7 @@ parameter_set
     ;
 
 optional_parameter
-    : Identifier
+    : parameter
       Assign
       constant
     ;
