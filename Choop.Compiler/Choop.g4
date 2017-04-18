@@ -124,6 +124,7 @@ scope_body
         Terminator
       | assignment
       | return_stmt
+      | scope_body
       )*
       Brace_Close
     ;

@@ -44,6 +44,11 @@ sprite MySprite {
 	atomic void Test2(param1) {
 		const Scoped_Const = 43;
 		var test = Test4(3, Test4(2, 5));
+
+		{
+			// Mini-scope
+			var testscope = 3;
+		}
 	}
 
 	void Test3(param1, param2 = "test1") {
