@@ -356,6 +356,12 @@ expression
 Const_True      : 'true';
 Const_False     : 'false';
 
+Assign_Add	    : '+=';
+Assign_Sub      : '-=';
+Assign_Concat   : '.=';
+Assign_Inc      : '++';
+Assign_Dec      : '--';
+
 Op_Concat       : '.';
 Op_Plus	        : '+';
 Op_Minus        : '-';
@@ -375,6 +381,8 @@ Op_And          : '&&';
 Op_Or           : '||';
 Op_Not          : '!';
 
+Assign	        : '=';
+
 Bracket_Open    : '(';
 Bracket_Close   : ')';
 Brace_Open      : '{';
@@ -389,13 +397,6 @@ Decl_Const      : 'const';
 Decl_Var        : 'var';
 Decl_Array      : 'array';
 Decl_List       : 'list';
-
-Assign	        : '=';
-Assign_Add	    : '+=';
-Assign_Sub      : '-=';
-Assign_Concat   : '.=';
-Assign_Inc      : '++';
-Assign_Dec      : '--';
 
 Sprite_Tag      : 'sprite';
 Module_Tag      : 'module';
