@@ -25,6 +25,6 @@ sprite MySprite {
 	void Test3(param1, param2 = "test1") {
 	}
 
-	void Test4(param1, param2 = 3, param = -4e2) {
+	function Test4(param1, param2 = 3, param = -4e2) {
 	}
 }

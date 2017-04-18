@@ -29,6 +29,7 @@ sprite_body
     : Brace_Open
       ( global_declaration
       | void_declaration
+      | function_declaration
       )*
       Brace_Close
     ;
@@ -66,6 +67,14 @@ constant
 void_declaration
     : Atomic_Tag?
       Void_Tag
+      Identifier
+      parameter_set
+      scope_body
+    ;
+
+function_declaration
+    : Atomic_Tag?
+      Function_Tag
       Identifier
       parameter_set
       scope_body
