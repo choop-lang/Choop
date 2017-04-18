@@ -154,14 +154,6 @@ primary_expression
 Const_True      : 'true';
 Const_False     : 'false';
 
-Op_Equals       : '==';
-Op_GT           : '>';
-Op_LT           : '<';
-Op_GTE          : '>=';
-Op_LTE          : '<=';
-Op_And          : '&&';
-Op_Or           : '||';
-Op_Not          : '!';
 Op_Concat       : '.';
 Op_Plus	        : '+';
 Op_Minus        : '-';
@@ -171,6 +163,14 @@ Op_Mod          : '%';
 Op_Pow          : '^';
 Op_LShift       : '<<';
 Op_RShift       : '>>';
+Op_Equals       : '==';
+Op_GTE          : '>=';
+Op_LTE          : '<=';
+Op_GT           : '>';
+Op_LT           : '<';
+Op_And          : '&&';
+Op_Or           : '||';
+Op_Not          : '!';
 
 Bracket_Open    : '(';
 Bracket_Close   : ')';
