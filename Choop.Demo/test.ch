@@ -49,6 +49,15 @@ sprite MySprite {
 		} else {
 			test = 20;
 		}
+
+		var newtest = 0;
+		if (true) {
+			newtest = 1;
+		} else if (false) {
+			newtest = 2;
+		} else if (true) {
+			newtest = 3;
+		}
 	}
 
 	atomic void Test2(param1) {
