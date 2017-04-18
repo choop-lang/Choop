@@ -52,8 +52,9 @@ const_declaration
 var_global_declaration
     : Decl_Var
       Identifier
-      Assign
-      constant
+      ( Assign
+        constant
+      )?
       Terminator
     ;
 
@@ -145,8 +146,9 @@ scoped_declaration
 var_declaration
     : Decl_Var
       Identifier
-      Assign
-      primary_expression
+      ( Assign
+        primary_expression
+      )?
       Terminator
     ;
 

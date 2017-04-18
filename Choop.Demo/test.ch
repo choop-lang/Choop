@@ -13,6 +13,8 @@ const Pi = 3.141593;
 sprite MySprite {
 	const NumericTest = -3.1e-2; // Inline comment
 
+	var EmptyTest;
+
 	var BoolTest1 = false;
 	var BoolTest2 = true;
 
@@ -50,7 +52,7 @@ sprite MySprite {
 			test = 20;
 		}
 
-		var newtest = 0;
+		var newtest;
 		if (true) {
 			newtest = 1;
 		} else if (false) {
