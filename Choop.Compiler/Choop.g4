@@ -68,7 +68,9 @@ array_global_declaration
       ( Assign
         Brace_Open
         ( constant
+          Separator
         )*
+        constant
         Brace_Close
       )?
       Terminator
@@ -78,7 +80,11 @@ constant
     : ( Const_True
       | Const_False
       | StringLiteral
-      | NumericLiteral
+      | HexNumber
+      | SciNumber
+      | Decimal
+      | NegInteger
+      | UInteger
       )
     ;
 
@@ -179,7 +185,9 @@ array_declaration
       ( Assign
         Brace_Open
         ( primary_expression
+          Separator
         )*
+        primary_expression
         Brace_Close
       )?
       Terminator
@@ -348,15 +356,6 @@ Identifier
       )*
     ;
 
-NumericLiteral
-    : ( HexNumber
-      | SciNumber
-      | Decimal
-      | Integer
-      )
-    ;
-
-fragment
 HexNumber
     : ( Op_Minus
       )?
@@ -365,15 +364,17 @@ HexNumber
       HexDigit+
     ;
 
-fragment
 SciNumber
     : ( Decimal
-      | Integer)
+      | UInteger
+      | NegInteger
+      )
       'e'
-      Integer
+      ( UInteger
+      | NegInteger
+      )
     ;
 
-fragment
 Decimal
     : ( Op_Minus
       )?
@@ -382,14 +383,11 @@ Decimal
       UInteger
     ;
 
-fragment
-Integer
-    : ( Op_Minus
-      )?
+NegInteger
+    : Op_Minus
       UInteger
     ;
 
-fragment
 UInteger
     : ( Digit
       )+
