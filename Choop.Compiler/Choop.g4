@@ -284,20 +284,20 @@ switch_stmt
       primary_expression
       Bracket_Close
       Brace_Open
-      ( Case_Tag
-        ( constant
-          Separator
-        )*
-        constant
-        Colon
-        ( statement
+      ( ( Case_Tag
+          constant
+          Colon
         )+
+        statement+
+        Break_Tag
+        Terminator
       )+
       ( Default_Tag
         Colon
-        ( statement
-        )+
-      )
+        statement+
+        Break_Tag
+        Terminator
+      )?
       Brace_Close
     ;
 
@@ -381,6 +381,7 @@ Else_Tag        : 'else';
 Switch_Tag      : 'switch';
 Case_Tag        : 'case';
 Default_Tag     : 'default';
+Break_Tag       : 'break';
 
 For_Tag         : 'for';
 While_Tag       : 'while';

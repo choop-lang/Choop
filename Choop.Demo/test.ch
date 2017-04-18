@@ -72,12 +72,16 @@ sprite MySprite {
 		}
 
 		switch (newtest) {
-			case 1, 2:
+			case 1:
+			case 2:
 				Test2(1);
+				break;
 			case "3":
 				Test2(2);
+				break;
 			default:
 				Test2(3);
+				break;
 		}
 	}
 
