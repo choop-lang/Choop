@@ -102,6 +102,9 @@ sprite MySprite {
 	}
 	
 	event GreenFlag() {
+		array[2] myArray = {1, 2};
+
+		myArray[0] = 3;
 	}
 
 	event KeyPressed<"space">() {
