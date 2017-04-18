@@ -178,8 +178,6 @@ Brace_Open      : '{';
 Brace_Close     : '}';
 Square_Open	    : '[';
 Square_Close    : ']';
-Angle_Open      : '<';
-Angle_Close     : '>';
 Separator       : ',';
 Terminator      : ';';
 
