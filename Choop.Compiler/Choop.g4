@@ -193,6 +193,7 @@ statement
       | return_stmt
       | if_stmt
       | switch_stmt
+      | repeat_stmt
       | scope_body
       )
     ;
@@ -311,6 +312,15 @@ switch_stmt
         Terminator
       )?
       Brace_Close
+    ;
+
+repeat_stmt
+    : Inline_Tag?
+      Repeat_Tag
+      Bracket_Open
+      UInteger
+      Bracket_Close
+      scope_body
     ;
 
 uconstant

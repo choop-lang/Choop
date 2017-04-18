@@ -86,6 +86,15 @@ sprite MySprite {
 				Test2(3);
 				break;
 		}
+
+		var count = 0;
+		repeat(10) {
+			count++;
+		}
+		
+		inline repeat(10) {
+			count--;
+		}
 	}
 
 	atomic void Test2(param1) {
