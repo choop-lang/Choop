@@ -6,14 +6,14 @@ const MyConst = 12;
 
 var MyVar = 10; // Inline comment
 
-[ResourcesFile(mySprite.res)]
+[ResourcesFile("mySprite.res")]
 [Import(myModule)]
 sprite Sprite1 {
 	event GreenFlag() {
 		MyVoid(10, 20);
 	}
 
-	event KeyPressed<space>() {
+	event KeyPressed<"space">() {
 		{
 			// Mini scope
 			var test = 2;
