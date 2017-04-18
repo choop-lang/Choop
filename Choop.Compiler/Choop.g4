@@ -219,6 +219,8 @@ array_declaration
       Terminator
     ;
 
+
+
 method_call
     : Identifier
       Bracket_Open
@@ -245,6 +247,8 @@ assignment
       | ( Assign_Inc
         | Assign_Dec
         )
+      | Assign
+
       )
       Terminator
     ;
@@ -289,8 +293,7 @@ switch_stmt
         ( statement
         )+
       )+
-      ( Case_Tag
-        Default_Tag
+      ( Default_Tag
         Colon
         ( statement
         )+
