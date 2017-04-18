@@ -189,8 +189,8 @@ Assign	        : '=';
 Assign_Add	    : '+=';
 Assign_Sub      : '-=';
 Assign_Concat   : '.=';
-Assing_Inc      : '++';
-Assing_Dec      : '--';
+Assign_Inc      : '++';
+Assign_Dec      : '--';
 
 Sprite_Tag      : 'sprite';
 Module_Tag      : 'module';
