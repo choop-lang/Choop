@@ -105,13 +105,13 @@ sprite MySprite {
 		if (param2 + param3 >= 10)
 			return param3 - param2;
 
-		return 3;
+		return -param1;
 	}
 	
 	event GreenFlag() {
 		array[2] myArray = {1, 2};
 
-		myArray[0] = 3;
+		myArray[0] = -3;
 	}
 
 	event KeyPressed<"space">() {

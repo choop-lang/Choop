@@ -322,6 +322,7 @@ primary_expression
 
 unary_expression
     : ( Op_Not
+      | Op_Minus
       )?
       primary_expression
     ;
