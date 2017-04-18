@@ -22,9 +22,9 @@ sprite MySprite {
 		const Scoped_Const = 43;
 	}
 
-	void Test3(param1, param2) {
+	void Test3(param1, param2 = "test1") {
 	}
 
-	void Test4(param1, param3 = 3) {
+	void Test4(param1, param2 = 3, param = -4e2) {
 	}
 }
