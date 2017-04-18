@@ -121,6 +121,7 @@ scope_body
     : Brace_Open
       ( scoped_declaration
       | method_call
+        Terminator
       )*
       Brace_Close
     ;
@@ -148,11 +149,12 @@ method_call
         primary_expression
       )?
       Bracket_Close
-      Terminator
     ;
 
 primary_expression
-    : constant
+    : ( constant
+      | method_call
+      )
     ;
 
 /*
