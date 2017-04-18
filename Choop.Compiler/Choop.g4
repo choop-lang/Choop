@@ -231,6 +231,7 @@ switch_stmt
 primary_expression
     : ( constant
       | method_call
+      | Identifier
       )
     ;
 

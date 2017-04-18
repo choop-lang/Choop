@@ -61,7 +61,7 @@ sprite MySprite {
 			newtest = 3;
 		}
 
-		switch (3) {
+		switch (newtest) {
 			case 1, 2:
 				Test2(1);
 			case "3":
