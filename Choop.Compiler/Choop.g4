@@ -132,7 +132,16 @@ function_declaration
 
 event_handler
     : Event_Tag
-      Identifier
+      ( Event_Flag
+      | Event_Key
+      | Event_Click
+      | Event_Backdrop
+      | Event_Message
+      | Event_Cloned
+      | Event_Loudness
+      | Event_Timer
+      | Event_Video
+      )
       ( Op_LT
         constant
         Op_GT
@@ -373,6 +382,16 @@ Function_Tag    : 'function';
 Event_Tag       : 'event';
 Atomic_Tag      : 'atomic';
 Inline_Tag      : 'inline';
+
+Event_Flag      : 'GreenFlag';
+Event_Key       : 'KeyPressed';
+Event_Click     : 'Clicked';
+Event_Backdrop  : 'BackdropChanged';
+Event_Message   : 'MessageRecieved';
+Event_Cloned    : 'Cloned';
+Event_Loudness  : 'LoudnessGreaterThan';
+Event_Timer     : 'TimerGreaterThan';
+Event_Video     : 'VideoMotionGreaterThan';
 
 ElseIf_Tag      : 'else if';
 If_Tag          : 'if';

@@ -115,6 +115,27 @@ sprite MySprite {
 
 	event KeyPressed<"space">() {
 	}
+
+	event Clicked() {
+	}
+
+	event BackdropChanged<"Thumb">() {
+	}
+
+	event MessageRecieved<"message1">() {
+	}
+
+	event Cloned() {
+	}
+
+	event LoudnessGreaterThan<50>() {
+	}
+
+	event TimerGreaterThan<10>() {
+	}
+
+	event VideoMotionGreaterThan<30>() {
+	}
 }
 
 module Module1 {
