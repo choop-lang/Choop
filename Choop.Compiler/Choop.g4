@@ -195,8 +195,8 @@ statement
       | return_stmt
       | if_stmt
       | switch_stmt
-      | repeat_stmt
-      | for_stmt
+      | repeat_loop
+      | for_loop
       | scope_body
       )
     ;
@@ -333,7 +333,7 @@ switch_stmt
       Brace_Close
     ;
 
-repeat_stmt
+repeat_loop
     : Inline_Tag?
       Repeat_Tag
       Bracket_Open
@@ -342,7 +342,7 @@ repeat_stmt
       scope_body
     ;
 
-for_stmt
+for_loop
     : For_Tag
       Bracket_Open
       var_declaration
