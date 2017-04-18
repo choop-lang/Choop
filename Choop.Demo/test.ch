@@ -31,6 +31,7 @@ sprite MySprite {
 		Test3("test", true);
 
 		test = 12;
+		test--;
 		test++;
 		test += 1;
 		test -= 1;
