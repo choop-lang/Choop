@@ -127,8 +127,16 @@ scope_body
 
 scoped_declaration
     : ( const_declaration
-      | var_global_declaration
+      | var_declaration
       )
+    ;
+
+var_declaration
+    : Decl_Var
+      Identifier
+      Assign
+      primary_expression
+      Terminator
     ;
 
 method_call
