@@ -28,7 +28,9 @@ Local variables can be accessed using the (var v) of (sprite v) block
 Events can be raised using broadcast blocks
 
 Consts get auto inlined
-The "inline" option on a void causes the code to be placed directly inside the caller - a custom block will not be created
+The "inline" option on a void causes the code to be placed directly inside the caller
+- A custom block will not be created
+- If a recursive function is found the compiler should indicate to remove the inline tag
 The "atomic" option on a method causes the method to run without screen refresh
 
 Each custom block gets an extra thread and thread start parameter
