@@ -206,7 +206,7 @@ var_declaration
     : Decl_Var
       Identifier
       ( Assign
-        primary_expression
+        expression
       )?
       Terminator
     ;
@@ -219,10 +219,10 @@ array_declaration
       Identifier
       ( Assign
         Brace_Open
-        ( primary_expression
+        ( expression
           Separator
         )*
-        primary_expression
+        expression
         Brace_Close
       )?
       Terminator
@@ -233,10 +233,10 @@ array_declaration
 method_call
     : Identifier
       Bracket_Open
-      ( ( primary_expression
+      ( ( expression
           Separator
         )*
-        primary_expression
+        expression
       )?
       Bracket_Close
     ;
@@ -244,7 +244,7 @@ method_call
 assignment
     : Identifier
       ( Square_Open
-        primary_expression
+        expression
         Square_Close
       )?
       ( ( Assign
@@ -252,7 +252,7 @@ assignment
         | Assign_Sub
         | Assign_Concat
         )
-        primary_expression
+        expression
       | ( Assign_Inc
         | Assign_Dec
         )
@@ -264,19 +264,19 @@ assignment
 
 return_stmt
     : Return_Tag
-      primary_expression?
+      expression?
       Terminator
     ;
 
 if_stmt
     : If_Tag
       Bracket_Open
-      primary_expression
+      expression
       Bracket_Close
       ( scope_body
         ( ElseIf_Tag
           Bracket_Open
-          primary_expression
+          expression
           Bracket_Close
           scope_body
         )*
@@ -290,7 +290,7 @@ if_stmt
 switch_stmt
     : Switch_Tag
       Bracket_Open
-      primary_expression
+      expression
       Bracket_Close
       Brace_Open
       ( ( Case_Tag
@@ -315,10 +315,32 @@ primary_expression
       | method_call
       | Identifier
       | Bracket_Open
-        primary_expression
+        expression
         Bracket_Close
       )
     ;
+
+expression
+    :   primary_expression
+    |   expression Op_Pow primary_expression
+    |   expression Op_Mult primary_expression
+    |   expression Op_Divide primary_expression
+    |   expression Op_Mod primary_expression
+    |   expression Op_Concat primary_expression
+    |   expression Op_Plus primary_expression
+    |   expression Op_Minus primary_expression
+    |   expression Op_LShift primary_expression
+    |   expression Op_RShift primary_expression
+    |   expression Op_LT primary_expression
+    |   expression Op_GT primary_expression
+    |   expression Op_LTE primary_expression
+    |   expression Op_GTE primary_expression
+    |   expression Op_Equals primary_expression
+    |   expression Op_NEquals primary_expression
+    |   expression Op_And primary_expression
+    |   expression Op_Or primary_expression
+    ;
+
 
 /*
  * Lexer Rules
@@ -337,6 +359,7 @@ Op_Pow          : '^';
 Op_LShift       : '<<';
 Op_RShift       : '>>';
 Op_Equals       : '==';
+Op_NEquals      : '!=';
 Op_GTE          : '>=';
 Op_LTE          : '<=';
 Op_GT           : '>';

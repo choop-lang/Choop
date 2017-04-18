@@ -48,13 +48,14 @@ sprite MySprite {
 		test += 1;
 		test -= 1;
 
-		test2 .= " world";
+		test2 .= " world!";
+		test2 = "hello" . (" world" . "!");
 
 		if (false) {
 			return;
 		}
 
-		if (true) {
+		if (true || false) {
 			var testing = 1;
 		} else if (false) {
 			return;
@@ -100,9 +101,9 @@ sprite MySprite {
 	void Test3(param1, param2 = "test1") {
 	}
 
-	atomic function Test4(param1, param2 = 3, param = -4e2) {
-		if (true)
-			return false;
+	atomic function Test4(param1, param2 = 3, param3 = -4e2) {
+		if (param2 + param3 >= 10)
+			return param3 - param2;
 
 		return 3;
 	}
@@ -141,7 +142,11 @@ sprite MySprite {
 module Module1 {
 	const e = 2.718;
 
-	function Subtract(input1, input2) {
-		return input1;
+	function Diff(input1, input2) {
+		if (input2 > input1) {
+			return input2 - input1;
+		} else {
+			return input1 - input2;
+		}
 	}
 }
