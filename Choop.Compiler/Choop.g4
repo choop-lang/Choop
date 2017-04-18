@@ -329,6 +329,16 @@ Assign_Dec      : '--';
 Sprite_Tag      : 'sprite';
 Module_Tag      : 'module';
 
+Attr_Resources  : 'ResourcesFile';
+Attr_Import     : 'Import';
+Attr_Location   : 'Location';
+Attr_Size       : 'Size';
+Attr_Rotation   : 'Rotation';
+Attr_Visible    : 'Visible';
+Attr_Costume    : 'Costume';
+Attr_RotStyle   : 'RotationStyle';
+Attr_Draggable  : 'Draggable';
+
 Void_Tag        : 'void';
 Function_Tag    : 'function';
 Event_Tag       : 'event';
