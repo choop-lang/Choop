@@ -122,6 +122,7 @@ scope_body
       ( scoped_declaration
       | method_call
         Terminator
+      | assignment
       )*
       Brace_Close
     ;
@@ -149,6 +150,21 @@ method_call
         primary_expression
       )?
       Bracket_Close
+    ;
+
+assignment
+    : Identifier
+      ( ( Assign
+        | Assign_Add
+        | Assign_Sub
+        | Assign_Concat
+        )
+        primary_expression
+      | ( Assign_Inc
+        | Assign_Dec
+        )
+      )
+      Terminator
     ;
 
 primary_expression

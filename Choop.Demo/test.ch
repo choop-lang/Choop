@@ -24,9 +24,18 @@ sprite MySprite {
 	var StringTest2 = ' !#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
 
 	void Test1() {
-		var test = "27";
+		var test = 27;
+		var test2 = "hello";
+
 		Test2(3);
 		Test3("test", true);
+
+		test = 12;
+		test++;
+		test += 1;
+		test -= 1;
+
+		test2 .= " world";
 	}
 
 	atomic void Test2(param1) {
