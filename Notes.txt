@@ -57,6 +57,3 @@ String to number:   myString + 0
 String to boolean:  myString == 'true'
 Boolean to number:  myBool + 0
 Boolean to string:  myBool . ''
-
-TODO:
-Way to make loops single frame
