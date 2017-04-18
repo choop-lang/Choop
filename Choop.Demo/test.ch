@@ -44,6 +44,8 @@ sprite MySprite {
 
 		if (true) {
 			var testing = 1;
+		} else if (false) {
+			return;
 		} else {
 			test = 20;
 		}

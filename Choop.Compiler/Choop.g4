@@ -188,6 +188,12 @@ if_stmt
       primary_expression
       Bracket_Close
       ( scope_body
+        ( ElseIf_Tag
+          Bracket_Open
+          primary_expression
+          Bracket_Close
+          scope_body
+        )*
         ( Else_Tag
           scope_body
         )?
@@ -256,9 +262,9 @@ Event_Tag       : 'event';
 Atomic_Tag      : 'atomic';
 Inline_Tag      : 'inline';
 
+ElseIf_Tag      : 'else if';
 If_Tag          : 'if';
 Else_Tag        : 'else';
-ElseIf_Tag      : 'else if';
 
 Switch_Tag      : 'switch';
 Case_Tag        : 'case';
