@@ -135,6 +135,9 @@ sprite MySprite {
 	}
 
 	event Clicked() {
+		forever {
+			Wait(10);
+		}
 	}
 
 	event BackdropChanged<"Thumb">() {

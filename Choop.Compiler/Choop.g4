@@ -197,6 +197,7 @@ statement
       | switch_stmt
       | repeat_loop
       | for_loop
+      | forever_loop
       | scope_body
       )
     ;
@@ -354,6 +355,11 @@ for_loop
       scope_body
     ;
 
+forever_loop
+    : Forever_Tag
+      scope_body
+    ;
+
 uconstant
     : ( Const_True
       | Const_False
@@ -491,6 +497,7 @@ Case_Tag        : 'case';
 Default_Tag     : 'default';
 Break_Tag       : 'break';
 
+Forever_Tag     : 'forever';
 For_Tag         : 'for';
 While_Tag       : 'while';
 Repeat_Tag      : 'repeat';
