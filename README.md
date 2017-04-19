@@ -24,4 +24,8 @@ Choop does not yet have official documentation for it's
 syntax. However, you can get a feel for the language
 by looking at the
 [test script](Choop.Demo/test.ch) or the
-[Antrl grammar file](Choop.Compiler/Choop.g4). 
+[Antrl grammar file](Choop.Compiler/Choop.g4).
+
+## Under development
+Currently, significant functionality is missing from
+from the Choop compiler.
