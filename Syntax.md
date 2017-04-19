@@ -183,3 +183,15 @@ generic (var) | `""`
 num | `0`
 string | `""`
 bool | `false`
+
+# Arrays
+Arrays are lists of a fixed length.
+
+The syntax for declaring arrays is as follows, where
+the number inside the square brackets is the amount of
+items in the array:
+```C#
+array[4] MyArray;
+int[3] SomeInts;
+string[6] Strings;
+```
