@@ -36,6 +36,7 @@ sprite MySprite {
 
 	var StringTest1 = " !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 	var StringTest2 = ' !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
+	string NewLineTest = "Hello\nworld!";
 
 	list[] ListTest1 = {1, 2, 3};
 	list[3] ListTest2;
