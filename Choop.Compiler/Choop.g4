@@ -159,7 +159,9 @@ void_declaration
 
 function_declaration
     : Atomic_Tag?
-      Function_Tag
+      ( Function_Tag
+      | type_specifier
+      )
       Identifier
       parameter_set
       scope_body
