@@ -38,6 +38,7 @@ sprite MySprite {
 
 	list[] ListTest1 = {1, 2, 3};
 	list[3] ListTest2;
+	list[] ListTest3;
 
 	void Test1() {
 		var test = 27;
