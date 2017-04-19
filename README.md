@@ -20,9 +20,9 @@ Eventually, Choop will come with a Visual Studio extension,
 so you can still use an official IDE to program in Choop.
 
 ## Syntax
-Choop does not yet have official documentation for it's
-syntax. However, you can get a feel for the language
-by looking at the
+You can see the documentation for the syntax of
+Choop at [Syntax.md](Syntax.md).
+Alternatively, you can view the
 [test script](Choop.Demo/test.ch) or the
 [Antrl grammar file](Choop.Compiler/Choop.g4).
 

@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ExampleScript.ch = ExampleScript.ch
 		Notes.txt = Notes.txt
 		README.md = README.md
+		Syntax.md = Syntax.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Choop.Demo", "Choop.Demo\Choop.Demo.csproj", "{CF7A350F-4EEB-4B24-B60E-4AAAA923DA53}"
