@@ -107,7 +107,7 @@ sprite MySprite {
 		}
 	}
 
-	atomic void Test2(param1) {
+	atomic void Test2(bool param1) {
 		const Scoped_Const = 43;
 		var test = Test4(3, Test4(2, 5));
 
@@ -117,10 +117,10 @@ sprite MySprite {
 		}
 	}
 
-	void Test3(param1, param2 = "test1") {
+	void Test3(param1, string param2 = "test1") {
 	}
 
-	atomic function Test4(param1, param2 = 3, param3 = -4e2) {
+	atomic function Test4(param1, num param2 = 3, num param3 = -4e2) {
 		if (param2 + param3 >= 10)
 			return param3 - param2;
 

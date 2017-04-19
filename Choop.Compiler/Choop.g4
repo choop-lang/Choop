@@ -199,7 +199,8 @@ optional_parameter
     ;
 
 parameter
-    : Identifier
+    : type_specifier?
+      Identifier
     ;
 
 scope_body
