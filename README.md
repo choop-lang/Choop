@@ -5,7 +5,7 @@ Inspired by [ApuC](https://github.com/MegaApuTurkUltra/Scratch-ApuC)
 by [@MegaApuTurkUltra](https://scratch.mit.edu/users/MegaApuTurkUltra/).
 
 ## Features
-- Scoped variables
+- Scoped variables and arrays
 - Compile-time type support
 - Complete thread safety
 - Full recursion support
@@ -14,3 +14,7 @@ by [@MegaApuTurkUltra](https://scratch.mit.edu/users/MegaApuTurkUltra/).
 - Optional parameters
 - Constants
 - Include new lines within strings
+
+## IDE
+Eventually, Choop will come with a Visual Studio extension,
+so you can still use an official IDE to program in Choop.
