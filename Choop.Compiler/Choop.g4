@@ -65,6 +65,7 @@ global_declaration
     : ( const_declaration
       | var_global_declaration
       | array_global_declaration
+      | list_global_declaration
       )
     ;
 
@@ -92,14 +93,30 @@ array_global_declaration
       Square_Close
       Identifier
       ( Assign
-        Brace_Open
-        ( constant
-          Separator
-        )*
-        constant
-        Brace_Close
+        array_constant
       )?
       Terminator
+    ;
+
+list_global_declaration
+    : Decl_List
+      Square_Open
+      UInteger?
+      Square_Close
+      Identifier
+      ( Assign
+        array_constant
+      )?
+      Terminator
+    ;
+
+array_constant
+    : Brace_Open
+      ( constant
+        Separator
+      )*
+      constant
+      Brace_Close
     ;
 
 constant

@@ -10,6 +10,7 @@
 var globalVar = true;
 const Pi = 3.141593;
 array[3] globalArray = {1, "test", 3};
+list[] globalList;
 
 [ResourcesFile("MySprite.res")]
 [Import(MyModule)]
@@ -34,6 +35,9 @@ sprite MySprite {
 
 	var StringTest1 = " !#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 	var StringTest2 = ' !#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
+
+	list[] ListTest1 = {1, 2, 3};
+	list[3] ListTest2;
 
 	void Test1() {
 		var test = 27;
