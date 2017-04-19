@@ -85,7 +85,9 @@ type_specifier
     ;
 
 var_global_declaration
-    : Decl_Var
+    : ( Decl_Var
+      | type_specifier
+      )
       Identifier
       ( Assign
         constant
@@ -94,7 +96,9 @@ var_global_declaration
     ;
 
 array_global_declaration
-    : Decl_Array
+    : ( Decl_Array
+      | type_specifier
+      )
       Square_Open
       UInteger
       Square_Close
@@ -107,6 +111,10 @@ array_global_declaration
 
 list_global_declaration
     : Decl_List
+      ( Op_LT
+        type_specifier
+        Op_GT
+      )?
       Square_Open
       UInteger?
       Square_Close
@@ -238,7 +246,9 @@ scoped_declaration
     ;
 
 var_declaration
-    : Decl_Var
+    : ( Decl_Var
+      | type_specifier
+      )
       Identifier
       ( Assign
         expression
@@ -247,7 +257,9 @@ var_declaration
     ;
 
 array_declaration
-    : Decl_Array
+    : ( Decl_Array
+      | type_specifier
+      )
       Square_Open
       UInteger
       Square_Close

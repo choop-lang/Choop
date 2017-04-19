@@ -39,11 +39,12 @@ sprite MySprite {
 
 	list[] ListTest1 = {1, 2, 3};
 	list[3] ListTest2;
-	list[] ListTest3;
+	list<num>[] ListTest3;
+	list<string>[] ListTest4 = {'1', '2', '3'};
 
 	void Test1() {
 		var test = 27;
-		var test2 = "hello";
+		string test2 = "hello";
 
 		Test2(3);
 		Test3("test", true);
@@ -62,7 +63,7 @@ sprite MySprite {
 		}
 
 		if (true || false) {
-			var testing = 1;
+			bool testing = true;
 		} else if (false) {
 			return;
 		} else {
@@ -113,7 +114,7 @@ sprite MySprite {
 
 		{
 			// Mini-scope
-			var testscope = 3;
+			num testscope = 3;
 		}
 	}
 
@@ -129,6 +130,7 @@ sprite MySprite {
 	
 	event GreenFlag() {
 		array[2] myArray = {1, 2};
+		num[3] numArray = {-5e2, 12.5};
 
 		myArray[0] = -3;
 
@@ -161,6 +163,8 @@ sprite MySprite {
 	}
 
 	event MessageRecieved<"message1">() {
+		string[4] strArray;
+		bool[3] boolArray = {true, false, true};
 	}
 
 	event Cloned() {
