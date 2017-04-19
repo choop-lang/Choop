@@ -618,7 +618,9 @@ CharSequence
 
 fragment
 PrintableChar
-    : [ !#-&(-~]
+    : '\\'
+      ['"n\\]
+    | [ !#-&(-[\]-~]
     ;
 
 BlockComment
