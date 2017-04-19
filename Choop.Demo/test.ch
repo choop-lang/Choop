@@ -22,7 +22,8 @@ list[] globalList;
 [RotationStyle("normal")]
 [Draggable(false)]
 sprite MySprite {
-	const NumericTest = -3.1e-2; // Inline comment
+	const num NumConst = -3.1e-2; // Inline comment
+	const string StringConst = "test";
 
 	var EmptyTest;
 

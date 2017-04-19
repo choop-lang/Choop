@@ -71,10 +71,17 @@ global_declaration
 
 const_declaration
     : Decl_Const
+      type_specifier?
       Identifier
       Assign
       constant
       Terminator
+    ;
+
+type_specifier
+    : Type_Num
+    | Type_String
+    | Type_Bool
     ;
 
 var_global_declaration
@@ -495,6 +502,10 @@ Decl_Const      : 'const';
 Decl_Var        : 'var';
 Decl_Array      : 'array';
 Decl_List       : 'list';
+
+Type_Num        : 'num';
+Type_String     : 'string';
+Type_Bool       : 'bool';
 
 Sprite_Tag      : 'sprite';
 Module_Tag      : 'module';
