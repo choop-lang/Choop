@@ -170,6 +170,7 @@ var MyGenericVar = 23;
 var MyOtherVar;
 num SomeNumber = 0xF0;
 string MyString = 'Bizz';
+string Name;
 bool IsVisible = true;
 ```
 
