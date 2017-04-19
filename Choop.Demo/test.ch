@@ -150,6 +150,8 @@ sprite MySprite {
 	}
 
 	event BackdropChanged<"Thumb">() {
+		var bidmas = 8 - 4 * (1 + 2);
+		Say(bidmas);
 	}
 
 	event MessageRecieved<"message1">() {
