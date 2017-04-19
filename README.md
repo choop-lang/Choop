@@ -18,3 +18,10 @@ by [@MegaApuTurkUltra](https://scratch.mit.edu/users/MegaApuTurkUltra/).
 ## IDE
 Eventually, Choop will come with a Visual Studio extension,
 so you can still use an official IDE to program in Choop.
+
+## Syntax
+Choop does not yet have official documentation for it's
+syntax. However, you can get a feel for the language
+by looking at the
+[test script](Choop.Demo/test.ch) or the
+[Antrl grammar file](Choop.Compiler/Choop.g4). 
