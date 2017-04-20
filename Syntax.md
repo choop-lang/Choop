@@ -360,7 +360,7 @@ to indicate how some maths should be evaluated.
 ```C#
 var foo = 4 - 3 * 2 + 1;
 // Equivalent to:
-var bar = 4 - (3 * 2) + 1
+var bar = 4 - (3 * 2) + 1;
 ```
 
 **Full list of operators, in order of precedence:**
@@ -431,11 +431,11 @@ bool BoolToConvert = true;
 num Num1 = StringToConvert + 0; // = 12
 num Num2 = BoolToConvert + 0; // = 1
 
-string String1 = NumToConvert.'' // = "1"
-string String2 = BoolToConvert.'' // = "true"
+string String1 = NumToConvert.''; // = "1"
+string String2 = BoolToConvert.''; // = "true"
 
 bool Bool1 = NumToConvert==1; // = true
-bool Bool2 = StringToConvert=="true" // = false
+bool Bool2 = StringToConvert=="true"; // = false
 ```
 
 **Note:** If a value cannot easily be converted into
