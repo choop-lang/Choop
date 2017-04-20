@@ -9,6 +9,10 @@ code.
 Please be aware that the Choop grammar is **case sensitive**, whilst
 string comparisons in Choop are **case insensitive**.
 
+For any additional information, you can view the
+[Choop grammar file](Choop.Compiler/Choop.g4) or
+[contact me](https://scratch.mit.edu/users/chooper100/).
+
 # Comments
 Comments can be either single or multi-line.
 They use the following syntax:
