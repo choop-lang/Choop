@@ -442,3 +442,56 @@ bool Bool2 = StringToConvert=="true"; // = false
 a different type (eg. "foo" cannot be converted into
 a number), the default value for that type will be
 used (which in this case would be 0).
+
+# Selection
+Selection is basically if and switch statements.
+
+## If Statements
+This is how if statements work in Choop:
+
+```C#
+var foo = 13;
+
+var bar;
+if (foo == 2) {
+    // This code runs if foo is 2
+
+    bar = 1;
+} else if (foo > 10) {
+    // This code runs if foo is greater than 10
+
+    bar = 2;
+} else if (foo < 4) {
+    // This code runs if foo is less than 4,
+    // but not if foo is 2 because we already
+    // tested that
+
+    bar = 3;
+} else {
+    // This code runs if none of the previous
+    // conditions were met
+
+    // In this case, this would occur if foo
+    // was between 4 and 10 (inclusive)
+
+    bar = 4;
+}
+```
+
+You can have as many `else if` blocks as you want, or
+none at all.
+
+The `else` block is also optional, but it must go at
+the end if you do use it.
+
+The simplest type of if statement is just:
+```C#
+var foo = 2;
+var bar;
+
+if (foo == 4) {
+    // This code runs when foo equals 4
+
+    bar = 1;
+}
+```
