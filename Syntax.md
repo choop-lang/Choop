@@ -6,6 +6,9 @@ In the Choop syntax, I've tried to keep it similar as possible to existing
 languages, whilst still bearing in mind that this compiles down to Scratch
 code.
 
+Please be aware that the Choop grammar is **case sensitive**, whilst
+string comparisons in Choop are **case insensitive**.
+
 # Comments
 Comments can be either single or multi-line.
 They use the following syntax:
