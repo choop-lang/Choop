@@ -90,6 +90,8 @@ sprite MySprite {
 				break;
 			case 4:
 				break;
+			case 5:
+				return;
 			default:
 				Test2(3);
 				break;

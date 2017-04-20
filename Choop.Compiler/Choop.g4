@@ -362,17 +362,21 @@ switch_stmt
           constant
           Colon
         )+
-        statement*
-        Break_Tag
-        Terminator
+        case_body
       )+
       ( Default_Tag
         Colon
-        statement*
-        Break_Tag
-        Terminator
+        case_body
       )?
       Brace_Close
+    ;
+
+case_body
+    : statement*
+      ( Break_Tag
+        Terminator
+      | return_stmt
+      )
     ;
 
 repeat_loop
