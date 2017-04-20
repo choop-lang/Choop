@@ -192,6 +192,57 @@ the number inside the square brackets is the amount of
 items in the array:
 ```C#
 array[4] MyArray;
-int[3] SomeInts;
-string[6] Strings;
+num[3] SomeNums;
+string[5] Strings;
+```
+
+You can also specify the starting elements in the
+array:
+```C#
+array[4] MyArray = {'foo', -23.2, true, "bar"};
+num[3] SomeNumbers = {3, 4e-2, 0xE4};
+string[5] Strings = {"foo\nbar", "baz", "qux", "bizz", "boo"};
+```
+
+Note that the number of elements given must match the
+number in the square brackets.
+
+## Array Usage
+Array indexes are 0-based.
+
+You can get and assign values like so:
+```C#
+// ...
+
+// Create array
+array[4] MyArray = {'foo', -23.2, true, "bar"};
+
+// Get items
+var First = MyArray[0]; // = 'foo'
+var Second = MyArray[1]; // = -23.2
+var Third = MyArray[2]; // = true
+var Fourth = MyArray[3]; // = "bar"
+
+// Set items
+MyArray[0] = 12; // Sets the value of the first item to 12
+MyArray[3] = "baz"; // Sets the value of the last item to "baz"
+
+// ...
+```
+
+**Important:** Arrays *do not* have bounds checking.
+
+Therefore, if we did the following in the above example,
+we would get unexpected results:
+
+```C#
+// ...
+
+var Item = MyArray[-1]; // = ????
+var AnotherItem = MyArray[5]; // = ????
+
+MyArray[-1] = "test"; // What did we set here?
+MyArray[5] = "value"; // This could seriously disrupt data flow in our app
+
+// ...
 ```
