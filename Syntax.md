@@ -287,3 +287,56 @@ MyArray[5] = "value"; // This could seriously disrupt data flow in our app
 
 // ...
 ```
+
+# Lists
+Lists store groups of values. They have an initial size,
+but values can later be added to or removed from them
+at runtime.
+
+Like arrays, you can also specify the inital items in
+the list.
+
+**Examples:**
+```C#
+list[] MyEmptyList; // Has no items initially
+list[4] MyList; // Has 4 items initially
+
+list<num>[3] MyNumList; // A list of 3 numbers
+list<bool>[2] MyBoolList; // A list of 2 booleans
+
+// These lists specify their initial items:
+list[3] MyFilledList = {12, "foo", true};
+list<string>[2] MyStringList = {'bar', 'bazz'};
+```
+
+Again, when specifying the initial items in a list, the
+number of items given must match the number in the
+square brackets.
+
+## List Usage
+To get and set items in a list, you can use the same
+syntax as arrays:
+
+```C#
+// ...
+
+// Create list
+list<string>[3] MyList = {'foo', 'bar', 'bazz'};
+
+// Get items
+var First = MyList[0]; // = 'foo'
+var Second = MyList[1]; // = 'bar'
+var Third = MyList[2]; // = 'bazz'
+
+// Set items
+MyList[0] = 'hello'; // Sets the value of the first item to 'hello'
+MyArray[3] = 'boo'; // Sets the value of the last item to 'boo'
+
+// ...
+```
+
+### Adding and Removing Items
+TODO
+
+### Getting the List Length
+TODO
