@@ -115,6 +115,10 @@ Type | Description
 `string` | Text
 `bool` | Boolean value (true/false)
 
+## Type Conversions
+For information on how to convert types, please see
+[Type Conversions Using Operators](#type-conversions-using-operators).
+
 # Numeric Literals
 Choop allows 3 different ways to specify numbers:
 
@@ -395,3 +399,46 @@ bool bam = false;
 
 bool baz = !bam; // NOT: Inverts bam (= true)
 ```
+
+## Type Conversions Using Operators
+When using typed variables in Choop, the compiler
+will raise an error if the type of the variable
+you are setting does not match the type of the data.
+
+For example, this will not work:
+```C#
+num foo = 23;
+string bar = foo;
+```
+This is because foo is a number but bar is a string.
+
+To change the type of something, we can use operators:
+```C#
+num foo = 23;
+string bar = foo.'';
+```
+Here, we concatenate an empty string onto foo. The
+concatenation operator will always output a string
+value, therefore this will work as the types now
+match.
+
+Here's how you can convert other types:
+```C#
+num NumToConvert = 1;
+string StringToConvert = "12";
+bool BoolToConvert = true;
+
+num Num1 = StringToConvert + 0; // = 12
+num Num2 = BoolToConvert + 0; // = 1
+
+string String1 = NumToConvert.'' // = "1"
+string String2 = BoolToConvert.'' // = "true"
+
+bool Bool1 = NumToConvert==1; // = true
+bool Bool2 = StringToConvert=="true" // = false
+```
+
+**Note:** If a value cannot easily be converted into
+a different type (eg. "foo" cannot be converted into
+a number), the default value for that type will be
+used (which in this case would be 0).
