@@ -340,3 +340,58 @@ TODO
 
 ### Getting the List Length
 TODO
+
+# Operators
+Choop supports several different operators.
+Each operator will accept any type of data, but will
+always output data of a certain type.
+
+You can use multiple operators in a single statement
+without the use of brackets. However, as Choop
+follows order of operations (BIDMAS) first, then
+left-to-right order, you may wish to use brackets
+to indicate how some maths should be evaluated.
+
+**Example:**
+```C#
+var foo = 4 - 3 * 2 + 1;
+// Equivalent to:
+var bar = 4 - (3 * 2) + 1
+```
+
+**Full list of operators, in order of precedence:**
+
+Operator | Example | Output type | Description
+-------- | ------- | ----------- | -----------
+`^` | `3 ^ 2` | `num` | 3 to the power of 2 (= 9)
+`*` | `4 * 2` | `num` | 4 times 2 (= 8)
+`/` | `10 / 5` |`num` | 10 divided by 5 (= 2)
+`%` | `13 % 3` | `num` | 13 modulo 3 (= 1)
+`.` | `'foo'.'bar'` | `string` | 'foo' and 'bar' (= 'foobar')
+`+` | `3 + 5` | `num` | 3 plus 5 (= 8)
+`-` | `9 - 4` | `num` | 9 minus 4 (= 5)
+`<<` | `8 << 2` | `num` | Shift 8 left by 2 bits (= 32)
+`>>` | `8 >> 2` | `num` | Shift 8 right by 2 bits (= 2)
+`<` | `3 < 4` | `bool` | Is 3 less than 4 (= true)
+`>` | `3 > 4` | `bool` | Is 3 greater than 4 (= false)
+`<=` | `5 <= 5` | `bool` | Is 5 less than or equal to 5 (= true)
+`>=` | `8 >= 4` | `bool` | Is 8 greater than or equal to 4 (= true)
+`==` | `"bar" == "bar"` | `bool` | Is "bar" equal to "bar" (= true)
+`!=` | `"bar" != "bar"` | `bool` | Is "bar" not equal to "bar" (= false)
+`&&` | `false && true` | `bool` | AND: Are both inputs true (= false)
+`||` | `false || true` | `bool` | OR: Are any of the inputs true (= true)
+
+## Unary Operators
+These only require 1 input
+
+There are only 2 unary operators currently:
+
+```C#
+num foo = 3;
+
+num bar = -foo; // Makes foo negative (= -3)
+
+bool bam = false;
+
+bool baz = !bam; // NOT: Inverts bam (= true)
+```
