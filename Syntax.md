@@ -495,3 +495,52 @@ if (foo == 4) {
     bar = 1;
 }
 ```
+
+## Switch statements
+Switch statements follow the usual syntax of
+other languages.
+
+Please be aware that 'falling through' is
+not supported and therefore each non-empty
+case must end with either a return or break
+statement.
+
+**Example:**
+```C#
+var foo = 3;
+var bar;
+
+switch(foo) { // We will compare foo
+    case 1:
+        // This code runs when foo = 1
+        
+        bar = 1;
+
+        break; // Indicates the end of this block
+    case "bizz":
+        // This code runs when foo = "bizz"
+
+        bar = 2;
+
+        break;
+    case 3:
+    case 4:
+        // This code runs when foo = 3 or foo = 4
+        
+        bar = 3;
+
+        break;
+    default:
+        // The default statement is optional
+        // It is ran if none of the above
+        // criteria are met
+
+        bar = 4;
+
+        break;
+}
+```
+
+As an alternative to `break` statements, you can
+also use `return` statements, which are covered
+later in this document.
