@@ -184,6 +184,40 @@ num | `0`
 string | `""`
 bool | `false`
 
+## Variable Usage
+You can get the value of variables simply by typing
+the name of the variable:
+
+```C#
+// ...
+
+var foo = 10;
+var bar = foo + 2; // = 12
+
+// ...
+```
+
+For assignments, there are more options available:
+
+```C#
+// ...
+
+num foo = 12;
+
+foo = 4; // Sets foo to 4
+foo++; // Increments foo by 1 (= 5)
+foo--; // Decrements foo by -1 (= 4)
+foo += 2; // Adds 2 to foo (= 6)
+foo -= 4; // Substracts 4 from foo (= 2)
+
+string bar = "bam";
+
+bar = "hello" // Sets bar to hello
+bar .= " world" // Concatenates " world" to bar (= "hello world")
+
+// ...
+```
+
 # Arrays
 Arrays are lists of a fixed length.
 
