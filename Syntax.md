@@ -383,7 +383,7 @@ Operator | Example | Output type | Description
 `==` | `"bar" == "bar"` | `bool` | Is "bar" equal to "bar" (= true)
 `!=` | `"bar" != "bar"` | `bool` | Is "bar" not equal to "bar" (= false)
 `&&` | `false && true` | `bool` | AND: Are both inputs true (= false)
-`||` | `false || true` | `bool` | OR: Are any of the inputs true (= true)
+`\|\|` | `false \|\| true` | `bool` | OR: Are any of the inputs true (= true)
 
 ## Unary Operators
 These only require 1 input
