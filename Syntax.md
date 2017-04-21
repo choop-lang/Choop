@@ -836,6 +836,27 @@ value was provided for the third parameter but not the second:
 
 **Notice:** Arrays or lists cannot be used as parameters.
 
+You can also get the compiler to automatically inline
+voids by using the `inline` tag:
+
+```C#
+var foo = 2;
+
+inline void IncrementFoo() {
+    foo++;
+}
+
+event Clicked() {
+    IncrementFoo();
+
+    // This will be replaced with
+    // foo++;
+}
+```
+
+**Notice:** If a void is recursive (it calls itself), the compiler
+will not allow it to be inlined.
+
 # Functions
 Functions are like voids except they can return
 values. This is useful for arithmetic.
@@ -878,3 +899,5 @@ event KeyPressed<"space">() {
     foo = DecreaseToZero(foo);
 }
 ```
+
+**Notice:** Functions do not currently allow inlining.
