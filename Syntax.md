@@ -484,7 +484,7 @@ none at all.
 The `else` block is also optional, but it must go at
 the end if you do use it.
 
-The simplest type of if statement is just:
+Therefore, an if statement can simply be just this:
 ```C#
 var foo = 2;
 var bar;
@@ -492,8 +492,26 @@ var bar;
 if (foo == 4) {
     // This code runs when foo equals 4
 
+    foo++;
     bar = 1;
 }
+```
+
+Choop also allows single-line if statements. These can
+be used when there are no 'else' parts and only one line
+of code is run:
+
+```C#
+var foo = 6;
+
+if (foo > 0)
+    foo--;
+
+/* Equivalent to this:
+if (foo > 0) {
+    foo--;
+}
+*/
 ```
 
 ## Switch statements
