@@ -664,3 +664,31 @@ for (var i = 0; i < 10; i++) {
 In the above example, i starts off as being 0 in
 the first loop, and then gets incremented each
 loop, until i = 10, at which point the loop stops.
+
+## Foreach loops
+Foreach loops are used when you want to read each
+item in a list, but do not need the index of the
+item or need to set the values.
+
+**Example:**
+```C#
+array[3] values = {5, 7, 3};
+var total = 0;
+
+foreach (var item in values) {
+    total += item;
+}
+```
+
+**Note:** The loop variable is read-only.
+Therfore, the following example will not compile:
+
+```C#
+array[3] values = {5, 3, 7};
+
+foreach (var item in values) {
+    item = 0; // Error: 'item' is readonly
+}
+```
+
+Instead, a for loop should be used for that situation.
