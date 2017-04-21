@@ -544,3 +544,37 @@ switch(foo) { // We will compare foo
 As an alternative to `break` statements, you can
 also use `return` statements, which are covered
 later in this document.
+
+# Repetion
+There are 5 kinds of loop in Choop, and each have
+their own uses.
+
+## Repeat Loops
+These are the simplest kind of loop. They run
+code for a set number of repeats:
+
+```C#
+var foo = 0;
+var bar = 6;
+
+repeat (bar) {
+    // This code will run 6 times
+    foo++;
+}
+```
+
+If a constant term (eg. 6) is used inside the brackets,
+you can also add the inline modifier. This causes the
+compiler to replace the loop with the code physically
+repeated for the specified number of times. This
+avoids any loop delay (particularly when outside of
+atomic mode).
+
+```C#
+var foo = 0;
+
+inline repeat (6) {
+    // This code will run 6 times
+    foo++;
+}
+```
