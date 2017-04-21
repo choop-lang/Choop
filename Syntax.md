@@ -599,3 +599,68 @@ forever {
     foo++;
 }
 ```
+
+## While Loops
+These loops will run until a given condition becomes
+no longer true.
+
+```C#
+var foo = 6;
+
+while (foo > 1) {
+    // This code will be repeated until foo
+    // is less than or equal to 1
+
+    foo--;
+}
+```
+
+Note that a while loop like this is equivalent to a
+forever loop:
+
+```C#
+var foo = 0;
+
+while (true) {
+    // This code will run forever
+
+    foo++;
+}
+```
+
+Wheras, the code in this loop will never be ran:
+```C#
+var foo = 0;
+
+while (false) {
+    // This code will never be run
+
+    foo++;
+}
+```
+
+## For Loops
+For loops are a special type of while loop. They
+have a scoped counter variable which is either
+increased or decreased each loop until a certain
+value is reached.
+
+The general syntax for them is:
+```C#
+for (declaration; stopping condition; step) {
+    // Code to repeat
+}
+```
+
+An actual usage might look like this:
+```C#
+array[10] items;
+
+for (var i = 0; i < 10; i++) {
+    items[i] = 10;
+}
+```
+
+In the above example, i starts off as being 0 in
+the first loop, and then gets incremented each
+loop, until i = 10, at which point the loop stops.
