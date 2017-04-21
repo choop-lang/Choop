@@ -578,3 +578,19 @@ inline repeat (6) {
     foo++;
 }
 ```
+
+## Forever Loops
+These are loops that, once started, will run until
+the script is externally stopped - eg. by stopping
+the entire project.
+
+**Syntax:**
+```C#
+var foo = 0;
+
+forever {
+    // This code will run until the project is stopped
+
+    foo++;
+}
+```
