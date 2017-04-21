@@ -549,8 +549,13 @@ later in this document.
 There are 5 kinds of loop in Choop, and each have
 their own uses.
 
+Outside of atomic scripts, loops that cause screen
+refreshes will be rate limited to 30 FPS. Inline
+loops, or loops inside atomic scripts, run as fast as
+possible however.
+
 ## Repeat Loops
-These are the simplest kind of loop. They run
+These are the most common type of loop. They run
 code for a set number of repeats:
 
 ```C#
