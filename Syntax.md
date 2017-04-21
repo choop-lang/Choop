@@ -1,5 +1,5 @@
 # Foreword
-In this document, I'll assume that you are already familiar with programming
+In this document, I'll assume that you are already reasonably familiar with programming
 lanugages beyond Scratch.
 
 In the Choop syntax, I've tried to keep it similar as possible to existing

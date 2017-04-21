@@ -24,7 +24,7 @@ You can see the documentation for the syntax of
 Choop at [Syntax.md](Syntax.md).
 Alternatively, you can view the
 [test script](Choop.Demo/test.ch) or the
-[Antrl grammar file](Choop.Compiler/Choop.g4).
+[Antlr grammar file](Choop.Compiler/Choop.g4).
 
 ## Under development
 Currently, significant functionality is missing from
