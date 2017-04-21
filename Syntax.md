@@ -680,6 +680,16 @@ foreach (var item in values) {
 }
 ```
 
+You can also use a type specifier instead of var:
+```C#
+num[3] values = {5, 7, 3};
+num total = 0;
+
+foreach (num item in values) {
+    total += item;
+}
+```
+
 **Note:** The loop variable is read-only.
 Therfore, the following example will not compile:
 

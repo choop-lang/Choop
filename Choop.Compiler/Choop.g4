@@ -403,7 +403,9 @@ for_loop
 foreach_loop
     : Foreach_Tag
       Bracket_Open
-      Decl_Var
+      ( Decl_Var
+      | type_specifier
+      )
       Identifier
       In_Tag
       Identifier

@@ -168,6 +168,10 @@ sprite MySprite {
 	event MessageRecieved<"message1">() {
 		string[4] strArray;
 		bool[3] boolArray = {true, false, true};
+
+		foreach (bool item in boolArray) {
+			
+		}
 	}
 
 	event Cloned() {
