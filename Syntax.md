@@ -841,7 +841,7 @@ Functions are like voids except they can return
 values. This is useful for arithmetic.
 
 To return values from the function, use the return
-statement :
+statement:
 ```C#
 function MyFunction(SomeValue) {
     // Returns the parameter + 1
@@ -858,3 +858,23 @@ event GreenFlag() {
 }
 ```
 
+You can also specify the return type of functions, as
+demonstrated in the example below:
+
+```C#
+num DecreaseToZero(num Value) {
+    if (Value > 0)
+        return Value - 1;
+    
+    /* When Value > 0, this code won't be ran
+       However, when that isn't the case, 0 will
+       be returned */
+    return 0;
+}
+
+num foo = 7;
+
+event KeyPressed<"space">() {
+    foo = DecreaseToZero(foo);
+}
+```
