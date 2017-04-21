@@ -745,3 +745,93 @@ Cloned | - | Occurs when the sprite is cloned (Thread is run by the clone)
 TimerGreaterThan | (num) threshold | Occurs when the timer is greater than the specified value
 LoudnessGreaterThan | (num) threshold | Occurs when the microphone loudness exceeds the specified value
 VideoMotionGreaterThan | (num) threshold | Occurs when the webcam video motion over the sprite exceeds the specified value
+
+# Voids
+Voids again can be placed inside sprites or modules. They
+are custom actions that have no return value.
+
+This is the most basic syntax for defining a void:
+
+```C#
+void MyVoid() { // MyVoid is the name of this void
+    // Code to run goes here
+}
+```
+
+To call the code, you use this code:
+```C#
+MyVoid(); // Calls MyVoid
+```
+
+Voids can also have parameters. Parameters can either
+have no type or have a type.
+
+These 2 examples show parameters with and without types:
+
+```C#
+var Difference;
+
+// Without types:
+void SetDifference(first, second) {
+    Difference = first - second;
+}
+
+// With types:
+void SetDifference2(num first, num second) {
+    Difference = first - second;
+}
+
+/* Our code to call the voids has to go in an event
+   handler or another method */ 
+event GreenFlag() {
+    var Value1 = 6;
+    var Value2 = 4;
+
+    // Call the first void, with inputs 6 and 4
+    SetDifference(Value1, Value2);
+
+    num MyNum = 5;
+
+    // Call the second void, with inputs 5 and 7
+    SetDifference2(MyNum, MyNum + 2);
+}
+```
+
+Note that you can read parameters like variables, but you
+cannot set them.
+
+Choop also supports optional parameters. These have a
+default value and then don't need to be specified when
+calling the void.
+
+All the optional parameters must be placed after the
+required ones.
+
+```C#
+/* In this example, Length and Message are optional.
+   Length has a default value of 10, and Message has
+   a default of "test". */
+void Demo(Required, Length = 10, string Message = "test") {
+    // Code to run
+}
+
+event GreenFlag() {
+    // Call Demo without specifying the optional parameters:
+
+    Demo(4);
+
+    // Call demo, specifying every possible parameter:
+
+    Demo(2, 10, "foo");
+}
+```
+
+The following example will cause a compile error as a
+value was provided for the third parameter but not the second:
+
+```C#
+// Causes a compile error:
+// Demo(2, , "bazz");
+```
+
+**Notice:** Arrays or lists cannot be used as parameters.
