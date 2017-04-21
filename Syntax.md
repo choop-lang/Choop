@@ -702,3 +702,46 @@ foreach (var item in values) {
 ```
 
 Instead, a for loop should be used for that situation.
+
+# Events
+Events form all the entry points for your project.
+You can have multiple event handlers and each event
+will be ran as a separate thread.
+
+Event handlers can go in either sprites or modules.
+
+Their syntax looks like this:
+```C#
+event EventName() {
+    // Code to run goes here
+}
+```
+
+Some events may also require parameters. The syntax
+for those looks like this:
+```C#
+event EventName<ParameterValue>() {
+    // Code to run goes here
+}
+```
+
+An example for the `KeyPressed` event is shown below:
+```C#
+event KeyPressed<"space">() {
+    // This code runs when the space key is pressed
+}
+```
+
+This is a complete list of all the events supported by Choop:
+
+Event | Parameter | Description
+----- | --------- | -----------
+GreenFlag | - | Occurs when the green flag is clicked
+KeyPressed | (string) key name | Occurs when the specified key is pressed
+Clicked | - | Occurs when the sprite is clicked
+BackdropChanged | (string) backdrop name | Occurs when the backdrop is changed to the specified backdrop
+MessageRecieved | (string) message name | Occurs when the specified message is recieved
+Cloned | - | Occurs when the sprite is cloned (Thread is run by the clone)
+TimerGreaterThan | (num) threshold | Occurs when the timer is greater than the specified value
+LoudnessGreaterThan | (num) threshold | Occurs when the microphone loudness exceeds the specified value
+VideoMotionGreaterThan | (num) threshold | Occurs when the webcam video motion over the sprite exceeds the specified value
