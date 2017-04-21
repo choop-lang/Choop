@@ -835,3 +835,26 @@ value was provided for the third parameter but not the second:
 ```
 
 **Notice:** Arrays or lists cannot be used as parameters.
+
+# Functions
+Functions are like voids except they can return
+values. This is useful for arithmetic.
+
+To return values from the function, use the return
+statement :
+```C#
+function MyFunction(SomeValue) {
+    // Returns the parameter + 1
+    return SomeValue + 1;
+
+    // As return causes the function to be exited,
+    // this code will never be ran:
+    var test = 1;
+}
+
+event GreenFlag() {
+    // Usage:
+    var foo = MyFunction(3) / 2; // = 4 / 2 = 2
+}
+```
+
