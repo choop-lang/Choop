@@ -919,3 +919,6 @@ event KeyPressed<"space">() {
 ```
 
 **Notice:** Functions do not currently allow inlining.
+
+*For a list of the inbuilt methods in Choop, see
+[Inbuilt.md](Inbuilt.md)*.

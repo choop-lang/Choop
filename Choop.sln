@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68E5A2D8-C89A-4A5B-A13E-F12100F4CD91}"
 	ProjectSection(SolutionItems) = preProject
 		ExampleScript.ch = ExampleScript.ch
+		Inbuilt.md = Inbuilt.md
 		Notes.txt = Notes.txt
 		README.md = README.md
 		Syntax.md = Syntax.md
