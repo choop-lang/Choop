@@ -6,9 +6,10 @@
 - [Modules](#modules)
 - [Data Types](#data-types)
   - [Type Conversion](#type-conversion)
-- [Numeric Literals](#numeric-literals)
-- [String Literals](#string-literals)
-- [Boolean Literals](#boolean-literals)
+- [Literals](#literals)
+  - [Numeric Literals](#numeric-literals)
+  - [String Literals](#string-literals)
+  - [Boolean Literals](#boolean-literals)
 - [Constants](#constants)
 - [Variables](#variables)
   - [Variable Usage](#variable-usage)
@@ -30,9 +31,10 @@
   - [While Loops](#while-loops)
   - [For Loops](#for-loops)
   - [Foreach Loops](#foreach-loops)
-- [Events](#events)
-- [Voids](#voids)
-- [Functions](#functions)
+- [Methods](#methods)
+  - [Events](#events)
+  - [Voids](#voids)
+  - [Functions](#functions)
 - [Scope](#scope)
 
 # Foreword
@@ -156,7 +158,10 @@ Type | Description
 For information on how to convert types, please see
 [Type Conversions Using Operators](#type-conversions-using-operators).
 
-# Numeric Literals
+# Literals
+Literals are ways of expressing fixed values in statements - eg. 42
+
+## Numeric Literals
 Choop allows 3 different ways to specify numbers:
 
 **Standard:**
@@ -168,7 +173,7 @@ Choop allows 3 different ways to specify numbers:
 **Hexadecimal:**
 `Ox3E`, `-0xffa4`, `0X30`
 
-# String Literals
+## String Literals
 Strings can either be enclosed in double or single quotes:
 
 eg. `"hello world"` or `'hello world'`
@@ -187,7 +192,7 @@ Escape code | Character
 
 Both single and double quoted strings use the same escape codes.
 
-# Boolean Literals
+## Boolean Literals
 Boolean values are as simple as it gets:
 - `true`
 - `false`
@@ -758,7 +763,11 @@ foreach (var item in values) {
 
 Instead, a for loop should be used for that situation.
 
-# Events
+# Methods
+Except for variable declarations, all your code must be placed inside
+methods. This is so that the compiler knows when to run them.
+
+## Events
 Events form all the entry points for your project.
 You can have multiple event handlers and each event
 will be ran as a separate thread.
@@ -801,7 +810,7 @@ TimerGreaterThan | (num) threshold | Occurs when the timer is greater than the s
 LoudnessGreaterThan | (num) threshold | Occurs when the microphone loudness exceeds the specified value
 VideoMotionGreaterThan | (num) threshold | Occurs when the webcam video motion over the sprite exceeds the specified value
 
-# Voids
+## Voids
 Voids again can be placed inside sprites or modules. They
 are custom actions that have no return value.
 
@@ -912,7 +921,7 @@ event Clicked() {
 **Notice:** If a void is recursive (it calls itself), the compiler
 will not allow it to be inlined.
 
-# Functions
+## Functions
 Functions are like voids except they can return
 values. This is useful for arithmetic.
 
