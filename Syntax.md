@@ -1015,3 +1015,6 @@ sprite Sprite1 {
     }
 }
 ```
+
+**Notice:** Local or scoped lists are currently not allowed. Please
+use arrays or global lists instead.
