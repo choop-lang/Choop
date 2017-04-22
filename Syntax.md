@@ -922,3 +922,50 @@ event KeyPressed<"space">() {
 
 *For a list of the inbuilt methods in Choop, see
 [Inbuilt.md](Inbuilt.md)*.
+
+# Scope
+Scope is an important concept in Choop. It applies to
+variables, arrays, lists and constants.
+
+Depending on where a variable is declared, it will have a
+different scope. The scope of a variable means the where
+in the code it can be accessed.
+
+This is a demonstration of the various scopes in Choop:
+
+```C#
+// SUPERGLOBALS:
+// These can be accessed by any sprite or module
+
+var SuperGlobal;
+
+sprite Sprite1 {
+    // GLOBALS:
+    // These can be accessed by any event, void or function in the sprite / module
+    // Note: If a module has been imported, any globals in that module can also
+    // be accessed by the sprite
+    
+    var Global;
+
+    event GreenFlag() {
+        // LOCALS:
+        // These can only be accessed by this method
+        // Local variables in Choop and thread and recurion safe
+
+        var Local;
+
+        {
+            // SCOPED VARS:
+            // These can only be accessed within this code block
+
+            var Scoped;
+        }
+
+        // Note that the "Scoped" variable can't be accessed
+        // here - this is outside it's scope.
+        // Therefore, the following line will give a compile error:
+
+        // Scoped = 10;
+    }
+}
+```
