@@ -1,3 +1,40 @@
+# Contents
+- [Foreword](#foreword])
+- [Comments](#comments)
+- [Sprites](#sprites)
+  - [Sprite Attributes](#sprite-attributes)
+- [Modules](#modules)
+- [Data Types](#data-types)
+  - [Type Conversion](#type-conversion)
+- [Numeric Literals](#numeric-literals)
+- [String Literals](#string-literals)
+- [Boolean Literals](#boolean-literals)
+- [Constants](#constants)
+- [Variables](#variables)
+  - [Variable Usage](#variable-usage)
+- [Arrays](#arrays)
+  - [Array Usage](#array-usage)
+- [Lists](#lists)
+  - [List Usage](#list-usage)
+    - [Adding and Removing Items](#adding-and-removing-items)
+    - [Getting the List Length](#getting-the-list-length)
+- [Operators](#operators)
+  - [Unary Operators](#unary-operators)
+  - [Type Conversion Using Operators](#type-conversion-using-operators)
+- [Selection](#selection)
+  - [If Statements](#if-statements)
+  - [Switch Statements](#switch-statements)
+- [Repetion](#repetition)
+  - [Repeat Loops](#repeat-loops)
+  - [Forever Loops](#forever-loops)
+  - [While Loops](#while-loops)
+  - [For Loops](#for-loops)
+  - [Foreach Loops](#foreach-loops)
+- [Events](#events)
+- [Voids](#voids)
+- [Functions](#functions)
+- [Scope](#scope)
+
 # Foreword
 In this document, I'll assume that you are already reasonably familiar with programming
 lanugages beyond Scratch.
@@ -683,7 +720,7 @@ In the above example, i starts off as being 0 in
 the first loop, and then gets incremented each
 loop, until i = 10, at which point the loop stops.
 
-## Foreach loops
+## Foreach Loops
 Foreach loops are used when you want to read each
 item in a list, but do not need the index of the
 item or need to set the values.
