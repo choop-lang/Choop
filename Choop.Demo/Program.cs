@@ -16,24 +16,14 @@ namespace Choop.Demo
         {
             using (StreamReader reader = new StreamReader("test.ch"))
             {
-                string code = reader.ReadToEnd();
+                ChoopCompiler compiler = new ChoopCompiler();
 
-                Console.WriteLine(code);
+                compiler.Compile(reader.BaseStream);
 
-                AntlrInputStream input = new AntlrInputStream(code);
-
-                ChoopLexer lexer = new ChoopLexer(input);
-
-                CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-                ChoopParser parser = new ChoopParser(tokens);
-
-                ChoopParser.RootContext root = parser.root();
-
-                Console.WriteLine(root.ToStringTree(parser));
-
-                Console.ReadLine();
+                Console.WriteLine("Compilation finished");
             }
+
+            Console.ReadLine();
         }
     }
 }
