@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +48,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlockModel\BlockDef.cs" />
+    <Compile Include="BlockModel\Comment.cs" />
+    <Compile Include="BlockModel\Sound.cs" />
+    <Compile Include="BlockModel\Costume.cs" />
+    <Compile Include="BlockModel\EventHandler.cs" />
+    <Compile Include="BlockModel\Block.cs" />
+    <Compile Include="BlockModel\IComponent.cs" />
+    <Compile Include="BlockModel\IResource.cs" />
+    <Compile Include="BlockModel\IMonitor.cs" />
+    <Compile Include="BlockModel\IScript.cs" />
+    <Compile Include="BlockModel\ISprite.cs" />
+    <Compile Include="BlockModel\IVariable.cs" />
+    <Compile Include="BlockModel\MonitorCmd.cs" />
+    <Compile Include="BlockModel\MonitorReadoutMode.cs" />
+    <Compile Include="BlockModel\ProjectInfo.cs" />
+    <Compile Include="BlockModel\RotationType.cs" />
+    <Compile Include="BlockModel\Sprite.cs" />
+    <Compile Include="BlockModel\Stage.cs" />
+    <Compile Include="BlockModel\StageMonitor.cs" />
+    <Compile Include="BlockModel\List.cs" />
+    <Compile Include="BlockModel\Variable.cs" />
     <Compile Include="Choop.g4.lexer.cs">
       <DependentUpon>Choop.g4</DependentUpon>
     </Compile>
