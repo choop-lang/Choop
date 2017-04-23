@@ -14,45 +14,42 @@ root
     ;
 
 sprite
-    : attribute*
+    : attribute?
       Sprite_Tag
       Identifier
-      sprite_body
-    ;
-
-module
-    : Module_Tag
-      Identifier
-      sprite_body
+      Brace_Open
+      using_stmt*
+      ( global_declaration
+      | void_declaration
+      | function_declaration
+      | event_handler
+      )*
+      Brace_Close
     ;
 
 attribute
     : Square_Open
-      ( ( Attr_Resources
-        | Attr_Location
-        | Attr_Size
-        | Attr_Rotation
-        | Attr_Visible
-        | Attr_Costume
-        | Attr_RotStyle
-        | Attr_Draggable
-        )
+      ( Attr_Meta
         Bracket_Open
         ( constant
           Separator
         )?
         constant
         Bracket_Close
-      | Attr_Import
-        Bracket_Open
-        Identifier
-        Bracket_Close
       )
       Square_Close
     ;
 
-sprite_body
-    : Brace_Open
+using_stmt
+    : Using_Tag
+      Identifier
+      Terminator
+    ;
+
+module
+    : Module_Tag
+      Identifier
+      Brace_Open
       ( global_declaration
       | void_declaration
       | function_declaration
@@ -531,15 +528,9 @@ Type_Bool       : 'bool';
 Sprite_Tag      : 'sprite';
 Module_Tag      : 'module';
 
-Attr_Resources  : 'ResourcesFile';
-Attr_Import     : 'Import';
-Attr_Location   : 'Location';
-Attr_Size       : 'Size';
-Attr_Rotation   : 'Rotation';
-Attr_Visible    : 'Visible';
-Attr_Costume    : 'Costume';
-Attr_RotStyle   : 'RotationStyle';
-Attr_Draggable  : 'Draggable';
+Attr_Meta       : 'MetaFile';
+
+Using_Tag       : '#using';
 
 Void_Tag        : 'void';
 Function_Tag    : 'function';

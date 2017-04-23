@@ -12,16 +12,10 @@ const Pi = 3.141593;
 array[3] globalArray = {1, "test", 3};
 list[] globalList;
 
-[ResourcesFile("MySprite.res")]
-[Import(MyModule)]
-[Location(10, -10)]
-[Size(100)]
-[Rotation(90)]
-[Visible(true)]
-[Costume(1)]
-[RotationStyle("normal")]
-[Draggable(false)]
+[MetaFile("MySprite.sm")]
 sprite MySprite {
+	#using MyModule;
+
 	const num NumConst = -3.1e-2; // Inline comment
 	const string StringConst = "test";
 

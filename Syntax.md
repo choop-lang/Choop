@@ -2,7 +2,7 @@
 - [Foreword](#foreword])
 - [Comments](#comments)
 - [Sprites](#sprites)
-  - [Sprite Attributes](#sprite-attributes)
+  - [Metadata Files](#meta-files)
 - [Modules](#modules)
 - [Data Types](#data-types)
   - [Type Conversion](#type-conversion)
@@ -69,50 +69,38 @@ var num; // Comments can also be inline, like so
 To declare a sprite, you use the following syntax:
 
 ```C#
-[ResourcesFile("SpriteName.res")]
-sprite SpriteName {
+// Declare a sprite called MySprite
+sprite MySprite {
     // Sprite code goes in here
 }
 ```
 
-Where:
-- **SpriteName** is the name of your sprite
-- **SpriteName.res** is the file that specifies all the costumes and sounds
-  used by the sprite
+## Metadata Files
+Each sprite must have an associated sprite metadata (*.sm) file.
+These contain information about the sprite, including:
+- Costumes
+- Sounds
+- Properties
 
-## Sprite Attributes
-In the example above, ResourcesFile was an attribute of the sprite.
-There are 8 other attributes you can use, and they are all optional:
+By default, the compiler will look for a resources file with the
+same name as the sprite, so for a sprite called Renderer it
+would look for the file "Renderer.sm".
 
-Attribute | Parameters | Default | Meaning
---------- | ---------- | ------- | -------
-Import | Module name | N/A | Import the specified module code into this sprite
-Location | X, Y | `0, 0` | The intial location of the sprite
-Size | Size | `100` | The initial size of the sprite
-Rotation | Angle (0 - 360) | `90` | The initial direction of the sprite
-Visible | Visible | `true` | Whether the sprite is initially visible
-Costume | Costume ID / Name | `1` | The initial costume of the sprite
-RotationStyle | `"normal"` \| `"leftRight"` \| `"none"` | `"normal"` | The initial rotation style of the sprite
-Draggable | Draggable | `false` | Whether the sprite is draggable in the player
-
-**Note:** It is possible to have multiple import attributes to import more
-than 1 module.
+You can however force the compiler to use a certain file for
+the sprite metadata. This is done using the `MetaFile`
+attribute:
 
 **Examples:**
 ```C#
-[ResourcesFile("SpriteName.res")]
-[Import(MyModule)]
-[Location(10, -10)]
-[Size(100)]
-[Rotation(90)]
-[Visible(true)]
-[Costume(1)]
-[RotationStyle("normal")]
-[Draggable(false)]
-sprite SpriteName {
+[MetaFile("Metadata.sm")] // Metadata.sm is the path to the metadata file
+sprite MySprite {
     // Sprite code goes in here
 }
 ```
+
+The file path can be relative or absolute, although it makes
+more sense to make it a relative path in case you change the
+folder location.
 
 # Modules
 One of the key principals of Choop is modular design.
@@ -123,20 +111,31 @@ and can be used to provide common functionality across sprites.
 The syntax to declare modules looks like this:
 
 ```C#
-module ModuleName {
+// Declare a module called MyModule
+module MyModule {
     // Module code goes in here
 }
 ```
 
-Where:
-- **ModuleName** is the name of your module
-
 Note that the code inside as a module is the same as in a sprite - variables,
 events and methods are all supported.
 
-To import a module into a sprite, use the `Import` attribute on the sprite, as
-shown above. Please be aware however that modules themselves cannot import
-other modules.
+To import a module into a sprite, use the '#using' directive
+on the first line of the sprite body:
+
+```C#
+sprite MySprite {
+    #using MyModule; // Imports the MyModule code
+
+    // Rest of sprite code
+}
+```
+
+To import multiple modules, simply add another `#using`
+directive with the name of the other module.
+
+Please be aware however that modules themselves **cannot import
+other modules**.
 
 Common use cases for modules might include:
 - String manipulation functions
