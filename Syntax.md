@@ -2,7 +2,7 @@
 - [Foreword](#foreword])
 - [Comments](#comments)
 - [Sprites](#sprites)
-  - [Metadata Files](#meta-files)
+  - [Metadata Files](#metadata-files)
 - [Modules](#modules)
 - [Data Types](#data-types)
   - [Type Conversion](#type-conversion)
