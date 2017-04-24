@@ -59,7 +59,7 @@ module MyModule {
 				return true;
 			case "No":
 				return false;
-			case default:
+			default:
 				return false;
 		}
 	}
