@@ -7,7 +7,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents the stage.
     /// </summary>
-    class Stage : ISprite
+    public class Stage : ISprite
     {
         #region Properties
         /// <summary>

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a resource.
     /// </summary>
-    interface IResource
+    public interface IResource
     {
         #region Properties
         /// <summary>

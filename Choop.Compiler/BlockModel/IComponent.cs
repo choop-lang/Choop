@@ -5,7 +5,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a component in the workspace.
     /// </summary>
-    interface IComponent
+    public interface IComponent
     {
         #region Properties
         /// <summary>

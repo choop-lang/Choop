@@ -7,7 +7,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represent a script that handles an event.
     /// </summary>
-    class EventHandler : IScript, IComponent
+    public class EventHandler : IScript, IComponent
     {
         #region Properties
         /// <summary>

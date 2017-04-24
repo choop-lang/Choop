@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a variable or list.
     /// </summary>
-    interface IVariable
+    public interface IVariable
     {
         #region Properties
         /// <summary>

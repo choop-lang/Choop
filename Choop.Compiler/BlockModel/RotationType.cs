@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies different modes of rotation for a sprite.
     /// </summary>
-    enum RotationType
+    public enum RotationType
     {
         /// <summary>
         /// Indicates standard rotation.

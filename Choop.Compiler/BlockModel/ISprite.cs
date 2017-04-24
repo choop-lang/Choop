@@ -5,7 +5,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents the base of sprite.
     /// </summary>
-    interface ISprite
+    public interface ISprite
     {
         #region Properties
         /// <summary>

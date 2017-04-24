@@ -5,7 +5,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a comment.
     /// </summary>
-    class Comment : IComponent
+    public class Comment : IComponent
     {
         #region Properties
         /// <summary>

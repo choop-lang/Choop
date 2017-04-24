@@ -5,7 +5,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a variable monitor.
     /// </summary>
-    class StageMonitor : IMonitor, IComponent
+    public class StageMonitor : IMonitor, IComponent
     {
         #region Properties
         /// <summary>

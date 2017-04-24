@@ -7,7 +7,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a sprite.
     /// </summary>
-    class Sprite : ISprite, IMonitor, IComponent
+    public class Sprite : ISprite, IMonitor, IComponent
     {
         #region Properties
         /// <summary>

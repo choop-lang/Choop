@@ -6,7 +6,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a single block.
     /// </summary>
-    class Block
+    public class Block
     {
         #region Properties
         /// <summary>

@@ -8,7 +8,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a custom block definition.
     /// </summary>
-    class BlockDef : IScript, IComponent
+    public class BlockDef : IScript, IComponent
     {
         #region Properties
         /// <summary>

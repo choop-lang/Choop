@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies the different types of <see cref="StageMonitor"/> objects. 
     /// </summary>
-    enum MonitorCmd
+    public enum MonitorCmd
     {
         /// <summary>
         /// Indicates the answer monitor.

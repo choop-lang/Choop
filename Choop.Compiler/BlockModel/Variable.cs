@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a variable.
     /// </summary>
-    class Variable : IVariable
+    public class Variable : IVariable
     {
         #region Properties
         /// <summary>

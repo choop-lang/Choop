@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies different readout modes for a <see cref="StageMonitor"/> .
     /// </summary>
-    enum MonitorReadoutMode
+    public enum MonitorReadoutMode
     {
         /// <summary>
         /// Indicates the normal readout.

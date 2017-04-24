@@ -7,7 +7,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a list and it's monitor.
     /// </summary>
-    class List : IVariable, IMonitor, IComponent
+    public class List : IVariable, IMonitor, IComponent
     {
         #region Properties
         /// <summary>

@@ -6,7 +6,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a script.
     /// </summary>
-    interface IScript
+    public interface IScript
     {
         #region Properties
         /// <summary>

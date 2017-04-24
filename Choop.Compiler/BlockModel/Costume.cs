@@ -5,7 +5,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a costume.
     /// </summary>
-    class Costume : IResource
+    public class Costume : IResource
     {
         #region Properties
         /// <summary>

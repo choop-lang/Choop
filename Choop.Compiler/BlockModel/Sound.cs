@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a sound.
     /// </summary>
-    class Sound : IResource
+    public class Sound : IResource
     {
         #region Properties
         /// <summary>

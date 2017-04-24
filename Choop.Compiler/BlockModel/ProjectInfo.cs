@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the info for a Scratch project.
     /// </summary>
-    class ProjectInfo
+    public class ProjectInfo
     {
         #region Properties
         /// <summary>
