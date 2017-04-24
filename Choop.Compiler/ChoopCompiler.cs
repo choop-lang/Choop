@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 
 namespace Choop.Compiler
@@ -11,7 +12,23 @@ namespace Choop.Compiler
     public class ChoopCompiler
     {
         #region Properties
+        private ICollection<CompilerError> compileErrors = null;
 
+        /// <summary>
+        /// Gets the collection of compiler errors that occured whilst compiling the file. 
+        /// </summary>
+        public ICollection<CompilerError> CompileErrors
+        {
+            get { return compileErrors; }
+        }
+
+        /// <summary>
+        /// Gets whether any compiler errors occured.
+        /// </summary>
+        public bool HasErrors
+        {
+            get { return CompileErrors.Count > 0; }
+        }
         #endregion
         #region Constructor
         /// <summary>
@@ -55,9 +72,12 @@ namespace Choop.Compiler
             // Create the parser
             ChoopParser parser = new ChoopParser(tokens);
 
+            // Clear compile errors
+            compileErrors = new Collection<CompilerError>();
+
             // Set error listener
             parser.RemoveErrorListeners();
-            parser.AddErrorListener(new ChoopErrorListener());
+            parser.AddErrorListener(new ChoopErrorListener(compileErrors));
 
             // Gets the parse tree
             ChoopParser.RootContext root = parser.root();

@@ -78,6 +78,7 @@
     <Compile Include="ChoopCompiler.cs" />
     <Compile Include="ChoopErrorListener.cs" />
     <Compile Include="ChoopListener.cs" />
+    <Compile Include="CompilerError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Antlr4.Runtime;
 
@@ -10,6 +9,19 @@ namespace Choop.Compiler
     /// </summary>
     class ChoopErrorListener : BaseErrorListener
     {
+        #region Fields
+        private ICollection<CompilerError> ErrorCollection;
+        #endregion
+        #region Constructor
+        /// <summary>
+        /// Creates a new instance of the <see cref="ChoopErrorListener"/> class. 
+        /// </summary>
+        /// <param name="errorCollection">The collection to store add compiler errors to.</param>
+        public ChoopErrorListener(ICollection<CompilerError> errorCollection)
+        {
+            ErrorCollection = errorCollection;
+        }
+        #endregion
         #region Methods
         /// <summary>
         /// Notifies that there has been a syntax error.
@@ -24,21 +36,14 @@ namespace Choop.Compiler
         {
             base.SyntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
 
+            // Get node hierarchy
             IList<string> stack = ((ChoopParser)recognizer).GetRuleInvocationStack();
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Syntax error:");
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine($"Stack: [{string.Join(" ", stack.Reverse())}]");
-            Console.WriteLine($"Line: {line}:{charPositionInLine} at {offendingSymbol.ToString()}: {msg}");
-        }
-        #endregion
-        #region Constructor
-        /// <summary>
-        /// Creates a new instance of the <see cref="ChoopErrorListener"/> class. 
-        /// </summary>
-        public ChoopErrorListener()
-        {
 
+            // Get compiler error message
+            string message = $"Stack: [{string.Join(" ", stack.Reverse())}]\r\nLine {line}:{charPositionInLine} at {offendingSymbol.ToString()}: {msg}";
+
+            // Add error
+            ErrorCollection.Add(new CompilerError(message, line, charPositionInLine));
         }
         #endregion
     }

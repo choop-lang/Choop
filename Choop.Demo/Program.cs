@@ -24,9 +24,23 @@ namespace Choop.Demo
                 // Compile code
                 compiler.Compile(reader.BaseStream);
 
-                // Compilation finished
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Compilation finished");
+                // Check if compilation was successful
+                if (compiler.HasErrors)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Could not compile file:");
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    foreach (CompilerError error in compiler.CompileErrors)
+                    {
+                        Console.WriteLine(error.Message);
+                    }
+                }
+                else
+                {
+                    // Compilation finished
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Successfully compiled!");
+                }
             }
 
             // Keep console open until dismissed by user
