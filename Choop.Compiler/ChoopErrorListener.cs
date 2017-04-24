@@ -40,7 +40,7 @@ namespace Choop.Compiler
             IList<string> stack = ((ChoopParser)recognizer).GetRuleInvocationStack();
 
             // Get compiler error message
-            string message = $"Stack: [{string.Join(" ", stack.Reverse())}]\r\nLine {line}:{charPositionInLine} at {offendingSymbol.ToString()}: {msg}";
+            string message = $"Line {line}:{charPositionInLine} at {offendingSymbol.ToString()}: {msg},\r\n\tStack: {string.Join(" ", stack.Reverse())}";
 
             // Add error
             ErrorCollection.Add(new CompilerError(message, line, charPositionInLine));

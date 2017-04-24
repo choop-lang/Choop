@@ -3,5 +3,7 @@
 
 	void (num Index) {
 		// Code
+
+		int InvalidType = 10;
 	}
 }
