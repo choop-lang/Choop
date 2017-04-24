@@ -76,6 +76,7 @@
       <DependentUpon>Choop.g4</DependentUpon>
     </Compile>
     <Compile Include="ChoopCompiler.cs" />
+    <Compile Include="ChoopErrorListener.cs" />
     <Compile Include="ChoopListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

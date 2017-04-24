@@ -59,6 +59,9 @@
     <None Include="test.ch">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="testerror.ch">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Choop.Compiler\Choop.Compiler.csproj">

@@ -14,12 +14,15 @@ namespace Choop.Demo
     {
         static void Main(string[] args)
         {
-            using (StreamReader reader = new StreamReader("test.ch"))
+            string filepath = "testerror.ch";
+
+            using (StreamReader reader = new StreamReader(filepath))
             {
                 ChoopCompiler compiler = new ChoopCompiler();
 
                 compiler.Compile(reader.BaseStream);
 
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Compilation finished");
             }
 

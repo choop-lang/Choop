@@ -55,6 +55,10 @@ namespace Choop.Compiler
             // Create the parser
             ChoopParser parser = new ChoopParser(tokens);
 
+            // Set error listener
+            parser.RemoveErrorListeners();
+            parser.AddErrorListener(new ChoopErrorListener());
+
             // Gets the parse tree
             ChoopParser.RootContext root = parser.root();
 
