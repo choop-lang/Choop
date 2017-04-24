@@ -14,7 +14,7 @@ list[] globalList;
 
 [MetaFile("MySprite.sm")]
 sprite MySprite {
-	#using MyModule;
+	using MyModule;
 
 	const num NumConst = -3.1e-2; // Inline comment
 	const string StringConst = "test";

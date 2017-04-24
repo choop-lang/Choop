@@ -120,18 +120,18 @@ module MyModule {
 Note that the code inside as a module is the same as in a sprite - variables,
 events and methods are all supported.
 
-To import a module into a sprite, use the '#using' directive
+To import a module into a sprite, use the `using` directive
 on the first line of the sprite body:
 
 ```C#
 sprite MySprite {
-    #using MyModule; // Imports the MyModule code
+    using MyModule; // Imports the MyModule code
 
     // Rest of sprite code
 }
 ```
 
-To import multiple modules, simply add another `#using`
+To import multiple modules, simply add another `using`
 directive with the name of the other module.
 
 Please be aware however that modules themselves **cannot import

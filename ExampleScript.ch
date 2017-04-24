@@ -6,9 +6,10 @@ const MyConst = 12;
 
 var MyVar = 10; // Inline comment
 
-[ResourcesFile("mySprite.res")]
-[Import(myModule)]
+[MetaFile("mySprite.sm")]
 sprite Sprite1 {
+	using MyModule;
+
 	event GreenFlag() {
 		MyVoid(10, 20);
 	}

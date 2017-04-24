@@ -530,7 +530,7 @@ Module_Tag      : 'module';
 
 Attr_Meta       : 'MetaFile';
 
-Using_Tag       : '#using';
+Using_Tag       : 'using';
 
 Void_Tag        : 'void';
 Function_Tag    : 'function';
