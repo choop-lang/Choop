@@ -1,31 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
 using Choop.Compiler;
 
 namespace Choop.Demo
 {
     class Program
     {
+        /// <summary>
+        /// The entry point for the program.
+        /// </summary>
+        /// <param name="args">The arguments supplied to the program.</param>
         static void Main(string[] args)
         {
+            // The path of the file to compile
             string filepath = "testerror.ch";
 
+            // Open file
             using (StreamReader reader = new StreamReader(filepath))
             {
+                // Create compiler instance
                 ChoopCompiler compiler = new ChoopCompiler();
 
+                // Compile code
                 compiler.Compile(reader.BaseStream);
 
+                // Compilation finished
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Compilation finished");
             }
 
+            // Keep console open until dismissed by user
             Console.ReadLine();
         }
     }
