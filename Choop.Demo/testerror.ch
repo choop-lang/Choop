@@ -13,4 +13,8 @@
 				break
 		}
 	}
+
+	Test(num number) {
+		// Code
+	}
 }

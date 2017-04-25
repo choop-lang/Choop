@@ -74,7 +74,7 @@ namespace Choop.Compiler
 
             // Create the parser
             ChoopParser parser = new ChoopParser(tokens, compileErrors);
-
+            
             // Gets the parse tree
             ChoopParser.RootContext root = parser.root();
 
