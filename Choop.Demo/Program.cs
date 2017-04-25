@@ -32,7 +32,14 @@ namespace Choop.Demo
                     Console.ForegroundColor = ConsoleColor.Gray;
                     foreach (CompilerError error in compiler.CompileErrors)
                     {
-                        Console.WriteLine(error.Message);
+                        if (string.IsNullOrEmpty(error.TokenText))
+                        {
+                            Console.WriteLine($"Line {error.Line}:{error.Col}  {error.Message}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Line {error.Line}:{error.Col}...{error.StopIndex - error.StartIndex + error.Col}  {error.Message}");
+                        }
                     }
                 }
                 else

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using Antlr4.Runtime;
 
 namespace Choop.Compiler
@@ -36,14 +36,8 @@ namespace Choop.Compiler
         {
             base.SyntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
 
-            // Get node hierarchy
-            IList<string> stack = ((ChoopParser)recognizer).GetRuleInvocationStack();
-
-            // Get compiler error message
-            string message = $"Line {line}:{charPositionInLine} at {offendingSymbol.ToString()}: {msg},\r\n\tStack: {string.Join(" ", stack.Reverse())}";
-
-            // Add error
-            ErrorCollection.Add(new CompilerError(message, line, charPositionInLine));
+            // Add error to collection
+            ErrorCollection.Add(new CompilerError(msg, line, charPositionInLine, offendingSymbol.StartIndex, offendingSymbol.StopIndex, offendingSymbol.Text));
         }
         #endregion
     }
