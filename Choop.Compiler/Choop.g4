@@ -14,7 +14,7 @@ root
     ;
 
 sprite
-    : attribute?
+    : meta_attribute?
       Sprite_Tag
       Identifier
       Brace_Open
@@ -27,13 +27,10 @@ sprite
       Brace_Close
     ;
 
-attribute
+meta_attribute
     : Square_Open
       ( Attr_Meta
         Bracket_Open
-        ( constant
-          Separator
-        )?
         constant
         Bracket_Close
       )
