@@ -354,11 +354,15 @@ switch_stmt
       ( ( Case_Tag
           constant
           Colon
+        | Case_Tag
+          constant {NotifyErrorListeners(ERR_Colon);}
         )+
         case_body
       )+
-      ( Default_Tag
-        Colon
+      ( ( Default_Tag
+          Colon
+        | Default_Tag {NotifyErrorListeners(ERR_Colon);}
+        )
         case_body
       )?
       Brace_Close

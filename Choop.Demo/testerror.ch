@@ -9,7 +9,7 @@
 		MyVoid()
 
 		switch (InvalidType) {
-			case 10:
+			case 10
 				break
 		}
 	}

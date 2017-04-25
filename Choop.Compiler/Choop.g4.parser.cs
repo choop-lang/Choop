@@ -10,6 +10,11 @@ namespace Choop.Compiler
         /// The error message for a missing semicolon.
         /// </summary>
         protected const string ERR_Semicolon = "; expected";
+
+        /// <summary>
+        /// The error message for a missing colon.
+        /// </summary>
+        protected const string ERR_Colon = ": expected";
         #endregion
         #region Constructor
         /// <summary>
