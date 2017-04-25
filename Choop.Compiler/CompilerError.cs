@@ -7,34 +7,34 @@
     {
         #region Properties
         /// <summary>
-        /// Gets or sets the message of the <see cref="CompilerError"/>. 
+        /// Gets the message of the <see cref="CompilerError"/>. 
         /// </summary>
-        public string Message { get; set; }
+        public string Message { get; }
 
         /// <summary>
-        /// Gets or sets the line number at which the <see cref="CompilerError"/> occured. 
+        /// Gets the line number at which the <see cref="CompilerError"/> occured. 
         /// </summary>
-        public int Line { get; set; }
+        public int Line { get; }
 
         /// <summary>
-        /// Gets or sets the char position with the line at which the <see cref="CompilerError"/> occured. 
+        /// Gets the char position within the line at which the <see cref="CompilerError"/> occured. 
         /// </summary>
-        public int Col { get; set; }
+        public int Col { get; }
 
         /// <summary>
-        /// Gets or sets the starting character index of the token that caused the compiler error.
+        /// Gets the starting character index of the token that caused the compiler error.
         /// </summary>
-        public int StartIndex { get; set; }
+        public int StartIndex { get; }
 
         /// <summary>
-        /// Gets or sets the last character index of the token that caused the compiler error.
+        /// Gets the last character index of the token that caused the compiler error.
         /// </summary>
-        public int StopIndex { get; set; }
+        public int StopIndex { get; }
 
         /// <summary>
-        /// Gets or sets the text contents of the token that caused the compiler error.
+        /// Gets the text contents of the token that caused the compiler error.
         /// </summary>
-        public string TokenText { get; set; }
+        public string TokenText { get; }
         #endregion
         #region Constructor
         /// <summary>
