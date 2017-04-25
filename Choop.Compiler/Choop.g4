@@ -8,7 +8,7 @@ grammar Choop;
 root
     : ( sprite
       | module
-      | global_declaration
+      | global_stmt
       )*
       EOF
     ;
@@ -19,7 +19,7 @@ sprite
       Identifier
       Brace_Open
       using_stmt*
-      ( global_declaration
+      ( global_stmt
       | void_declaration
       | function_declaration
       | event_handler
@@ -50,7 +50,7 @@ module
     : Module_Tag
       Identifier
       Brace_Open
-      ( global_declaration
+      ( global_stmt
       | void_declaration
       | function_declaration
       | event_handler
@@ -58,7 +58,12 @@ module
       Brace_Close
     ;
 
-global_declaration
+global_stmt
+    : global_stmt_no_terminator
+      Terminator
+    ;
+
+global_stmt_no_terminator
     : ( const_declaration
       | var_global_declaration
       | array_global_declaration
@@ -72,7 +77,6 @@ const_declaration
       Identifier
       Assign
       constant
-      Terminator
     ;
 
 type_specifier
@@ -89,7 +93,6 @@ var_global_declaration
       ( Assign
         constant
       )?
-      Terminator
     ;
 
 array_global_declaration
@@ -103,7 +106,6 @@ array_global_declaration
       ( Assign
         array_constant
       )?
-      Terminator
     ;
 
 list_global_declaration
@@ -119,7 +121,6 @@ list_global_declaration
       ( Assign
         array_constant
       )?
-      Terminator
     ;
 
 array_constant
@@ -218,13 +219,8 @@ scope_body
     ;
 
 statement
-    : ( scoped_declaration
-      | method_call
+    : ( stmt_no_terminator
         Terminator
-      | var_assignment
-      | array_assignment
-      | array_full_assignment
-      | return_stmt
       | if_stmt
       | switch_stmt
       | repeat_loop
@@ -236,12 +232,15 @@ statement
       )
     ;
 
-
-scoped_declaration
-    : ( const_declaration
-      | var_declaration
-      | array_declaration
-      )
+stmt_no_terminator
+    : const_declaration
+    | var_declaration
+    | array_declaration
+    | method_call
+    | var_assignment
+    | array_assignment
+    | array_full_assignment
+    | return_stmt
     ;
 
 var_declaration
@@ -252,7 +251,6 @@ var_declaration
       ( Assign
         expression
       )?
-      Terminator
     ;
 
 array_declaration
@@ -266,7 +264,6 @@ array_declaration
       ( Assign
         array_literal
       )?
-      Terminator
     ;
 
 array_literal
@@ -292,7 +289,6 @@ method_call
 var_assignment
     : Identifier
       assignment_suffix
-      Terminator
     ;
 
 array_assignment
@@ -301,14 +297,12 @@ array_assignment
       expression
       Square_Close
       assignment_suffix
-      Terminator
     ;
 
 array_full_assignment
     : Identifier
       Assign
       array_literal
-      Terminator
     ;
 
 assignment_suffix
@@ -327,7 +321,6 @@ assignment_suffix
 return_stmt
     : Return_Tag
       expression?
-      Terminator
     ;
 
 if_stmt
@@ -373,6 +366,7 @@ case_body
       ( Break_Tag
         Terminator
       | return_stmt
+        Terminator
       )
     ;
 
@@ -389,6 +383,7 @@ for_loop
     : For_Tag
       Bracket_Open
       var_declaration
+      Terminator
       expression
       Terminator
       Identifier
