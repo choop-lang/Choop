@@ -4,6 +4,13 @@
 	void (num Index) {
 		// Code
 
-		int InvalidType = 10;
+		int InvalidType = 10
+
+		MyVoid()
+
+		switch (InvalidType) {
+			case 10:
+				break
+		}
 	}
 }

@@ -44,6 +44,8 @@ using_stmt
     : Using_Tag
       Identifier
       Terminator
+    | Using_Tag
+      Identifier {NotifyErrorListeners(ERR_Semicolon);}
     ;
 
 module
@@ -229,6 +231,7 @@ statement
       | forever_loop
       | while_loop
       | scope_body
+      | stmt_no_terminator {NotifyErrorListeners(ERR_Semicolon);}
       )
     ;
 
@@ -367,6 +370,8 @@ case_body
         Terminator
       | return_stmt
         Terminator
+      | Break_Tag {NotifyErrorListeners(ERR_Semicolon);}
+      | return_stmt {NotifyErrorListeners(ERR_Semicolon);}
       )
     ;
 

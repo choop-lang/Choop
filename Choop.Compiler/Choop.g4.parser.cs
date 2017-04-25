@@ -5,6 +5,12 @@ namespace Choop.Compiler
 {
     partial class ChoopParser
     {
+        #region Constants
+        /// <summary>
+        /// The error message for a missing semicolon.
+        /// </summary>
+        protected const string ERR_Semicolon = "; expected";
+        #endregion
         #region Constructor
         /// <summary>
         /// Creates a new instance of the <see cref="ChoopParser"/> class. 
