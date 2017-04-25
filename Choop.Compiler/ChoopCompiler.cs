@@ -69,15 +69,11 @@ namespace Choop.Compiler
             // Get the tokens from the lexer
             CommonTokenStream tokens = new CommonTokenStream(lexer);
 
-            // Create the parser
-            ChoopParser parser = new ChoopParser(tokens);
-
             // Clear compile errors
             compileErrors = new Collection<CompilerError>();
 
-            // Set error listener
-            parser.RemoveErrorListeners();
-            parser.AddErrorListener(new ChoopErrorListener(compileErrors));
+            // Create the parser
+            ChoopParser parser = new ChoopParser(tokens, compileErrors);
 
             // Gets the parse tree
             ChoopParser.RootContext root = parser.root();
