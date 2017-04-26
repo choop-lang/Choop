@@ -79,7 +79,7 @@ namespace Choop.Compiler
             ChoopParser.RootContext root = parser.root();
 
             // Create the listener which will translate the code
-            ChoopListener translator = new ChoopListener();
+            ChoopListener translator = new ChoopListener(parser);
 
             // Walk along the tree, causing it to be translated
             ParseTreeWalker.Default.Walk(translator, root);
