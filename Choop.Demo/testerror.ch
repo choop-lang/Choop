@@ -12,6 +12,11 @@
 			case 10
 				break
 		}
+
+
+		if InvalidType = 10 {
+			MyVoid();
+		}
 	}
 
 	Test(num number) {

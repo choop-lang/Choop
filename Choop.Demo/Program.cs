@@ -38,7 +38,7 @@ namespace Choop.Demo
                         }
                         else
                         {
-                            Console.WriteLine($"Line {error.Line}:{error.Col}...{error.StopIndex - error.StartIndex + error.Col}  {error.Message}");
+                            Console.WriteLine($"Line {error.Line}:{error.Col}..{error.StopIndex - error.StartIndex + error.Col}\t{error.Message}");
                         }
                     }
                 }
