@@ -9,17 +9,17 @@ namespace Choop.Compiler
     /// <summary>
     /// Handles parsing errors in the <see cref="ChoopParser"/>. 
     /// </summary>
-    class ChoopErrorListener : BaseErrorListener
+    class ChoopParserErrorListener : BaseErrorListener
     {
         #region Fields
         private ICollection<CompilerError> ErrorCollection;
         #endregion
         #region Constructor
         /// <summary>
-        /// Creates a new instance of the <see cref="ChoopErrorListener"/> class. 
+        /// Creates a new instance of the <see cref="ChoopParserErrorListener"/> class. 
         /// </summary>
         /// <param name="errorCollection">The collection to store add compiler errors to.</param>
-        public ChoopErrorListener(ICollection<CompilerError> errorCollection)
+        public ChoopParserErrorListener(ICollection<CompilerError> errorCollection)
         {
             ErrorCollection = errorCollection;
         }
@@ -44,39 +44,44 @@ namespace Choop.Compiler
             IToken symbol = offendingSymbol;
 
             // Get parser and dictionary
-            ChoopParser parser = (ChoopParser)recognizer;
-            Vocabulary vocabulary = (Vocabulary)ChoopLexer.DefaultVocabulary;
-            
-            // Get expected tokens
-            List<int> expectedTokenTypes = parser.GetExpectedTokensWithinCurrentRule().ToIntegerList();
-            string[] expectedTokens = expectedTokenTypes.Select(t => vocabulary.GetDisplayName(t)).ToArray();
-            
-            if (expectedTokens.Length == 1)
-            {
-                // Simple case - only 1 expected token
-                message = expectedTokens[0] + " expected";
-            }
-            else
-            {
-                // Multiple potential expected tokens
-                // Use analysis to work out best message
+            ChoopParser parser = recognizer as ChoopParser;
 
-                if (e == null)
+            if (parser != null)
+            {
+                // Get lexer rules
+                IVocabulary vocabulary = ChoopLexer.DefaultVocabulary;
+
+                // Get expected tokens
+                List<int> expectedTokenTypes = parser.GetExpectedTokensWithinCurrentRule().ToIntegerList();
+                string[] expectedTokens = expectedTokenTypes.Select(t => vocabulary.GetDisplayName(t)).ToArray();
+
+                if (expectedTokens.Length == 1)
                 {
-                    // No exception - generic error
-
-                    // Assume extraneous input
-                    message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '", offendingSymbol.Text, "'");
+                    // Simple case - only 1 expected token
+                    message = expectedTokens[0] + " expected";
                 }
                 else
                 {
-                    // Exception occured
+                    // Multiple potential expected tokens
+                    // Use analysis to work out best message
 
-                    if (e is NoViableAltException)
+                    if (e == null)
                     {
-                        // Could not match input to token
-                        symbol = ((NoViableAltException)e).StartToken;
-                        message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '", symbol.Text, "'");
+                        // No exception - generic error
+
+                        // Assume extraneous input
+                        message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '", offendingSymbol.Text, "'");
+                    }
+                    else
+                    {
+                        // Exception occured
+
+                        if (e is NoViableAltException)
+                        {
+                            // Could not match input to token
+                            symbol = ((NoViableAltException)e).StartToken;
+                            message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '", symbol.Text, "'");
+                        }
                     }
                 }
             }

@@ -63,14 +63,14 @@ namespace Choop.Compiler
         /// <param name="input">The input stream to compile the code from.</param>
         private void Compile(AntlrInputStream input)
         {
-            // Create the lexer
-            ChoopLexer lexer = new ChoopLexer(input);
-
-            // Get the tokens from the lexer
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-
             // Clear compile errors
             compileErrors = new Collection<CompilerError>();
+            
+            // Create the lexer
+            ChoopLexer lexer = new ChoopLexer(input, compileErrors);
+            
+            // Get the tokens from the lexer
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
 
             // Create the parser
             ChoopParser parser = new ChoopParser(tokens, compileErrors);

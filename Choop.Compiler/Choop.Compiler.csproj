@@ -76,8 +76,9 @@
       <DependentUpon>Choop.g4</DependentUpon>
     </Compile>
     <Compile Include="ChoopCompiler.cs" />
-    <Compile Include="ChoopErrorListener.cs" />
+    <Compile Include="ChoopParserErrorListener.cs" />
     <Compile Include="ChoopListener.cs" />
+    <Compile Include="ChoopTokenErrorListener.cs" />
     <Compile Include="CompilerError.cs" />
     <Compile Include="CustomRecognitionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

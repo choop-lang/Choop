@@ -15,7 +15,7 @@ namespace Choop.Compiler
         {
             // Set error listener
             RemoveErrorListeners();
-            AddErrorListener(new ChoopErrorListener(errorCollection));
+            AddErrorListener(new ChoopParserErrorListener(errorCollection));
         }
         #endregion
     }
