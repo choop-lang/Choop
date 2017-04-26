@@ -6,9 +6,17 @@
     public enum ErrorType
     {
         /// <summary>
-        /// Indicates a generic compiler error.
+        /// Indicates an unspecified compiler error.
         /// </summary>
-        Generic,
+        Unspecified,
+        /// <summary>
+        /// Indicates a generic error that occured in the lexer.
+        /// </summary>
+        GenericLexerError,
+        /// <summary>
+        /// Indicates a generic error that occured in the parser.
+        /// </summary>
+        GenericParserError,
         /// <summary>
         /// Indicates that the input could not be matched to any lexer rule.
         /// </summary>

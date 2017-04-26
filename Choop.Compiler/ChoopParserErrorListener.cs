@@ -41,7 +41,7 @@ namespace Choop.Compiler
             // Create error params
             string message = msg;
             IToken symbol = offendingSymbol;
-            ErrorType errorType = ErrorType.Generic;
+            ErrorType errorType = ErrorType.GenericParserError;
 
             // Get parser and dictionary
             ChoopParser parser = recognizer as ChoopParser;

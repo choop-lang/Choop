@@ -39,7 +39,7 @@ namespace Choop.Compiler
             string message = msg;
             int startIndex = -1;
             int endIndex = -1;
-            ErrorType errorType = ErrorType.Generic;
+            ErrorType errorType = ErrorType.GenericLexerError;
 
             ChoopLexer lexer = recognizer as ChoopLexer;
             if (lexer != null)
