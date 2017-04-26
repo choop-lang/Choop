@@ -38,10 +38,10 @@ namespace Choop.Compiler
         {
             base.SyntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
 
-            // Create message
-            // Default to system message
+            // Create error params
             string message = msg;
             IToken symbol = offendingSymbol;
+            ErrorType errorType = ErrorType.Generic;
 
             // Get parser and dictionary
             ChoopParser parser = recognizer as ChoopParser;
@@ -59,6 +59,7 @@ namespace Choop.Compiler
                 {
                     // Simple case - only 1 expected token
                     message = expectedTokens[0] + " expected";
+                    errorType = ErrorType.TokenMissing;
                 }
                 else
                 {
@@ -71,6 +72,7 @@ namespace Choop.Compiler
 
                         // Assume extraneous input
                         message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '", offendingSymbol.Text, "'");
+                        errorType = ErrorType.ExtraneousToken;
                     }
                     else
                     {
@@ -81,13 +83,14 @@ namespace Choop.Compiler
                             // Could not match input to token
                             symbol = ((NoViableAltException)e).StartToken;
                             message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '", symbol.Text, "'");
+                            errorType = ErrorType.NoViableAlternative;
                         }
                     }
                 }
             }
 
             // Add error to collection
-            ErrorCollection.Add(new CompilerError(message, line, charPositionInLine, symbol.StartIndex, symbol.StopIndex, symbol.Text));
+            ErrorCollection.Add(new CompilerError(message, line, charPositionInLine, symbol.StartIndex, symbol.StopIndex, symbol.Text, errorType));
         }
         #endregion
     }

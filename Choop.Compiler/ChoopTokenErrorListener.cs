@@ -39,6 +39,7 @@ namespace Choop.Compiler
             string message = msg;
             int startIndex = -1;
             int endIndex = -1;
+            ErrorType errorType = ErrorType.Generic;
 
             ChoopLexer lexer = recognizer as ChoopLexer;
             if (lexer != null)
@@ -47,10 +48,11 @@ namespace Choop.Compiler
                 endIndex = lexer._input.Index;
                 token = lexer.GetErrorDisplay(lexer._input.GetText(Interval.Of(startIndex, endIndex)));
                 message = "Could not recognise token '" + token + "'";
+                errorType = ErrorType.TokenRecognitionError;
             }
 
             // Add error to collection
-            ErrorCollection.Add(new CompilerError(message, line, charPositionInLine, startIndex, endIndex, token));
+            ErrorCollection.Add(new CompilerError(message, line, charPositionInLine, startIndex, endIndex, token, errorType));
         }
         #endregion
     }

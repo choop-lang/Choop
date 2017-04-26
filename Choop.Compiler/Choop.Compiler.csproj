@@ -81,6 +81,7 @@
     <Compile Include="ChoopTokenErrorListener.cs" />
     <Compile Include="CompilerError.cs" />
     <Compile Include="CustomRecognitionException.cs" />
+    <Compile Include="ErrorType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

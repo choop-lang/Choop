@@ -35,6 +35,11 @@
         /// Gets the text contents of the token that caused the compiler error.
         /// </summary>
         public string TokenText { get; }
+
+        /// <summary>
+        /// Gets the type of the compiler error.
+        /// </summary>
+        public ErrorType Type { get; }
         #endregion
         #region Constructor
         /// <summary>
@@ -54,7 +59,7 @@
         /// <param name="startIndex">The starting character index of the token that caused the error.</param>
         /// <param name="stopIndex">The last character index of the token that caused the error.</param>
         /// <param name="tokenText">The text of the token that caused the error.</param>
-        public CompilerError(string message, int line, int col, int startIndex, int stopIndex, string tokenText)
+        public CompilerError(string message, int line, int col, int startIndex, int stopIndex, string tokenText, ErrorType type)
         {
             Message = message;
             Line = line;
@@ -62,6 +67,7 @@
             StartIndex = startIndex;
             StopIndex = stopIndex;
             TokenText = tokenText;
+            Type = type;
         }
         #endregion
     }

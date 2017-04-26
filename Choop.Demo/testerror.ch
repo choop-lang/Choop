@@ -8,6 +8,8 @@
 
 		MyVoid()
 
+		MyVoid(param1,);
+
 		switch (InvalidType) {
 			case 10
 				break
