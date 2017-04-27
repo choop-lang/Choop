@@ -13,6 +13,8 @@ namespace Choop.Compiler
     {
         #region Fields
         protected ChoopParser Parser;
+
+        protected int Depth = 0;
         #endregion
         #region Constructor
         public ChoopListener(ChoopParser parser)
@@ -25,14 +27,49 @@ namespace Choop.Compiler
         {
             base.EnterEveryRule(context);
 
-            Console.WriteLine(new string(' ', context.Depth() - 1) + Parser.RuleNames[context.RuleIndex]);
+            Depth = context.Depth();
+            Console.WriteLine(GetIndent(Depth) + Parser.RuleNames[context.RuleIndex]);
+            Depth++;
         }
-        
+
+        public override void ExitEveryRule([NotNull] ParserRuleContext context)
+        {
+            base.ExitEveryRule(context);
+
+            Depth--;
+        }
+
+        public override void VisitTerminal([NotNull] ITerminalNode node)
+        {
+            base.VisitTerminal(node);
+
+            Console.WriteLine(GetIndent(Depth) + "'" + node.GetText() + "'");
+        }
+
         public override void VisitErrorNode([NotNull] IErrorNode node)
         {
             base.VisitErrorNode(node);
 
-            Console.WriteLine("Error: " + node.GetText());
+            Console.WriteLine(GetIndent(Depth) + "Error: " + node.GetText());
+        }
+
+        string GetIndent(int depth)
+        {
+            StringBuilder sb = new StringBuilder(depth);
+
+            for (int i = 0; i < depth; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    sb.Append(' ');
+                }
+                else
+                {
+                    sb.Append('|');
+                }
+            }
+
+            return sb.ToString();
         }
         #endregion
     }
