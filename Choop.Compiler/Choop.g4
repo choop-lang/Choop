@@ -8,83 +8,83 @@ grammar Choop;
 root
     : ( sprite
       | module
-      | global_stmt
+      | globalStmt
       )*
       EOF
     ;
 
 sprite
-    : meta_attribute?
-      Sprite_Tag
+    : metaAttribute?
+      SpriteTag
       Identifier
-      Brace_Open
-      using_stmt*
-      ( global_stmt
-      | void_declaration
-      | function_declaration
-      | event_handler
+      BraceOpen
+      usingStmt*
+      ( globalStmt
+      | voidDeclaration
+      | functionDeclaration
+      | eventHandler
       )*
-      Brace_Close
+      BraceClose
     ;
 
-meta_attribute
-    : Square_Open
-      ( Attr_Meta
-        Bracket_Open
+metaAttribute
+    : SquareOpen
+      ( AttrMeta
+        BracketOpen
         constant
-        Bracket_Close
+        BracketClose
       )
-      Square_Close
+      SquareClose
     ;
 
-using_stmt
-    : Using_Tag
+usingStmt
+    : UsingTag
       Identifier
       Terminator
     ;
 
 module
-    : Module_Tag
+    : ModuleTag
       Identifier
-      Brace_Open
-      ( global_stmt
-      | void_declaration
-      | function_declaration
-      | event_handler
+      BraceOpen
+      ( globalStmt
+      | voidDeclaration
+      | functionDeclaration
+      | eventHandler
       )*
-      Brace_Close
+      BraceClose
     ;
 
-global_stmt
-    : global_stmt_no_terminator
+globalStmt
+    : globalStmtNoTerminator
       Terminator
     ;
 
-global_stmt_no_terminator
-    : ( const_declaration
-      | var_global_declaration
-      | array_global_declaration
-      | list_global_declaration
+globalStmtNoTerminator
+    : ( constDeclaration
+      | varGlobalDeclaration
+      | arrayGlobalDeclaration
+      | listGlobalDeclaration
       )
     ;
 
-const_declaration
-    : Decl_Const
-      type_specifier?
+constDeclaration
+    : DeclConst
+      typeSpecifier?
       Identifier
       Assign
       constant
     ;
 
-type_specifier
-    : Type_Num
-    | Type_String
-    | Type_Bool
+typeSpecifier
+    : TypeNum
+    | TypeString
+    | TypeBool
     ;
 
-var_global_declaration
-    : ( Decl_Var
-      | type_specifier
+varGlobalDeclaration
+    : ( DeclVar
+      | typeSpecifier
       )
       Identifier
       ( Assign
@@ -92,157 +92,157 @@ var_global_declaration
       )?
     ;
 
-array_global_declaration
-    : ( Decl_Array
-      | type_specifier
+arrayGlobalDeclaration
+    : ( DeclArray
+      | typeSpecifier
       )
-      Square_Open
+      SquareOpen
       UInteger
-      Square_Close
+      SquareClose
       Identifier
       ( Assign
-        array_constant
+        arrayConstant
       )?
     ;
 
-list_global_declaration
-    : Decl_List
-      ( Op_LT
-        type_specifier
-        Op_GT
+listGlobalDeclaration
+    : DeclList
+      ( OpLT
+        typeSpecifier
+        OpGT
       )?
-      Square_Open
+      SquareOpen
       UInteger?
-      Square_Close
+      SquareClose
       Identifier
       ( Assign
-        array_constant
+        arrayConstant
       )?
     ;
 
-array_constant
-    : Brace_Open
+arrayConstant
+    : BraceOpen
       ( constant
         Separator
       )*
       constant
-      Brace_Close
+      BraceClose
     ;
 
 constant
-    : ( Const_True
-      | Const_False
+    : ( ConstTrue
+      | ConstFalse
       | StringLiteral
-      | Op_Minus?
+      | OpMinus?
         HexNumber
-      | Op_Minus?
+      | OpMinus?
         USciNumber
-      | Op_Minus?
+      | OpMinus?
         UDecimal
-      | Op_Minus?
+      | OpMinus?
         UInteger
       )
     ;
 
-void_declaration
-    : Atomic_Tag?
-      Void_Tag
+voidDeclaration
+    : AtomicTag?
+      VoidTag
       Identifier
-      parameter_set
-      scope_body
+      parameterSet
+      scopeBody
     ;
 
-function_declaration
-    : Atomic_Tag?
-      ( Function_Tag
-      | type_specifier
+functionDeclaration
+    : AtomicTag?
+      ( FunctionTag
+      | typeSpecifier
       )
       Identifier
-      parameter_set
-      scope_body
+      parameterSet
+      scopeBody
     ;
 
-event_handler
-    : Event_Tag
-      ( Event_Flag
-      | Event_Key
-      | Event_Click
-      | Event_Backdrop
-      | Event_Message
-      | Event_Cloned
-      | Event_Loudness
-      | Event_Timer
-      | Event_Video
+eventHandler
+    : EventTag
+      ( EventFlag
+      | EventKey
+      | EventClick
+      | EventBackdrop
+      | EventMessage
+      | EventCloned
+      | EventLoudness
+      | EventTimer
+      | EventVideo
       )
-      ( Op_LT
+      ( OpLT
         constant
-        Op_GT
+        OpGT
       )?
-      Bracket_Open
-      Bracket_Close
-      scope_body
+      BracketOpen
+      BracketClose
+      scopeBody
     ;
 
-parameter_set
-    : Bracket_Open
+parameterSet
+    : BracketOpen
       ( parameter
         Separator
       )*
-      ( ( optional_parameter
+      ( ( optionalParameter
           Separator
         )*
-        optional_parameter
+        optionalParameter
       | parameter
       )?
-      Bracket_Close
+      BracketClose
     ;
 
-optional_parameter
+optionalParameter
     : parameter
       Assign
       constant
     ;
 
 parameter
-    : type_specifier?
+    : typeSpecifier?
       Identifier
     ;
 
-scope_body
-    : Brace_Open
+scopeBody
+    : BraceOpen
       ( statement
       )*
-      Brace_Close
+      BraceClose
     ;
 
 statement
-    : ( stmt_no_terminator
+    : ( stmtNoTerminator
         Terminator
-      | if_stmt
-      | switch_stmt
-      | repeat_loop
-      | for_loop
-      | foreach_loop
-      | forever_loop
-      | while_loop
-      | scope_body
+      | ifStmt
+      | switchStmt
+      | repeatLoop
+      | forLoop
+      | foreachLoop
+      | foreverLoop
+      | whileLoop
+      | scopeBody
       )
     ;
 
-stmt_no_terminator
-    : const_declaration
-    | var_declaration
-    | array_declaration
-    | method_call
-    | var_assignment
-    | array_assignment
-    | array_full_assignment
-    | return_stmt
+stmtNoTerminator
+    : constDeclaration
+    | varDeclaration
+    | arrayDeclaration
+    | methodCall
+    | varAssignment
+    | arrayAssignment
+    | arrayFullAssignment
+    | returnStmt
     ;
 
-var_declaration
-    : ( Decl_Var
-      | type_specifier
+varDeclaration
+    : ( DeclVar
+      | typeSpecifier
       )
       Identifier
       ( Assign
@@ -250,175 +250,175 @@ var_declaration
       )?
     ;
 
-array_declaration
-    : ( Decl_Array
-      | type_specifier
+arrayDeclaration
+    : ( DeclArray
+      | typeSpecifier
       )
-      Square_Open
+      SquareOpen
       UInteger
-      Square_Close
+      SquareClose
       Identifier
       ( Assign
-        array_literal
+        arrayLiteral
       )?
     ;
 
-array_literal
-    : Brace_Open
+arrayLiteral
+    : BraceOpen
       ( expression
         Separator
       )*
       expression
-      Brace_Close
+      BraceClose
     ;
 
-method_call
+methodCall
     : Identifier
-      Bracket_Open
+      BracketOpen
       ( ( expression
           Separator
         )*
         expression
       )?
-      Bracket_Close
+      BracketClose
     ;
 
-var_assignment
+varAssignment
     : Identifier
-      assignment_suffix
+      assignmentSuffix
     ;
 
-array_assignment
+arrayAssignment
     : Identifier
-      Square_Open
+      SquareOpen
       expression
-      Square_Close
-      assignment_suffix
+      SquareClose
+      assignmentSuffix
     ;
 
-array_full_assignment
+arrayFullAssignment
     : Identifier
       Assign
-      array_literal
+      arrayLiteral
     ;
 
-assignment_suffix
+assignmentSuffix
     : ( ( Assign
-        | Assign_Add
-        | Assign_Sub
-        | Assign_Concat
+        | AssignAdd
+        | AssignSub
+        | AssignConcat
         )
         expression
-      | ( Assign_Inc
-        | Assign_Dec
+      | ( AssignInc
+        | AssignDec
         )
       )
     ;
 
-return_stmt
-    : Return_Tag
+returnStmt
+    : ReturnTag
       expression?
     ;
 
-if_stmt
-    : If_Tag
-      Bracket_Open
+ifStmt
+    : IfTag
+      BracketOpen
       expression
-      Bracket_Close
-      ( scope_body
-        ( ElseIf_Tag
-          Bracket_Open
+      BracketClose
+      ( scopeBody
+        ( ElseIfTag
+          BracketOpen
           expression
-          Bracket_Close
-          scope_body
+          BracketClose
+          scopeBody
         )*
-        ( Else_Tag
-          scope_body
+        ( ElseTag
+          scopeBody
         )?
       | statement
       )
     ;
 
-switch_stmt
-    : Switch_Tag
-      Bracket_Open
+switchStmt
+    : SwitchTag
+      BracketOpen
       expression
-      Bracket_Close
-      Brace_Open
-      ( ( Case_Tag
+      BracketClose
+      BraceOpen
+      ( ( CaseTag
           constant
           Colon
         )+
-        case_body
+        caseBody
       )+
-      ( ( Default_Tag
+      ( ( DefaultTag
           Colon
         )
-        case_body
+        caseBody
       )?
-      Brace_Close
+      BraceClose
     ;
 
-case_body
+caseBody
     : statement*
-      ( Break_Tag
+      ( BreakTag
         Terminator
-      | return_stmt
+      | returnStmt
         Terminator
       )
     ;
 
-repeat_loop
-    : Inline_Tag?
-      Repeat_Tag
-      Bracket_Open
+repeatLoop
+    : InlineTag?
+      RepeatTag
+      BracketOpen
       UInteger
-      Bracket_Close
-      scope_body
+      BracketClose
+      scopeBody
     ;
 
-for_loop
-    : For_Tag
-      Bracket_Open
-      var_declaration
+forLoop
+    : ForTag
+      BracketOpen
+      varDeclaration
       Terminator
       expression
       Terminator
       Identifier
-      assignment_suffix
-      Bracket_Close
-      scope_body
+      assignmentSuffix
+      BracketClose
+      scopeBody
     ;
 
-foreach_loop
-    : Foreach_Tag
-      Bracket_Open
-      ( Decl_Var
-      | type_specifier
+foreachLoop
+    : ForeachTag
+      BracketOpen
+      ( DeclVar
+      | typeSpecifier
       )
       Identifier
-      In_Tag
+      InTag
       Identifier
-      Bracket_Close
-      scope_body
+      BracketClose
+      scopeBody
     ;
 
-forever_loop
-    : Forever_Tag
-      scope_body
+foreverLoop
+    : ForeverTag
+      scopeBody
     ;
 
-while_loop
-    : While_Tag
-      Bracket_Open
+whileLoop
+    : WhileTag
+      BracketOpen
       expression
-      Bracket_Close
-      scope_body
+      BracketClose
+      scopeBody
     ;
 
 uconstant
-    : ( Const_True
-      | Const_False
+    : ( ConstTrue
+      | ConstFalse
       | StringLiteral
       | HexNumber
       | USciNumber
@@ -427,137 +427,137 @@ uconstant
       )
     ;
 
-primary_expression
+primaryExpression
     : ( uconstant
-      | method_call
+      | methodCall
       | Identifier
-      | Bracket_Open
+      | BracketOpen
         expression
-        Bracket_Close
+        BracketClose
       )
     ;
 
-unary_expression
-    : ( Op_Not
-      | Op_Minus
+unaryExpression
+    : ( OpNot
+      | OpMinus
       )?
-      primary_expression
+      primaryExpression
     ;
 
 expression
-    :   unary_expression
-    |   expression Op_Pow unary_expression
-    |   expression Op_Mult unary_expression
-    |   expression Op_Divide unary_expression
-    |   expression Op_Mod unary_expression
-    |   expression Op_Concat unary_expression
-    |   expression Op_Plus unary_expression
-    |   expression Op_Minus unary_expression
-    |   expression Op_LShift unary_expression
-    |   expression Op_RShift unary_expression
-    |   expression Op_LT unary_expression
-    |   expression Op_GT unary_expression
-    |   expression Op_LTE unary_expression
-    |   expression Op_GTE unary_expression
-    |   expression Op_Equals unary_expression
-    |   expression Op_NEquals unary_expression
-    |   expression Op_And unary_expression
-    |   expression Op_Or unary_expression
+    :   unaryExpression
+    |   expression OpPow unaryExpression
+    |   expression OpMult unaryExpression
+    |   expression OpDivide unaryExpression
+    |   expression OpMod unaryExpression
+    |   expression OpConcat unaryExpression
+    |   expression OpPlus unaryExpression
+    |   expression OpMinus unaryExpression
+    |   expression OpLShift unaryExpression
+    |   expression OpRShift unaryExpression
+    |   expression OpLT unaryExpression
+    |   expression OpGT unaryExpression
+    |   expression OpLTE unaryExpression
+    |   expression OpGTE unaryExpression
+    |   expression OpEquals unaryExpression
+    |   expression OpNEquals unaryExpression
+    |   expression OpAnd unaryExpression
+    |   expression OpOr unaryExpression
     ;
 
 /*
  * Lexer Rules
  */
 
-Const_True      : 'true';
-Const_False     : 'false';
+ConstTrue      : 'true';
+ConstFalse     : 'false';
 
-Assign_Add	    : '+=';
-Assign_Sub      : '-=';
-Assign_Concat   : '.=';
-Assign_Inc      : '++';
-Assign_Dec      : '--';
+AssignAdd	    : '+=';
+AssignSub      : '-=';
+AssignConcat   : '.=';
+AssignInc      : '++';
+AssignDec      : '--';
 
-Op_Concat       : '.';
-Op_Plus	        : '+';
-Op_Minus        : '-';
-Op_Divide       : '/';
-Op_Mult         : '*';
-Op_Mod          : '%';
-Op_Pow          : '^';
-Op_LShift       : '<<';
-Op_RShift       : '>>';
-Op_Equals       : '==';
-Op_NEquals      : '!=';
-Op_GTE          : '>=';
-Op_LTE          : '<=';
-Op_GT           : '>';
-Op_LT           : '<';
-Op_And          : '&&';
-Op_Or           : '||';
-Op_Not          : '!';
+OpConcat       : '.';
+OpPlus	        : '+';
+OpMinus        : '-';
+OpDivide       : '/';
+OpMult         : '*';
+OpMod          : '%';
+OpPow          : '^';
+OpLShift       : '<<';
+OpRShift       : '>>';
+OpEquals       : '==';
+OpNEquals      : '!=';
+OpGTE          : '>=';
+OpLTE          : '<=';
+OpGT           : '>';
+OpLT           : '<';
+OpAnd          : '&&';
+OpOr           : '||';
+OpNot          : '!';
 
 Assign	        : '=';
 
-Bracket_Open    : '(';
-Bracket_Close   : ')';
-Brace_Open      : '{';
-Brace_Close     : '}';
-Square_Open	    : '[';
-Square_Close    : ']';
+BracketOpen    : '(';
+BracketClose   : ')';
+BraceOpen      : '{';
+BraceClose     : '}';
+SquareOpen	    : '[';
+SquareClose    : ']';
 Separator       : ',';
 Terminator      : ';';
 Colon           : ':';
 
-Decl_Const      : 'const';
-Decl_Var        : 'var';
-Decl_Array      : 'array';
-Decl_List       : 'list';
+DeclConst      : 'const';
+DeclVar        : 'var';
+DeclArray      : 'array';
+DeclList       : 'list';
 
-Type_Num        : 'num';
-Type_String     : 'string';
-Type_Bool       : 'bool';
+TypeNum        : 'num';
+TypeString     : 'string';
+TypeBool       : 'bool';
 
-Sprite_Tag      : 'sprite';
-Module_Tag      : 'module';
+SpriteTag      : 'sprite';
+ModuleTag      : 'module';
 
-Attr_Meta       : 'MetaFile';
+AttrMeta       : 'MetaFile';
 
-Using_Tag       : 'using';
+UsingTag       : 'using';
 
-Void_Tag        : 'void';
-Function_Tag    : 'function';
-Event_Tag       : 'event';
-Atomic_Tag      : 'atomic';
-Inline_Tag      : 'inline';
+VoidTag        : 'void';
+FunctionTag    : 'function';
+EventTag       : 'event';
+AtomicTag      : 'atomic';
+InlineTag      : 'inline';
 
-Event_Flag      : 'GreenFlag';
-Event_Key       : 'KeyPressed';
-Event_Click     : 'Clicked';
-Event_Backdrop  : 'BackdropChanged';
-Event_Message   : 'MessageRecieved';
-Event_Cloned    : 'Cloned';
-Event_Loudness  : 'LoudnessGreaterThan';
-Event_Timer     : 'TimerGreaterThan';
-Event_Video     : 'VideoMotionGreaterThan';
+EventFlag      : 'GreenFlag';
+EventKey       : 'KeyPressed';
+EventClick     : 'Clicked';
+EventBackdrop  : 'BackdropChanged';
+EventMessage   : 'MessageRecieved';
+EventCloned    : 'Cloned';
+EventLoudness  : 'LoudnessGreaterThan';
+EventTimer     : 'TimerGreaterThan';
+EventVideo     : 'VideoMotionGreaterThan';
 
-ElseIf_Tag      : 'else if';
-If_Tag          : 'if';
-Else_Tag        : 'else';
+ElseIfTag      : 'else if';
+IfTag          : 'if';
+ElseTag        : 'else';
 
-Switch_Tag      : 'switch';
-Case_Tag        : 'case';
-Default_Tag     : 'default';
-Break_Tag       : 'break';
+SwitchTag      : 'switch';
+CaseTag        : 'case';
+DefaultTag     : 'default';
+BreakTag       : 'break';
 
-Forever_Tag     : 'forever';
-Foreach_Tag     : 'foreach';
-In_Tag          : 'in';
-For_Tag         : 'for';
-While_Tag       : 'while';
-Repeat_Tag      : 'repeat';
+ForeverTag     : 'forever';
+ForeachTag     : 'foreach';
+InTag          : 'in';
+ForTag         : 'for';
+WhileTag       : 'while';
+RepeatTag      : 'repeat';
 
-Return_Tag      : 'return';
+ReturnTag      : 'return';
 
 Identifier
     : Letter
@@ -577,7 +577,7 @@ USciNumber
       | UInteger
       )
       'e'
-      Op_Minus?
+      OpMinus?
       UInteger
     ;
 
