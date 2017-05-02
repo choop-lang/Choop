@@ -827,7 +827,8 @@ MyVoid(); // Calls MyVoid
 ```
 
 Voids can also have parameters. Parameters can either
-have no type or have a type.
+have no type or have a type. Arrays or lists however
+are **not** allowed as parameters.
 
 These 2 examples show parameters with and without types:
 
