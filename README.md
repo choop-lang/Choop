@@ -29,3 +29,9 @@ Alternatively, you can view the
 ## Under development
 Currently, significant functionality is missing from
 from the Choop compiler.
+
+## External links
+- [Scratch website](https://scratch.mit.edu/)
+- [SB2 file format](https://wiki.scratch.mit.edu/wiki/Scratch_File_Format_(2.0))
+
+Scratch is a project of the Lifelong Kindergarten Group at the MIT Media Lab.
