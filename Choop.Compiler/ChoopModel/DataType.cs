@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies the possible data types.
     /// </summary>
-    enum DataType
+    public enum DataType
     {
         /// <summary>
         /// Indicates an object type.
