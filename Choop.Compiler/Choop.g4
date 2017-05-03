@@ -230,8 +230,7 @@ statement
     ;
 
 stmtNoTerminator
-    : constDeclaration
-    | varDeclaration
+    : varDeclaration
     | arrayDeclaration
     | methodCall
     | varAssignment

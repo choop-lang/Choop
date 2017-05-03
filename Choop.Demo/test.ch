@@ -106,7 +106,6 @@ sprite MySprite {
 	}
 
 	atomic void Test2(bool param1) {
-		const Scoped_Const = 43;
 		var test = Test4(3, Test4(2, 5));
 
 		{

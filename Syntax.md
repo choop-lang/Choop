@@ -213,6 +213,9 @@ const bool MyBool = false;
 const num Pi = 3.1416;
 ```
 
+Constants can both be global and local to the sprite, but cannot be
+declared inside a method.
+
 # Variables
 Variables can be both read and set at runtime.
 
@@ -982,6 +985,7 @@ This is a demonstration of the various scopes in Choop:
 ```C#
 // SUPERGLOBALS:
 // These can be accessed by any sprite or module
+// Allowed: var, array, list, const
 
 var SuperGlobal;
 
@@ -990,19 +994,22 @@ sprite Sprite1 {
     // These can be accessed by any event, void or function in the sprite / module
     // Note: If a module has been imported, any globals in that module can also
     // be accessed by the sprite
+    // Allowed: var, array, list, const
     
     var Global;
 
     event GreenFlag() {
         // LOCALS:
         // These can only be accessed by this method
-        // Local variables in Choop and thread and recurion safe
+        // Local variables in Choop are thread and recurion safe
+        // Allowed: var, array
 
         var Local;
 
         {
             // SCOPED VARS:
             // These can only be accessed within this code block
+            // Allowed: var, array
 
             var Scoped;
         }
@@ -1016,5 +1023,6 @@ sprite Sprite1 {
 }
 ```
 
-**Notice:** Local or scoped lists are currently not allowed. Please
-use arrays or global lists instead.
+**Note:** As shown above, local or scoped lists and constants are currently
+not allowed. As an alternative to scoped lists, you can use arrays if the
+maximum size is known at compile time.

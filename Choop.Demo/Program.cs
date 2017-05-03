@@ -13,7 +13,7 @@ namespace Choop.Demo
         static void Main(string[] args)
         {
             // The path of the file to compile
-            string filepath = "testerror.ch";
+            string filepath = "test.ch";
 
             // Open file
             using (StreamReader reader = new StreamReader(filepath))
