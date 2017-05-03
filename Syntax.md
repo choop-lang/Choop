@@ -56,7 +56,7 @@ For any additional information, you can view the
 Comments can be either single or multi-line.
 They use the following syntax:
 
-```JS
+```C#
 // This is a single line comment
 
 /* This is a comment that spans
