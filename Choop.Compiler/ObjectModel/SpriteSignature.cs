@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Choop.Compiler.ChoopModel;
+using System;
 using System.Collections.ObjectModel;
 
 namespace Choop.Compiler.ObjectModel
@@ -9,7 +10,7 @@ namespace Choop.Compiler.ObjectModel
     public class SpriteSignature : ISpriteSignature
     {
         #region Properties
-        private StageSignature stage;
+        private Project project;
 
         /// <summary>
         /// Gets or sets the name of the sprite.
@@ -47,11 +48,11 @@ namespace Choop.Compiler.ObjectModel
         public Collection<MethodSignature> Methods { get; } = new Collection<MethodSignature>();
 
         /// <summary>
-        /// Gets the parent stage of the sprite.
+        /// Gets the project which contains the sprite.
         /// </summary>
-        public StageSignature Stage
+        public Project Project
         {
-            get { return stage; }
+            get { return project; }
         }
         #endregion
         #region Constructor
@@ -66,13 +67,97 @@ namespace Choop.Compiler.ObjectModel
         #endregion
         #region Methods
         /// <summary>
+        /// Finds the method which has the specified name and is compatible with the specified parameter types.
+        /// </summary>
+        /// <param name="name">The name of the method.</param>
+        /// <param name="paramTypes">The types of each of the supplied parameters, in order.</param>
+        /// <returns>The signature of the method if found; otherwise null.</returns>
+        public MethodSignature GetMethod(string name, params DataType[] paramTypes)
+        {
+            foreach (MethodSignature method in Methods)
+            {
+                // Check name matches
+                if (method.Name.Equals(name, Project.IdentifierComparisonMode))
+                {
+                    // Check valid amount of parameters
+                    if (paramTypes.Length <= method.Params.Count)
+                    {
+                        // Default to valid
+                        bool Valid = true;
+
+                        // Check each parameter
+                        for (int i = 0; i < method.Params.Count; i++)
+                        {
+                            if (i < paramTypes.Length)
+                            {
+                                // Check parameter types are compatible
+                                if (!method.Params[i].Type.IsCompatible(paramTypes[i]))
+                                {
+                                    Valid = false;
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                // These parameters weren't specified, so they must be optional
+                                if (!method.Params[i].Optional)
+                                {
+                                    Valid = false;
+                                    break;
+                                }
+                            }
+                        }
+
+                        // Return method if valid
+                        if (Valid)
+                            return method;
+                    }
+                }
+            }
+
+            // Not found
+            return null;
+        }
+
+        /// <summary>
+        /// Imports the specified module.
+        /// </summary>
+        /// <param name="module">The module to import.</param>
+        public void Import(ModuleSignature module)
+        {
+            // Constants
+            foreach (ConstSignature constant in module.Constants)
+                Constants.Add(constant);
+
+            // Variables
+            foreach (VarSignature variable in module.Variables)
+                Variables.Add(variable);
+
+            // Arrays
+            foreach (VarSignature array in module.Arrays)
+                Arrays.Add(array);
+
+            // Lists
+            foreach (VarSignature list in module.Lists)
+                Lists.Add(list);
+
+            // Event handlers
+            foreach (Scope scope in module.EventHandlers)
+                EventHandlers.Add(scope);
+
+            // Methods
+            foreach (MethodSignature method in module.Methods)
+                Methods.Add(method);
+        }
+
+        /// <summary>
         /// Finds the constant with the specified name within the sprite and stage.
         /// </summary>
         /// <param name="name">The name of the constant to search for.</param>
         /// <returns>The signature of the constant with the specified name; null if not found.</returns>
         public ConstSignature GetConstant(string name)
         {
-            return GetItem(name, Constants, stage.Constants);
+            return GetItem(name, Constants, project.Constants);
         }
 
         /// <summary>
@@ -82,7 +167,7 @@ namespace Choop.Compiler.ObjectModel
         /// <returns>The signature of the variable with the specified name; null if not found.</returns>
         public VarSignature GetVariable(string name)
         {
-            return GetItem(name, Variables, stage.Variables);
+            return GetItem(name, Variables, project.Variables);
         }
 
         /// <summary>
@@ -92,7 +177,7 @@ namespace Choop.Compiler.ObjectModel
         /// <returns>The signature of the array with the specified name; null if not found.</returns>
         public VarSignature GetArray(string name)
         {
-            return GetItem(name, Arrays, stage.Arrays);
+            return GetItem(name, Arrays, project.Arrays);
         }
 
         /// <summary>
@@ -102,11 +187,11 @@ namespace Choop.Compiler.ObjectModel
         /// <returns>The signature of the list with the specified name; null if not found.</returns>
         public VarSignature GetList(string name)
         {
-            return GetItem(name, Lists, stage.Lists);
+            return GetItem(name, Lists, project.Lists);
         }
 
         /// <summary>
-        /// Finds the item with the specified name and signature type within the sprite and stage.
+        /// Finds the item with the specified name and signature type within the sprite or project.
         /// </summary>
         /// <param name="name">The name of the item to search for.</param>
         /// <returns>The signature of the item with the specified name; null if not found.</returns>
@@ -114,12 +199,12 @@ namespace Choop.Compiler.ObjectModel
         {
             // Local
             foreach (T item in locals)
-                if (item.Name.Equals(name, StageSignature.IdentifierComparisonMode))
+                if (item.Name.Equals(name, Project.IdentifierComparisonMode))
                     return item;
             
             // Global
             foreach (T item in globals)
-                if (item.Name.Equals(name, StageSignature.IdentifierComparisonMode))
+                if (item.Name.Equals(name, Project.IdentifierComparisonMode))
                     return item;
 
             // Not found
@@ -127,20 +212,20 @@ namespace Choop.Compiler.ObjectModel
         }
         
         /// <summary>
-        /// Registers the sprite with the specified stage object. For internal use only.
+        /// Registers the sprite with the specified project object. For internal use only.
         /// </summary>
-        /// <param name="stage">The stage to register the sprite with.</param>
-        public void Register(StageSignature stage)
+        /// <param name="project">The project to register the sprite with.</param>
+        public void Register(Project project)
         {
-            if (Stage == null)
+            if (Project == null)
             {
                 // Not previously registered
-                this.stage = stage;
+                this.project = project;
             }
             else
             {
                 // Previously registered
-                throw new InvalidOperationException("Sprite already registered to another stage.");
+                throw new InvalidOperationException("Sprite already registered to another project.");
             }
         }
         #endregion

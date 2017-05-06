@@ -5,9 +5,9 @@ using System.Collections.Specialized;
 namespace Choop.Compiler.ObjectModel
 {
     /// <summary>
-    /// Represents the signature for the stage.
+    /// Represents a Choop project.
     /// </summary>
-    public class StageSignature : ISpriteSignature
+    public class Project
     {
         #region Constants
         /// <summary>
@@ -17,15 +17,6 @@ namespace Choop.Compiler.ObjectModel
         #endregion
         #region Properties
         private ObservableCollection<SpriteSignature> sprites = new ObservableCollection<SpriteSignature>();
-
-        /// <summary>
-        /// Gets or sets the name of the stage. (Is always Stage)
-        /// </summary>
-        public string Name
-        {
-            get { return "Stage"; }
-            set { throw new NotImplementedException(); }
-        }
 
         /// <summary>
         /// Gets the collection of global constants.
@@ -47,15 +38,6 @@ namespace Choop.Compiler.ObjectModel
         /// </summary>
         public Collection<VarSignature> Lists { get; } = new Collection<VarSignature>();
 
-        /// <summary>
-        /// Gets the collection of scopes for the event handlers in the stage.
-        /// </summary>
-        public Collection<Scope> EventHandlers { get; } = new Collection<Scope>();
-
-        /// <summary>
-        /// Gets the collection of user-defined methods in the stage.
-        /// </summary>
-        public Collection<MethodSignature> Methods { get; } = new Collection<MethodSignature>();
 
         /// <summary>
         /// Gets the collection of sprites within the stage.
@@ -72,9 +54,9 @@ namespace Choop.Compiler.ObjectModel
         #endregion
         #region Constructor
         /// <summary>
-        /// Creates a new isntance of the <see cref="StageSignature"/> class.
+        /// Creates a new instance of the <see cref="Project"/> class.
         /// </summary>
-        public StageSignature()
+        public Project()
         {
             sprites.CollectionChanged += Sprites_CollectionChanged;
         }
@@ -86,10 +68,7 @@ namespace Choop.Compiler.ObjectModel
             {
                 // Sprite added
                 foreach (SpriteSignature sprite in e.NewItems)
-                {
-                    // Register sprite as child
                     sprite.Register(this);
-                }
             }
         }
         #endregion

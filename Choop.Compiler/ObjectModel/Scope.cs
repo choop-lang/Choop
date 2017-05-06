@@ -64,7 +64,7 @@ namespace Choop.Compiler.ObjectModel
             // Loop through stack values in this scope
             foreach (StackValue value in StackValues)
             {
-                if (value.Name.Equals(name, StageSignature.IdentifierComparisonMode))
+                if (value.Name.Equals(name, Project.IdentifierComparisonMode))
                     return value; // Match found
             }
 
