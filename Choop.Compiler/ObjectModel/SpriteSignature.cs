@@ -151,7 +151,7 @@ namespace Choop.Compiler.ObjectModel
         }
 
         /// <summary>
-        /// Finds the constant with the specified name within the sprite and stage.
+        /// Finds the constant with the specified name within the sprite and project.
         /// </summary>
         /// <param name="name">The name of the constant to search for.</param>
         /// <returns>The signature of the constant with the specified name; null if not found.</returns>
@@ -161,7 +161,7 @@ namespace Choop.Compiler.ObjectModel
         }
 
         /// <summary>
-        /// Finds the variable with the specified name within the sprite and stage.
+        /// Finds the variable with the specified name within the sprite and project.
         /// </summary>
         /// <param name="name">The name of the variable to search for.</param>
         /// <returns>The signature of the variable with the specified name; null if not found.</returns>
@@ -171,7 +171,7 @@ namespace Choop.Compiler.ObjectModel
         }
 
         /// <summary>
-        /// Finds the array with the specified name within the sprite and stage.
+        /// Finds the array with the specified name within the sprite and project.
         /// </summary>
         /// <param name="name">The name of the array to search for.</param>
         /// <returns>The signature of the array with the specified name; null if not found.</returns>
@@ -181,7 +181,7 @@ namespace Choop.Compiler.ObjectModel
         }
 
         /// <summary>
-        /// Finds the list with the specified name within the sprite and stage.
+        /// Finds the list with the specified name within the sprite and project.
         /// </summary>
         /// <param name="name">The name of the list to search for.</param>
         /// <returns>The signature of the list with the specified name; null if not found.</returns>

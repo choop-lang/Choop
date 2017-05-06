@@ -37,10 +37,9 @@ namespace Choop.Compiler.ObjectModel
         /// Gets the collection of global lists.
         /// </summary>
         public Collection<VarSignature> Lists { get; } = new Collection<VarSignature>();
-
-
+        
         /// <summary>
-        /// Gets the collection of sprites within the stage.
+        /// Gets the collection of sprites within the project.
         /// </summary>
         public Collection<SpriteSignature> Sprites
         {
@@ -48,7 +47,7 @@ namespace Choop.Compiler.ObjectModel
         }
 
         /// <summary>
-        /// Gets the collection of modules within the stage.
+        /// Gets the collection of modules within the project.
         /// </summary>
         public Collection<ModuleSignature> Modules { get; } = new Collection<ModuleSignature>();
         #endregion
