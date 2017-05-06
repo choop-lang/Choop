@@ -30,9 +30,9 @@ namespace Choop.Compiler.ObjectModel
         Collection<VarSignature> Lists { get; }
 
         /// <summary>
-        /// Gets the collection of scopes for the event handlers in the sprite.
+        /// Gets the collection of event handlers in the sprite.
         /// </summary>
-        Collection<Scope> EventHandlers { get; }
+        Collection<EventHandlerSignature> EventHandlers { get; }
 
         /// <summary>
         /// Gets the collection of user-defined methods in the sprite.

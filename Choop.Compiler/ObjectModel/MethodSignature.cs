@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 namespace Choop.Compiler.ObjectModel
 {
     /// <summary>
-    /// Represents a method signature.
+    /// Represents a void or function signature.
     /// </summary>
-    public class MethodSignature : ITypedSignature
+    public class MethodSignature : IMethodSignature, ITypedSignature
     {
         #region Properties
         /// <summary>
