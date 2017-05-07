@@ -142,7 +142,7 @@ namespace Choop.Compiler.ObjectModel
                 Lists.Add(list);
 
             // Event handlers
-            foreach (Scope scope in module.EventHandlers)
+            foreach (EventHandlerSignature scope in module.EventHandlers)
                 EventHandlers.Add(scope);
 
             // Methods
