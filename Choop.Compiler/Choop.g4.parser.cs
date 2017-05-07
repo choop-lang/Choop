@@ -1,9 +1,9 @@
 ﻿using Antlr4.Runtime;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Choop.Compiler
 {
-    partial class ChoopParser
+    sealed partial class ChoopParser
     {
         #region Constructor
         /// <summary>
@@ -11,7 +11,7 @@ namespace Choop.Compiler
         /// </summary>
         /// <param name="input">The token stream to parse.</param>
         /// <param name="errorCollection">The collection to record compiler errors to.</param>
-        public ChoopParser(ITokenStream input, ICollection<CompilerError> errorCollection) : this(input)
+        public ChoopParser(ITokenStream input, Collection<CompilerError> errorCollection) : this(input)
         {
             // Set error listener
             RemoveErrorListeners();

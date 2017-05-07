@@ -10,9 +10,9 @@ namespace Choop.Compiler.ObjectModel
     {
         #region Properties
         /// <summary>
-        /// Gets or sets the name of the method.
+        /// Gets the name of the method.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets the collection of parameters for the method.
@@ -25,14 +25,26 @@ namespace Choop.Compiler.ObjectModel
         public Scope MainScope { get; } = new Scope();
 
         /// <summary>
-        /// Gets or sets the return type of the method.
+        /// Gets the return type of the method.
         /// </summary>
-        public DataType Type { get; set; }
+        public DataType Type { get; }
 
         /// <summary>
         /// Gets or sets whether the method will return a value.
         /// </summary>
         public bool HasReturn { get; set; }
+        #endregion
+        #region Constructor
+        /// <summary>
+        /// Creates a new instance of the <see cref="MethodSignature"/> class.
+        /// </summary>
+        /// <param name="name">The name of the method.</param>
+        /// <param name="type">The return type of the method.</param>
+        public MethodSignature(string name, DataType type)
+        {
+            Name = name;
+            Type = type;
+        }
         #endregion
     }
 }

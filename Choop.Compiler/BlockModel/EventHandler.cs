@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Collections.Generic;
 using System.Drawing;
 
 namespace Choop.Compiler.BlockModel
@@ -23,7 +22,7 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets the collection of blocks inside this script.
         /// </summary>
-        public ICollection<Block> Blocks { get; } = new Collection<Block>();
+        public Collection<Block> Blocks { get; } = new Collection<Block>();
         #endregion
         #region Constructor
         /// <summary>

@@ -16,12 +16,12 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets or sets the number of the corresponding file in the project ZIP archive.
         /// </summary>
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the MD5 hash of the contents of the costume, followed by the file extension.
         /// </summary>
-        public string MD5 { get; set; }
+        public string Md5 { get; set; }
 
         /// <summary>
         /// Gets or sets the number of pixels that fit along the X axis of a single screen pixel
@@ -33,15 +33,6 @@ namespace Choop.Compiler.BlockModel
         /// Gets or sets the rotation centre of the costume.
         /// </summary>
         public Point RotationCenter { get; set; } = Point.Empty;
-        #endregion
-        #region Constructor
-        /// <summary>
-        /// Creates a new instance of the <see cref="Costume"/> class. 
-        /// </summary>
-        public Costume()
-        {
-
-        }
         #endregion
     }
 }

@@ -16,7 +16,7 @@ namespace Choop.Compiler.ObjectModel
         public const StringComparison IdentifierComparisonMode = StringComparison.CurrentCulture;
         #endregion
         #region Properties
-        private ObservableCollection<SpriteSignature> sprites = new ObservableCollection<SpriteSignature>();
+        private readonly ObservableCollection<SpriteSignature> _sprites = new ObservableCollection<SpriteSignature>();
 
         /// <summary>
         /// Gets the collection of global constants.
@@ -41,10 +41,7 @@ namespace Choop.Compiler.ObjectModel
         /// <summary>
         /// Gets the collection of sprites within the project.
         /// </summary>
-        public Collection<SpriteSignature> Sprites
-        {
-            get { return sprites; }
-        }
+        public Collection<SpriteSignature> Sprites => _sprites;
 
         /// <summary>
         /// Gets the collection of modules within the project.
@@ -57,18 +54,17 @@ namespace Choop.Compiler.ObjectModel
         /// </summary>
         public Project()
         {
-            sprites.CollectionChanged += Sprites_CollectionChanged;
+            _sprites.CollectionChanged += Sprites_CollectionChanged;
         }
         #endregion
         #region Methods
         private void Sprites_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                // Sprite added
-                foreach (SpriteSignature sprite in e.NewItems)
-                    sprite.Register(this);
-            }
+            if (e.Action != NotifyCollectionChangedAction.Add) return;
+
+            // Sprite added
+            foreach (SpriteSignature sprite in e.NewItems)
+                sprite.Register(this);
         }
         #endregion
     }

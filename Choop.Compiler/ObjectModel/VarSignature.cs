@@ -14,9 +14,21 @@ namespace Choop.Compiler.ObjectModel
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the data type of the variable.
+        /// Gets the data type of the variable.
         /// </summary>
-        public DataType Type { get; set; }
+        public DataType Type { get; }
+        #endregion
+        #region Constructor
+        /// <summary>
+        /// Creates a new instance of the <see cref="VarSignature"/> class.
+        /// </summary>
+        /// <param name="name">The name of the variable.</param>
+        /// <param name="type">The type of the variable.</param>
+        public VarSignature(string name, DataType type)
+        {
+            Name = name;
+            Type = type;
+        }
         #endregion
     }
 }

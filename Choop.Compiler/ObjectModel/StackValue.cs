@@ -12,7 +12,7 @@ namespace Choop.Compiler.ObjectModel
         /// <summary>
         /// Whether the <see cref="StackValue"/> has been registered to a <see cref="StackSegment"/> object. 
         /// </summary>
-        private bool Registered = false;
+        private bool _registered;
         #endregion
         #region Properties
         /// <summary>
@@ -61,23 +61,16 @@ namespace Choop.Compiler.ObjectModel
         public void UpdateInfo(StackSegment stack)
         {
             // Check if previously registered
-            if (!Registered)
-            {
-                // Not previously registered
-
-                // Set relative stack start index
-                StackStart = stack.GetNextIndex();
-
-                // Mark as registered
-                Registered = true;
-            }
-            else
-            {
-                // Already registered
-
-                // Throw an exception - cannot be added twice
+            if (_registered)
                 throw new InvalidOperationException("StackValue already registered to a StackSegment.");
-            }
+            
+            // Not previously registered
+
+            // Set relative stack start index
+            StackStart = stack.GetNextIndex();
+
+            // Mark as registered
+            _registered = true;
         }
         #endregion
     }

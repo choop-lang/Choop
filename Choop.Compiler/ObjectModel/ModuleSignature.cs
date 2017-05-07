@@ -9,9 +9,9 @@ namespace Choop.Compiler.ObjectModel
     {
         #region Properties
         /// <summary>
-        /// Gets or sets the name of the module.
+        /// Gets the name of the module.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets the collection of constants that are local to the module.
@@ -42,6 +42,16 @@ namespace Choop.Compiler.ObjectModel
         /// Gets the collection of user-defined methods in the module.
         /// </summary>
         public Collection<MethodSignature> Methods { get; } = new Collection<MethodSignature>();
+        #endregion
+        #region Constructor
+        /// <summary>
+        /// Creates a new instance of the <see cref="ModuleSignature"/> class.
+        /// </summary>
+        /// <param name="name">The name of the module.</param>
+        public ModuleSignature(string name)
+        {
+            Name = name;
+        }
         #endregion
     }
 }

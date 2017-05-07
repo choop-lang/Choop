@@ -21,14 +21,5 @@
         /// </summary>
         public bool Persistant { get; set; } = false;
         #endregion
-        #region Constructor
-        /// <summary>
-        /// Creates a new instance of the <see cref="Variable"/> class. 
-        /// </summary>
-        public Variable()
-        {
-
-        }
-        #endregion
     }
 }

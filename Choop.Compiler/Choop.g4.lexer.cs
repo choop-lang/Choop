@@ -1,9 +1,9 @@
 ﻿using Antlr4.Runtime;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Choop.Compiler
 {
-    partial class ChoopLexer
+    sealed partial class ChoopLexer
     {
         #region Constructor
         /// <summary>
@@ -11,7 +11,7 @@ namespace Choop.Compiler
         /// </summary>
         /// <param name="input">The input stream.</param>
         /// <param name="errorCollection">The collection to record token recognition errors in.</param>
-        public ChoopLexer(ICharStream input, ICollection<CompilerError> errorCollection) : this(input)
+        public ChoopLexer(ICharStream input, Collection<CompilerError> errorCollection) : this(input)
         {
             // Set error listener
             RemoveErrorListeners();

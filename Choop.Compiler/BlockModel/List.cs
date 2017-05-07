@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Drawing;
 
 namespace Choop.Compiler.BlockModel
@@ -18,7 +17,7 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets the collection of values in the list.
         /// </summary>
-        public ICollection<object> Contents { get; } = new Collection<object>();
+        public Collection<object> Contents { get; } = new Collection<object>();
 
         /// <summary>
         /// Gets or sets whether the list is a cloud list. (Default is false)
@@ -39,15 +38,6 @@ namespace Choop.Compiler.BlockModel
         /// Gets or sets whether the list monitor is visible. (Default is false)
         /// </summary>
         public bool Visible { get; set; } = false;
-        #endregion
-        #region Constructor
-        /// <summary>
-        /// Creates a new instance of the <see cref="List"/> class. 
-        /// </summary>
-        public List()
-        {
-
-        }
         #endregion
     }
 }

@@ -36,13 +36,5 @@
         /// </summary>
         public string SwfVersion { get; set; } = "v454";
         #endregion
-        #region Constructor
-        /// <summary>
-        /// Creates a new instance of the <see cref="ProjectInfo"/> class. 
-        /// </summary>
-        public ProjectInfo() {
-
-        }
-        #endregion
     }
 }

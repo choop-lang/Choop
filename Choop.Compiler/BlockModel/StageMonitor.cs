@@ -63,13 +63,5 @@ namespace Choop.Compiler.BlockModel
         /// </summary>
         public bool Visible { get; set; } = true;
         #endregion
-        #region Constructor
-        /// <summary>
-        /// Creates a new instance of the <see cref="StageMonitor"/> class. 
-        /// </summary>
-        public StageMonitor() {
-
-        }
-        #endregion
     }
 }

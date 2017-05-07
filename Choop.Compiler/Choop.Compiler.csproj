@@ -76,12 +76,34 @@
       <DependentUpon>Choop.g4</DependentUpon>
     </Compile>
     <Compile Include="ChoopCompiler.cs" />
+    <Compile Include="ChoopModel\ArrayDeclaration.cs" />
+    <Compile Include="ChoopModel\DataType.cs" />
+    <Compile Include="ChoopModel\DataTypeExtension.cs" />
+    <Compile Include="ChoopModel\IDeclaration.cs" />
+    <Compile Include="ChoopModel\IScopedDeclaration.cs" />
+    <Compile Include="ChoopModel\ScopedArrayDeclaration.cs" />
+    <Compile Include="ChoopModel\ScopedVariableDeclaration.cs" />
+    <Compile Include="ChoopModel\VariableDeclaration.cs" />
     <Compile Include="ChoopParserErrorListener.cs" />
     <Compile Include="ChoopListener.cs" />
     <Compile Include="ChoopTokenErrorListener.cs" />
     <Compile Include="CompilerError.cs" />
-    <Compile Include="CustomRecognitionException.cs" />
     <Compile Include="ErrorType.cs" />
+    <Compile Include="ObjectModel\ConstSignature.cs" />
+    <Compile Include="ObjectModel\EventHandlerSignature.cs" />
+    <Compile Include="ObjectModel\IMethodSignature.cs" />
+    <Compile Include="ObjectModel\ISpriteSignature.cs" />
+    <Compile Include="ObjectModel\ITypedSignature.cs" />
+    <Compile Include="ObjectModel\ISignature.cs" />
+    <Compile Include="ObjectModel\MethodSignature.cs" />
+    <Compile Include="ObjectModel\Project.cs" />
+    <Compile Include="ObjectModel\SpriteSignature.cs" />
+    <Compile Include="ObjectModel\VarSignature.cs" />
+    <Compile Include="ObjectModel\ParamSignature.cs" />
+    <Compile Include="ObjectModel\Scope.cs" />
+    <Compile Include="ObjectModel\ModuleSignature.cs" />
+    <Compile Include="ObjectModel\StackSegment.cs" />
+    <Compile Include="ObjectModel\StackValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -91,6 +113,7 @@
     </Antlr4>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

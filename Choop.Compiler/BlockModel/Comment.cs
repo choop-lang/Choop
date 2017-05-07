@@ -26,20 +26,12 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets or sets the ID of the block the comment is attached to. -1 indicates no attachment.
         /// </summary>
-        public int BlockID { get; set; }
+        public int BlockId { get; set; }
 
         /// <summary>
         /// Gets or sets the text inside the comment.
         /// </summary>
         public string Text { get; set; }
-        #endregion
-        #region Constructor
-        /// <summary>
-        /// Creates a new instance of the <see cref="Comment"/> class.
-        /// </summary>
-        public Comment()
-        {
-        }
         #endregion
     }
 }

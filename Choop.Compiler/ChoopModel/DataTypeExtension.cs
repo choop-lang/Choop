@@ -3,8 +3,9 @@
     /// <summary>
     /// Provides extension methods for the <see cref="DataType"/> enumeration. 
     /// </summary>
-    static class DataTypeExtension
+    public static class DataTypeExtension
     {
+        #region Methods
         /// <summary>
         /// Returns whether the specified data type is able to be stored within the current data type.
         /// </summary>
@@ -15,5 +16,6 @@
         {
             return type == DataType.Object || type == other;
         }
+        #endregion
     }
 }

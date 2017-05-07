@@ -9,7 +9,7 @@ namespace Choop.Compiler.ObjectModel
     public class Scope
     {
         #region Properties
-        private List<Scope> childScopes = new List<Scope>();
+        private readonly List<Scope> _childScopes = new List<Scope>();
 
         /// <summary>
         /// Gets the collection of values stored on the stack.
@@ -24,10 +24,8 @@ namespace Choop.Compiler.ObjectModel
         /// <summary>
         /// Gets the collection of child scopes.
         /// </summary>
-        public ReadOnlyCollection<Scope> ChildScopes
-        {
-            get { return childScopes.AsReadOnly(); }
-        }
+        public ReadOnlyCollection<Scope> ChildScopes => _childScopes.AsReadOnly();
+
         #endregion
         #region Constructor
         /// <summary>
@@ -81,7 +79,7 @@ namespace Choop.Compiler.ObjectModel
         /// <param name="child">The scope to add as a child scope.</param>
         protected void AddChild(Scope child)
         {
-            childScopes.Add(child);
+            _childScopes.Add(child);
         }
         #endregion
     }

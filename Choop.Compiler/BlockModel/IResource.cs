@@ -14,12 +14,12 @@
         /// <summary>
         /// Gets or sets the number of the corresponding file in the project ZIP archive.
         /// </summary>
-        int ID { get; set; }
+        int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the MD5 hash of the contents of the resource, followed by the file extension.
         /// </summary>
-        string MD5 { get; set; }
+        string Md5 { get; set; }
         #endregion
     }
 }

@@ -7,9 +7,9 @@
     {
         #region Properties
         /// <summary>
-        /// Gets or sets the name of the subject.
+        /// Gets the name of the subject.
         /// </summary>
-        string Name { get; set; }
+        string Name { get; }
         #endregion
     }
 }

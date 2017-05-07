@@ -1,27 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
 
 namespace Choop.Compiler
 {
     /// <summary>
     /// Handles parsing errors in the <see cref="ChoopParser"/>. 
     /// </summary>
-    class ChoopParserErrorListener : BaseErrorListener
+    internal class ChoopParserErrorListener : BaseErrorListener
     {
         #region Fields
-        private ICollection<CompilerError> ErrorCollection;
+        /// <summary>
+        /// The collection of compiler errors to add to.
+        /// </summary>
+        private readonly Collection<CompilerError> _errorCollection;
         #endregion
         #region Constructor
         /// <summary>
         /// Creates a new instance of the <see cref="ChoopParserErrorListener"/> class. 
         /// </summary>
         /// <param name="errorCollection">The collection to store add compiler errors to.</param>
-        public ChoopParserErrorListener(ICollection<CompilerError> errorCollection)
+        public ChoopParserErrorListener(Collection<CompilerError> errorCollection)
         {
-            ErrorCollection = errorCollection;
+            _errorCollection = errorCollection;
         }
         #endregion
         #region Methods
@@ -78,10 +80,11 @@ namespace Choop.Compiler
                     {
                         // Exception occured
 
-                        if (e is NoViableAltException)
+                        NoViableAltException exception = e as NoViableAltException;
+                        if (exception != null)
                         {
                             // Could not match input to token
-                            symbol = ((NoViableAltException)e).StartToken;
+                            symbol = exception.StartToken;
                             message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '", symbol.Text, "'");
                             errorType = ErrorType.NoViableAlternative;
                         }
@@ -90,7 +93,17 @@ namespace Choop.Compiler
             }
 
             // Add error to collection
-            ErrorCollection.Add(new CompilerError(message, line, charPositionInLine, symbol.StartIndex, symbol.StopIndex, symbol.Text, errorType));
+            _errorCollection.Add(
+                new CompilerError(
+                    message, 
+                    line, 
+                    charPositionInLine, 
+                    symbol.StartIndex, 
+                    symbol.StopIndex, 
+                    symbol.Text,
+                    errorType
+                )
+            );
         }
         #endregion
     }

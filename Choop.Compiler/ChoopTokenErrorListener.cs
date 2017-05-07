@@ -1,25 +1,28 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Choop.Compiler
 {
     /// <summary>
     /// Handles lexer errors in the <see cref="ChoopParser"/>. 
     /// </summary>
-    class ChoopTokenErrorListener : IAntlrErrorListener<int>
+    internal class ChoopTokenErrorListener : IAntlrErrorListener<int>
     {
         #region Fields
-        private ICollection<CompilerError> ErrorCollection;
+        /// <summary>
+        /// The collection of compiler errors to add to.
+        /// </summary>
+        private readonly Collection<CompilerError> _errorCollection;
         #endregion
         #region Constructor
         /// <summary>
         /// Creates a new instance of the <see cref="ChoopTokenErrorListener"/> class. 
         /// </summary>
         /// <param name="errorCollection">The collection to store add compiler errors to.</param>
-        public ChoopTokenErrorListener(ICollection<CompilerError> errorCollection)
+        public ChoopTokenErrorListener(Collection<CompilerError> errorCollection)
         {
-            ErrorCollection = errorCollection;
+            _errorCollection = errorCollection;
         }
         #endregion
         #region Methods
@@ -52,7 +55,7 @@ namespace Choop.Compiler
             }
 
             // Add error to collection
-            ErrorCollection.Add(new CompilerError(message, line, charPositionInLine, startIndex, endIndex, token, errorType));
+            _errorCollection.Add(new CompilerError(message, line, charPositionInLine, startIndex, endIndex, token, errorType));
         }
         #endregion
     }

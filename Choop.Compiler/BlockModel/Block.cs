@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Choop.Compiler.BlockModel
 {
@@ -10,14 +9,14 @@ namespace Choop.Compiler.BlockModel
     {
         #region Properties
         /// <summary>
-        /// Gets or sets the opcode of the block.
+        /// Gets the opcode of the block.
         /// </summary>
-        public string Opcode { get; set; }
+        public string Opcode { get; }
 
         /// <summary>
         /// Gets the collection of arguments for the block.
         /// </summary>
-        public ICollection<object> Args { get; } = new Collection<object>();
+        public Collection<object> Args { get; } = new Collection<object>();
         #endregion
         #region Constructor
         /// <summary>

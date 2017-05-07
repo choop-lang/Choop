@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 
 namespace Choop.Compiler
 {
-    class ChoopListener : ChoopBaseListener
+    internal class ChoopListener : ChoopBaseListener
     {
         #region Fields
-        protected ChoopParser Parser;
+        protected readonly ChoopParser Parser;
 
-        protected int Depth = 0;
+        protected int Depth;
         #endregion
         #region Constructor
         public ChoopListener(ChoopParser parser)
@@ -59,14 +56,7 @@ namespace Choop.Compiler
 
             for (int i = 0; i < depth; i++)
             {
-                if (i % 2 == 0)
-                {
-                    sb.Append(' ');
-                }
-                else
-                {
-                    sb.Append('|');
-                }
+                sb.Append(i % 2 == 0 ? ' ' : '|');
             }
 
             return sb.ToString();

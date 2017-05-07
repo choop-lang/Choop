@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Drawing;
 
 namespace Choop.Compiler.BlockModel
@@ -18,32 +17,32 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets the collection of variables in the sprite.
         /// </summary>
-        public ICollection<Variable> Variables { get; } = new Collection<Variable>();
+        public Collection<Variable> Variables { get; } = new Collection<Variable>();
 
         /// <summary>
         /// Gets the collection of lists in the sprite.
         /// </summary>
-        public ICollection<List> Lists { get; } = new Collection<List>();
+        public Collection<List> Lists { get; } = new Collection<List>();
 
         /// <summary>
         /// Gets the collection of scripts in the sprite. 
         /// </summary>
-        public ICollection<IScript> Scripts { get; } = new Collection<IScript>();
+        public Collection<IScript> Scripts { get; } = new Collection<IScript>();
 
         /// <summary>
         /// Gets the collection of script comments in the sprite.
         /// </summary>
-        public ICollection<Comment> Comments { get; } = new Collection<Comment>();
+        public Collection<Comment> Comments { get; } = new Collection<Comment>();
 
         /// <summary>
         /// Gets the collection of sounds in the sprite.
         /// </summary>
-        public ICollection<Sound> Sounds { get; } = new Collection<Sound>();
+        public Collection<Sound> Sounds { get; } = new Collection<Sound>();
 
         /// <summary>
         /// Gets the collection of costumes in the sprite.
         /// </summary>
-        public ICollection<Costume> Costumes { get; } = new Collection<Costume>();
+        public Collection<Costume> Costumes { get; } = new Collection<Costume>();
 
         /// <summary>
         /// Gets or sets the zero-based index of the current costume of the sprite.
@@ -89,15 +88,6 @@ namespace Choop.Compiler.BlockModel
         /// Gets or sets the info for the sprite. (Unused)
         /// </summary>
         public object SpriteInfo { get; set; } = null;
-        #endregion
-        #region Constructor
-        /// <summary>
-        /// Creates a new instance of the <see cref="Sprite"/> class. 
-        /// </summary>
-        public Sprite()
-        {
-
-        }
         #endregion
     }
 }

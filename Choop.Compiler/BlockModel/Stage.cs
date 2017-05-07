@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Choop.Compiler.BlockModel
@@ -22,32 +21,32 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets the collection of variables in the stage.
         /// </summary>
-        public ICollection<Variable> Variables { get; } = new Collection<Variable>();
+        public Collection<Variable> Variables { get; } = new Collection<Variable>();
 
         /// <summary>
         /// Gets the collection of lists in the stage.
         /// </summary>
-        public ICollection<List> Lists { get; } = new Collection<List>();
+        public Collection<List> Lists { get; } = new Collection<List>();
 
         /// <summary>
         /// Gets the collection of scripts in the stage. 
         /// </summary>
-        public ICollection<IScript> Scripts { get; } = new Collection<IScript>();
+        public Collection<IScript> Scripts { get; } = new Collection<IScript>();
 
         /// <summary>
         /// Gets the collection of script comments in the stage.
         /// </summary>
-        public ICollection<Comment> Comments { get; } = new Collection<Comment>();
+        public Collection<Comment> Comments { get; } = new Collection<Comment>();
 
         /// <summary>
         /// Gets the collection of sounds in the stage.
         /// </summary>
-        public ICollection<Sound> Sounds { get; } = new Collection<Sound>();
+        public Collection<Sound> Sounds { get; } = new Collection<Sound>();
 
         /// <summary>
         /// Gets the collection of backdrops in the stage.
         /// </summary>
-        public ICollection<Costume> Costumes { get; } = new Collection<Costume>();
+        public Collection<Costume> Costumes { get; } = new Collection<Costume>();
 
         /// <summary>
         /// Gets or sets the zero-based index of the current backdrop of the stage.
@@ -62,7 +61,7 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets or sets the MD5 hash name for the image of the pen trails.
         /// </summary>
-        public string PenLayerMD5 { get; set; } = "";
+        public string PenLayerMd5 { get; set; } = "";
 
         /// <summary>
         /// Gets or sets the tempo of the project in bpm.
@@ -77,21 +76,12 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets the collection of monitors in the stage.
         /// </summary>
-        public ICollection<IMonitor> Children { get; } = new Collection<IMonitor>();
+        public Collection<IMonitor> Children { get; } = new Collection<IMonitor>();
 
         /// <summary>
         /// Gets or sets the info for the Scratch project.
         /// </summary>
         public ProjectInfo Info { get; set; }
-        #endregion
-        #region Constructor
-        /// <summary>
-        /// Creates a new instance of the <see cref="Stage"/> class. 
-        /// </summary>
-        public Stage()
-        {
-
-        }
         #endregion
     }
 }

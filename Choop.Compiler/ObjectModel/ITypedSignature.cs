@@ -9,9 +9,9 @@ namespace Choop.Compiler.ObjectModel
     {
         #region Properties
         /// <summary>
-        /// Gets or sets the data type of the subject.
+        /// Gets the data type of the subject.
         /// </summary>
-        DataType Type { get; set; }
+        DataType Type { get; }
         #endregion
     }
 }
