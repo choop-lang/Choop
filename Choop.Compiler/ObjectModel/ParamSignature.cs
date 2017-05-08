@@ -8,10 +8,16 @@ namespace Choop.Compiler.ObjectModel
     public class ParamSignature : VarSignature
     {
         #region Properties
+
+        /// <summary>
+        /// Gets the default value for the parameter, if applicable.
+        /// </summary>
+        public object DefaultValue { get; }
+
         /// <summary>
         /// Gets whether the parameter is optional.
         /// </summary>
-        public bool Optional { get; }
+        public bool Optional => DefaultValue == null;
         #endregion
         #region Constructor
         /// <summary>
@@ -19,10 +25,10 @@ namespace Choop.Compiler.ObjectModel
         /// </summary>
         /// <param name="name">The name of the parameter.</param>
         /// <param name="type">The type of the parameter.</param>
-        /// <param name="optional">Whether the parameter is optional.</param>
-        public ParamSignature(string name, DataType type, bool optional = false) : base(name, type)
+        /// <param name="defaultValue">The default value of the parameter, if it is optional.</param>
+        public ParamSignature(string name, DataType type, object defaultValue = null) : base(name, type)
         {
-            Optional = optional;
+            DefaultValue = defaultValue;
         }
         #endregion
     }
