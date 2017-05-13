@@ -9,9 +9,9 @@ namespace Choop.Compiler.ObjectModel
     {
         #region Properties
         /// <summary>
-        /// Gets or sets the name of the variable.
+        /// Gets the name of the variable.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// Gets the data type of the variable.
