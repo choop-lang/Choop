@@ -36,7 +36,7 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="value">The initial value of the variable.</param>
         /// <param name="stackRef">The stack ref for this variable.</param>
-        public ScopedVarDeclaration(object value, StackValue stackRef)
+        public ScopedVarDeclaration(IExpression value, StackValue stackRef)
         {
             Value = value;
             StackRef = stackRef;

@@ -100,7 +100,7 @@
     <Compile Include="ChoopModel\IDeclaration.cs" />
     <Compile Include="ChoopModel\IScopedDeclaration.cs" />
     <Compile Include="ChoopModel\ArrayAssignStmt.cs" />
-    <Compile Include="ChoopModel\ArrayFullAssignStmt.cs" />
+    <Compile Include="ChoopModel\ArrayReAssignStmt.cs" />
     <Compile Include="ChoopModel\UnaryExpression.cs" />
     <Compile Include="ChoopModel\VarAssignStmt.cs" />
     <Compile Include="ChoopModel\ReturnStmt.cs" />
