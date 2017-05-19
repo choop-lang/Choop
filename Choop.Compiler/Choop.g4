@@ -430,6 +430,10 @@ primaryExpression
     : ( uconstant
       | methodCall
       | Identifier
+      | Identifier
+        SquareOpen
+        expression
+        SquareClose
       | BracketOpen
         expression
         BracketClose
