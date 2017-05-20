@@ -15,7 +15,7 @@ namespace Choop.Compiler.BlockModel
         public string Name
         {
             get { return "Stage"; }
-            set { throw new NotImplementedException(); }
+            set { throw new NotSupportedException(); }
         }
 
         /// <summary>

@@ -15,7 +15,7 @@ namespace Choop.Compiler.BlockModel
         /// </summary>
         public string Opcode {
             get { return "procDef"; }
-            set { throw new NotImplementedException(); }
+            set { throw new NotSupportedException(); }
         }
 
         /// <summary>
