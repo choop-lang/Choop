@@ -31,7 +31,6 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="name">The name of the constant.</param>
         /// <param name="type">The data type of the constant.</param>
         /// <param name="value">The initial value of the constant.</param>
-        /// <param name="signature">The signature of the constant.</param>
         public ConstDeclaration(string name, DataType type, TerminalExpression value)
         {
             Name = name;

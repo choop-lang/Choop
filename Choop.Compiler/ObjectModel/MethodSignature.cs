@@ -40,10 +40,12 @@ namespace Choop.Compiler.ObjectModel
         /// </summary>
         /// <param name="name">The name of the method.</param>
         /// <param name="type">The return type of the method.</param>
-        public MethodSignature(string name, DataType type)
+        /// <param name="hasReturn">Whether the method returns a value.</param>
+        public MethodSignature(string name, DataType type, bool hasReturn)
         {
             Name = name;
             Type = type;
+            HasReturn = hasReturn;
         }
         #endregion
     }
