@@ -30,9 +30,9 @@ namespace Choop.Compiler.ObjectModel
         public DataType Type { get; }
 
         /// <summary>
-        /// Gets or sets whether the method will return a value.
+        /// Gets whether the method will return a value.
         /// </summary>
-        public bool HasReturn { get; set; }
+        public bool HasReturn { get; }
         #endregion
         #region Constructor
         /// <summary>
