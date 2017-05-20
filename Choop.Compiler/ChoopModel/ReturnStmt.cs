@@ -6,7 +6,7 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents a return statement.
     /// </summary>
-    public class ReturnStmt : ICompilable<Block[]>
+    public class ReturnStmt : IStatement
     {
         #region Properties
         /// <summary>

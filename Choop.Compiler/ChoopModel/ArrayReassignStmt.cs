@@ -6,7 +6,7 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents a full array assignment statement.
     /// </summary>
-    public class ArrayReAssignStmt : ICompilable<Block[]>
+    public class ArrayReAssignStmt : IStatement
     {
         #region Properties
         /// <summary>

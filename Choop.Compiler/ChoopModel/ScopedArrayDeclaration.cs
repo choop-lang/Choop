@@ -7,51 +7,59 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents an array declaration scoped inside a method.
     /// </summary>
-    public class ScopedArrayDeclaration : IArrayDeclaration, IScopedDeclaration, ICompilable<Block[]>
+    public class ScopedArrayDeclaration : IArrayDeclaration, IScopedDeclaration, IStatement
     {
         #region Properties
 
         /// <summary>
         /// Gets the name of the array.
         /// </summary>
-        public string Name => StackRef.Name;
+        public string Name { get; }
 
         /// <summary>
         /// Gets the type of the data stored in each element of the array.
         /// </summary>
-        public DataType Type => StackRef.Type;
+        public DataType Type { get; }
 
         /// <summary>
         /// Gets the length of the array.
         /// </summary>
-        public int Length => StackRef.StackSpace;
+        public int Length { get; }
 
         /// <summary>
-        /// Gets the initial values stored in the array.
+        /// Gets the expressions for the initial values stored in the array.
         /// </summary>
         public IExpression[] Value { get; }
-
-        /// <summary>
-        /// Gets the <see cref="StackValue"/> describing the array on the stack.
-        /// </summary>
-        public StackValue StackRef { get; }
         #endregion
         #region Constructor
         /// <summary>
         /// Creates a new instance of the <see cref="ScopedArrayDeclaration"/> class. 
         /// </summary>
-        /// <param name="value">The initial values in the array.</param>
-        /// <param name="stackRef">The stack ref for this array.</param>
-        public ScopedArrayDeclaration(IExpression[] value, StackValue stackRef)
+        /// <param name="name">The name of the array.</param>
+        /// <param name="type">The data type of items inside the array.</param>
+        /// <param name="length">The length of the array.</param>
+        /// <param name="value">The expressions for the initial values in the array.</param>
+        public ScopedArrayDeclaration(string name, DataType type, int length, IExpression[] value)
         {
-            if (StackRef.StackSpace != value.Length)
+            if (length != value.Length)
                 throw new ArgumentException("Stack space and array length do not match", nameof(value));
 
+            Name = name;
+            Type = type;
+            Length = length;
             Value = value;
-            StackRef = stackRef;
         }
         #endregion
         #region Methods
+        /// <summary>
+        /// Returns the signature of the object being declared.
+        /// </summary>
+        /// <returns>The signature of the object being declared.</returns>
+        public StackValue GetSignature()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>

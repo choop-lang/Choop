@@ -76,12 +76,15 @@
       <DependentUpon>Choop.g4</DependentUpon>
     </Compile>
     <Compile Include="ChoopCompiler.cs" />
+    <Compile Include="ChoopModel\IStatement.cs" />
     <Compile Include="ChoopModel\IExpression.cs" />
     <Compile Include="ChoopModel\ArrayLookupExpression.cs" />
+    <Compile Include="ChoopModel\IHasSignature.cs" />
     <Compile Include="ChoopModel\MethodCall.cs" />
     <Compile Include="ChoopModel\CompoundExpression.cs" />
     <Compile Include="ChoopModel\CompoundOperator.cs" />
     <Compile Include="ChoopModel\LookupExpression.cs" />
+    <Compile Include="ChoopModel\ParamDeclaration.cs" />
     <Compile Include="ChoopModel\TerminalExpression.cs" />
     <Compile Include="ChoopModel\UnaryOperator.cs" />
     <Compile Include="ChoopModel\AssignOperator.cs" />
@@ -121,10 +124,10 @@
     <Compile Include="ObjectModel\ITypedSignature.cs" />
     <Compile Include="ObjectModel\ISignature.cs" />
     <Compile Include="ObjectModel\MethodSignature.cs" />
+    <Compile Include="ObjectModel\ParamSignature.cs" />
     <Compile Include="ObjectModel\Project.cs" />
     <Compile Include="ObjectModel\SpriteSignature.cs" />
     <Compile Include="ObjectModel\VarSignature.cs" />
-    <Compile Include="ObjectModel\ParamSignature.cs" />
     <Compile Include="ObjectModel\Scope.cs" />
     <Compile Include="ObjectModel\ModuleSignature.cs" />
     <Compile Include="ObjectModel\StackSegment.cs" />

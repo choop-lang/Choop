@@ -1,4 +1,5 @@
-﻿using Choop.Compiler.ObjectModel;
+﻿using System;
+using Choop.Compiler.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -22,11 +23,6 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the value of the constant.
         /// </summary>
         public TerminalExpression Value { get; }
-
-        /// <summary>
-        /// Gets the signature of the constant.
-        /// </summary>
-        public ConstSignature Signature { get; }
         #endregion
         #region Constructor
         /// <summary>
@@ -36,12 +32,21 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="type">The data type of the constant.</param>
         /// <param name="value">The initial value of the constant.</param>
         /// <param name="signature">The signature of the constant.</param>
-        public ConstDeclaration(string name, DataType type, TerminalExpression value, ConstSignature signature)
+        public ConstDeclaration(string name, DataType type, TerminalExpression value)
         {
             Name = name;
             Type = type;
             Value = value;
-            Signature = signature;
+        }
+        #endregion
+        #region Methods
+        /// <summary>
+        /// Returns the signature of the object being declared.
+        /// </summary>
+        /// <returns>The signature of the object being declared.</returns>
+        public ConstSignature GetSignature()
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

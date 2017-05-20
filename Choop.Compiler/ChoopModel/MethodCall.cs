@@ -8,7 +8,7 @@ namespace Choop.Compiler.ChoopModel
     /// Represents a method call.
     /// </summary>
     /// <remarks>Can be used inside an expression or as a standalone statement.</remarks>
-    public class MethodCall : IExpression, ICompilable<Block[]>
+    public class MethodCall : IExpression, IStatement
     {
         #region Properties
         /// <summary>

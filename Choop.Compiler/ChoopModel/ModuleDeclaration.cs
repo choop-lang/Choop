@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using Choop.Compiler.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -6,13 +7,13 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents a module declaration.
     /// </summary>
-    public class ModuleDeclaration : ISpriteDeclaration
+    public class ModuleDeclaration : ISpriteDeclaration, IHasSignature<ModuleSignature>
     {
         #region Properties
         /// <summary>
         /// Gets the name of the module.
         /// </summary>
-        public string Name => Signature.Name;
+        public string Name { get; }
         
         /// <summary>
         /// Gets the collection of constant declarations. (Not compiled)
@@ -33,20 +34,25 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of method declarations.
         /// </summary>
         public Collection<MethodDeclaration> Methods { get; } = new Collection<MethodDeclaration>();
-
-        /// <summary>
-        /// Gets the signature of the module.
-        /// </summary>
-        public ModuleSignature Signature { get; }
         #endregion
         #region Constructor
         /// <summary>
         /// Creates a new instance of the <see cref="ModuleDeclaration"/> class.
         /// </summary>
-        /// <param name="signature">The signature of the module.</param>
-        public ModuleDeclaration(ModuleSignature signature)
+        /// <param name="name">The name of the module.</param>
+        public ModuleDeclaration(string name)
         {
-            Signature = signature;
+            Name = name;
+        }
+        #endregion
+        #region Methods
+        /// <summary>
+        /// Returns the signature of the object being declared.
+        /// </summary>
+        /// <returns>The signature of the object being declared.</returns>
+        public ModuleSignature GetSignature()
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

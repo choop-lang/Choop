@@ -8,13 +8,13 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents a sprite declaration.
     /// </summary>
-    public class SpriteDeclaration : ISpriteDeclaration, ICompilable<Sprite>
+    public class SpriteDeclaration : ISpriteDeclaration, ICompilable<Sprite>, IHasSignature<SpriteSignature>
     {
         #region Properties
         /// <summary>
         /// Gets the name of the sprite.
         /// </summary>
-        public string Name => Signature.Name;
+        public string Name { get; }
 
         /// <summary>
         /// Gets the filepath of the Sprite metadata file for this sprite.
@@ -45,22 +45,17 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of method declarations.
         /// </summary>
         public Collection<MethodDeclaration> Methods { get; } = new Collection<MethodDeclaration>();
-
-        /// <summary>
-        /// Gets the signature of the sprite.
-        /// </summary>
-        public SpriteSignature Signature { get; }
         #endregion
         #region Constructor
         /// <summary>
         /// Creates a new instance of the <see cref="SpriteDeclaration"/> class.
         /// </summary>
-        /// <param name="signature">The signature of the sprite.</param>
+        /// <param name="name">The name of the sprite.</param>
         /// <param name="metaFile">The file path to the metadata file for this sprite.</param>
-        public SpriteDeclaration(SpriteSignature signature, string metaFile)
+        public SpriteDeclaration(string name, string metaFile)
         {
+            Name = name;
             MetaFile = metaFile;
-            Signature = signature;
         }
         #endregion
         #region Methods
@@ -70,8 +65,7 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="module">The module to import.</param>
         public void Import(ModuleDeclaration module)
         {
-            // Import signatures
-            Signature.Import(module.Signature);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -79,6 +73,15 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
         public Sprite Translate()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Returns the signature of the object being declared.
+        /// </summary>
+        /// <returns>The signature of the object being declared.</returns>
+        public SpriteSignature GetSignature()
         {
             throw new NotImplementedException();
         }

@@ -1,11 +1,9 @@
-﻿using Choop.Compiler.BlockModel;
-
-namespace Choop.Compiler.ChoopModel
+﻿namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents a generic assignment.
     /// </summary>
-    public interface IAssignStmt : ICompilable<Block[]>
+    public interface IAssignStmt : IStatement
     {
         #region Properties
         /// <summary>

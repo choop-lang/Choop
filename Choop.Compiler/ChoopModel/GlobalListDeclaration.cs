@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ObjectModel;
 
@@ -14,12 +15,12 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the name of the list.
         /// </summary>
-        public string Name => Signature.Name;
+        public string Name { get; }
 
         /// <summary>
         /// Gets the type of the data stored in each list item.
         /// </summary>
-        public DataType Type => Signature.Type;
+        public DataType Type { get; }
 
         /// <summary>
         /// Gets the length of the list.
@@ -35,29 +36,35 @@ namespace Choop.Compiler.ChoopModel
         /// Gets whether the list acts as an array.
         /// </summary>
         public bool IsArray { get; }
-
-        /// <summary>
-        /// Gets the signature of the list.
-        /// </summary>
-        public VarSignature Signature { get; }
-
+        
         IExpression[] IVarDeclaration<IExpression[]>.Value => Value.Cast<IExpression>().ToArray();
         #endregion
         #region Constructor
         /// <summary>
         /// Creates a new instance of the <see cref="GlobalListDeclaration"/> class.
         /// </summary>
+        /// <param name="name">The name of the list.</param>
+        /// <param name="type">The data type of items in the list.</param>
         /// <param name="value">The initial values of the list.</param>
         /// <param name="isArray">Whether the list acts as an array.</param>
-        /// <param name="signature">The signature of the list.</param>
-        public GlobalListDeclaration(TerminalExpression[] value, bool isArray, VarSignature signature)
+        public GlobalListDeclaration(string name, DataType type, TerminalExpression[] value, bool isArray)
         {
+            Name = name;
+            Type = type;
             Value = value;
             IsArray = isArray;
-            Signature = signature;
         }
         #endregion
         #region Methods
+        /// <summary>
+        /// Returns the signature of the object being declared.
+        /// </summary>
+        /// <returns>The signature of the object being declared.</returns>
+        public VarSignature GetSignature()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
