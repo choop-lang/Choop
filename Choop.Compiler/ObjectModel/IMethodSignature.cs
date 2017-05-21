@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a signature for any void, function or event handler.
     /// </summary>
-    public interface IMethodSignature
+    public interface IMethodSignature : ISignature
     {
         #region Properties
         /// <summary>

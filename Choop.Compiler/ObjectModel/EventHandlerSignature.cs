@@ -7,6 +7,11 @@
     {
         #region Properties
         /// <summary>
+        /// Gets the name of the event being handled.
+        /// </summary>
+        public string Name { get; }
+
+        /// <summary>
         /// Gets the scope for the event handler.
         /// </summary>
         public Scope MainScope { get; } = new Scope();

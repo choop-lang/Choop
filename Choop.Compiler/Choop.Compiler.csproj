@@ -79,6 +79,7 @@
     <Compile Include="ChoopModel\ForeverLoop.cs" />
     <Compile Include="ChoopModel\ForLoop.cs" />
     <Compile Include="ChoopModel\ForeachLoop.cs" />
+    <Compile Include="ChoopModel\EventHandler.cs" />
     <Compile Include="ChoopModel\WhileLoop.cs" />
     <Compile Include="ChoopModel\RepeatLoop.cs" />
     <Compile Include="ChoopModel\SwitchStmt.cs" />
