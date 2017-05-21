@@ -384,8 +384,7 @@ forLoop
       Terminator
       expression
       Terminator
-      Identifier
-      assignmentSuffix
+      varAssignment
       BracketClose
       scopeBody
     ;
