@@ -145,7 +145,8 @@ constant
     ;
 
 voidDeclaration
-    : AtomicTag?
+    : InlineTag?
+      AtomicTag?
       VoidTag
       Identifier
       parameterSet
