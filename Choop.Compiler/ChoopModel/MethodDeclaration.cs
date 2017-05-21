@@ -11,6 +11,15 @@ namespace Choop.Compiler.ChoopModel
     public class MethodDeclaration : ITypedDeclaration, ICompilable<BlockDef>, IHasSignature<MethodSignature>, IHasBody
     {
         #region Properties
+        /// <summary>
+        /// Gets whether the method should be inlined.
+        /// </summary>
+        public bool Inline { get; }
+
+        /// <summary>
+        /// Gets whether the method should be atomic.
+        /// </summary>
+        public bool Atomic { get; }
 
         /// <summary>
         /// Gets the name of the method.
@@ -49,12 +58,16 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="name">The name of the method.</param>
         /// <param name="type">The return type of the method, if applicable.</param>
         /// <param name="hasReturn">Whether the method returns a value.</param>
+        /// <param name="inline">Whether the method should be inlined.</param>
+        /// <param name="atomic">Whether the method should be atomic.</param>
         /// <param name="params">The collection of parameter declarations for the method.</param>
-        public MethodDeclaration(string name, DataType type, bool hasReturn, ReadOnlyCollection<ParamDeclaration> @params)
+        public MethodDeclaration(string name, DataType type, bool hasReturn, bool inline, bool atomic, ReadOnlyCollection<ParamDeclaration> @params)
         {
             Name = name;
             Type = type;
             HasReturn = hasReturn;
+            Inline = inline;
+            Atomic = atomic;
             Params = @params;
         }
         #endregion
