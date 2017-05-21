@@ -8,6 +8,12 @@ namespace Choop.Compiler.ObjectModel
     /// </summary>
     public class Scope
     {
+        #region Fields
+        /// <summary>
+        /// The next scope ID to use.
+        /// </summary>
+        protected static int NextID = 1;
+        #endregion
         #region Properties
         private readonly List<Scope> _childScopes = new List<Scope>();
 
@@ -15,6 +21,12 @@ namespace Choop.Compiler.ObjectModel
         /// Gets the collection of values stored on the stack.
         /// </summary>
         public StackSegment StackValues { get; } = new StackSegment();
+
+        /// <summary>
+        /// Gets the unique ID for the scope, for use in unsafe mode.
+        /// </summary>
+        /// <remarks>ID is unique, not random.</remarks>
+        public int ID { get; }
 
         /// <summary>
         /// Gets the parent scope of the current instance.
@@ -33,14 +45,15 @@ namespace Choop.Compiler.ObjectModel
         /// </summary>
         public Scope()
         {
-
+            ID = NextID;
+            NextID++;
         }
 
         /// <summary>
         /// Creates a new instance of the <see cref="Scope"/> class with the specified parent. 
         /// </summary>
         /// <param name="parent">The parent scope of the current instance.</param>
-        public Scope(Scope parent)
+        public Scope(Scope parent) : this()
         {
             // Set stack segment start index
             StackValues = new StackSegment(parent.StackValues.GetNextIndex());
