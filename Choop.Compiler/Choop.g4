@@ -145,7 +145,8 @@ constant
     ;
 
 voidDeclaration
-    : InlineTag?
+    : UnsafeTag?
+      InlineTag?
       AtomicTag?
       VoidTag
       Identifier
@@ -154,7 +155,8 @@ voidDeclaration
     ;
 
 functionDeclaration
-    : AtomicTag?
+    : UnsafeTag?
+      AtomicTag?
       ( FunctionTag
       | typeSpecifier
       )
@@ -164,7 +166,8 @@ functionDeclaration
     ;
 
 eventHandler
-    : EventTag
+    : UnsafeTag?
+      EventTag
       ( EventFlag
       | EventKey
       | EventClick
@@ -448,24 +451,24 @@ unaryExpression
     ;
 
 expression
-    :   unaryExpression
-    |   expression OpPow unaryExpression
-    |   expression OpMult unaryExpression
-    |   expression OpDivide unaryExpression
-    |   expression OpMod unaryExpression
-    |   expression OpConcat unaryExpression
-    |   expression OpPlus unaryExpression
-    |   expression OpMinus unaryExpression
-    |   expression OpLShift unaryExpression
-    |   expression OpRShift unaryExpression
-    |   expression OpLT unaryExpression
-    |   expression OpGT unaryExpression
-    |   expression OpLTE unaryExpression
-    |   expression OpGTE unaryExpression
-    |   expression OpEquals unaryExpression
-    |   expression OpNEquals unaryExpression
-    |   expression OpAnd unaryExpression
-    |   expression OpOr unaryExpression
+    : unaryExpression
+    | expression OpPow unaryExpression
+    | expression OpMult unaryExpression
+    | expression OpDivide unaryExpression
+    | expression OpMod unaryExpression
+    | expression OpConcat unaryExpression
+    | expression OpPlus unaryExpression
+    | expression OpMinus unaryExpression
+    | expression OpLShift unaryExpression
+    | expression OpRShift unaryExpression
+    | expression OpLT unaryExpression
+    | expression OpGT unaryExpression
+    | expression OpLTE unaryExpression
+    | expression OpGTE unaryExpression
+    | expression OpEquals unaryExpression
+    | expression OpNEquals unaryExpression
+    | expression OpAnd unaryExpression
+    | expression OpOr unaryExpression
     ;
 
 /*
@@ -531,8 +534,9 @@ UsingTag       : 'using';
 VoidTag        : 'void';
 FunctionTag    : 'function';
 EventTag       : 'event';
-AtomicTag      : 'atomic';
+UnsafeTag      : 'unsafe';
 InlineTag      : 'inline';
+AtomicTag      : 'atomic';
 
 EventFlag      : 'GreenFlag';
 EventKey       : 'KeyPressed';

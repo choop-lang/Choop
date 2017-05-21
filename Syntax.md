@@ -903,27 +903,6 @@ value was provided for the third parameter but not the second:
 
 **Notice:** Arrays or lists cannot be used as parameters.
 
-You can also get the compiler to automatically inline
-voids by using the `inline` tag:
-
-```C#
-var foo = 2;
-
-inline void IncrementFoo() {
-    foo++;
-}
-
-event Clicked() {
-    IncrementFoo();
-
-    // This will be replaced with
-    // foo++;
-}
-```
-
-**Notice:** If a void is recursive (it calls itself), the compiler
-will not allow it to be inlined.
-
 ## Functions
 Functions are like voids except they can return
 values. This is useful for arithmetic.
@@ -935,8 +914,8 @@ function MyFunction(SomeValue) {
     // Returns the parameter + 1
     return SomeValue + 1;
 
-    // As return causes the function to be exited,
-    // this code will never be ran:
+    // As return causes the function to be exited
+    // early, this code will never be ran:
     var test = 1;
 }
 
@@ -971,6 +950,67 @@ event KeyPressed<"space">() {
 
 *For a list of the inbuilt methods in Choop, see
 [Inbuilt.md](Inbuilt.md)*.
+
+## Method Modifiers
+Modifiers can be used to give instructions to the
+compiler on how to compile your code. This can lead to
+the compiler delivering better optimised code.
+
+All modifiers are optional and are specified as keywords
+before the declaration of the method:
+
+```C#
+var foo = 2;
+
+// This code will be inlined
+inline void IncrementFoo() {
+    foo++;
+}
+
+// This code won't have thread and recursion safety
+unsafe event GreenFlag() {
+    var NotThreadSafe = "foo";
+}
+
+// This code will run without screen refresh and
+// will not have any thread or recursion safety
+unsafe atomic string Foo() {
+    return 'bar';
+}
+```
+
+### Atomic Modifier
+The atomic modifier can be used in voids and functions.
+
+It is used to indicate that a method should be ran
+atomically ("without screen refresh").
+
+This gives fast script execution without any loop
+delay. However, it prevents other scripts from running
+at the same time, which can cause the editor to halt
+during long running scripts.
+
+### Inline Modifier
+The inline modifier can be used on voids.
+
+It causes the compiler to directly insert the code into
+the method if possible. If it is not possible (for example,
+the method is recursive) a compiler warning wil be generated.
+
+This avoids the lookup delay for custom methods.
+
+Note that the inline modifier cannot be used in conjunction
+with the atomic modifier.
+
+### Unsafe Modifier
+This can be used on all voids, functions and event handlers.
+
+It can be used where thread safety and recursion support is
+not required. The benefit of this is that scoped variables
+get faster access speeds.
+
+If the unsafe modifier is used inappropriately, scoped
+variables may give incorrect values and data may be lost.
 
 # Scope
 Scope is an important concept in Choop. It applies to

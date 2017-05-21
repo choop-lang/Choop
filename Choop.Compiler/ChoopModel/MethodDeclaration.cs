@@ -12,6 +12,11 @@ namespace Choop.Compiler.ChoopModel
     {
         #region Properties
         /// <summary>
+        /// Gets whether the method is unsafe.
+        /// </summary>
+        public bool Unsafe { get; }
+
+        /// <summary>
         /// Gets whether the method should be inlined.
         /// </summary>
         public bool Inline { get; }
@@ -58,14 +63,16 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="name">The name of the method.</param>
         /// <param name="type">The return type of the method, if applicable.</param>
         /// <param name="hasReturn">Whether the method returns a value.</param>
+        /// <param name="unsafe">Whether the method is unsafe.</param>
         /// <param name="inline">Whether the method should be inlined.</param>
         /// <param name="atomic">Whether the method should be atomic.</param>
         /// <param name="params">The collection of parameter declarations for the method.</param>
-        public MethodDeclaration(string name, DataType type, bool hasReturn, bool inline, bool atomic, ReadOnlyCollection<ParamDeclaration> @params)
+        public MethodDeclaration(string name, DataType type, bool hasReturn, bool @unsafe, bool inline, bool atomic, ReadOnlyCollection<ParamDeclaration> @params)
         {
             Name = name;
             Type = type;
             HasReturn = hasReturn;
+            Unsafe = @unsafe;
             Inline = inline;
             Atomic = atomic;
             Params = @params;
