@@ -76,6 +76,13 @@
       <DependentUpon>Choop.g4</DependentUpon>
     </Compile>
     <Compile Include="ChoopCompiler.cs" />
+    <Compile Include="ChoopModel\ForeverLoop.cs" />
+    <Compile Include="ChoopModel\ForLoop.cs" />
+    <Compile Include="ChoopModel\ForeachLoop.cs" />
+    <Compile Include="ChoopModel\WhileLoop.cs" />
+    <Compile Include="ChoopModel\RepeatLoop.cs" />
+    <Compile Include="ChoopModel\SwitchStmt.cs" />
+    <Compile Include="ChoopModel\IHasBody.cs" />
     <Compile Include="ChoopModel\IStatement.cs" />
     <Compile Include="ChoopModel\IExpression.cs" />
     <Compile Include="ChoopModel\ArrayLookupExpression.cs" />
@@ -85,6 +92,9 @@
     <Compile Include="ChoopModel\CompoundOperator.cs" />
     <Compile Include="ChoopModel\LookupExpression.cs" />
     <Compile Include="ChoopModel\ParamDeclaration.cs" />
+    <Compile Include="ChoopModel\ConditionalBlock.cs" />
+    <Compile Include="ChoopModel\IfStmt.cs" />
+    <Compile Include="ChoopModel\ScopeDeclaration.cs" />
     <Compile Include="ChoopModel\TerminalExpression.cs" />
     <Compile Include="ChoopModel\UnaryOperator.cs" />
     <Compile Include="ChoopModel\AssignOperator.cs" />

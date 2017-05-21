@@ -8,7 +8,7 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents a function or void declaration.
     /// </summary>
-    public class MethodDeclaration : ITypedDeclaration, ICompilable<BlockDef>, IHasSignature<MethodSignature>
+    public class MethodDeclaration : ITypedDeclaration, ICompilable<BlockDef>, IHasSignature<MethodSignature>, IHasBody
     {
         #region Properties
 
@@ -36,6 +36,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of statements within the method.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
+
+        /// <summary>
+        /// Gets the scope of the scope being declared.
+        /// </summary>
+        public Scope Scope { get; } = new Scope();
         #endregion
         #region Constructor
         /// <summary>
