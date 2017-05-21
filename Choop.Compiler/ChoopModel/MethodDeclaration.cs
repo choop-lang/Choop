@@ -52,7 +52,7 @@ namespace Choop.Compiler.ChoopModel
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
 
         /// <summary>
-        /// Gets the scope of the scope being declared.
+        /// Gets the scope of the method.
         /// </summary>
         public Scope Scope { get; } = new Scope();
         #endregion
