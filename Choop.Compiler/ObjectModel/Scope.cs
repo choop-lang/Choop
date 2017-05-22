@@ -45,8 +45,7 @@ namespace Choop.Compiler.ObjectModel
         /// </summary>
         public Scope()
         {
-            ID = NextID;
-            NextID++;
+            ID = NextID++;
         }
 
         /// <summary>
