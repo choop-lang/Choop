@@ -35,6 +35,7 @@
   - [Events](#events)
   - [Voids](#voids)
   - [Functions](#functions)
+  - [Method Modifiers](#method-modifiers)
 - [Scope](#scope)
 
 # Foreword
