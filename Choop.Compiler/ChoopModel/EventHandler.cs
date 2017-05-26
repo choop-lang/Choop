@@ -30,11 +30,6 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of statements within the method.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
-
-        /// <summary>
-        /// Gets the scope of the event handler.
-        /// </summary>
-        public Scope Scope { get; } = new Scope();
         #endregion
         #region Constructor
         /// <summary>

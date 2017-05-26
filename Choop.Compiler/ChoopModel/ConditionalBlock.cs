@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Choop.Compiler.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -23,21 +22,14 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of statements within the block.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
-
-        /// <summary>
-        /// Gets the scope of the block.
-        /// </summary>
-        public Scope Scope { get; }
         #endregion
         #region Constructor
         /// <summary>
         /// Creates a new instance of the <see cref="ConditionalBlock"/> class.
         /// </summary>
-        /// <param name="parentScope">The parent scope of the block.</param>
         /// <param name="condition">The condition determining whether the code block should be run.</param>
-        public ConditionalBlock(Scope parentScope, IExpression condition = null)
+        public ConditionalBlock(IExpression condition = null)
         {
-            Scope = new Scope(parentScope);
             Condiion = condition;
         }
         #endregion

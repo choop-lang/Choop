@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Choop.Compiler.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -13,11 +12,6 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of statements within the body.
         /// </summary>
         Collection<IStatement> Statements { get; }
-
-        /// <summary>
-        /// Gets the scope of the body.
-        /// </summary>
-        Scope Scope { get; }
         #endregion
     }
 }

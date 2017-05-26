@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Choop.Compiler.BlockModel;
-using Choop.Compiler.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -25,11 +24,6 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of statements within the loop.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
-
-        /// <summary>
-        /// Gets the scope of the loop.
-        /// </summary>
-        public Scope Scope { get; }
         #endregion
         #region Constructor
         /// <summary>
@@ -37,12 +31,10 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="inline">Whether to inline the repeat loop.</param>
         /// <param name="iterations">The expression for the number of iterations to be run.</param>
-        /// <param name="parentScope">The parent scope of the declaration.</param>
-        public RepeatLoop(bool inline, IExpression iterations, Scope parentScope)
+        public RepeatLoop(bool inline, IExpression iterations)
         {
             Inline = inline;
             Iterations = iterations;
-            Scope = new Scope(parentScope);
         }
         #endregion
         #region Methods
