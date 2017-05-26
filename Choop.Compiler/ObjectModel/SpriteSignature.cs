@@ -1,6 +1,4 @@
-﻿using Choop.Compiler.ChoopModel;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 
 namespace Choop.Compiler.ObjectModel
@@ -65,54 +63,6 @@ namespace Choop.Compiler.ObjectModel
         #endregion
         #region Methods
         /// <summary>
-        /// Finds the method which has the specified name and is compatible with the specified parameter types.
-        /// </summary>
-        /// <param name="name">The name of the method.</param>
-        /// <param name="paramTypes">The types of each of the supplied parameters, in order.</param>
-        /// <returns>The signature of the method if found; otherwise null.</returns>
-        public MethodSignature GetMethod(string name, params DataType[] paramTypes)
-        {
-            foreach (MethodSignature method in Methods)
-            {
-                // Check name matches
-                if (!method.Name.Equals(name, Project.IdentifierComparisonMode)) continue;
-                // Check valid amount of parameters
-                if (paramTypes.Length > method.Params.Count) continue;
-                
-                // Default to valid
-                bool valid = true;
-
-                // Check each parameter
-                for (int i = 0; i < method.Params.Count; i++)
-                {
-                    if (i < paramTypes.Length)
-                    {
-                        // Check parameter types are compatible
-                        if (method.Params[i].Type.IsCompatible(paramTypes[i])) continue;
-
-                        // Not compatible
-                        valid = false;
-                        break;
-                    }
-
-                    // These parameters weren't specified, so they must be optional
-                    if (method.Params[i].Optional) continue;
-
-                    // Not optional
-                    valid = false;
-                    break;
-                }
-
-                // Return method if valid
-                if (valid)
-                    return method;
-            }
-
-            // Not found
-            return null;
-        }
-
-        /// <summary>
         /// Imports the specified module.
         /// </summary>
         /// <param name="module">The module to import.</param>
@@ -142,58 +92,7 @@ namespace Choop.Compiler.ObjectModel
             foreach (MethodSignature method in module.Methods)
                 Methods.Add(method);
         }
-
-        /// <summary>
-        /// Finds the constant with the specified name within the sprite and project.
-        /// </summary>
-        /// <param name="name">The name of the constant to search for.</param>
-        /// <returns>The signature of the constant with the specified name; null if not found.</returns>
-        public ConstSignature GetConstant(string name) => GetItem(name, Constants, Project.Constants);
-
-        /// <summary>
-        /// Finds the variable with the specified name within the sprite and project.
-        /// </summary>
-        /// <param name="name">The name of the variable to search for.</param>
-        /// <returns>The signature of the variable with the specified name; null if not found.</returns>
-        public VarSignature GetVariable(string name) => GetItem(name, Variables, Project.Variables);
-
-        /// <summary>
-        /// Finds the array with the specified name within the sprite and project.
-        /// </summary>
-        /// <param name="name">The name of the array to search for.</param>
-        /// <returns>The signature of the array with the specified name; null if not found.</returns>
-        public VarSignature GetArray(string name) => GetItem(name, Arrays, Project.Arrays);
-
-        /// <summary>
-        /// Finds the list with the specified name within the sprite and project.
-        /// </summary>
-        /// <param name="name">The name of the list to search for.</param>
-        /// <returns>The signature of the list with the specified name; null if not found.</returns>
-        public VarSignature GetList(string name) => GetItem(name, Lists, Project.Lists);
-
-        /// <summary>
-        /// Finds the item with the specified name and signature type within the sprite or project.
-        /// </summary>
-        /// <param name="name">The name of the item to search for.</param>
-        /// <param name="locals">The collection of local items to search inside.</param>
-        /// <param name="globals">The collection of global items to search inside.</param>
-        /// <returns>The signature of the item with the specified name; null if not found.</returns>
-        private static T GetItem<T>(string name, IEnumerable<T> locals, IEnumerable<T> globals) where T : class, ITypedSignature
-        {
-            // Local
-            foreach (T item in locals)
-                if (item.Name.Equals(name, Project.IdentifierComparisonMode))
-                    return item;
-            
-            // Global
-            foreach (T item in globals)
-                if (item.Name.Equals(name, Project.IdentifierComparisonMode))
-                    return item;
-
-            // Not found
-            return null;
-        }
-
+        
         /// <summary>
         /// Registers the sprite with the specified project object. For internal use only.
         /// </summary>

@@ -3,7 +3,7 @@
 namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
-    /// Represents a sprite or module declaration.
+    /// Represents a sprite, stage or module declaration.
     /// </summary>
     public interface ISpriteDeclaration : IDeclaration
     {
@@ -22,6 +22,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of list declarations.
         /// </summary>
         Collection<GlobalListDeclaration> Lists { get; }
+
+        /// <summary>
+        /// Gets the collection of event handlers.
+        /// </summary>
+        Collection<EventHandler> EventHandlers { get; }
 
         /// <summary>
         /// Gets the collection of method declarations.

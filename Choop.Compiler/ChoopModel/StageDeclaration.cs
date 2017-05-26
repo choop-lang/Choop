@@ -5,17 +5,16 @@ using Choop.Compiler.ObjectModel;
 namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
-    /// Represents a sprite declaration.
+    /// Represents a stage declaration.
     /// </summary>
-    public class SpriteDeclaration : SpriteBaseDeclaration, ICompilable<Sprite>, IHasSignature<SpriteSignature>
+    public class StageDeclaration : SpriteBaseDeclaration, ICompilable<Stage>, IHasSignature<Project>
     {
         #region Constructor
         /// <summary>
-        /// Creates a new instance of the <see cref="SpriteDeclaration"/> class.
+        /// Creates a new instance of the <see cref="StageDeclaration"/> class.
         /// </summary>
-        /// <param name="name">The name of the sprite.</param>
-        /// <param name="metaFile">The file path to the metadata file for this sprite.</param>
-        public SpriteDeclaration(string name, string metaFile) : base(name, metaFile)
+        /// <param name="metaFile">The file path to the metadata file for the stage.</param>
+        public StageDeclaration(string metaFile) : base("Stage", metaFile)
         {
 
         }
@@ -25,7 +24,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Sprite Translate()
+        public Stage Translate()
         {
             throw new NotImplementedException();
         }
@@ -34,7 +33,7 @@ namespace Choop.Compiler.ChoopModel
         /// Returns the signature of the object being declared.
         /// </summary>
         /// <returns>The signature of the object being declared.</returns>
-        public SpriteSignature GetSignature()
+        public Project GetSignature()
         {
             throw new NotImplementedException();
         }

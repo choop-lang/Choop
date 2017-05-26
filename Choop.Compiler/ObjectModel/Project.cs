@@ -7,7 +7,7 @@ namespace Choop.Compiler.ObjectModel
     /// <summary>
     /// Represents a Choop project.
     /// </summary>
-    public class Project
+    public class Project : ISignature
     {
         #region Constants
         /// <summary>
@@ -17,6 +17,11 @@ namespace Choop.Compiler.ObjectModel
         #endregion
         #region Properties
         private readonly ObservableCollection<SpriteSignature> _sprites = new ObservableCollection<SpriteSignature>();
+
+        /// <summary>
+        /// Gets the name of the stage.
+        /// </summary>
+        public string Name => "Stage";
 
         /// <summary>
         /// Gets the collection of global constants.

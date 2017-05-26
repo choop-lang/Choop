@@ -31,6 +31,11 @@ namespace Choop.Compiler.ChoopModel
         public Collection<GlobalListDeclaration> Lists { get; } = new Collection<GlobalListDeclaration>();
 
         /// <summary>
+        /// Gets the collection of event handlers.
+        /// </summary>
+        public Collection<EventHandler> EventHandlers { get; } = new Collection<EventHandler>();
+
+        /// <summary>
         /// Gets the collection of method declarations.
         /// </summary>
         public Collection<MethodDeclaration> Methods { get; } = new Collection<MethodDeclaration>();
