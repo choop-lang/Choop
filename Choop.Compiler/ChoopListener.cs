@@ -50,13 +50,13 @@ namespace Choop.Compiler
             Console.WriteLine(GetIndent(Depth) + "Error: " + node.GetText());
         }
 
-        string GetIndent(int depth)
+        private static string GetIndent(int depth)
         {
             StringBuilder sb = new StringBuilder(depth);
 
-            for (int i = 0; i < depth; i++)
+            for (int i = 0; i < (depth - 1) * 2; i++)
             {
-                sb.Append(i % 2 == 0 ? ' ' : '|');
+                sb.Append(i % 2 == 1 ? ' ' : '|');
             }
 
             return sb.ToString();
