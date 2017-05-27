@@ -1,12 +1,9 @@
-﻿using System;
-using Choop.Compiler.ObjectModel;
-
-namespace Choop.Compiler.ChoopModel
+﻿namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents a paramter declaration.
     /// </summary>
-    public class ParamDeclaration : ITypedDeclaration, IHasSignature<VarSignature>
+    public class ParamDeclaration : ITypedDeclaration
     {
         #region Properties
         /// <summary>
@@ -41,16 +38,6 @@ namespace Choop.Compiler.ChoopModel
             Name = name;
             Type = type;
             Default = @default;
-        }
-        #endregion
-        #region Method
-        /// <summary>
-        /// Returns the signature of the object being declared.
-        /// </summary>
-        /// <returns>The signature of the object being declared.</returns>
-        public VarSignature GetSignature()
-        {
-            throw new NotImplementedException();
         }
         #endregion
     }

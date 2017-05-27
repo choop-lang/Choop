@@ -80,6 +80,7 @@
     <Compile Include="ChoopModel\ForLoop.cs" />
     <Compile Include="ChoopModel\ForeachLoop.cs" />
     <Compile Include="ChoopModel\EventHandler.cs" />
+    <Compile Include="ChoopModel\Settings.cs" />
     <Compile Include="ChoopModel\SpriteBaseDeclaration.cs" />
     <Compile Include="ChoopModel\StageDeclaration.cs" />
     <Compile Include="ChoopModel\WhileLoop.cs" />
@@ -89,7 +90,6 @@
     <Compile Include="ChoopModel\IStatement.cs" />
     <Compile Include="ChoopModel\IExpression.cs" />
     <Compile Include="ChoopModel\ArrayLookupExpression.cs" />
-    <Compile Include="ChoopModel\IHasSignature.cs" />
     <Compile Include="ChoopModel\MethodCall.cs" />
     <Compile Include="ChoopModel\CompoundExpression.cs" />
     <Compile Include="ChoopModel\CompoundOperator.cs" />
@@ -110,7 +110,6 @@
     <Compile Include="ChoopModel\MethodDeclaration.cs" />
     <Compile Include="ChoopModel\GlobalListDeclaration.cs" />
     <Compile Include="ChoopModel\ICompilable.cs" />
-    <Compile Include="ChoopModel\IGlobalVarDeclaration.cs" />
     <Compile Include="ChoopModel\ITypedDeclaration.cs" />
     <Compile Include="ChoopModel\IVarDeclaration.cs" />
     <Compile Include="ChoopModel\IDeclaration.cs" />
@@ -130,19 +129,7 @@
     <Compile Include="ChoopTokenErrorListener.cs" />
     <Compile Include="CompilerError.cs" />
     <Compile Include="ErrorType.cs" />
-    <Compile Include="ObjectModel\ConstSignature.cs" />
-    <Compile Include="ObjectModel\EventHandlerSignature.cs" />
-    <Compile Include="ObjectModel\IMethodSignature.cs" />
-    <Compile Include="ObjectModel\ISpriteSignature.cs" />
-    <Compile Include="ObjectModel\ITypedSignature.cs" />
-    <Compile Include="ObjectModel\ISignature.cs" />
-    <Compile Include="ObjectModel\MethodSignature.cs" />
-    <Compile Include="ObjectModel\ParamSignature.cs" />
-    <Compile Include="ObjectModel\Project.cs" />
-    <Compile Include="ObjectModel\SpriteSignature.cs" />
-    <Compile Include="ObjectModel\VarSignature.cs" />
     <Compile Include="ObjectModel\Scope.cs" />
-    <Compile Include="ObjectModel\ModuleSignature.cs" />
     <Compile Include="ObjectModel\StackSegment.cs" />
     <Compile Include="ObjectModel\StackValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,12 +1,9 @@
-﻿using System;
-using Choop.Compiler.ObjectModel;
-
-namespace Choop.Compiler.ChoopModel
+﻿namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents the a constant declaration.
     /// </summary>
-    public class ConstDeclaration : IGlobalVarDeclaration<TerminalExpression, ConstSignature>
+    public class ConstDeclaration : IVarDeclaration<TerminalExpression>
     {
         #region Properties
         /// <summary>
@@ -36,16 +33,6 @@ namespace Choop.Compiler.ChoopModel
             Name = name;
             Type = type;
             Value = value;
-        }
-        #endregion
-        #region Methods
-        /// <summary>
-        /// Returns the signature of the object being declared.
-        /// </summary>
-        /// <returns>The signature of the object being declared.</returns>
-        public ConstSignature GetSignature()
-        {
-            throw new NotImplementedException();
         }
         #endregion
     }

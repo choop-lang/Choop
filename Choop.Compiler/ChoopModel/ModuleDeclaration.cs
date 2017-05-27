@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using Choop.Compiler.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents a module declaration.
     /// </summary>
-    public class ModuleDeclaration : ISpriteDeclaration, IHasSignature<ModuleSignature>
+    public class ModuleDeclaration : ISpriteDeclaration
     {
         #region Properties
         /// <summary>
@@ -48,16 +46,6 @@ namespace Choop.Compiler.ChoopModel
         public ModuleDeclaration(string name)
         {
             Name = name;
-        }
-        #endregion
-        #region Methods
-        /// <summary>
-        /// Returns the signature of the object being declared.
-        /// </summary>
-        /// <returns>The signature of the object being declared.</returns>
-        public ModuleSignature GetSignature()
-        {
-            throw new NotImplementedException();
         }
         #endregion
     }

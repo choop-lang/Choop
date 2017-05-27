@@ -52,10 +52,10 @@ namespace Choop.Compiler.ChoopModel
         #endregion
         #region Methods
         /// <summary>
-        /// Returns the signature of the object being declared.
+        /// Gets the stack reference for this array.
         /// </summary>
-        /// <returns>The signature of the object being declared.</returns>
-        public StackValue GetSignature()
+        /// <returns>The stack reference for this array.</returns>
+        public StackValue GetStackRef()
         {
             throw new NotImplementedException();
         }

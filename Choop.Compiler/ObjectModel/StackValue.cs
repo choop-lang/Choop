@@ -6,7 +6,7 @@ namespace Choop.Compiler.ObjectModel
     /// <summary>
     /// Represents a variable or array stored on the stack.
     /// </summary>
-    public class StackValue : ITypedSignature
+    public class StackValue
     {
         #region Fields
         /// <summary>

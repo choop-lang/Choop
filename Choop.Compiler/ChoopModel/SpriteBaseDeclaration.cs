@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Choop.Compiler.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -101,7 +100,7 @@ namespace Choop.Compiler.ChoopModel
             foreach (MethodDeclaration method in Methods)
             {
                 // Check name matches
-                if (!method.Name.Equals(name, Project.IdentifierComparisonMode)) continue;
+                if (!method.Name.Equals(name, Settings.IdentifierComparisonMode)) continue;
                 // Check valid amount of parameters
                 if (paramTypes.Length > method.Params.Count) continue;
 
@@ -169,7 +168,7 @@ namespace Choop.Compiler.ChoopModel
         {
             // Local
             foreach (T item in locals)
-                if (item.Name.Equals(name, Project.IdentifierComparisonMode))
+                if (item.Name.Equals(name, Settings.IdentifierComparisonMode))
                     return item;
             
             // Not found

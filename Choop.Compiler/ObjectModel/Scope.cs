@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Choop.Compiler.ChoopModel;
 
 namespace Choop.Compiler.ObjectModel
 {
@@ -74,7 +75,7 @@ namespace Choop.Compiler.ObjectModel
             // Loop through stack values in this scope
             foreach (StackValue value in StackValues)
             {
-                if (value.Name.Equals(name, Project.IdentifierComparisonMode))
+                if (value.Name.Equals(name, Settings.IdentifierComparisonMode))
                     return value; // Match found
             }
 

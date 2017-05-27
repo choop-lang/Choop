@@ -1,13 +1,12 @@
 ﻿using System;
 using Choop.Compiler.BlockModel;
-using Choop.Compiler.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents a global variable declaration.
     /// </summary>
-    public class GlobalVarDeclaration : IGlobalVarDeclaration<TerminalExpression, VarSignature>, ICompilable<Variable>
+    public class GlobalVarDeclaration : IVarDeclaration<TerminalExpression>, ICompilable<Variable>
     {
         #region Properties
         /// <summary>
@@ -40,15 +39,6 @@ namespace Choop.Compiler.ChoopModel
         }
         #endregion
         #region Methods
-        /// <summary>
-        /// Returns the signature of the object being declared.
-        /// </summary>
-        /// <returns>The signature of the object being declared.</returns>
-        public VarSignature GetSignature()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>

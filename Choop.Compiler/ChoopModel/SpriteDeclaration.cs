@@ -1,13 +1,12 @@
 ﻿using System;
 using Choop.Compiler.BlockModel;
-using Choop.Compiler.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents a sprite declaration.
     /// </summary>
-    public class SpriteDeclaration : SpriteBaseDeclaration, ICompilable<Sprite>, IHasSignature<SpriteSignature>
+    public class SpriteDeclaration : SpriteBaseDeclaration, ICompilable<Sprite>
     {
         #region Constructor
         /// <summary>
@@ -26,15 +25,6 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
         public Sprite Translate()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Returns the signature of the object being declared.
-        /// </summary>
-        /// <returns>The signature of the object being declared.</returns>
-        public SpriteSignature GetSignature()
         {
             throw new NotImplementedException();
         }
