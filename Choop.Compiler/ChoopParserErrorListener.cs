@@ -48,8 +48,10 @@ namespace Choop.Compiler
             // Get parser and dictionary
             ChoopParser parser = recognizer as ChoopParser;
 
-            if (parser != null)
+            if (parser != null && parser.State > -1)
             {
+                // Parser is a ChoopParser and an automatic parser error was thrown
+
                 // Get lexer rules
                 IVocabulary vocabulary = ChoopLexer.DefaultVocabulary;
 
