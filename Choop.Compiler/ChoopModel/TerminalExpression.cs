@@ -10,35 +10,26 @@ namespace Choop.Compiler.ChoopModel
     {
         #region Properties
         /// <summary>
-        /// Gets the constant value of the terminal expression.
+        /// Gets the unparsed string value of the terminal expression.
         /// </summary>
-        public object Value { get; }
+        public string Literal { get; }
+
+        /// <summary>
+        /// Gets the data type of the literal.
+        /// </summary>
+        public DataType LiteralType { get; }
         #endregion
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="TerminalExpression"/> class.
         /// </summary>
-        /// <param name="value">The constant value of the expression.</param>
-        public TerminalExpression(object value)
+        /// <param name="literal">The unparsed string value of the expression.</param>
+        /// <param name="literalType">The data type of the literal value.</param>
+        public TerminalExpression(string literal, DataType literalType)
         {
-            Value = value;
-        }
-        #endregion
-        #region Operators
-
-        public static implicit operator TerminalExpression(string value)
-        {
-            return new TerminalExpression(value);
-        }
-
-        public static implicit operator TerminalExpression(double value)
-        {
-            return new TerminalExpression(value);
-        }
-
-        public static implicit operator TerminalExpression(bool value)
-        {
-            return new TerminalExpression(value);
+            Literal = literal;
+            LiteralType = literalType;
         }
         #endregion
         #region Methods
