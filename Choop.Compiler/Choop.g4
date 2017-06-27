@@ -19,11 +19,7 @@ sprite
       Identifier
       BraceOpen
       usingStmt*
-      ( globalStmt
-      | voidDeclaration
-      | functionDeclaration
-      | eventHandler
-      )*
+      spriteBody
       BraceClose
     ;
 
@@ -43,15 +39,18 @@ usingStmt
       Terminator
     ;
 
+spriteBody
+    : ( globalStmt
+      | methodDeclaration
+      | eventHandler
+      )*
+    ;
+
 module
     : ModuleTag
       Identifier
       BraceOpen
-      ( globalStmt
-      | voidDeclaration
-      | functionDeclaration
-      | eventHandler
-      )*
+      spriteBody
       BraceClose
     ;
 
@@ -61,11 +60,10 @@ globalStmt
     ;
 
 globalStmtNoTerminator
-    : ( constDeclaration
-      | varGlobalDeclaration
-      | arrayGlobalDeclaration
-      | listGlobalDeclaration
-      )
+    : constDeclaration
+    | varGlobalDeclaration
+    | arrayGlobalDeclaration
+    | listGlobalDeclaration
     ;
 
 constDeclaration
@@ -130,34 +128,26 @@ arrayConstant
     ;
 
 constant
-    : ( ConstTrue
-      | ConstFalse
-      | StringLiteral
-      | OpMinus?
-        HexNumber
-      | OpMinus?
-        USciNumber
-      | OpMinus?
-        UDecimal
-      | OpMinus?
-        UInteger
-      )
+    : ConstTrue
+    | ConstFalse
+    | StringLiteral
+    | OpMinus?
+      HexNumber
+    | OpMinus?
+      USciNumber
+    | OpMinus?
+      UDecimal
+    | OpMinus?
+      UInteger
     ;
 
-voidDeclaration
-    : UnsafeTag?
-      InlineTag?
-      AtomicTag?
-      VoidTag
-      Identifier
-      parameterSet
-      scopeBody
-    ;
-
-functionDeclaration
-    : UnsafeTag?
-      AtomicTag?
-      ( FunctionTag
+methodDeclaration
+    : ( UnsafeTag
+      | InlineTag
+      | AtomicTag
+      )*
+      ( VoidTag
+      | FunctionTag
       | typeSpecifier
       )
       Identifier
@@ -166,18 +156,11 @@ functionDeclaration
     ;
 
 eventHandler
-    : UnsafeTag?
+    : ( UnsafeTag
+      | AtomicTag
+      )*
       EventTag
-      ( EventFlag
-      | EventKey
-      | EventClick
-      | EventBackdrop
-      | EventMessage
-      | EventCloned
-      | EventLoudness
-      | EventTimer
-      | EventVideo
-      )
+      Identifier
       ( OpLT
         constant
         OpGT
@@ -220,17 +203,16 @@ scopeBody
     ;
 
 statement
-    : ( stmtNoTerminator
-        Terminator
-      | ifStmt
-      | switchStmt
-      | repeatLoop
-      | forLoop
-      | foreachLoop
-      | foreverLoop
-      | whileLoop
-      | scopeBody
-      )
+    : stmtNoTerminator
+      Terminator
+    | ifStmt
+    | switchStmt
+    | repeatLoop
+    | forLoop
+    | foreachLoop
+    | foreverLoop
+    | whileLoop
+    | scopeBody
     ;
 
 stmtNoTerminator
@@ -306,15 +288,14 @@ arrayFullAssignment
     ;
 
 assignmentSuffix
-    : ( ( Assign
-        | AssignAdd
-        | AssignSub
-        | AssignConcat
-        )
-        expression
-      | ( AssignInc
-        | AssignDec
-        )
+    : ( Assign
+      | AssignAdd
+      | AssignSub
+      | AssignConcat
+      )
+      expression
+    | ( AssignInc
+      | AssignDec
       )
     ;
 
@@ -419,28 +400,26 @@ whileLoop
     ;
 
 uconstant
-    : ( ConstTrue
-      | ConstFalse
-      | StringLiteral
-      | HexNumber
-      | USciNumber
-      | UDecimal
-      | UInteger
-      )
+    : ConstTrue
+    | ConstFalse
+    | StringLiteral
+    | HexNumber
+    | USciNumber
+    | UDecimal
+    | UInteger
     ;
 
 primaryExpression
-    : ( uconstant
-      | methodCall
-      | Identifier
-      | Identifier
-        SquareOpen
-        expression
-        SquareClose
-      | BracketOpen
-        expression
-        BracketClose
-      )
+    : uconstant
+    | methodCall
+    | Identifier
+    | Identifier
+      SquareOpen
+      expression
+      SquareClose
+    | BracketOpen
+      expression
+      BracketClose
     ;
 
 unaryExpression
@@ -537,16 +516,6 @@ EventTag       : 'event';
 UnsafeTag      : 'unsafe';
 InlineTag      : 'inline';
 AtomicTag      : 'atomic';
-
-EventFlag      : 'GreenFlag';
-EventKey       : 'KeyPressed';
-EventClick     : 'Clicked';
-EventBackdrop  : 'BackdropChanged';
-EventMessage   : 'MessageRecieved';
-EventCloned    : 'Cloned';
-EventLoudness  : 'LoudnessGreaterThan';
-EventTimer     : 'TimerGreaterThan';
-EventVideo     : 'VideoMotionGreaterThan';
 
 ElseIfTag      : 'else if';
 IfTag          : 'if';
