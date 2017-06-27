@@ -16,6 +16,11 @@ namespace Choop.Compiler.ChoopModel
         public bool Unsafe { get; }
 
         /// <summary>
+        /// Gets whether the event handler is atomic.
+        /// </summary>
+        public bool Atomic { get; }
+
+        /// <summary>
         /// Gets the name of the event being handled.
         /// </summary>
         public string Name { get; }
@@ -36,12 +41,14 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="name">The name of the event being handled.</param>
         /// <param name="parameter">The parameter for the event handler, if necessary.</param>
-        /// <param name="unsafe">Whether the method is unsafe.</param>
-        public EventHandler(string name, TerminalExpression parameter, bool @unsafe)
+        /// <param name="unsafe">Whether the event handler is unsafe.</param>
+        /// <param name="atomic">Whether the event handler is atomic.</param>
+        public EventHandler(string name, TerminalExpression parameter, bool @unsafe, bool atomic)
         {
             Name = name;
             Parameter = parameter;
             Unsafe = @unsafe;
+            Atomic = atomic;
         }
         #endregion
         #region Methods

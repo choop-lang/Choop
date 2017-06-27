@@ -43,7 +43,7 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the collection of parameters declared in the method.
         /// </summary>
-        public ReadOnlyCollection<ParamDeclaration> Params { get; }
+        public Collection<ParamDeclaration> Params { get; } = new Collection<ParamDeclaration>();
 
         /// <summary>
         /// Gets the collection of statements within the method.
@@ -60,8 +60,7 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="unsafe">Whether the method is unsafe.</param>
         /// <param name="inline">Whether the method should be inlined.</param>
         /// <param name="atomic">Whether the method should be atomic.</param>
-        /// <param name="params">The collection of parameter declarations for the method.</param>
-        public MethodDeclaration(string name, DataType type, bool hasReturn, bool @unsafe, bool inline, bool atomic, ReadOnlyCollection<ParamDeclaration> @params)
+        public MethodDeclaration(string name, DataType type, bool hasReturn, bool @unsafe, bool inline, bool atomic)
         {
             Name = name;
             Type = type;
@@ -69,7 +68,6 @@ namespace Choop.Compiler.ChoopModel
             Unsafe = @unsafe;
             Inline = inline;
             Atomic = atomic;
-            Params = @params;
         }
         #endregion
         #region Methods
