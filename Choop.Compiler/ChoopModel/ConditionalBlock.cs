@@ -11,27 +11,17 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the condition to use when deiciding whether to run the block.
         /// </summary>
-        public IExpression Condiion { get; }
+        public Collection<IExpression> Conditions { get; } = new Collection<IExpression>();
 
         /// <summary>
         /// Gets whether the block is the default case. (No parameter)
         /// </summary>
-        public bool IsDefault => Condiion == null;
+        public bool IsDefault => Conditions.Count == 0;
 
         /// <summary>
         /// Gets the collection of statements within the block.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
-        #endregion
-        #region Constructor
-        /// <summary>
-        /// Creates a new instance of the <see cref="ConditionalBlock"/> class.
-        /// </summary>
-        /// <param name="condition">The condition determining whether the code block should be run.</param>
-        public ConditionalBlock(IExpression condition = null)
-        {
-            Condiion = condition;
-        }
         #endregion
     }
 }

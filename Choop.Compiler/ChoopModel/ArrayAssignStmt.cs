@@ -17,7 +17,7 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the index of the element being assigned.
         /// </summary>
-        public int Index { get; }
+        public IExpression Index { get; }
 
         /// <summary>
         /// Gets the operator used for the assignment.
@@ -39,7 +39,7 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="index">The index of the element being assigned.</param>
         /// <param name="operator">The operator to use for the assignment.</param>
         /// <param name="value">The input to the assignment operator.</param>
-        public ArrayAssignStmt(string arrayName, int index, AssignOperator @operator, IExpression value = null)
+        public ArrayAssignStmt(string arrayName, IExpression index, AssignOperator @operator, IExpression value = null)
         {
             Operator = @operator;
             Index = index;

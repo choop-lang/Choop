@@ -31,6 +31,11 @@ namespace Choop.Compiler.ChoopModel
         public Collection<GlobalListDeclaration> Lists { get; } = new Collection<GlobalListDeclaration>();
 
         /// <summary>
+        /// Gets or sets the stage sprite in the project.
+        /// </summary>
+        public StageDeclaration Stage { get; set; }
+
+        /// <summary>
         /// Gets the collection of sprites in the project.
         /// </summary>
         public Collection<SpriteDeclaration> Sprites { get; } = new Collection<SpriteDeclaration>();
@@ -86,6 +91,31 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The declaration of the list with the specified name; null if not found.</returns>
         public GlobalListDeclaration GetList(string name) => GetItem(name, Lists);
 
+        /// <summary>
+        /// Finds the sprite with the specified name.
+        /// </summary>
+        /// <param name="name">The name of the sprite to search for.</param>
+        /// <returns>The declaration of the sprite with the specified name; null if not found.</returns>
+        public SpriteDeclaration GetSprite(string name) => GetItem(name, Sprites);
+
+        /// <summary>
+        /// Finds the module with the specified name.
+        /// </summary>
+        /// <param name="name">The name of the module to search for.</param>
+        /// <returns>The declaration of the module with the specified name; null if not found.</returns>
+        public ModuleDeclaration GetModule(string name) => GetItem(name, Modules);
+
+        /// <summary>
+        /// Finds the declaration with the specified name at the project level.
+        /// </summary>
+        /// <param name="name">The name of the declaration to search for.</param>
+        /// <returns>The declaration with the specified name; null if not found.</returns>
+        public IDeclaration GetDeclaration(string name) => GetItem(name, Constants) ??
+                                                           GetItem(name, Variables) ??
+                                                           GetItem(name, Lists) ??
+                                                           GetItem(name, Sprites) ??
+                                                           (IDeclaration) GetItem(name, Modules);
+        
         /// <summary>
         /// Finds the item with the specified name and type within the project superglobals.
         /// </summary>

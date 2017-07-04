@@ -75,11 +75,13 @@
     <Compile Include="Choop.g4.parser.cs">
       <DependentUpon>Choop.g4</DependentUpon>
     </Compile>
+    <Compile Include="ChoopBuilder.cs" />
     <Compile Include="ChoopCompiler.cs" />
     <Compile Include="ChoopModel\ForeverLoop.cs" />
     <Compile Include="ChoopModel\ForLoop.cs" />
     <Compile Include="ChoopModel\ForeachLoop.cs" />
     <Compile Include="ChoopModel\EventHandler.cs" />
+    <Compile Include="ChoopModel\Project.cs" />
     <Compile Include="ChoopModel\Settings.cs" />
     <Compile Include="ChoopModel\SpriteBaseDeclaration.cs" />
     <Compile Include="ChoopModel\StageDeclaration.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="ChoopTokenErrorListener.cs" />
     <Compile Include="CompilerError.cs" />
     <Compile Include="ErrorType.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="ObjectModel\Scope.cs" />
     <Compile Include="ObjectModel\StackSegment.cs" />
     <Compile Include="ObjectModel\StackValue.cs" />

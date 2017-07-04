@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -17,18 +18,16 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the new array contents.
         /// </summary>
-        public IExpression[] Value { get; }
+        public Collection<IExpression> Items { get; } = new Collection<IExpression>();
         #endregion
         #region Constructor
         /// <summary>
         /// Creates a new instance of the <see cref="VarAssignStmt"/> class.
         /// </summary>
         /// <param name="arrayName">The name of the array being assigned.</param>
-        /// <param name="value">The new array contents.</param>
-        public ArrayReAssignStmt(string arrayName, IExpression[] value)
+        public ArrayReAssignStmt(string arrayName)
         {
             ArrayName = arrayName;
-            Value = value;
         }
         #endregion
         #region Methods

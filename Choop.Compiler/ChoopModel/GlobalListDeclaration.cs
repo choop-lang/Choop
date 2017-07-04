@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Choop.Compiler.BlockModel;
 
@@ -7,7 +9,7 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents a global list or array declaration.
     /// </summary>
-    public class GlobalListDeclaration : IVarDeclaration<TerminalExpression[]>, IArrayDeclaration, ICompilable<List>
+    public class GlobalListDeclaration : IVarDeclaration<Collection<TerminalExpression>>, IArrayDeclaration, ICompilable<List>
     {
         #region Properties
 
@@ -24,19 +26,20 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the length of the list.
         /// </summary>
-        public int Length => Value.Length;
+        public int Length => Value.Count;
 
         /// <summary>
         /// Gets the initial values stored in the list.
         /// </summary>
-        public TerminalExpression[] Value { get; }
+        public Collection<TerminalExpression> Value { get; } = new Collection<TerminalExpression>();
 
         /// <summary>
         /// Gets whether the list acts as an array.
         /// </summary>
         public bool IsArray { get; }
-        
-        IExpression[] IVarDeclaration<IExpression[]>.Value => Value.Cast<IExpression>().ToArray();
+
+        IEnumerable<IExpression> IVarDeclaration<IEnumerable<IExpression>>.Value => Value;
+
         #endregion
         #region Constructor
         /// <summary>
@@ -46,11 +49,10 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="type">The data type of items in the list.</param>
         /// <param name="value">The initial values of the list.</param>
         /// <param name="isArray">Whether the list acts as an array.</param>
-        public GlobalListDeclaration(string name, DataType type, TerminalExpression[] value, bool isArray)
+        public GlobalListDeclaration(string name, DataType type, bool isArray)
         {
             Name = name;
             Type = type;
-            Value = value;
             IsArray = isArray;
         }
         #endregion

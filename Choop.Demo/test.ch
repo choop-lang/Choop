@@ -37,7 +37,7 @@ sprite MySprite {
 	list<num>[] ListTest3;
 	list<string>[] ListTest4 = {'1', '2', '3'};
 
-	void Test1() {
+	inline void Test1() {
 		var test = 27;
 		string test2 = "hello";
 
@@ -118,15 +118,16 @@ sprite MySprite {
 	}
 
 	atomic function Test4(param1, num param2 = 3, num param3 = -4e2) {
-		if (param2 + param3 >= 10)
+		if (param2 + param3 >= 10) {
 			return param3 - param2;
+		}
 
 		return -param1;
 	}
 	
 	event GreenFlag() {
 		array[2] myArray = {1, 2};
-		num[3] numArray = {-5e2, 12.5};
+		num[2] numArray = {-5e2, 12.5};
 
 		myArray[0] = -3;
 

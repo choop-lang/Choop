@@ -1,9 +1,12 @@
-﻿namespace Choop.Compiler.ChoopModel
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents an array or list declaration.
     /// </summary>
-    public interface IArrayDeclaration : IVarDeclaration<IExpression[]>
+    public interface IArrayDeclaration : IVarDeclaration<IEnumerable<IExpression>>
     {
         #region Properties
         /// <summary>

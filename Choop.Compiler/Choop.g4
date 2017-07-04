@@ -128,17 +128,17 @@ arrayConstant
     ;
 
 constant
-    : ConstTrue
-    | ConstFalse
-    | StringLiteral
+    : ConstTrue     #constantTrue
+    | ConstFalse    #constantFalse
+    | StringLiteral #constantString
     | OpMinus?
-      HexNumber
+      HexNumber     #constantHex
     | OpMinus?
-      USciNumber
+      USciNumber    #constantSci
     | OpMinus?
-      UDecimal
+      UDecimal      #constantDec
     | OpMinus?
-      UInteger
+      UInteger      #constantInt
     ;
 
 methodDeclaration
@@ -152,21 +152,6 @@ methodDeclaration
       )
       Identifier
       parameterSet
-      scopeBody
-    ;
-
-eventHandler
-    : ( UnsafeTag
-      | AtomicTag
-      )*
-      EventTag
-      Identifier
-      ( OpLT
-        constant
-        OpGT
-      )?
-      BracketOpen
-      BracketClose
       scopeBody
     ;
 
@@ -185,7 +170,8 @@ parameterSet
     ;
 
 optionalParameter
-    : parameter
+    : typeSpecifier?
+      Identifier
       Assign
       constant
     ;
@@ -195,34 +181,52 @@ parameter
       Identifier
     ;
 
+eventHandler
+    : eventHead
+      scopeBody
+    ;
+
+eventHead
+    : ( UnsafeTag
+      | AtomicTag
+      )*
+      EventTag
+      Identifier
+      ( OpLT
+        constant
+        OpGT
+      )?
+      BracketOpen
+      BracketClose
+    ;
+
 scopeBody
     : BraceOpen
-      ( statement
-      )*
+      statement*
       BraceClose
     ;
 
 statement
     : stmtNoTerminator
-      Terminator
-    | ifStmt
-    | switchStmt
-    | repeatLoop
-    | forLoop
-    | foreachLoop
-    | foreverLoop
-    | whileLoop
-    | scopeBody
+      Terminator          #stmtDefault
+    | ifStmt              #stmtIf
+    | switchStmt          #stmtSwitch
+    | repeatLoop          #stmtRepeat
+    | forLoop             #stmtFor
+    | foreachLoop         #stmtForEach
+    | foreverLoop         #stmtForever
+    | whileLoop           #stmtWhile
+    | scopeBody           #stmtScope
     ;
 
 stmtNoTerminator
-    : varDeclaration
-    | arrayDeclaration
-    | methodCall
-    | varAssignment
-    | arrayAssignment
-    | arrayFullAssignment
-    | returnStmt
+    : varDeclaration      #stmtVarDecl
+    | arrayDeclaration    #stmtArrayDecl
+    | methodCall          #stmtMethodCall
+    | varAssignment       #stmtAssignVar
+    | arrayAssignment     #stmtAssignArray
+    | arrayFullAssignment #stmtReassignArray
+    | returnStmt          #stmtReturn
     ;
 
 varDeclaration
@@ -270,7 +274,12 @@ methodCall
 
 varAssignment
     : Identifier
-      assignmentSuffix
+      assignOp
+      expression #assignVar
+	| Identifier
+	  AssignInc  #assignVarInc
+	| Identifier
+	  AssignDec  #assignVarDec
     ;
 
 arrayAssignment
@@ -278,7 +287,18 @@ arrayAssignment
       SquareOpen
       expression
       SquareClose
-      assignmentSuffix
+      assignOp
+      expression  #assignArray
+	| Identifier
+      SquareOpen
+      expression
+      SquareClose
+      AssignInc   #assignArrayInc
+	| Identifier
+      SquareOpen
+      expression
+      SquareClose
+      AssignDec   #assignArrayDec
     ;
 
 arrayFullAssignment
@@ -288,15 +308,17 @@ arrayFullAssignment
     ;
 
 assignmentSuffix
-    : ( Assign
-      | AssignAdd
-      | AssignSub
-      | AssignConcat
-      )
+    : assignOp
       expression
-    | ( AssignInc
-      | AssignDec
-      )
+    | AssignInc
+    | AssignDec
+    ;
+
+assignOp
+    : Assign
+    | AssignAdd
+    | AssignSub
+    | AssignConcat
     ;
 
 returnStmt
@@ -305,43 +327,64 @@ returnStmt
     ;
 
 ifStmt
-    : IfTag
-      BracketOpen
-      expression
-      BracketClose
-      ( scopeBody
-        ( ElseIfTag
-          BracketOpen
-          expression
-          BracketClose
-          scopeBody
-        )*
-        ( ElseTag
-          scopeBody
-        )?
-      | statement
-      )
+    : ifHead
+      scopeBody
+      ( elseIfHead
+        scopeBody
+      )*
+      elseBlock?
     ;
 
-switchStmt
-    : SwitchTag
+ifHead
+	: IfTag
       BracketOpen
       expression
       BracketClose
+	;
+
+elseIfHead
+	: ElseIfTag
+      BracketOpen
+      expression
+      BracketClose
+	;
+
+elseBlock
+	: ElseTag
+      scopeBody
+	;
+
+switchStmt
+    : switchHead
       BraceOpen
-      ( ( CaseTag
-          constant
-          Colon
-        )+
+      ( caseHead
         caseBody
       )+
-      ( ( DefaultTag
-          Colon
-        )
+      ( defaultCaseHead
         caseBody
       )?
       BraceClose
     ;
+
+switchHead
+	: SwitchTag
+      BracketOpen
+      expression
+      BracketClose
+	;
+
+caseHead
+	: ( CaseTag
+        constant
+        Colon
+      )+
+	;
+
+defaultCaseHead
+	: DefaultTag
+      Colon
+	;
+	
 
 caseBody
     : statement*
@@ -353,25 +396,46 @@ caseBody
     ;
 
 repeatLoop
-    : InlineTag?
-      RepeatTag
-      BracketOpen
-      UInteger
-      BracketClose
+    : repeatHead
       scopeBody
     ;
 
-forLoop
-    : ForTag
+repeatHead
+	: InlineTag?
+      RepeatTag
       BracketOpen
-      varDeclaration
+      expression
+      BracketClose
+	;
+
+forLoop
+    : forHead
+      scopeBody
+    ;
+
+forHead
+	: ForTag
+      BracketOpen
+      ( ( DeclVar
+        | typeSpecifier
+	    )
+		Identifier
+		Assign
+		expression
+	  )
       Terminator
       expression
       Terminator
-      varAssignment
+      ( Identifier
+        assignOp
+        expression
+	  | Identifier
+	    AssignInc
+	  | Identifier
+	    AssignDec
+	  )
       BracketClose
-      scopeBody
-    ;
+	;
 
 foreachLoop
     : ForeachTag
@@ -392,62 +456,67 @@ foreverLoop
     ;
 
 whileLoop
-    : WhileTag
-      BracketOpen
-      expression
-      BracketClose
+    : whileHead
       scopeBody
     ;
 
+whileHead
+	: WhileTag
+      BracketOpen
+      expression
+      BracketClose
+	;
+
 uconstant
-    : ConstTrue
-    | ConstFalse
-    | StringLiteral
-    | HexNumber
-    | USciNumber
-    | UDecimal
-    | UInteger
+    : ConstTrue     #uConstantTrue
+    | ConstFalse    #uConstantFalse
+    | StringLiteral #uConstantString
+    | HexNumber     #uConstantHex
+    | USciNumber    #uConstantSci
+    | UDecimal      #uConstantDec
+    | UInteger      #uConstantInt
     ;
 
 primaryExpression
-    : uconstant
-    | methodCall
-    | Identifier
+    : uconstant     #primaryConstant
+    | methodCall    #primaryMethodCall
+    | Identifier    #primaryVarLookup
     | Identifier
       SquareOpen
       expression
-      SquareClose
+      SquareClose   #primaryArrayLookup
     | BracketOpen
       expression
-      BracketClose
+      BracketClose  #primaryBracket
     ;
 
 unaryExpression
-    : ( OpNot
-      | OpMinus
-      )?
-      primaryExpression
+    : OpNot
+      primaryExpression #unaryNot
+    | OpMinus
+      primaryExpression #unaryMinus
+    | primaryExpression #unaryDefault
     ;
 
 expression
-    : unaryExpression
-    | expression OpPow unaryExpression
-    | expression OpMult unaryExpression
-    | expression OpDivide unaryExpression
-    | expression OpMod unaryExpression
-    | expression OpConcat unaryExpression
-    | expression OpPlus unaryExpression
-    | expression OpMinus unaryExpression
-    | expression OpLShift unaryExpression
-    | expression OpRShift unaryExpression
-    | expression OpLT unaryExpression
-    | expression OpGT unaryExpression
-    | expression OpLTE unaryExpression
-    | expression OpGTE unaryExpression
-    | expression OpEquals unaryExpression
-    | expression OpNEquals unaryExpression
-    | expression OpAnd unaryExpression
-    | expression OpOr unaryExpression
+    : unaryExpression                       #expressionDefault
+    | expression OpPow unaryExpression      #expressionPow
+    | expression OpMult unaryExpression     #expressionMult
+    | expression OpDivide unaryExpression   #expressionDivide
+    | expression OpMod unaryExpression      #expressionMod
+    | expression OpConcat unaryExpression   #expressionConcat
+    | expression OpPlus unaryExpression     #expressionPlus
+    | expression OpMinus unaryExpression    #expressionMinus
+    | expression OpLShift unaryExpression   #expressionLShift
+    | expression OpRShift unaryExpression   #expressionRShift
+    | expression OpLT unaryExpression       #expressionLT
+    | expression OpGT unaryExpression       #expressionGT
+    | expression OpLTE unaryExpression      #expressionLTE
+    | expression OpGTE unaryExpression      #expressionGTE
+    | expression OpEquals unaryExpression   #expressionEquals
+    | expression OpNEquals unaryExpression  #expressionNEquals
+    | expression OpAnd unaryExpression      #expressionAnd
+    | expression OpOr unaryExpression       #expressionOr
     ;
 
 /*
@@ -457,14 +526,14 @@ expression
 ConstTrue      : 'true';
 ConstFalse     : 'false';
 
-AssignAdd	    : '+=';
+AssignAdd      : '+=';
 AssignSub      : '-=';
 AssignConcat   : '.=';
 AssignInc      : '++';
 AssignDec      : '--';
 
 OpConcat       : '.';
-OpPlus	        : '+';
+OpPlus         : '+';
 OpMinus        : '-';
 OpDivide       : '/';
 OpMult         : '*';
@@ -482,17 +551,17 @@ OpAnd          : '&&';
 OpOr           : '||';
 OpNot          : '!';
 
-Assign	        : '=';
+Assign         : '=';
 
 BracketOpen    : '(';
 BracketClose   : ')';
 BraceOpen      : '{';
 BraceClose     : '}';
-SquareOpen	    : '[';
+SquareOpen     : '[';
 SquareClose    : ']';
-Separator       : ',';
-Terminator      : ';';
-Colon           : ':';
+Separator      : ',';
+Terminator     : ';';
+Colon          : ':';
 
 DeclConst      : 'const';
 DeclVar        : 'var';
@@ -568,13 +637,12 @@ UInteger
     ;
 
 StringLiteral
-    : ( '"'
-        CharSequence
-        '"'
-      | '\''
-        CharSequence
-        '\''
-      )
+    : '"'
+      CharSequence
+      '"'
+    | '\''
+      CharSequence
+      '\''
     ;
 
 fragment
