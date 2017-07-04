@@ -32,6 +32,22 @@
         /// <summary>
         /// Indicates that, when choosing between multiple parser rules, no matching rule was found.
         /// </summary>
-        NoViableAlternative
+        NoViableAlternative,
+        /// <summary>
+        /// Indiciates that a declaration which shared its name with another declaration was detected.
+        /// </summary>
+        DuplicateDeclaration,
+        /// <summary>
+        /// Indicates that a module had already been imported into the sprite.
+        /// </summary>
+        ModuleAlreadyImported,
+        /// <summary>
+        /// Indicates that an argument was invalid.
+        /// </summary>
+        InvalidArgument,
+        /// <summary>
+        /// Indicates that the type was not compatible with the target type.
+        /// </summary>
+        TypeMismatch
     }
 }

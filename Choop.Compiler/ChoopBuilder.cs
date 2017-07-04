@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using Choop.Compiler.ChoopModel;
 
@@ -30,9 +30,9 @@ namespace Choop.Compiler
         private readonly Stack<IExpression> _currentExpressions;
 
         /// <summary>
-        /// The parser to report errors to.
+        /// The collection of compiler errors.
         /// </summary>
-        private readonly Parser _parser;
+        private readonly Collection<CompilerError> _compilerErrors;
 
         #endregion
         
@@ -51,10 +51,10 @@ namespace Choop.Compiler
         /// Creates a new instance of the <see cref="ChoopBuilder"/> class.
         /// </summary>
         /// <param name="projectName">The name of the Choop project to create.</param>
-        /// <param name="parser">The parser to report errors to.</param>
-        public ChoopBuilder(string projectName, Parser parser)
+        /// <param name="compilerErrors">The collection of compiler errors to add to.</param>
+        public ChoopBuilder(string projectName, Collection<CompilerError> compilerErrors)
         {
-            _parser = parser;
+            _compilerErrors = compilerErrors;
             Project = new Project(projectName);
 
             _currentSprite = Project;
@@ -101,8 +101,8 @@ namespace Choop.Compiler
                 else
                 {
                     // Syntax error - stage declared twice
-                    _parser.NotifyErrorListeners(identifier.Symbol,
-                        $"Project already contains a definition for '{name}'", null);
+                    _compilerErrors.Add(new CompilerError(identifier.Symbol, 
+                        $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
                     return;
                 }
             }
@@ -120,8 +120,8 @@ namespace Choop.Compiler
                 else
                 {
                     // Syntax error - definition already exists
-                    _parser.NotifyErrorListeners(identifier.Symbol,
-                        $"Project already contains a definition for '{name}'", null);
+                    _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                        $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
                     return;
                 }
             }
@@ -139,7 +139,8 @@ namespace Choop.Compiler
                 else
                 {
                     // Module already included, raise error
-                    _parser.NotifyErrorListeners(module.Symbol, $"Module '{moduleName}' already imported", null);
+                    _compilerErrors.Add(new CompilerError(module.Symbol,
+                        $"Module '{moduleName}' already imported", ErrorType.ModuleAlreadyImported));
                 }
             }
 
@@ -169,8 +170,8 @@ namespace Choop.Compiler
             else
             {
                 // Syntax error - definition already exists
-                _parser.NotifyErrorListeners(identifier.Symbol, $"Project already contains a definition for '{name}'",
-                    null);
+                _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -183,7 +184,7 @@ namespace Choop.Compiler
             base.EnterGlobalStmt(context);
 
             // Expressions list should be empty
-            _currentExpressions.Clear();
+            if (_currentExpressions.Count > 0) throw new InvalidOperationException();
         }
 
         public override void ExitConstDeclaration(ChoopParser.ConstDeclarationContext context)
@@ -197,13 +198,7 @@ namespace Choop.Compiler
 
             // Get terminal expression
             TerminalExpression expression = _currentExpressions.Pop() as TerminalExpression;
-            if (expression == null)
-            {
-                // Expression not terminal (so not constant)
-                // (Our grammar file should prevent this case)
-                _parser.NotifyErrorListeners(identifier.Symbol, "Expression must be a constant value", null);
-                return;
-            }
+            if (expression == null) throw new InvalidOperationException();
 
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
@@ -216,8 +211,8 @@ namespace Choop.Compiler
             else
             {
                 // Syntax error - definition already exists
-                _parser.NotifyErrorListeners(identifier.Symbol, $"Project already contains a definition for '{name}'",
-                    null);
+                _compilerErrors.Add(new CompilerError(identifier.Symbol, 
+                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -236,13 +231,7 @@ namespace Choop.Compiler
             {
                 // Get terminal expression
                 expression = _currentExpressions.Pop() as TerminalExpression;
-                if (expression == null)
-                {
-                    // Expression not terminal (so not constant)
-                    // (Our grammar file should prevent this case)
-                    _parser.NotifyErrorListeners(identifier.Symbol, "Expression must be a constant value", null);
-                    return;
-                }
+                if (expression == null) throw new InvalidOperationException();
             }
 
             // Check anything with same name hasn't already been declared
@@ -256,8 +245,8 @@ namespace Choop.Compiler
             else
             {
                 // Syntax error - definition already exists
-                _parser.NotifyErrorListeners(identifier.Symbol, $"Project already contains a definition for '{name}'",
-                    null);
+                _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -288,7 +277,8 @@ namespace Choop.Compiler
                 if (bounds == 0)
                 {
                     // Syntax error - bound should be greater than 0
-                    _parser.NotifyErrorListeners(identifier.Symbol, "Array length must be greater than 0", null);
+                    _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                        "Array length must be greater than 0", ErrorType.InvalidArgument));
                     return;
                 }
 
@@ -298,8 +288,8 @@ namespace Choop.Compiler
                     if (bounds != _currentExpressions.Count)
                     {
                         // Syntax error - bounds should match
-                        _parser.NotifyErrorListeners(identifier.Symbol,
-                            "Array bounds does not match length of supplied values", null);
+                        _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                            "Array bounds does not match length of supplied values", ErrorType.InvalidArgument));
                         return;
                     }
 
@@ -318,8 +308,8 @@ namespace Choop.Compiler
             else
             {
                 // Syntax error - definition already exists
-                _parser.NotifyErrorListeners(identifier.Symbol, $"Project already contains a definition for '{name}'",
-                    null);
+                _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -329,7 +319,7 @@ namespace Choop.Compiler
 
             // Ensure current expressions is empty
             // (Should be anyway)
-            _currentExpressions.Clear();
+            if (_currentExpressions.Count > 0) throw new InvalidOperationException();
         }
 
         public override void ExitListGlobalDeclaration(ChoopParser.ListGlobalDeclarationContext context)
@@ -364,8 +354,8 @@ namespace Choop.Compiler
                     if (bounds != _currentExpressions.Count)
                     {
                         // Syntax error - bounds should match
-                        _parser.NotifyErrorListeners(identifier.Symbol,
-                            "List bounds does not match length of supplied values", null);
+                        _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                            "List bounds does not match length of supplied values", ErrorType.InvalidArgument));
                     }
 
                     // Get the default values
@@ -386,8 +376,8 @@ namespace Choop.Compiler
             else
             {
                 // Syntax error - definition already exists
-                _parser.NotifyErrorListeners(identifier.Symbol, $"Project already contains a definition for '{name}'",
-                    null);
+                _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                    $"Project already contains a definition for '{name}'", ErrorType.InvalidArgument));
             }
         }
 
@@ -400,7 +390,7 @@ namespace Choop.Compiler
             base.EnterMethodDeclaration(context);
 
             // Expressions list should be empty
-            _currentExpressions.Clear();
+            if (_currentExpressions.Count > 0) throw new InvalidOperationException();
 
             // Get basic info
             ITerminalNode identifier = context.Identifier();
@@ -412,9 +402,9 @@ namespace Choop.Compiler
             DataType type = context.typeSpecifier().ToDataType();
 
             // Validate modifiers
-            ValidateModifier(inlineTags, "inline", _parser);
-            ValidateModifier(atomicTags, "atomic", _parser);
-            ValidateModifier(unsafeTags, "unsafe", _parser);
+            ValidateModifier(inlineTags, "inline", _compilerErrors);
+            ValidateModifier(atomicTags, "atomic", _compilerErrors);
+            ValidateModifier(unsafeTags, "unsafe", _compilerErrors);
 
             // Check method signature doesn't already exist
             // Todo
@@ -460,8 +450,8 @@ namespace Choop.Compiler
             else
             {
                 // Syntax error - definition already exists
-                _parser.NotifyErrorListeners(identifier.Symbol, $"Project already contains a definition for '{name}'",
-                    null);
+                _compilerErrors.Add(new CompilerError(identifier.Symbol, 
+                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -479,13 +469,7 @@ namespace Choop.Compiler
             string name = identifier.GetText();
             DataType type = context.typeSpecifier().ToDataType();
             TerminalExpression expression = _currentExpressions.Pop() as TerminalExpression;
-            if (expression == null)
-            {
-                // Expression not terminal (so not constant)
-                // (Our grammar file should prevent this case)
-                _parser.NotifyErrorListeners(identifier.Symbol, "Expression must be a constant value", null);
-                return;
-            }
+            if (expression == null) throw new InvalidOperationException();
 
             // Check not already defined
             // TODO
@@ -499,8 +483,8 @@ namespace Choop.Compiler
             else
             {
                 // Syntax error - definition already exists
-                _parser.NotifyErrorListeners(identifier.Symbol,
-                    $"Project already contains a definition for '{name}'", null);
+                _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                    $"Project already contains a definition for '{name}'", ErrorType.ExtraneousToken));
             }
         }
 
@@ -509,7 +493,7 @@ namespace Choop.Compiler
             base.EnterEventHead(context);
 
             // Expressions list should be empty
-            _currentExpressions.Clear();
+            if (_currentExpressions.Count > 0) throw new InvalidOperationException();
         }
 
         public override void ExitEventHead(ChoopParser.EventHeadContext context)
@@ -523,8 +507,8 @@ namespace Choop.Compiler
             ITerminalNode[] unsafeTags = context.UnsafeTag();
 
             // Validate modifiers
-            ValidateModifier(atomicTags, "atomic", _parser);
-            ValidateModifier(unsafeTags, "unsafe", _parser);
+            ValidateModifier(atomicTags, "atomic", _compilerErrors);
+            ValidateModifier(unsafeTags, "unsafe", _compilerErrors);
 
             // Check if event has a parameter
             TerminalExpression expression = null;
@@ -532,13 +516,7 @@ namespace Choop.Compiler
             {
                 // Get parameter
                 expression = _currentExpressions.Pop() as TerminalExpression;
-                if (expression == null)
-                {
-                    // Expression not terminal (so not constant)
-                    // (Our grammar file should prevent this case)
-                    _parser.NotifyErrorListeners(eventTag.Symbol, "Parameter must be a constant value", null);
-                    return;
-                }
+                if (expression == null) throw new InvalidOperationException();
             }
 
             // Create declaration
@@ -560,13 +538,14 @@ namespace Choop.Compiler
         /// <param name="modifier">The modifier to validate.</param>
         /// <param name="name">The display name of the modifier.</param>
         /// <param name="parser">The parser to report errors to.</param>
-        private static void ValidateModifier(ITerminalNode[] modifier, string name, Parser parser)
+        private static void ValidateModifier(ITerminalNode[] modifier, string name, Collection<CompilerError> compilerErrors)
         {
             // Only allow max 1
             if (modifier.Length <= 1) return;
 
             for (int i = 1; i < modifier.Length; i++)
-                parser.NotifyErrorListeners(modifier[i].Symbol, $"Duplicate '{name}' modifier", null);
+                compilerErrors.Add(new CompilerError(modifier[i].Symbol,
+                    $"Duplicate '{name}' modifier", ErrorType.ExtraneousToken));
         }
 
         #endregion
@@ -603,8 +582,8 @@ namespace Choop.Compiler
             else
             {
                 // Syntax error - definition already exists
-                _parser.NotifyErrorListeners(identifier.Symbol, $"Project already contains a definition for '{name}'",
-                    null);
+                _compilerErrors.Add(new CompilerError(identifier.Symbol, 
+                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -634,7 +613,8 @@ namespace Choop.Compiler
                 if (bounds == 0)
                 {
                     // Syntax error - bound should be greater than 0
-                    _parser.NotifyErrorListeners(identifier.Symbol, "Array length must be greater than 0", null);
+                    _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                        "Array length must be greater than 0", ErrorType.InvalidArgument));
                     return;
                 }
 
@@ -644,8 +624,8 @@ namespace Choop.Compiler
                     if (bounds != _currentExpressions.Count)
                     {
                         // Syntax error - bounds should match
-                        _parser.NotifyErrorListeners(identifier.Symbol,
-                            "Array bounds does not match length of supplied values", null);
+                        _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                            "Array bounds does not match length of supplied values", ErrorType.InvalidArgument));
                         return;
                     }
 
@@ -664,8 +644,8 @@ namespace Choop.Compiler
             else
             {
                 // Syntax error - definition already exists
-                _parser.NotifyErrorListeners(identifier.Symbol, $"Project already contains a definition for '{name}'",
-                    null);
+                _compilerErrors.Add(new CompilerError(identifier.Symbol, 
+                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -777,7 +757,7 @@ namespace Choop.Compiler
             base.EnterCaseHead(context);
 
             // Current expressions should be empty
-            _currentExpressions.Clear();
+            if (_currentExpressions.Count > 0) throw new InvalidOperationException();
         }
 
         public override void ExitCaseHead(ChoopParser.CaseHeadContext context)
@@ -885,7 +865,7 @@ namespace Choop.Compiler
             if (inlineTag != null && !(expression is TerminalExpression))
             {
                 // Loop cannot be inlined
-                _parser.NotifyErrorListeners(inlineTag.Symbol, "Loop cannot be inlined", null);
+                _compilerErrors.Add(new CompilerError(inlineTag.Symbol, "Loop cannot be inlined", ErrorType.InvalidArgument));
                 return;
             }
 
@@ -903,7 +883,8 @@ namespace Choop.Compiler
             string counterVar = identifiers[0].GetText();
 
             if (counterVar != identifiers[1].GetText())
-                _parser.NotifyErrorListeners(identifiers[1].Symbol, "Assignment must be to the counter variable", null);
+                _compilerErrors.Add(new CompilerError(identifiers[1].Symbol, 
+                    "Assignment must be to the counter variable", ErrorType.InvalidArgument));
 
             // Get assign statement
             VarAssignStmt assignStmt;
@@ -922,7 +903,8 @@ namespace Choop.Compiler
             ChoopParser.TypeSpecifierContext typeSpecifier = context.typeSpecifier();
             DataType type = typeSpecifier.ToDataType();
             if (type == DataType.Boolean || type == DataType.String)
-                _parser.NotifyErrorListeners(typeSpecifier.Start, "Variable type must be object or number", null);
+                _compilerErrors.Add(new CompilerError(typeSpecifier.Start, 
+                    "Variable type must be object or number", ErrorType.TypeMismatch));
 
             ScopedVarDeclaration varDeclaration = new ScopedVarDeclaration(counterVar, type, _currentExpressions.Pop());
 
@@ -977,7 +959,7 @@ namespace Choop.Compiler
             base.EnterStatement(context);
 
             // Expressions list should be empty
-            _currentExpressions.Clear();
+            if (_currentExpressions.Count > 0) throw new InvalidOperationException();
         }
 
         public override void ExitStmtMethodCall(ChoopParser.StmtMethodCallContext context)

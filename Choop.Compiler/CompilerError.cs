@@ -1,4 +1,6 @@
-﻿namespace Choop.Compiler
+﻿using Antlr4.Runtime;
+
+namespace Choop.Compiler
 {
     /// <summary>
     /// Represents a compiler error that occured whilst compiling a Choop file.
@@ -6,6 +8,7 @@
     public class CompilerError
     {
         #region Properties
+
         /// <summary>
         /// Gets the message of the <see cref="CompilerError"/>. 
         /// </summary>
@@ -40,8 +43,22 @@
         /// Gets the type of the compiler error.
         /// </summary>
         public ErrorType Type { get; }
+
         #endregion
+
         #region Constructor
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="CompilerError"/> class. 
+        /// </summary>
+        /// <param name="token">The token that caused the compiler error.</param>
+        /// <param name="message">The error message to display.</param>
+        /// <param name="type">The type of the compiler error.</param>
+        internal CompilerError(IToken token, string message, ErrorType type = ErrorType.Unspecified)
+            : this(message, token.Column, token.Line, token.StartIndex, token.StopIndex, token.Text, type)
+        {
+        }
+
         /// <summary>
         /// Creates a new instance of the <see cref="CompilerError"/> class. 
         /// </summary>
@@ -52,7 +69,8 @@
         /// <param name="stopIndex">The last character index of the token that caused the error.</param>
         /// <param name="tokenText">The text of the token that caused the error.</param>
         /// <param name="type">The type of the compiler error.</param>
-        public CompilerError(string message, int line, int col, int startIndex, int stopIndex, string tokenText, ErrorType type)
+        public CompilerError(string message, int line, int col, int startIndex, int stopIndex, string tokenText,
+            ErrorType type)
         {
             Message = message;
             Line = line;
@@ -62,6 +80,7 @@
             TokenText = tokenText;
             Type = type;
         }
+
         #endregion
     }
 }

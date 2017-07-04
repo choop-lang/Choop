@@ -19,10 +19,10 @@ namespace Choop.Demo
             using (StreamReader reader = new StreamReader(filepath))
             {
                 // Create compiler instance
-                ChoopCompiler compiler = new ChoopCompiler();
+                ChoopCompiler compiler = new ChoopCompiler("Test");
 
                 // Compile code
-                compiler.Compile(reader.BaseStream);
+                compiler.AddFile(reader.BaseStream);
 
                 // Check if compilation was successful
                 if (compiler.HasErrors)
@@ -30,7 +30,7 @@ namespace Choop.Demo
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Could not compile file:");
                     Console.ForegroundColor = ConsoleColor.Gray;
-                    foreach (CompilerError error in compiler.CompileErrors)
+                    foreach (CompilerError error in compiler.CompilerErrors)
                     {
                         Console.WriteLine(string.IsNullOrEmpty(error.TokenText)
                             ? $"Line {error.Line}:{error.Col}  {error.Message}"
