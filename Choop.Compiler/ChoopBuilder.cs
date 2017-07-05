@@ -81,7 +81,7 @@ namespace Choop.Compiler
             if (metaAttribute != null)
             {
                 // Meta attribute used to specify non-standard meta file path
-                metaFile = metaAttribute.constant().GetText();
+                metaFile = metaAttribute.StringLiteral().GetText();
             }
 
             // Create declaration object
@@ -338,6 +338,10 @@ namespace Choop.Compiler
                 GlobalListDeclaration listDeclaration = new GlobalListDeclaration(name, type, false);
 
                 _currentSprite.Lists.Add(listDeclaration);
+                
+                // Get the default values
+                while (_currentExpressions.Count > 0)
+                    listDeclaration.Value.Add(_currentExpressions.Pop() as TerminalExpression);
 
                 // Get bounds
                 ITerminalNode boundSpecifier = context.UInteger();
@@ -345,25 +349,17 @@ namespace Choop.Compiler
                     return;
 
                 int bounds = int.Parse(boundSpecifier.GetText());
-
-                if (bounds == 0) return;
-
-                if (_currentExpressions.Count > 0)
+                
+                if (listDeclaration.Value.Count > 0)
                 {
                     // Check bounds match supplied values
-                    if (bounds != _currentExpressions.Count)
+                    if (bounds != listDeclaration.Value.Count)
                     {
                         // Syntax error - bounds should match
-                        _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                        _compilerErrors.Add(new CompilerError(boundSpecifier.Symbol,
                             "List bounds does not match length of supplied values", ErrorType.InvalidArgument));
                     }
 
-                    // Get the default values
-                    while (_currentExpressions.Count > 0)
-                    {
-                        TerminalExpression expression = _currentExpressions.Pop() as TerminalExpression;
-                        listDeclaration.Value.Add(expression);
-                    }
                 }
                 else
                 {
@@ -961,14 +957,14 @@ namespace Choop.Compiler
             // Expressions list should be empty
             if (_currentExpressions.Count > 0) throw new InvalidOperationException();
         }
-
+        
         public override void ExitStmtMethodCall(ChoopParser.StmtMethodCallContext context)
         {
             base.ExitStmtMethodCall(context);
 
             MethodCall stmt = _currentExpressions.Pop() as MethodCall;
 
-            if (stmt == null) throw new ArgumentNullException(nameof(stmt));
+            if (stmt == null) throw new InvalidOperationException();
 
             _currentBlocks.Peek().Statements.Add(stmt);
         }
@@ -1125,10 +1121,13 @@ namespace Choop.Compiler
             ITerminalNode identifier = context.Identifier();
 
             MethodCall methodCall = new MethodCall(identifier.GetText());
+            
+            while (_currentExpressions.Count > 0)
+                methodCall.Parameters.Insert(0, _currentExpressions.Pop());
 
             _currentExpressions.Push(methodCall);
         }
-
+        
         public override void ExitPrimaryVarLookup(ChoopParser.PrimaryVarLookupContext context)
         {
             base.ExitPrimaryVarLookup(context);

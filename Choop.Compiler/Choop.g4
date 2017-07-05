@@ -27,7 +27,7 @@ metaAttribute
     : SquareOpen
       ( AttrMeta
         BracketOpen
-        constant
+        StringLiteral
         BracketClose
       )
       SquareClose
