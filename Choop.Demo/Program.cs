@@ -13,7 +13,7 @@ namespace Choop.Demo
         private static void Main(string[] args)
         {
             // The path of the file to compile
-            const string filepath = "test.ch";
+            const string filepath = "testerror.ch";
 
             // Open file
             using (StreamReader reader = new StreamReader(filepath))
@@ -22,7 +22,8 @@ namespace Choop.Demo
                 ChoopCompiler compiler = new ChoopCompiler("Test");
 
                 // Compile code
-                compiler.AddFile(reader.BaseStream);
+                compiler.AddCode(reader.BaseStream, filepath);
+                compiler.Compile();
 
                 // Check if compilation was successful
                 if (compiler.HasErrors)
@@ -33,8 +34,8 @@ namespace Choop.Demo
                     foreach (CompilerError error in compiler.CompilerErrors)
                     {
                         Console.WriteLine(string.IsNullOrEmpty(error.TokenText)
-                            ? $"Line {error.Line}:{error.Col}  {error.Message}"
-                            : $"Line {error.Line}:{error.Col}..{error.StopIndex - error.StartIndex + error.Col}\t{error.Message}");
+                            ? $"Line {error.Line}:{error.Col}  {error.Message} ({error.FileName})"
+                            : $"Line {error.Line}:{error.Col}..{error.StopIndex - error.StartIndex + error.Col}\t{error.Message} ({error.FileName})");
                     }
                 }
                 else

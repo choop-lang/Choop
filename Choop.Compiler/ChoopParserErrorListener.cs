@@ -11,22 +11,36 @@ namespace Choop.Compiler
     internal class ChoopParserErrorListener : BaseErrorListener
     {
         #region Fields
+
         /// <summary>
         /// The collection of compiler errors to add to.
         /// </summary>
         private readonly Collection<CompilerError> _errorCollection;
+
+        /// <summary>
+        /// The name of the file being parsed.
+        /// </summary>
+        private readonly string _fileName;
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ChoopParserErrorListener"/> class. 
         /// </summary>
         /// <param name="errorCollection">The collection to store add compiler errors to.</param>
-        public ChoopParserErrorListener(Collection<CompilerError> errorCollection)
+        /// <param name="fileName">The name of the file currently being compiled.</param>
+        public ChoopParserErrorListener(Collection<CompilerError> errorCollection, string fileName)
         {
             _errorCollection = errorCollection;
+            _fileName = fileName;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Notifies that there has been a syntax error.
         /// </summary>
@@ -36,7 +50,8 @@ namespace Choop.Compiler
         /// <param name="charPositionInLine">The column number of the syntax error.</param>
         /// <param name="msg">The message to emit.</param>
         /// <param name="e">The base exception generated that lead to the reporting of an error.</param>
-        public override void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        public override void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line,
+            int charPositionInLine, string msg, RecognitionException e)
         {
             base.SyntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
 
@@ -75,7 +90,8 @@ namespace Choop.Compiler
                         // No exception - generic error
 
                         // Assume extraneous input
-                        message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '", offendingSymbol.Text, "'");
+                        message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '",
+                            offendingSymbol.Text, "'");
                         errorType = ErrorType.ExtraneousToken;
                     }
                     else
@@ -87,7 +103,8 @@ namespace Choop.Compiler
                         {
                             // Could not match input to token
                             symbol = exception.StartToken;
-                            message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '", symbol.Text, "'");
+                            message = string.Concat("Expected {", string.Join(", ", expectedTokens), "} but found '",
+                                symbol.Text, "'");
                             errorType = ErrorType.NoViableAlternative;
                         }
                     }
@@ -97,16 +114,18 @@ namespace Choop.Compiler
             // Add error to collection
             _errorCollection.Add(
                 new CompilerError(
-                    message, 
-                    line, 
-                    charPositionInLine, 
-                    symbol.StartIndex, 
-                    symbol.StopIndex, 
+                    message,
+                    line,
+                    charPositionInLine,
+                    symbol.StartIndex,
+                    symbol.StopIndex,
                     symbol.Text,
+                    _fileName,
                     errorType
                 )
             );
         }
+
         #endregion
     }
 }

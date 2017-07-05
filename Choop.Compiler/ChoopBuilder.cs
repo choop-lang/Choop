@@ -43,6 +43,11 @@ namespace Choop.Compiler
         /// </summary>
         public Project Project { get; }
 
+        /// <summary>
+        /// Gets or sets the current file name.
+        /// </summary>
+        public string FileName { get; set; }
+
         #endregion
         
         #region Constructor
@@ -102,7 +107,7 @@ namespace Choop.Compiler
                 {
                     // Syntax error - stage declared twice
                     _compilerErrors.Add(new CompilerError(identifier.Symbol, 
-                        $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
+                        $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
                     return;
                 }
             }
@@ -121,7 +126,7 @@ namespace Choop.Compiler
                 {
                     // Syntax error - definition already exists
                     _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                        $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
+                        $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
                     return;
                 }
             }
@@ -140,7 +145,7 @@ namespace Choop.Compiler
                 {
                     // Module already included, raise error
                     _compilerErrors.Add(new CompilerError(module.Symbol,
-                        $"Module '{moduleName}' already imported", ErrorType.ModuleAlreadyImported));
+                        $"Module '{moduleName}' already imported", FileName, ErrorType.ModuleAlreadyImported));
                 }
             }
 
@@ -171,7 +176,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
+                    $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -212,7 +217,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError(identifier.Symbol, 
-                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
+                    $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -246,7 +251,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
+                    $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -278,7 +283,7 @@ namespace Choop.Compiler
                 {
                     // Syntax error - bound should be greater than 0
                     _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                        "Array length must be greater than 0", ErrorType.InvalidArgument));
+                        "Array length must be greater than 0", FileName, ErrorType.InvalidArgument));
                     return;
                 }
 
@@ -289,7 +294,7 @@ namespace Choop.Compiler
                     {
                         // Syntax error - bounds should match
                         _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                            "Array bounds does not match length of supplied values", ErrorType.InvalidArgument));
+                            "Array bounds does not match length of supplied values", FileName, ErrorType.InvalidArgument));
                         return;
                     }
 
@@ -309,7 +314,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
+                    $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -357,7 +362,7 @@ namespace Choop.Compiler
                     {
                         // Syntax error - bounds should match
                         _compilerErrors.Add(new CompilerError(boundSpecifier.Symbol,
-                            "List bounds does not match length of supplied values", ErrorType.InvalidArgument));
+                            "List bounds does not match length of supplied values", FileName, ErrorType.InvalidArgument));
                     }
 
                 }
@@ -373,7 +378,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                    $"Project already contains a definition for '{name}'", ErrorType.InvalidArgument));
+                    $"Project already contains a definition for '{name}'", FileName, ErrorType.InvalidArgument));
             }
         }
 
@@ -398,9 +403,9 @@ namespace Choop.Compiler
             DataType type = context.typeSpecifier().ToDataType();
 
             // Validate modifiers
-            ValidateModifier(inlineTags, "inline", _compilerErrors);
-            ValidateModifier(atomicTags, "atomic", _compilerErrors);
-            ValidateModifier(unsafeTags, "unsafe", _compilerErrors);
+            ValidateModifier(inlineTags, "inline");
+            ValidateModifier(atomicTags, "atomic");
+            ValidateModifier(unsafeTags, "unsafe");
 
             // Check method signature doesn't already exist
             // Todo
@@ -447,7 +452,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError(identifier.Symbol, 
-                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
+                    $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -480,7 +485,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                    $"Project already contains a definition for '{name}'", ErrorType.ExtraneousToken));
+                    $"Project already contains a definition for '{name}'", FileName, ErrorType.ExtraneousToken));
             }
         }
 
@@ -503,8 +508,8 @@ namespace Choop.Compiler
             ITerminalNode[] unsafeTags = context.UnsafeTag();
 
             // Validate modifiers
-            ValidateModifier(atomicTags, "atomic", _compilerErrors);
-            ValidateModifier(unsafeTags, "unsafe", _compilerErrors);
+            ValidateModifier(atomicTags, "atomic");
+            ValidateModifier(unsafeTags, "unsafe");
 
             // Check if event has a parameter
             TerminalExpression expression = null;
@@ -533,15 +538,14 @@ namespace Choop.Compiler
         /// </summary>
         /// <param name="modifier">The modifier to validate.</param>
         /// <param name="name">The display name of the modifier.</param>
-        /// <param name="parser">The parser to report errors to.</param>
-        private static void ValidateModifier(ITerminalNode[] modifier, string name, Collection<CompilerError> compilerErrors)
+        private void ValidateModifier(ITerminalNode[] modifier, string name)
         {
             // Only allow max 1
             if (modifier.Length <= 1) return;
 
             for (int i = 1; i < modifier.Length; i++)
-                compilerErrors.Add(new CompilerError(modifier[i].Symbol,
-                    $"Duplicate '{name}' modifier", ErrorType.ExtraneousToken));
+                _compilerErrors.Add(new CompilerError(modifier[i].Symbol,
+                    $"Duplicate '{name}' modifier", FileName, ErrorType.ExtraneousToken));
         }
 
         #endregion
@@ -579,7 +583,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError(identifier.Symbol, 
-                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
+                    $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -610,7 +614,7 @@ namespace Choop.Compiler
                 {
                     // Syntax error - bound should be greater than 0
                     _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                        "Array length must be greater than 0", ErrorType.InvalidArgument));
+                        "Array length must be greater than 0", FileName, ErrorType.InvalidArgument));
                     return;
                 }
 
@@ -621,7 +625,7 @@ namespace Choop.Compiler
                     {
                         // Syntax error - bounds should match
                         _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                            "Array bounds does not match length of supplied values", ErrorType.InvalidArgument));
+                            "Array bounds does not match length of supplied values", FileName, ErrorType.InvalidArgument));
                         return;
                     }
 
@@ -641,7 +645,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError(identifier.Symbol, 
-                    $"Project already contains a definition for '{name}'", ErrorType.DuplicateDeclaration));
+                    $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
 
@@ -861,7 +865,8 @@ namespace Choop.Compiler
             if (inlineTag != null && !(expression is TerminalExpression))
             {
                 // Loop cannot be inlined
-                _compilerErrors.Add(new CompilerError(inlineTag.Symbol, "Loop cannot be inlined", ErrorType.InvalidArgument));
+                _compilerErrors.Add(new CompilerError(inlineTag.Symbol,
+                    "Loop cannot be inlined", FileName, ErrorType.InvalidArgument));
                 return;
             }
 
@@ -880,7 +885,7 @@ namespace Choop.Compiler
 
             if (counterVar != identifiers[1].GetText())
                 _compilerErrors.Add(new CompilerError(identifiers[1].Symbol, 
-                    "Assignment must be to the counter variable", ErrorType.InvalidArgument));
+                    "Assignment must be to the counter variable", FileName, ErrorType.InvalidArgument));
 
             // Get assign statement
             VarAssignStmt assignStmt;
@@ -900,7 +905,7 @@ namespace Choop.Compiler
             DataType type = typeSpecifier.ToDataType();
             if (type == DataType.Boolean || type == DataType.String)
                 _compilerErrors.Add(new CompilerError(typeSpecifier.Start, 
-                    "Variable type must be object or number", ErrorType.TypeMismatch));
+                    "Variable type must be object or number", FileName, ErrorType.TypeMismatch));
 
             ScopedVarDeclaration varDeclaration = new ScopedVarDeclaration(counterVar, type, _currentExpressions.Pop());
 

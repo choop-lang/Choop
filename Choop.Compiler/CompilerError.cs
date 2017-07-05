@@ -40,6 +40,11 @@ namespace Choop.Compiler
         public string TokenText { get; }
 
         /// <summary>
+        /// Gets the name of file currently being compiled.
+        /// </summary>
+        public string FileName { get; }
+
+        /// <summary>
         /// Gets the type of the compiler error.
         /// </summary>
         public ErrorType Type { get; }
@@ -53,9 +58,10 @@ namespace Choop.Compiler
         /// </summary>
         /// <param name="token">The token that caused the compiler error.</param>
         /// <param name="message">The error message to display.</param>
+        /// <param name="fileName">The name of the file currently being compiled.</param>
         /// <param name="type">The type of the compiler error.</param>
-        internal CompilerError(IToken token, string message, ErrorType type = ErrorType.Unspecified)
-            : this(message, token.Column, token.Line, token.StartIndex, token.StopIndex, token.Text, type)
+        internal CompilerError(IToken token, string message, string fileName = null, ErrorType type = ErrorType.Unspecified)
+            : this(message, token.Column, token.Line, token.StartIndex, token.StopIndex, token.Text, fileName, type)
         {
         }
 
@@ -69,7 +75,7 @@ namespace Choop.Compiler
         /// <param name="stopIndex">The last character index of the token that caused the error.</param>
         /// <param name="tokenText">The text of the token that caused the error.</param>
         /// <param name="type">The type of the compiler error.</param>
-        public CompilerError(string message, int line, int col, int startIndex, int stopIndex, string tokenText,
+        public CompilerError(string message, int line, int col, int startIndex, int stopIndex, string tokenText, string fileName,
             ErrorType type)
         {
             Message = message;
@@ -78,6 +84,7 @@ namespace Choop.Compiler
             StartIndex = startIndex;
             StopIndex = stopIndex;
             TokenText = tokenText;
+            FileName = fileName;
             Type = type;
         }
 

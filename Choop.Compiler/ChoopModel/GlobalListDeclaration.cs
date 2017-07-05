@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -47,7 +46,6 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="name">The name of the list.</param>
         /// <param name="type">The data type of items in the list.</param>
-        /// <param name="value">The initial values of the list.</param>
         /// <param name="isArray">Whether the list acts as an array.</param>
         public GlobalListDeclaration(string name, DataType type, bool isArray)
         {

@@ -7,6 +7,7 @@ namespace Choop.Compiler
     sealed partial class ChoopParser
     {
         #region Fields
+
         /// <summary>
         /// Gets the list of event names and their corresponding opcodes.
         /// </summary>
@@ -23,19 +24,23 @@ namespace Choop.Compiler
                 {"TimerGreaterThan", "whenSensorGreaterThan"},
                 {"VideoMotionGreaterThan", "whenSensorGreaterThan"},
             };
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ChoopParser"/> class. 
         /// </summary>
         /// <param name="input">The token stream to parse.</param>
         /// <param name="errorCollection">The collection to record compiler errors to.</param>
-        public ChoopParser(ITokenStream input, Collection<CompilerError> errorCollection) : this(input)
+        public ChoopParser(ITokenStream input, Collection<CompilerError> errorCollection, string fileName) : this(input)
         {
             // Set error listener
             RemoveErrorListeners();
-            AddErrorListener(new ChoopParserErrorListener(errorCollection));
+            AddErrorListener(new ChoopParserErrorListener(errorCollection, fileName));
         }
+
         #endregion
     }
 }

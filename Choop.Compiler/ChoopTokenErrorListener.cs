@@ -10,22 +10,36 @@ namespace Choop.Compiler
     internal class ChoopTokenErrorListener : IAntlrErrorListener<int>
     {
         #region Fields
+
         /// <summary>
         /// The collection of compiler errors to add to.
         /// </summary>
         private readonly Collection<CompilerError> _errorCollection;
+
+        /// <summary>
+        /// The name of the file currently being compiled.
+        /// </summary>
+        private readonly string _fileName;
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ChoopTokenErrorListener"/> class. 
         /// </summary>
         /// <param name="errorCollection">The collection to store add compiler errors to.</param>
-        public ChoopTokenErrorListener(Collection<CompilerError> errorCollection)
+        /// <param name="fileName">The name of the file currently being compiled.</param>
+        public ChoopTokenErrorListener(Collection<CompilerError> errorCollection, string fileName)
         {
             _errorCollection = errorCollection;
+            _fileName = fileName;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Notifies that there has been a syntax error.
         /// </summary>
@@ -35,7 +49,8 @@ namespace Choop.Compiler
         /// <param name="charPositionInLine">The column number of the syntax error.</param>
         /// <param name="msg">The message to emit.</param>
         /// <param name="e">The base exception generated that lead to the reporting of an error.</param>
-        public void SyntaxError(IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        public void SyntaxError(IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine,
+            string msg, RecognitionException e)
         {
             // Default to system message
             string token = "";
@@ -44,8 +59,7 @@ namespace Choop.Compiler
             int endIndex = -1;
             ErrorType errorType = ErrorType.GenericLexerError;
 
-            ChoopLexer lexer = recognizer as ChoopLexer;
-            if (lexer != null)
+            if (recognizer is ChoopLexer lexer)
             {
                 startIndex = lexer._tokenStartCharIndex;
                 endIndex = lexer._input.Index;
@@ -55,8 +69,10 @@ namespace Choop.Compiler
             }
 
             // Add error to collection
-            _errorCollection.Add(new CompilerError(message, line, charPositionInLine, startIndex, endIndex, token, errorType));
+            _errorCollection.Add(new CompilerError(message, line, charPositionInLine, startIndex, endIndex, token,
+                _fileName, errorType));
         }
+
         #endregion
     }
 }

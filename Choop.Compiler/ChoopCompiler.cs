@@ -1,7 +1,10 @@
-﻿using Antlr4.Runtime;
+﻿using System;
+using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using System.Collections.ObjectModel;
 using System.IO;
+using Choop.Compiler.BlockModel;
+using Choop.Compiler.ChoopModel;
 
 namespace Choop.Compiler
 {
@@ -16,7 +19,7 @@ namespace Choop.Compiler
         /// The builder used for creating the internal Choop representation.
         /// </summary>
         private ChoopBuilder _builder;
-
+        
         #endregion
 
         #region Properties
@@ -36,6 +39,21 @@ namespace Choop.Compiler
         /// </summary>
         public bool HasErrors => CompilerErrors.Count > 0;
 
+        /// <summary>
+        /// Gets whether the project has been compiled yet.
+        /// </summary>
+        public bool Compiled { get; private set; }
+
+        /// <summary>
+        /// Gets the internal representation of the Choop project.
+        /// </summary>
+        public Project ChoopProject => _builder.Project;
+
+        /// <summary>
+        /// Gets the internal representation of the Scratch project produced.
+        /// </summary>
+        public ProjectInfo ScratchProject { get; }
+
         #endregion
 
         #region Constructor
@@ -54,53 +72,56 @@ namespace Choop.Compiler
         #region Methods
 
         /// <summary>
-        /// Compiles the code from the specified file.
+        /// Adds the code from the specified stream to the source code to compile.
         /// </summary>
         /// <param name="input">The input stream containing the code to compile.</param>
-        public void AddFile(Stream input)
+        /// <param name="fileName">The name of the file the source code came from. Optional.</param>
+        public void AddCode(Stream input, string fileName = "")
         {
-            Compile(new AntlrInputStream(input));
+            AddCode(new AntlrInputStream(input), fileName);
         }
 
         /// <summary>
-        /// Compiles the specified code.
+        /// Adds the code from the specified stream to the source code to compile.
         /// </summary>
         /// <param name="input">The code to compile.</param>
-        public void AddCode(string input)
+        /// <param name="fileName">The name of the file the source code came from. Optional.</param>
+        public void AddCode(string input, string fileName = "")
         {
-            Compile(new AntlrInputStream(input));
+            AddCode(new AntlrInputStream(input), fileName);
         }
 
         /// <summary>
         /// Compiles the code from the specified input stream.
         /// </summary>
         /// <param name="input">The input stream to compile the code from.</param>
-        private void Compile(ICharStream input)
+        /// <param name="fileName">The file name of the source code.</param>
+        private void AddCode(ICharStream input, string fileName)
         {
+            // Check if already compiled
+            if (Compiled) throw new InvalidOperationException();
+
             // Create temporary compiler error list
             Collection<CompilerError> compilerErrorsTemp = new Collection<CompilerError>();
 
             // Create the lexer
-            ChoopLexer lexer = new ChoopLexer(input, CompilerErrors);
+            ChoopLexer lexer = new ChoopLexer(input, CompilerErrors, fileName);
 
             // Get the tokens from the lexer
             CommonTokenStream tokens = new CommonTokenStream(lexer);
 
             // Create the parser
-            ChoopParser parser = new ChoopParser(tokens, compilerErrorsTemp);
+            ChoopParser parser = new ChoopParser(tokens, compilerErrorsTemp, fileName);
 
             // Gets the parse tree
             ChoopParser.RootContext root = parser.root();
-
-
+            
             // Check that no fatal syntax errors occured
             if (compilerErrorsTemp.Count > 0)
             {
                 // Add compiler errors to global list
                 foreach (CompilerError compilerError in compilerErrorsTemp)
-                {
                     CompilerErrors.Add(compilerError);
-                }
 
                 // Don't create internal Choop representation
                 return;
@@ -108,6 +129,14 @@ namespace Choop.Compiler
 
             // Add to the global internal code representation
             ParseTreeWalker.Default.Walk(_builder, root);
+        }
+
+        /// <summary>
+        /// Takes all the inputted files and compiles them into an sb2 file.
+        /// </summary>
+        public void Compile()
+        {
+            Compiled = true;
         }
 
         #endregion
