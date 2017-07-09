@@ -1,4 +1,6 @@
-﻿namespace Choop.Compiler.ChoopModel
+﻿using System;
+
+namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Provides extension methods for the <see cref="DataType"/> enumeration. 
@@ -16,6 +18,27 @@
         public static bool IsCompatible(this DataType type, DataType other)
         {
             return type == DataType.Object || type == other;
+        }
+
+        /// <summary>
+        /// Returns the default value for the specified data type.
+        /// </summary>
+        /// <param name="type">The type to get the default value for.</param>
+        /// <returns>The default value for the specified data type.</returns>
+        public static object GetDefault(this DataType type)
+        {
+            switch (type)
+            {
+                case DataType.Number:
+                    return 0;
+                case DataType.Boolean:
+                    return false;
+                case DataType.String:
+                case DataType.Object:
+                    return "";
+                default:
+                    throw new InvalidOperationException("Unknown data type");
+            }
         }
 
         #endregion
