@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 
 namespace Choop.Compiler.ObjectModel
@@ -10,24 +11,38 @@ namespace Choop.Compiler.ObjectModel
     public class Scope
     {
         #region Fields
+
         /// <summary>
         /// The next scope ID to use.
         /// </summary>
         protected static int NextID = 1;
+
+        /// <summary>
+        /// The identifier to reference the scope stack.
+        /// </summary>
+        public static Block StackIdentifier = new Block("getParam", "stackRef");
+
         #endregion
+
         #region Properties
+
         private readonly List<Scope> _childScopes = new List<Scope>();
 
         /// <summary>
         /// Gets the collection of values stored on the stack.
         /// </summary>
-        public StackSegment StackValues { get; } = new StackSegment();
+        public StackSegment StackValues { get; }
 
         /// <summary>
         /// Gets the unique ID for the scope, for use in unsafe mode.
         /// </summary>
         /// <remarks>ID is unique, not random.</remarks>
         public int ID { get; }
+
+        /// <summary>
+        /// Gets whether the scope has unsafe variables or not.
+        /// </summary>
+        public bool Unsafe { get; }
 
         /// <summary>
         /// Gets the parent scope of the current instance.
@@ -40,30 +55,51 @@ namespace Choop.Compiler.ObjectModel
         public ReadOnlyCollection<Scope> ChildScopes => _childScopes.AsReadOnly();
 
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="Scope"/> class. 
         /// </summary>
-        public Scope()
+        /// <param name="unsafe">Whether the scope contains unsafe variables.</param>
+        public Scope(bool @unsafe = false)
         {
+            // Increment ID
             ID = NextID++;
+
+            // Create stack segment
+            StackValues = new StackSegment(this);
+
+            // Set unsafe
+            Unsafe = @unsafe;
         }
 
         /// <summary>
         /// Creates a new instance of the <see cref="Scope"/> class with the specified parent. 
         /// </summary>
         /// <param name="parent">The parent scope of the current instance.</param>
-        public Scope(Scope parent) : this()
+        /// <param name="unsafe">Whether the scope has unsafe variables or not.</param>
+        public Scope(Scope parent, bool @unsafe = false)
         {
-            // Set stack segment start index
-            StackValues = new StackSegment(parent.StackValues.GetNextIndex());
+            // Increment ID
+            ID = NextID++;
 
             // Register as child of parent
             Parent = parent;
             parent.AddChild(this);
+
+            // Create stack segment
+            // (Must happen after setting parent)
+            StackValues = new StackSegment(this);
+
+            // Set unsafe
+            Unsafe = parent.Unsafe || @unsafe;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Searches for the stack variable with the specified name.
         /// </summary>
@@ -94,6 +130,7 @@ namespace Choop.Compiler.ObjectModel
         {
             _childScopes.Add(child);
         }
+
         #endregion
     }
 }

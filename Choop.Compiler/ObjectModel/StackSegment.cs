@@ -9,16 +9,25 @@ namespace Choop.Compiler.ObjectModel
     public class StackSegment : IReadOnlyCollection<StackValue>
     {
         #region Fields
+
+        /// <summary>
+        /// The relative start index of segment within the complete stack.
+        /// </summary>
+        private readonly int _startIndex;
+
         /// <summary>
         /// The underlying list instance.
         /// </summary>
         private readonly List<StackValue> _base = new List<StackValue>();
+
         #endregion
+
         #region Properties
+
         /// <summary>
-        /// Gets the relative start index of segment within the complete stack.
+        /// Gets the scope of the <see cref="StackSegment"/>.
         /// </summary>
-        public int StartIndex { get; }
+        public Scope Scope { get; }
 
         /// <summary>
         /// Gets the number of elements contained within the <see cref="StackSegment"/>. 
@@ -33,25 +42,26 @@ namespace Choop.Compiler.ObjectModel
         public StackValue this[int index] => _base[index];
 
         #endregion
+
         #region Constructor
-        /// <summary>
-        /// Creates a new instnace of the <see cref="StackSegment"/> class. 
-        /// </summary>
-        public StackSegment()
-        {
-           
-        }
 
         /// <summary>
-        /// Creates a new instnace of the <see cref="StackSegment"/> class. 
+        /// Creates a new instance of the <see cref="StackSegment"/> class. 
         /// </summary>
-        /// <param name="startIndex">The relative start index of segment within the complete stack.</param>
-        public StackSegment(int startIndex)
+        /// <param name="scope">The scope of this stack segment.</param>
+        public StackSegment(Scope scope)
         {
-            StartIndex = startIndex;
+            // Get start index
+            _startIndex = scope.Parent?.StackValues.GetNextIndex() ?? 0;
+
+            // Set scope
+            Scope = scope;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Adds an item to the <see cref="StackSegment"/>. 
         /// </summary>
@@ -73,7 +83,7 @@ namespace Choop.Compiler.ObjectModel
         {
             // If stack segment currently empty, use stack segment start index
             if (_base.Count == 0)
-                return StartIndex;
+                return _startIndex;
 
             // Stack segment already contains values, calculate start index
 
