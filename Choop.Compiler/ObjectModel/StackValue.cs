@@ -126,6 +126,69 @@ namespace Choop.Compiler.ObjectModel
         }
 
         /// <summary>
+        /// Returns the code for a variable lookup.
+        /// </summary>
+        /// <returns>The code for a variable lookup.</returns>
+        public Block CreateVariableLookup()
+        {
+            return Scope.Unsafe
+                ? new Block(BlockSpecs.GetVariable, GetUnsafeName())
+                : new Block(BlockSpecs.GetItemOfList, StackStart, Scope.StackIdentifier);
+        }
+
+        /// <summary>
+        /// Returns the code for an array lookup.
+        /// </summary>
+        /// <param name="index">The expression for the index to look up.</param>
+        /// <returns>The code for an array lookup.</returns>
+        public Block CreateArrayLookup(object index)
+        {
+            return Scope.Unsafe
+                ? new Block(BlockSpecs.GetItemOfList, index, GetUnsafeName())
+                : new Block(BlockSpecs.GetItemOfList, new Block(BlockSpecs.Add, StackStart, index),
+                    Scope.StackIdentifier);
+        }
+
+        /// <summary>
+        /// Returns the code for a variable assignment.
+        /// </summary>
+        /// <param name="value">The expression for the value to assign to the variable.</param>
+        /// <returns>The code for a variable assignment.</returns>
+        public Block CreateVariableAssignment(object value)
+        {
+            return Scope.Unsafe
+                ? new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), value)
+                : new Block(BlockSpecs.ReplaceItemOfList, StackStart, Scope.StackIdentifier, value);
+        }
+
+        /// <summary>
+        /// Returns the code to increase the variable by the specified amount.
+        /// </summary>
+        /// <param name="value">The expression for the value to increment the variable by.</param>
+        /// <returns>The code to increase the variable by the specified amount.</returns>
+        public Block CreateVariableIncrement(object value)
+        {
+            return Scope.Unsafe
+                ? new Block(BlockSpecs.ChangeVarBy, GetUnsafeName(), value)
+                : new Block(BlockSpecs.ReplaceItemOfList, StackStart, Scope.StackIdentifier,
+                    new Block(BlockSpecs.Add, CreateVariableLookup(), value));
+        }
+
+        /// <summary>
+        /// Returns the code for an array assignment.
+        /// </summary>
+        /// <param name="value">The expression for the value to assign to the array.</param>
+        /// <param name="index">The index of the item to assign.</param>
+        /// <returns>The code for an array assignment.</returns>
+        public Block CreateArrayAssignment(object value, object index)
+        {
+            return Scope.Unsafe
+                ? new Block(BlockSpecs.ReplaceItemOfList, index, GetUnsafeName(), value)
+                : new Block(BlockSpecs.ReplaceItemOfList, new Block(BlockSpecs.Add, StackStart, index),
+                    Scope.StackIdentifier, value);
+        }
+
+        /// <summary>
         /// Creates the code to delete the variable from the stack, if necessary.
         /// </summary>
         /// <returns>The code to delete the variable from the stack or an empty array if unsafe.</returns>
@@ -137,20 +200,9 @@ namespace Choop.Compiler.ObjectModel
             Block[] result = new Block[StackSpace];
             for (int i = 0; i < StackSpace; i++)
             {
-                result[i] = new Block("deleteLine:ofList:", "last", Scope.StackIdentifier);
+                result[i] = new Block(BlockSpecs.DeleteItemOfList, "last", Scope.StackIdentifier);
             }
             return result;
-        }
-
-        /// <summary>
-        /// Returns the code for a variable lookup.
-        /// </summary>
-        /// <returns>The code for a variable lookup.</returns>
-        public Block GetVariableLookup()
-        {
-            return Scope.Unsafe
-                ? new Block("readVariable", GetUnsafeName())
-                : new Block("getLine:ofList:", StackStart, Scope.StackIdentifier);
         }
 
         /// <summary>
