@@ -92,7 +92,7 @@ namespace Choop.Compiler.ChoopModel
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new[] {new Block("setLine:ofList:to:", Index.Translate(), ArrayName, value.Translate())};
+            return new[] {new Block(BlockSpecs.ReplaceItemOfList, Index.Translate(), ArrayName, value.Translate())};
         }
 
         #endregion

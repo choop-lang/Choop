@@ -38,7 +38,7 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public override Block Translate()
         {
-            return new Block("getLine:ofList:", Index.Translate(), IdentifierName);
+            return new Block(BlockSpecs.GetItemOfList, Index.Translate(), IdentifierName);
         }
 
         #endregion

@@ -49,9 +49,9 @@ namespace Choop.Compiler.ChoopModel
         public Block[] Translate()
         {
             Block[] blocks = new Block[1 + Items.Count];
-            blocks[0] = new Block("deleteLine:ofList:", "all", ArrayName);
+            blocks[0] = new Block(BlockSpecs.DeleteItemOfList, "all", ArrayName);
             for (int i = 0; i < Items.Count; i++)
-                blocks[i + 1] = new Block("append:toList:", Items[i].Translate(), ArrayName);
+                blocks[i + 1] = new Block(BlockSpecs.AddToList, Items[i].Translate(), ArrayName);
 
             return blocks;
         }

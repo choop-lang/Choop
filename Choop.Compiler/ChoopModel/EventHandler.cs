@@ -70,32 +70,32 @@ namespace Choop.Compiler.ChoopModel
             switch (Name)
             {
                 case "GreenFlag":
-                    eventHandler = new BlockModel.EventHandler("whenGreenFlag");
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenGreenFlagClicked);
                     break;
                 case "KeyPressed":
-                    eventHandler = new BlockModel.EventHandler("whenKeyPressed", Parameter.Translate());
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenKeyPressed, Parameter.Translate());
                     break;
                 case "Clicked":
-                    eventHandler = new BlockModel.EventHandler("whenClicked");
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSpriteClicked);
                     break;
                 case "BackdropChanged":
-                    eventHandler = new BlockModel.EventHandler("whenSceneStarts", Parameter.Translate());
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenBackdropSwitchesTo, Parameter.Translate());
                     break;
                 case "MessageRecieved":
                     // TODO fix documentation typo
-                    eventHandler = new BlockModel.EventHandler("whenIReceive", Parameter.Translate());
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenIReceive, Parameter.Translate());
                     break;
                 case "Cloned":
-                    eventHandler = new BlockModel.EventHandler("whenCloned");
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSpriteCloned);
                     break;
                 case "TimerGreaterThan":
-                    eventHandler = new BlockModel.EventHandler("whenSensorGreaterThan", "timer", Parameter.Translate());
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "timer", Parameter.Translate());
                     break;
                 case "LoudnessGreaterThan":
-                    eventHandler = new BlockModel.EventHandler("whenSensorGreaterThan", "loudness", Parameter.Translate());
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "loudness", Parameter.Translate());
                     break;
                 case "VideoMotionGreaterThan":
-                    eventHandler = new BlockModel.EventHandler("whenSensorGreaterThan", "video motion", Parameter.Translate());
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "video motion", Parameter.Translate());
                     break;
                 default:
                     throw new ArgumentException("Invalid event name", nameof(Name));
