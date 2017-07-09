@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockModel\BlockDef.cs" />
+    <Compile Include="BlockModel\BlockSpecs.cs" />
     <Compile Include="BlockModel\Comment.cs" />
     <Compile Include="BlockModel\Sound.cs" />
     <Compile Include="BlockModel\Costume.cs" />
