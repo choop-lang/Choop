@@ -94,6 +94,7 @@
         public const string PointTowards = "pointTowards:";
         public const string PenDown = "putPenDown";
         public const string PenUp = "putPenUp";
+        public const string GetVariable = "readVariable";
         public const string PickRandomTo = "randomFrom:to:";
         public const string RestForBeats = "rest:elapsed:from:";
         public const string Round = "rounded"; // TODO: Check this
