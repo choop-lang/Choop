@@ -8,6 +8,7 @@ namespace Choop.Compiler.ChoopModel
     public class ConditionalBlock : IHasBody
     {
         #region Properties
+
         /// <summary>
         /// Gets the condition to use when deiciding whether to run the block.
         /// </summary>
@@ -22,6 +23,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of statements within the block.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
+
         #endregion
     }
 }

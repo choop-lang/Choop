@@ -85,6 +85,7 @@
     <Compile Include="ChoopModel\Settings.cs" />
     <Compile Include="ChoopModel\SpriteBaseDeclaration.cs" />
     <Compile Include="ChoopModel\StageDeclaration.cs" />
+    <Compile Include="ChoopModel\TranslationContext.cs" />
     <Compile Include="ChoopModel\WhileLoop.cs" />
     <Compile Include="ChoopModel\RepeatLoop.cs" />
     <Compile Include="ChoopModel\SwitchStmt.cs" />

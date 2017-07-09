@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents an entire Choop project.
     /// </summary>
-    public class Project : ISpriteDeclaration
+    public class Project : ISpriteDeclaration, ICompilable<ProjectInfo>
     {
         #region Properties
         /// <summary>
@@ -131,6 +132,15 @@ namespace Choop.Compiler.ChoopModel
 
             // Not found
             return null;
+        }
+        
+        /// <summary>
+        /// Gets the translated code for the grammar structure.
+        /// </summary>
+        /// <returns>The translated code for the grammar structure.</returns>
+        public ProjectInfo Translate()
+        {
+            throw new System.NotImplementedException();
         }
         #endregion
     }

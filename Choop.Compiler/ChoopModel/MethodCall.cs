@@ -11,6 +11,7 @@ namespace Choop.Compiler.ChoopModel
     public class MethodCall : IExpression, IStatement
     {
         #region Properties
+
         /// <summary>
         /// Gets the name of the method being called.
         /// </summary>
@@ -19,18 +20,37 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the collection of parameters to the method.
         /// </summary>
-        public Collection<IExpression> Parameters { get; } = new Collection<IExpression>();
+        public Collection<IExpression> Parameters { get; }
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="MethodCall"/> class.
         /// </summary>
+        /// <param name="methodName">The name of the method being called.</param>
         public MethodCall(string methodName)
         {
             MethodName = methodName;
+            Parameters = new Collection<IExpression>();
         }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="MethodCall"/> class.
+        /// </summary>
+        /// <param name="methodName">The name of the method being called.</param>
+        /// <param name="parameters">The parameters for the method.</param>
+        public MethodCall(string methodName, params IExpression[] parameters)
+        {
+            MethodName = methodName;
+            Parameters = new Collection<IExpression>(parameters);
+        }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
@@ -39,8 +59,9 @@ namespace Choop.Compiler.ChoopModel
         {
             throw new NotImplementedException();
         }
-        
-        Block[] ICompilable<Block[]>.Translate() => new[] { Translate() };
+
+        Block[] ICompilable<Block[]>.Translate() => new[] {Translate()};
+
         #endregion
     }
 }

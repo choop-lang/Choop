@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Eventing.Reader;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -10,6 +11,7 @@ namespace Choop.Compiler.ChoopModel
     public class EventHandler : IDeclaration, ICompilable<Tuple<BlockModel.EventHandler, BlockDef>>, IHasBody
     {
         #region Properties
+
         /// <summary>
         /// Gets whether the event handler is unsafe.
         /// </summary>
@@ -29,13 +31,16 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the parameter for the event handler, if necessary.
         /// </summary>
         public TerminalExpression Parameter { get; }
-        
+
         /// <summary>
         /// Gets the collection of statements within the method.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="EventHandler"/> class.
         /// </summary>
@@ -50,16 +55,58 @@ namespace Choop.Compiler.ChoopModel
             Unsafe = @unsafe;
             Atomic = atomic;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
         public Tuple<BlockModel.EventHandler, BlockDef> Translate()
         {
-            throw new NotImplementedException();
+            BlockModel.EventHandler eventHandler;
+            switch (Name)
+            {
+                case "GreenFlag":
+                    eventHandler = new BlockModel.EventHandler("whenGreenFlag");
+                    break;
+                case "KeyPressed":
+                    eventHandler = new BlockModel.EventHandler("whenKeyPressed", Parameter.Translate());
+                    break;
+                case "Clicked":
+                    eventHandler = new BlockModel.EventHandler("whenClicked");
+                    break;
+                case "BackdropChanged":
+                    eventHandler = new BlockModel.EventHandler("whenSceneStarts", Parameter.Translate());
+                    break;
+                case "MessageRecieved":
+                    // TODO fix documentation typo
+                    eventHandler = new BlockModel.EventHandler("whenIReceive", Parameter.Translate());
+                    break;
+                case "Cloned":
+                    eventHandler = new BlockModel.EventHandler("whenCloned");
+                    break;
+                case "TimerGreaterThan":
+                    eventHandler = new BlockModel.EventHandler("whenSensorGreaterThan", "timer", Parameter.Translate());
+                    break;
+                case "LoudnessGreaterThan":
+                    eventHandler = new BlockModel.EventHandler("whenSensorGreaterThan", "loudness", Parameter.Translate());
+                    break;
+                case "VideoMotionGreaterThan":
+                    eventHandler = new BlockModel.EventHandler("whenSensorGreaterThan", "video motion", Parameter.Translate());
+                    break;
+                default:
+                    throw new ArgumentException("Invalid event name", nameof(Name));
+            }
+
+            // TODO
+            //eventHandler.Blocks.Add();
+
+            return new Tuple<BlockModel.EventHandler, BlockDef>(eventHandler, null);
         }
+
         #endregion
     }
 }

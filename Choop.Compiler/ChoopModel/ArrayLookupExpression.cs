@@ -1,5 +1,4 @@
-﻿using System;
-using Choop.Compiler.BlockModel;
+﻿using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -9,12 +8,16 @@ namespace Choop.Compiler.ChoopModel
     public class ArrayLookupExpression : LookupExpression
     {
         #region Properties
+
         /// <summary>
         /// Gets the expression for the index of the item being looked up.
         /// </summary>
         public IExpression Index { get; }
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ArrayLookupExpression"/> class.
         /// </summary>
@@ -24,16 +27,20 @@ namespace Choop.Compiler.ChoopModel
         {
             Index = index;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
         public override Block Translate()
         {
-            throw new NotImplementedException();
+            return new Block("getLine:ofList:", Index.Translate(), IdentifierName);
         }
+
         #endregion
     }
 }

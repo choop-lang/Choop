@@ -9,14 +9,17 @@
         /// Indicates an object type.
         /// </summary>
         Object,
+
         /// <summary>
         /// Indicates the string type.
         /// </summary>
         String,
+
         /// <summary>
         /// Indicates the number type.
         /// </summary>
         Number,
+
         /// <summary>
         /// Indicates the boolean type.
         /// </summary>

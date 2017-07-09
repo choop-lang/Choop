@@ -9,22 +9,27 @@
         /// Indicates the = operator.
         /// </summary>
         Equals,
+
         /// <summary>
         /// Indicates the += operator.
         /// </summary>
         AddEquals,
+
         /// <summary>
         /// Indicates the -= operator.
         /// </summary>
         MinusEquals,
+
         /// <summary>
         /// Indicates the .= operator.
         /// </summary>
         DotEquals,
+
         /// <summary>
         /// Indicates the ++ operator.
         /// </summary>
         PlusPlus,
+
         /// <summary>
         /// Indicates the -- operator.
         /// </summary>

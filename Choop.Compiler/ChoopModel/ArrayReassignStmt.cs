@@ -10,17 +10,21 @@ namespace Choop.Compiler.ChoopModel
     public class ArrayReAssignStmt : IStatement
     {
         #region Properties
+
         /// <summary>
         /// Gets the name of the array being assigned.
         /// </summary>
         public string ArrayName { get; }
-        
+
         /// <summary>
         /// Gets the new array contents.
         /// </summary>
         public Collection<IExpression> Items { get; } = new Collection<IExpression>();
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="VarAssignStmt"/> class.
         /// </summary>
@@ -29,16 +33,29 @@ namespace Choop.Compiler.ChoopModel
         {
             ArrayName = arrayName;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
+        /// <remarks>
+        /// Uses the delete and add method, as demonstrated in this project:
+        /// https://scratch.mit.edu/projects/118629266/
+        /// </remarks>
         public Block[] Translate()
         {
-            throw new NotImplementedException();
+            Block[] blocks = new Block[1 + Items.Count];
+            blocks[0] = new Block("deleteLine:ofList:", "all", ArrayName);
+            for (int i = 0; i < Items.Count; i++)
+                blocks[i + 1] = new Block("append:toList:", Items[i].Translate(), ArrayName);
+
+            return blocks;
         }
+
         #endregion
     }
 }

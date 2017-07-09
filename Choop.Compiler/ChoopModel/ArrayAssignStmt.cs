@@ -9,6 +9,7 @@ namespace Choop.Compiler.ChoopModel
     public class ArrayAssignStmt : IAssignStmt
     {
         #region Properties
+
         /// <summary>
         /// Gets the name of the array of the element being assigned.
         /// </summary>
@@ -30,8 +31,11 @@ namespace Choop.Compiler.ChoopModel
         public IExpression Value { get; }
 
         string IAssignStmt.ItemName => ArrayName;
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ArrayAssignStmt"/> class.
         /// </summary>
@@ -46,16 +50,51 @@ namespace Choop.Compiler.ChoopModel
             ArrayName = arrayName;
             Value = value;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate()
         {
-            throw new NotImplementedException();
+            IExpression value;
+
+            switch (Operator)
+            {
+                case AssignOperator.Equals:
+                    value = Value;
+                    break;
+                case AssignOperator.AddEquals:
+                    value = new CompoundExpression(CompundOperator.Plus, new ArrayLookupExpression(ArrayName, Index),
+                        Value);
+                    break;
+                case AssignOperator.MinusEquals:
+                    value = new CompoundExpression(CompundOperator.Minus, new ArrayLookupExpression(ArrayName, Index),
+                        Value);
+                    break;
+                case AssignOperator.DotEquals:
+                    value = new CompoundExpression(CompundOperator.Multiply,
+                        new ArrayLookupExpression(ArrayName, Index), Value);
+                    break;
+                case AssignOperator.PlusPlus:
+                    value = new CompoundExpression(CompundOperator.Plus, new ArrayLookupExpression(ArrayName, Index),
+                        new TerminalExpression("1", DataType.Number));
+                    break;
+                case AssignOperator.MinusMinus:
+                    value = new CompoundExpression(CompundOperator.Minus, new ArrayLookupExpression(ArrayName, Index),
+                        new TerminalExpression("1", DataType.Number));
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return new[] {new Block("setLine:ofList:to:", Index.Translate(), ArrayName, value.Translate())};
         }
+
         #endregion
     }
 }

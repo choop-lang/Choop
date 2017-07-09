@@ -6,6 +6,7 @@
     public class ConstDeclaration : IVarDeclaration<TerminalExpression>
     {
         #region Properties
+
         /// <summary>
         /// Gets the name of the constant.
         /// </summary>
@@ -20,8 +21,11 @@
         /// Gets the value of the constant.
         /// </summary>
         public TerminalExpression Value { get; }
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ConstDeclaration"/> class.
         /// </summary>
@@ -34,6 +38,7 @@
             Type = type;
             Value = value;
         }
+
         #endregion
     }
 }
