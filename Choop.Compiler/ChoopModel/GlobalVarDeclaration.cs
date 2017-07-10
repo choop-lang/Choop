@@ -1,5 +1,4 @@
-﻿using System;
-using Choop.Compiler.BlockModel;
+﻿using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -52,7 +51,7 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Variable Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            return new Variable(Name, Value.Literal);
         }
 
         #endregion
