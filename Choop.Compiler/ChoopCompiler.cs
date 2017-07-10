@@ -128,6 +128,7 @@ namespace Choop.Compiler
             }
 
             // Add to the global internal code representation
+            _builder.FileName = fileName;
             ParseTreeWalker.Default.Walk(_builder, root);
         }
 
