@@ -9,6 +9,7 @@ namespace Choop.Compiler.BlockModel
     public class List : IVariable, IMonitor, IComponent
     {
         #region Properties
+
         /// <summary>
         /// Gets or sets the name of the list.
         /// </summary>
@@ -38,6 +39,22 @@ namespace Choop.Compiler.BlockModel
         /// Gets or sets whether the list monitor is visible. (Default is false)
         /// </summary>
         public bool Visible { get; set; } = false;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="List"/> class.
+        /// </summary>
+        /// <param name="name">The name of the list.</param>
+        /// <param name="contents">The collection of default values within the list.</param>
+        public List(string name, params object[] contents)
+        {
+            Name = name;
+            Contents = new Collection<object>(contents);
+        }
+
         #endregion
     }
 }
