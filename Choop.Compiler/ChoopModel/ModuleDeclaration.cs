@@ -8,11 +8,12 @@ namespace Choop.Compiler.ChoopModel
     public class ModuleDeclaration : ISpriteDeclaration
     {
         #region Properties
+
         /// <summary>
         /// Gets the name of the module.
         /// </summary>
         public string Name { get; }
-        
+
         /// <summary>
         /// Gets the collection of constant declarations. (Not compiled)
         /// </summary>
@@ -37,8 +38,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of method declarations.
         /// </summary>
         public Collection<MethodDeclaration> Methods { get; } = new Collection<MethodDeclaration>();
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ModuleDeclaration"/> class.
         /// </summary>
@@ -47,6 +51,7 @@ namespace Choop.Compiler.ChoopModel
         {
             Name = name;
         }
+
         #endregion
     }
 }

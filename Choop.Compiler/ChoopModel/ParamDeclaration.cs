@@ -6,6 +6,7 @@
     public class ParamDeclaration : ITypedDeclaration
     {
         #region Properties
+
         /// <summary>
         /// Gets the name of the parameter.
         /// </summary>
@@ -25,8 +26,11 @@
         /// Gets whether the parameter is optional.
         /// </summary>
         public bool IsOptional => Default != null;
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ParamDeclaration"/> class.
         /// </summary>
@@ -39,6 +43,7 @@
             Type = type;
             Default = @default;
         }
+
         #endregion
     }
 }

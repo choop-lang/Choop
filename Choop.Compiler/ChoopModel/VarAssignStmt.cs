@@ -9,6 +9,7 @@ namespace Choop.Compiler.ChoopModel
     public class VarAssignStmt : IAssignStmt
     {
         #region Properties
+
         /// <summary>
         /// Gets the name of the variable being assigned.
         /// </summary>
@@ -25,8 +26,11 @@ namespace Choop.Compiler.ChoopModel
         public IExpression Value { get; }
 
         string IAssignStmt.ItemName => VariableName;
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="VarAssignStmt"/> class.
         /// </summary>
@@ -39,16 +43,20 @@ namespace Choop.Compiler.ChoopModel
             VariableName = variableName;
             Value = value;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate()
+        public Block[] Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

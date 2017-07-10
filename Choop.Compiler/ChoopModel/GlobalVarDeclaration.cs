@@ -9,6 +9,7 @@ namespace Choop.Compiler.ChoopModel
     public class GlobalVarDeclaration : IVarDeclaration<TerminalExpression>, ICompilable<Variable>
     {
         #region Properties
+
         /// <summary>
         /// Gets the name of the variable.
         /// </summary>
@@ -23,8 +24,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the initial value stored in the variable.
         /// </summary>
         public TerminalExpression Value { get; }
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="GlobalVarDeclaration"/> class.
         /// </summary>
@@ -37,16 +41,20 @@ namespace Choop.Compiler.ChoopModel
             Type = type;
             Value = value;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Variable Translate()
+        public Variable Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

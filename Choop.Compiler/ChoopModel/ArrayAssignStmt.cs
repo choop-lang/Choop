@@ -59,7 +59,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate()
+        public Block[] Translate(TranslationContext context)
         {
             IExpression value;
 
@@ -92,7 +92,7 @@ namespace Choop.Compiler.ChoopModel
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new[] {new Block(BlockSpecs.ReplaceItemOfList, Index.Translate(), ArrayName, value.Translate())};
+            return new[] {new Block(BlockSpecs.ReplaceItemOfList, Index.Translate(context), ArrayName, value.Translate(context))};
         }
 
         #endregion

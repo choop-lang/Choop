@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Linq.Expressions;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ObjectModel;
 
@@ -100,11 +98,6 @@ namespace Choop.Compiler.ChoopModel
             output.AddRange(itemVar.CreateDestruction());
 
             return output.ToArray();
-        }
-
-        public Block[] Translate()
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

@@ -10,6 +10,7 @@ namespace Choop.Compiler.ChoopModel
     public class RepeatLoop : IHasBody, IStatement
     {
         #region Properties
+
         /// <summary>
         /// Gets whether the repeat loop should be inlined.
         /// </summary>
@@ -24,8 +25,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of statements within the loop.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="RepeatLoop"/> class.
         /// </summary>
@@ -36,16 +40,20 @@ namespace Choop.Compiler.ChoopModel
             Inline = inline;
             Iterations = iterations;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate()
+        public Block[] Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

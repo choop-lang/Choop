@@ -7,11 +7,13 @@
     public interface ICompilable<out T>
     {
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        T Translate();
+        T Translate(TranslationContext context);
+
         #endregion
     }
 }

@@ -10,6 +10,7 @@ namespace Choop.Compiler.ChoopModel
     public class WhileLoop : IHasBody, IStatement
     {
         #region Properties
+
         /// <summary>
         /// Gets the expression for the stopping condition.
         /// </summary>
@@ -19,8 +20,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of statements within the loop.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="WhileLoop"/> class.
         /// </summary>
@@ -29,16 +33,20 @@ namespace Choop.Compiler.ChoopModel
         {
             Condition = condition;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate()
+        public Block[] Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

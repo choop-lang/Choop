@@ -8,7 +8,8 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents a global list or array declaration.
     /// </summary>
-    public class GlobalListDeclaration : IVarDeclaration<Collection<TerminalExpression>>, IArrayDeclaration, ICompilable<List>
+    public class GlobalListDeclaration : IVarDeclaration<Collection<TerminalExpression>>, IArrayDeclaration,
+        ICompilable<List>
     {
         #region Properties
 
@@ -40,7 +41,9 @@ namespace Choop.Compiler.ChoopModel
         IEnumerable<IExpression> IVarDeclaration<IEnumerable<IExpression>>.Value => Value;
 
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="GlobalListDeclaration"/> class.
         /// </summary>
@@ -53,16 +56,20 @@ namespace Choop.Compiler.ChoopModel
             Type = type;
             IsArray = isArray;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public List Translate()
+        public List Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

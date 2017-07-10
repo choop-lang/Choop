@@ -8,6 +8,7 @@ namespace Choop.Compiler.ChoopModel
     public static class Settings
     {
         #region Constants
+
         /// <summary>
         /// Specifies how identifier names should be compared.
         /// </summary>
@@ -17,6 +18,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the name of the stage.
         /// </summary>
         public const string StageName = "Stage";
+
         #endregion
     }
 }

@@ -9,6 +9,7 @@
         /// Indicates the - unary operator.
         /// </summary>
         Minus,
+
         /// <summary>
         /// Indicates the ! unary operator.
         /// </summary>

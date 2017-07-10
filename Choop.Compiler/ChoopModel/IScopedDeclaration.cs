@@ -8,11 +8,13 @@ namespace Choop.Compiler.ChoopModel
     public interface IScopedDeclaration : IDeclaration
     {
         #region Methods
+
         /// <summary>
         /// Gets the stack reference for this variable.
         /// </summary>
         /// <returns>The stack reference for this variable.</returns>
         StackValue GetStackRef();
+
         #endregion
     }
 }

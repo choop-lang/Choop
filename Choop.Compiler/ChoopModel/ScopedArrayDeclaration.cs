@@ -32,11 +32,13 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the expressions for the initial values stored in the array.
         /// </summary>
         public Collection<IExpression> Value { get; } = new Collection<IExpression>();
-        
+
         IEnumerable<IExpression> IVarDeclaration<IEnumerable<IExpression>>.Value => Value;
 
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ScopedArrayDeclaration"/> class. 
         /// </summary>
@@ -47,8 +49,11 @@ namespace Choop.Compiler.ChoopModel
             Name = name;
             Type = type;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the stack reference for this array.
         /// </summary>
@@ -62,10 +67,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate()
+        public Block[] Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

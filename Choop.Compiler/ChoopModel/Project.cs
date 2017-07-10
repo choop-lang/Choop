@@ -11,11 +11,12 @@ namespace Choop.Compiler.ChoopModel
     public class Project : ISpriteDeclaration, ICompilable<ProjectInfo>
     {
         #region Properties
+
         /// <summary>
         /// Gets the name of the project.
         /// </summary>
         public string Name { get; }
-        
+
         /// <summary>
         /// Gets the collection of superglobal constant declarations. (Not compiled)
         /// </summary>
@@ -59,8 +60,11 @@ namespace Choop.Compiler.ChoopModel
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Collection<MethodDeclaration> Methods => null;
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="Project"/> class.
         /// </summary>
@@ -69,8 +73,11 @@ namespace Choop.Compiler.ChoopModel
         {
             Name = name;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Finds the constant with the specified name within the project superglobals.
         /// </summary>
@@ -116,7 +123,7 @@ namespace Choop.Compiler.ChoopModel
                                                            GetItem(name, Lists) ??
                                                            GetItem(name, Sprites) ??
                                                            (IDeclaration) GetItem(name, Modules);
-        
+
         /// <summary>
         /// Finds the item with the specified name and type within the project superglobals.
         /// </summary>
@@ -133,15 +140,16 @@ namespace Choop.Compiler.ChoopModel
             // Not found
             return null;
         }
-        
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public ProjectInfo Translate()
+        public ProjectInfo Translate(TranslationContext context)
         {
             throw new System.NotImplementedException();
         }
+
         #endregion
     }
 }

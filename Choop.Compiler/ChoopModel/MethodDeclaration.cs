@@ -10,6 +10,7 @@ namespace Choop.Compiler.ChoopModel
     public class MethodDeclaration : ITypedDeclaration, ICompilable<BlockDef>, IHasBody
     {
         #region Properties
+
         /// <summary>
         /// Gets whether the method is unsafe.
         /// </summary>
@@ -49,8 +50,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of statements within the method.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="MethodDeclaration"/> class.
         /// </summary>
@@ -69,16 +73,20 @@ namespace Choop.Compiler.ChoopModel
             Inline = inline;
             Atomic = atomic;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public BlockDef Translate()
+        public BlockDef Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

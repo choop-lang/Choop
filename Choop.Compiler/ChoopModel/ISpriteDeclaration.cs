@@ -8,6 +8,7 @@ namespace Choop.Compiler.ChoopModel
     public interface ISpriteDeclaration : IDeclaration
     {
         #region Properties
+
         /// <summary>
         /// Gets the collection of constant declarations. (Not compiled)
         /// </summary>
@@ -32,6 +33,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of method declarations.
         /// </summary>
         Collection<MethodDeclaration> Methods { get; }
+
         #endregion
     }
 }

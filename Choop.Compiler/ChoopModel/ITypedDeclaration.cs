@@ -6,10 +6,12 @@
     public interface ITypedDeclaration : IDeclaration
     {
         #region Properties
+
         /// <summary>
         /// Gets the type of the object being declared.
         /// </summary>
         DataType Type { get; }
+
         #endregion
     }
 }

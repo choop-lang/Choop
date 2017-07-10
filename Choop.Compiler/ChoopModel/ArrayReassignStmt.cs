@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -46,7 +45,7 @@ namespace Choop.Compiler.ChoopModel
         /// Uses the delete and add method, as demonstrated in this project:
         /// https://scratch.mit.edu/projects/118629266/
         /// </remarks>
-        public Block[] Translate()
+        public Block[] Translate(TranslationContext context)
         {
             Block[] blocks = new Block[1 + Items.Count];
             blocks[0] = new Block(BlockSpecs.DeleteItemOfList, "all", ArrayName);

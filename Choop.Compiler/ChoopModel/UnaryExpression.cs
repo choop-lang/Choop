@@ -9,6 +9,7 @@ namespace Choop.Compiler.ChoopModel
     public class UnaryExpression : IExpression
     {
         #region Properties
+
         /// <summary>
         /// Gets the operator used in the unary expression.
         /// </summary>
@@ -18,8 +19,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the expression that the unary operator modifies.
         /// </summary>
         public IExpression Expression { get; }
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="UnaryExpression"/> class.
         /// </summary>
@@ -30,16 +34,20 @@ namespace Choop.Compiler.ChoopModel
             Operator = @operator;
             Expression = expression;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block Translate()
+        public Block Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

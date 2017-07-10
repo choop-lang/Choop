@@ -8,10 +8,12 @@ namespace Choop.Compiler.ChoopModel
     public interface IHasBody
     {
         #region Properties
+
         /// <summary>
         /// Gets the collection of statements within the body.
         /// </summary>
         Collection<IStatement> Statements { get; }
+
         #endregion
     }
 }

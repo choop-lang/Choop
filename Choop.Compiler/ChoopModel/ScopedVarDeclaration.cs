@@ -25,8 +25,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the initial value stored in the variable.
         /// </summary>
         public IExpression Value { get; }
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ScopedVarDeclaration"/> class. 
         /// </summary>
@@ -39,8 +42,11 @@ namespace Choop.Compiler.ChoopModel
             Type = type;
             Value = value;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the stack reference for this variable.
         /// </summary>
@@ -54,10 +60,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate()
+        public Block[] Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

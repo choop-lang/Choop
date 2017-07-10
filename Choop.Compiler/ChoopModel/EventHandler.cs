@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Eventing.Reader;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -64,7 +63,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Tuple<BlockModel.EventHandler, BlockDef> Translate()
+        public Tuple<BlockModel.EventHandler, BlockDef> Translate(TranslationContext context)
         {
             BlockModel.EventHandler eventHandler;
             switch (Name)

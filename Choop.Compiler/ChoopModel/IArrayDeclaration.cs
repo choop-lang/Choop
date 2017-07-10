@@ -8,10 +8,12 @@ namespace Choop.Compiler.ChoopModel
     public interface IArrayDeclaration : IVarDeclaration<IEnumerable<IExpression>>
     {
         #region Properties
+
         /// <summary>
         /// Gets the length of the array.
         /// </summary>
         int Length { get; }
+
         #endregion
     }
 }

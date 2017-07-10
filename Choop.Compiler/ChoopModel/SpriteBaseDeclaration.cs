@@ -9,11 +9,12 @@ namespace Choop.Compiler.ChoopModel
     public abstract class SpriteBaseDeclaration : ISpriteDeclaration
     {
         #region Properties
+
         /// <summary>
         /// Gets the name of the sprite.
         /// </summary>
         public string Name { get; }
-        
+
         /// <summary>
         /// Gets the filepath of the Sprite metadata file for this sprite.
         /// </summary>
@@ -48,8 +49,11 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of method declarations.
         /// </summary>
         public Collection<MethodDeclaration> Methods { get; } = new Collection<MethodDeclaration>();
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="SpriteBaseDeclaration"/> class.
         /// </summary>
@@ -60,8 +64,11 @@ namespace Choop.Compiler.ChoopModel
             Name = name;
             MetaFile = metaFile;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Imports the specified module into the sprite.
         /// </summary>
@@ -170,10 +177,11 @@ namespace Choop.Compiler.ChoopModel
             foreach (T item in locals)
                 if (item.Name.Equals(name, Settings.IdentifierComparisonMode))
                     return item;
-            
+
             // Not found
             return null;
         }
+
         #endregion
     }
 }

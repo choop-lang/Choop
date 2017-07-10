@@ -7,10 +7,12 @@
     public interface IVarDeclaration<out T> : ITypedDeclaration
     {
         #region Properties
+
         /// <summary>
         /// Gets the initial value stored in the subject.
         /// </summary>
         T Value { get; }
+
         #endregion
     }
 }

@@ -9,6 +9,7 @@ namespace Choop.Compiler.ChoopModel
     public class TerminalExpression : IExpression
     {
         #region Properties
+
         /// <summary>
         /// Gets the unparsed string value of the terminal expression.
         /// </summary>
@@ -18,7 +19,9 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the data type of the literal.
         /// </summary>
         public DataType LiteralType { get; }
+
         #endregion
+
         #region Constructor
 
         /// <summary>
@@ -31,16 +34,20 @@ namespace Choop.Compiler.ChoopModel
             Literal = literal;
             LiteralType = literalType;
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block Translate()
+        public Block Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }
