@@ -11,40 +11,60 @@ namespace Choop.Compiler.ChoopModel
     {
         #region Properties
         /// <summary>
-        /// Gets the counter declaration for the loop.
+        /// Gets the name of the counter variable.
         /// </summary>
-        public ScopedVarDeclaration CounterDeclaration { get; }
+        public string Variable { get; }
 
         /// <summary>
-        /// Gets the expression for the stopping condition.
+        /// Gets the data type of the counter variable.
         /// </summary>
-        public IExpression Condition { get; }
+        public DataType VarType { get; }
 
         /// <summary>
-        /// Gets the counter increment statement.
+        /// Gets the expression for the counter start value.
         /// </summary>
-        public VarAssignStmt IncrementStmt { get; }
+        public IExpression Start { get; }
+
+        /// <summary>
+        /// Gets the expression for the counter end value.
+        /// </summary>
+        public IExpression End { get; }
+        
+        /// <summary>
+        /// Gets the expression for the counter step value.
+        /// </summary>
+        public IExpression Step { get; }
 
         /// <summary>
         /// Gets the collection of statements within the loop.
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
+
         #endregion
+
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the <see cref="ForLoop"/> class.
         /// </summary>
-        /// <param name="counterDeclaration">The declaration for the counter variable.</param>
-        /// <param name="condition">The stopping condition for the loop.</param>
-        /// <param name="incrementStmt">The counter increment statement.</param>
-        public ForLoop(ScopedVarDeclaration counterDeclaration, IExpression condition, VarAssignStmt incrementStmt)
+        /// <param name="variable">The name of the counter variable.</param>
+        /// <param name="varType">The data type of the counter variable.</param>
+        /// <param name="start">The expression for the counter start value.</param>
+        /// <param name="end">The expression for the counter end value.</param>
+        /// <param name="step">The expression for the counter stop value. Default is +1.</param>
+        public ForLoop(string variable, DataType varType, IExpression start, IExpression end, IExpression step = null)
         {
-            CounterDeclaration = counterDeclaration;
-            Condition = condition;
-            IncrementStmt = incrementStmt;
+            Variable = variable;
+            VarType = varType;
+            Start = start;
+            End = end;
+            Step = step ?? new TerminalExpression("1", DataType.Number);
         }
+
         #endregion
+
         #region Methods
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
@@ -53,6 +73,7 @@ namespace Choop.Compiler.ChoopModel
         {
             throw new NotImplementedException();
         }
+
         #endregion
     }
 }

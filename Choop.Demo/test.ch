@@ -143,7 +143,7 @@ sprite MySprite {
 		var a = 5;
 		var b = 4;
 		var res = 0;
-		for (var i = 1; i < a; i++) {
+		for (var i = 1 to a) {
 			res += b;
 		}
 	}
@@ -169,6 +169,9 @@ sprite MySprite {
 	}
 
 	event Cloned() {
+		for (num i = 5 to 2 step -1) {
+		
+		}
 	}
 
 	event LoudnessGreaterThan<50>() {

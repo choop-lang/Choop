@@ -879,38 +879,25 @@ namespace Choop.Compiler
         {
             base.ExitForHead(context);
 
-            // Get name of counter variable
-            ITerminalNode[] identifiers = context.Identifier();
-            string counterVar = identifiers[0].GetText();
-
-            if (counterVar != identifiers[1].GetText())
-                _compilerErrors.Add(new CompilerError(identifiers[1].Symbol, 
-                    "Assignment must be to the counter variable", FileName, ErrorType.InvalidArgument));
-
-            // Get assign statement
-            VarAssignStmt assignStmt;
-            if (context.AssignInc() != null)
-                assignStmt = new VarAssignStmt(counterVar, AssignOperator.PlusPlus);
-            else if (context.AssignDec() != null)
-                assignStmt = new VarAssignStmt(counterVar, AssignOperator.MinusMinus);
-            else
-                assignStmt = new VarAssignStmt(counterVar, context.assignOp().ToAssignOperator(),
-                    _currentExpressions.Pop());
-
-            // Get condition
-            IExpression condition = _currentExpressions.Pop();
-
-            // Get declaration
+            // Get counter variable details
+            ITerminalNode identifier = context.Identifier();
+            string varName = identifier.GetText();
             ChoopParser.TypeSpecifierContext typeSpecifier = context.typeSpecifier();
-            DataType type = typeSpecifier.ToDataType();
-            if (type == DataType.Boolean || type == DataType.String)
-                _compilerErrors.Add(new CompilerError(typeSpecifier.Start, 
+            DataType varType = typeSpecifier.ToDataType();
+            if (!varType.IsCompatible(DataType.Number))
+                _compilerErrors.Add(new CompilerError(typeSpecifier.Start,
                     "Variable type must be object or number", FileName, ErrorType.TypeMismatch));
 
-            ScopedVarDeclaration varDeclaration = new ScopedVarDeclaration(counterVar, type, _currentExpressions.Pop());
+            // Get expressions
+            IExpression step = null;
+            if (context.StepTag() != null) // Step value was specified
+                step = _currentExpressions.Pop();
+
+            IExpression end = _currentExpressions.Pop();
+            IExpression start = _currentExpressions.Pop();
 
             // Create for loop
-            ForLoop loop = new ForLoop(varDeclaration, condition, assignStmt);
+            ForLoop loop = new ForLoop(varName, varType, start, end, step);
             _currentBlocks.Peek().Statements.Add(loop);
             _currentBlocks.Push(loop);
         }

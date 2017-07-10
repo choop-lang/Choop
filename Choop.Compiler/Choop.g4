@@ -416,24 +416,17 @@ forLoop
 forHead
 	: ForTag
       BracketOpen
-      ( ( DeclVar
-        | typeSpecifier
-	    )
-		Identifier
-		Assign
-		expression
+	  ( DeclVar
+      | typeSpecifier
 	  )
-      Terminator
-      expression
-      Terminator
-      ( Identifier
-        assignOp
-        expression
-	  | Identifier
-	    AssignInc
-	  | Identifier
-	    AssignDec
-	  )
+	  Identifier
+	  Assign
+	  expression
+	  ToTag
+	  expression
+	  ( StepTag
+	    expression
+	  )?
       BracketClose
 	;
 
@@ -599,6 +592,8 @@ ForeverTag     : 'forever';
 ForeachTag     : 'foreach';
 InTag          : 'in';
 ForTag         : 'for';
+ToTag          : 'to';
+StepTag        : 'step';
 WhileTag       : 'while';
 RepeatTag      : 'repeat';
 
