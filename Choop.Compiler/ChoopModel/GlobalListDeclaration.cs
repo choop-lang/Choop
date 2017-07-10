@@ -67,7 +67,13 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public List Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            List result = new List(Name);
+            foreach (TerminalExpression expression in Value)
+            {
+                result.Contents.Add(expression.Literal);
+            }
+
+            return result;
         }
 
         #endregion
