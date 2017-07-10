@@ -59,44 +59,44 @@ namespace Choop.Compiler.ChoopModel
                 case CompundOperator.Pow:
                     // TODO: negative inputs
                     return new Block(BlockSpecs.ComputeFunction, "e ^",
-                        new Block(BlockSpecs.Times, new MethodCall("ln", First).Translate(), Second.Translate()));
+                        new Block(BlockSpecs.Times, new MethodCall("ln", First).Translate(context), Second.Translate(context)));
                 case CompundOperator.Multiply:
-                    return new Block(BlockSpecs.Times, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.Times, First.Translate(context), Second.Translate(context));
                 case CompundOperator.Divide:
-                    return new Block(BlockSpecs.Divide, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.Divide, First.Translate(context), Second.Translate(context));
                 case CompundOperator.Mod:
-                    return new Block(BlockSpecs.Mod, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.Mod, First.Translate(context), Second.Translate(context));
                 case CompundOperator.Concat:
-                    return new Block(BlockSpecs.Join, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.Join, First.Translate(context), Second.Translate(context));
                 case CompundOperator.Plus:
-                    return new Block(BlockSpecs.Add, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.Add, First.Translate(context), Second.Translate(context));
                 case CompundOperator.Minus:
-                    return new Block(BlockSpecs.Minus, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.Minus, First.Translate(context), Second.Translate(context));
                 case CompundOperator.LShift:
-                    return new Block(BlockSpecs.Times, First.Translate(),
+                    return new Block(BlockSpecs.Times, First.Translate(context),
                         new CompoundExpression(CompundOperator.Pow, new TerminalExpression("2", DataType.Number),
-                            Second).Translate());
+                            Second).Translate(context));
                 case CompundOperator.RShift:
-                    return new Block(BlockSpecs.Divide, First.Translate(),
+                    return new Block(BlockSpecs.Divide, First.Translate(context),
                         new CompoundExpression(CompundOperator.Pow, new TerminalExpression("2", DataType.Number),
-                            Second).Translate());
+                            Second).Translate(context));
                 case CompundOperator.LessThan:
-                    return new Block(BlockSpecs.LessThan, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.LessThan, First.Translate(context), Second.Translate(context));
                 case CompundOperator.GreaterThan:
-                    return new Block(BlockSpecs.GreaterThan, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.GreaterThan, First.Translate(context), Second.Translate(context));
                 case CompundOperator.LessThanEq:
-                    return new Block(BlockSpecs.Not, new Block(BlockSpecs.GreaterThan, First.Translate(), Second.Translate()));
+                    return new Block(BlockSpecs.Not, new Block(BlockSpecs.GreaterThan, First.Translate(context), Second.Translate(context)));
                 case CompundOperator.GreaterThanEq:
-                    return new Block(BlockSpecs.Not, new Block(BlockSpecs.LessThan, First.Translate(), Second.Translate()));
+                    return new Block(BlockSpecs.Not, new Block(BlockSpecs.LessThan, First.Translate(context), Second.Translate(context)));
                 case CompundOperator.Equal:
-                    return new Block(BlockSpecs.Equal, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.Equal, First.Translate(context), Second.Translate(context));
                 case CompundOperator.NotEqual:
-                    return new Block(BlockSpecs.Not, new Block(BlockSpecs.Equal, First.Translate(), Second.Translate()));
+                    return new Block(BlockSpecs.Not, new Block(BlockSpecs.Equal, First.Translate(context), Second.Translate(context)));
                 case CompundOperator.And:
                     // TODO: Extra optimisation here for when one input is known
-                    return new Block(BlockSpecs.And, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.And, First.Translate(context), Second.Translate(context));
                 case CompundOperator.Or:
-                    return new Block(BlockSpecs.Or, First.Translate(), Second.Translate());
+                    return new Block(BlockSpecs.Or, First.Translate(context), Second.Translate(context));
                 default:
                     throw new ArgumentOutOfRangeException();
             }

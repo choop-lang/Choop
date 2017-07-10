@@ -64,6 +64,7 @@ namespace Choop.Compiler.ChoopModel
 
             // Create scope of loop
             Scope innerScope = new Scope(context.ParentScope);
+            TranslationContext newContext = new TranslationContext(); // TODO
 
             // Create counter variable
             StackValue internalCounter = new StackValue("@counter", DataType.Number);
@@ -87,7 +88,7 @@ namespace Choop.Compiler.ChoopModel
                 itemVar.CreateVariableIncrement(1)
             };
             
-            foreach (Block[] translated in Statements.Select(x => x.Translate()))
+            foreach (Block[] translated in Statements.Select(x => x.Translate(newContext)))
                 loopContents.AddRange(translated);
 
             // Create loop Scratch block
