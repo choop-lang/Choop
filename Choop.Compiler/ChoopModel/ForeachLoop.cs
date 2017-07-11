@@ -63,8 +63,8 @@ namespace Choop.Compiler.ChoopModel
             List<Block> output = new List<Block>();
 
             // Create scope of loop
-            Scope innerScope = new Scope(context.ParentScope);
-            TranslationContext newContext = new TranslationContext(); // TODO
+            Scope innerScope = new Scope(context.CurrentScope);
+            TranslationContext newContext = new TranslationContext(innerScope, context.ErrorList); // TODO
 
             // Create counter variable
             StackValue internalCounter = new StackValue("@counter", DataType.Number);
