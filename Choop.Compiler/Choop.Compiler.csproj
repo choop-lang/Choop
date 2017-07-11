@@ -82,6 +82,7 @@
     <Compile Include="ChoopModel\ForLoop.cs" />
     <Compile Include="ChoopModel\ForeachLoop.cs" />
     <Compile Include="ChoopModel\EventHandler.cs" />
+    <Compile Include="ChoopModel\IRule.cs" />
     <Compile Include="ChoopModel\Project.cs" />
     <Compile Include="ChoopModel\Settings.cs" />
     <Compile Include="ChoopModel\SpriteBaseDeclaration.cs" />
