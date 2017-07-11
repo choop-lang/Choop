@@ -1,4 +1,5 @@
-﻿using Choop.Compiler.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using Choop.Compiler.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -7,9 +8,29 @@ namespace Choop.Compiler.ChoopModel
         #region Properties
 
         /// <summary>
-        /// Gets the parent scope.
+        /// Gets the current active scope.
         /// </summary>
-        public Scope ParentScope { get; }
+        public Scope CurrentScope { get; }
+
+        /// <summary>
+        /// Gets the collection of compiler errors.
+        /// </summary>
+        public Collection<CompilerError> ErrorList { get; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="TranslationContext"/> class.
+        /// </summary>
+        /// <param name="currentScope">The current active scope.</param>
+        /// <param name="errorList">The collection of compiler errors.</param>
+        public TranslationContext(Scope currentScope, Collection<CompilerError> errorList)
+        {
+            CurrentScope = currentScope;
+            ErrorList = errorList;
+        }
 
         #endregion
     }
