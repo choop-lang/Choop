@@ -20,7 +20,7 @@ namespace Choop.Compiler.ObjectModel
         /// <summary>
         /// The identifier to reference the scope stack.
         /// </summary>
-        public static Block StackIdentifier = new Block("getParam", "stackRef");
+        public static Block StackIdentifier = new Block("getParam", Settings.StackRefParam);
 
         #endregion
 

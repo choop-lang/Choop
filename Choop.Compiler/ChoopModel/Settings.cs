@@ -19,6 +19,11 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         public const string StageName = "Stage";
 
+        /// <summary>
+        /// Gets the name of the stack reference parameter.
+        /// </summary>
+        public const string StackRefParam = "@stackRef";
+
         #endregion
     }
 }
