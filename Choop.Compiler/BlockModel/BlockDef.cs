@@ -10,11 +10,13 @@ namespace Choop.Compiler.BlockModel
     public class BlockDef : IScript, IComponent
     {
         #region Properties
+
         /// <summary>
         /// Gets the opcode of the custom block definition..
         /// </summary>
-        public string Opcode {
-            get { return "procDef"; }
+        public string Opcode
+        {
+            get { return BlockSpecs.MethodDeclaration; }
             set { throw new NotSupportedException(); }
         }
 
@@ -47,20 +49,25 @@ namespace Choop.Compiler.BlockModel
         /// Gets the collection of blocks inside this script.
         /// </summary>
         public Collection<Block> Blocks { get; } = new Collection<Block>();
+
         #endregion
+
         #region Constructor
+
         /// <summary>
-        /// Creates a new instance of the <see cref="EventHandler"/> class.
+        /// Creates a new instance of the <see cref="BlockDef"/> class.
         /// </summary>
+        /// <param name="spec">The block spec.</param>
         /// <param name="atomic">Whether the block is atomic.</param>
         /// <param name="x">The x position of the script.</param>
         /// <param name="y">The y position of the script.</param>
-        public BlockDef(bool atomic = false, int x = 0, int y = 0)
+        public BlockDef(string spec, bool atomic = false, int x = 0, int y = 0)
         {
             Location = new Point(x, y);
             Spec = "";
             Atomic = atomic;
         }
+
         #endregion
     }
 }

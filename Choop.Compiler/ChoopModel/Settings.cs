@@ -24,6 +24,11 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         public const string StackRefParam = "@stackRef";
 
+        /// <summary>
+        /// Gets the name of the current stack variable.
+        /// </summary>
+        public const string CurrentStackVar = "@CurrentStack";
+
         #endregion
     }
 }

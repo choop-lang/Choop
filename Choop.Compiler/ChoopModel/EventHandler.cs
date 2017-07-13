@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics.SymbolStore;
+using System.IO;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.ObjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -65,6 +68,12 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Tuple<BlockModel.EventHandler, BlockDef> Translate(TranslationContext context)
         {
+            // Create event scope
+            Scope newScope = new Scope();
+
+            string internalName = $"{newScope.ID}: {Name} %n"; // Internal name used for custom block
+            
+            // Create calling code
             BlockModel.EventHandler eventHandler;
             switch (Name)
             {
@@ -100,10 +109,29 @@ namespace Choop.Compiler.ChoopModel
                     throw new ArgumentException("Invalid event name", nameof(Name));
             }
 
-            // TODO
-            //eventHandler.Blocks.Add();
+            eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar, 1)); // Increment CurrentStack
+            eventHandler.Blocks.Add(new Block(BlockSpecs.DeleteItemOfList, "all", new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar))); // Clear (/create) stack
+            eventHandler.Blocks.Add(new Block(BlockSpecs.CustomMethodCall, internalName, new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar))); // Call internal method
+            eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar, -1)); // Decrement CurrentStack
 
-            return new Tuple<BlockModel.EventHandler, BlockDef>(eventHandler, null);
+            // TODO event handler args
+
+            // Create internal method
+            BlockDef internalMethod = new BlockDef(internalName, Atomic);
+            internalMethod.InputNames.Add(Settings.StackRefParam);
+            internalMethod.DefaultValues.Add(DataType.Number.GetDefault());
+            
+            // Translate event code
+            TranslationContext newContext = new TranslationContext(newScope, context.ErrorList);
+            foreach (IStatement statement in Statements)
+            {
+                Block[] translated = statement.Translate(newContext);
+                foreach (Block block in translated)
+                    internalMethod.Blocks.Add(block);
+            }
+
+            // Return results
+            return new Tuple<BlockModel.EventHandler, BlockDef>(eventHandler, internalMethod);
         }
 
         #endregion
