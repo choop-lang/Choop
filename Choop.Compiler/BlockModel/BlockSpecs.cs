@@ -21,6 +21,7 @@
         public const string BackdropNumber = "backgroundIndex";
         public const string IfOnEdgeBounce = "bounceOffEdge";
         public const string Broadcast = "broadcast:";
+        public const string CustomMethodCall = "call";
         public const string ChangeEffectBy = "changeGraphicEffect:by:";
         public const string ChangePenColorBy = "changePenHueBy:";
         public const string ChangePenShadeBy = "changePenShadeBy:";
@@ -92,6 +93,7 @@
         public const string SetPenSizeTo = "penSize:";
         public const string PlaySound = "playSound:";
         public const string PointTowards = "pointTowards:";
+        public const string MethodDeclaration = "procDef";
         public const string PenDown = "putPenDown";
         public const string PenUp = "putPenUp";
         public const string GetVariable = "readVariable";
