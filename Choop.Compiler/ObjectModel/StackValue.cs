@@ -102,14 +102,14 @@ namespace Choop.Compiler.ObjectModel
             {
                 // Variable
                 if (StackSpace == 1)
-                    return new[] {new Block("setVar:to:", GetUnsafeName(), initalValues[0])};
+                    return new[] {new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), initalValues[0])};
 
                 // List
                 Block[] blocks = new Block[StackSpace + 1];
-                blocks[0] = new Block("deleteLine:ofList:", "all", GetUnsafeName());
+                blocks[0] = new Block(BlockSpecs.DeleteItemOfList, "all", GetUnsafeName());
                 for (int i = 0; i < StackSpace; i++)
                 {
-                    blocks[i + 1] = new Block("append:toList:", initalValues[i], GetUnsafeName());
+                    blocks[i + 1] = new Block(BlockSpecs.AddToList, initalValues[i], GetUnsafeName());
                 }
                 return blocks;
             }
