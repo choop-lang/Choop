@@ -17,11 +17,6 @@ namespace Choop.Compiler.ObjectModel
         /// </summary>
         protected static int NextID = 1;
 
-        /// <summary>
-        /// The identifier to reference the scope stack.
-        /// </summary>
-        public static readonly Block StackIdentifier = new Block(BlockSpecs.GetParameter, Settings.StackRefParam);
-
         #endregion
 
         #region Properties

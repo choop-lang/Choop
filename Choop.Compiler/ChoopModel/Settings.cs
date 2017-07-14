@@ -1,4 +1,5 @@
 ﻿using System;
+using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -28,6 +29,15 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the name of the current stack variable.
         /// </summary>
         public const string CurrentStackVar = "@CurrentStack";
+
+        #endregion
+
+        #region Fields
+
+        /// <summary>
+        /// The identifier to reference the scope stack.
+        /// </summary>
+        public static readonly Block StackIdentifier = new Block(BlockSpecs.GetParameter, StackRefParam);
 
         #endregion
     }

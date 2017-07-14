@@ -119,7 +119,7 @@ namespace Choop.Compiler.ObjectModel
                 Block[] blocks = new Block[StackSpace];
                 for (int i = 0; i < StackSpace; i++)
                 {
-                    blocks[i] = new Block("append:toList:", initalValues[i], Scope.StackIdentifier);
+                    blocks[i] = new Block("append:toList:", initalValues[i], Settings.StackIdentifier);
                 }
                 return blocks;
             }
@@ -133,7 +133,7 @@ namespace Choop.Compiler.ObjectModel
         {
             return Scope.Unsafe
                 ? new Block(BlockSpecs.GetVariable, GetUnsafeName())
-                : new Block(BlockSpecs.GetItemOfList, StackStart, Scope.StackIdentifier);
+                : new Block(BlockSpecs.GetItemOfList, StackStart, Settings.StackIdentifier);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Choop.Compiler.ObjectModel
             return Scope.Unsafe
                 ? new Block(BlockSpecs.GetItemOfList, index, GetUnsafeName())
                 : new Block(BlockSpecs.GetItemOfList, new Block(BlockSpecs.Add, StackStart, index),
-                    Scope.StackIdentifier);
+                    Settings.StackIdentifier);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Choop.Compiler.ObjectModel
         {
             return Scope.Unsafe
                 ? new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), value)
-                : new Block(BlockSpecs.ReplaceItemOfList, StackStart, Scope.StackIdentifier, value);
+                : new Block(BlockSpecs.ReplaceItemOfList, StackStart, Settings.StackIdentifier, value);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace Choop.Compiler.ObjectModel
         {
             return Scope.Unsafe
                 ? new Block(BlockSpecs.ChangeVarBy, GetUnsafeName(), value)
-                : new Block(BlockSpecs.ReplaceItemOfList, StackStart, Scope.StackIdentifier,
+                : new Block(BlockSpecs.ReplaceItemOfList, StackStart, Settings.StackIdentifier,
                     new Block(BlockSpecs.Add, CreateVariableLookup(), value));
         }
 
@@ -185,7 +185,7 @@ namespace Choop.Compiler.ObjectModel
             return Scope.Unsafe
                 ? new Block(BlockSpecs.ReplaceItemOfList, index, GetUnsafeName(), value)
                 : new Block(BlockSpecs.ReplaceItemOfList, new Block(BlockSpecs.Add, StackStart, index),
-                    Scope.StackIdentifier, value);
+                    Settings.StackIdentifier, value);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Choop.Compiler.ObjectModel
             Block[] result = new Block[StackSpace];
             for (int i = 0; i < StackSpace; i++)
             {
-                result[i] = new Block(BlockSpecs.DeleteItemOfList, "last", Scope.StackIdentifier);
+                result[i] = new Block(BlockSpecs.DeleteItemOfList, "last", Settings.StackIdentifier);
             }
             return result;
         }
