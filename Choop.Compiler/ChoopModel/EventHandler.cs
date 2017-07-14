@@ -89,8 +89,7 @@ namespace Choop.Compiler.ChoopModel
                 case "BackdropChanged":
                     eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenBackdropSwitchesTo, Parameter.Translate(context));
                     break;
-                case "MessageRecieved":
-                    // TODO fix documentation typo
+                case "MessageReceived":
                     eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenIReceive, Parameter.Translate(context));
                     break;
                 case "Cloned":

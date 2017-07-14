@@ -807,7 +807,7 @@ GreenFlag | - | Occurs when the green flag is clicked
 KeyPressed | (string) key name | Occurs when the specified key is pressed
 Clicked | - | Occurs when the sprite is clicked
 BackdropChanged | (string) backdrop name | Occurs when the backdrop is changed to the specified backdrop
-MessageRecieved | (string) message name | Occurs when the specified message is recieved
+MessageReceived | (string) message name | Occurs when the specified message is received
 Cloned | - | Occurs when the sprite is cloned (Thread is run by the clone)
 TimerGreaterThan | (num) threshold | Occurs when the timer is greater than the specified value
 LoudnessGreaterThan | (num) threshold | Occurs when the microphone loudness exceeds the specified value

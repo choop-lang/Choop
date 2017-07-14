@@ -159,7 +159,7 @@ sprite MySprite {
 		Say(bidmas);
 	}
 
-	event MessageRecieved<"message1">() {
+	event MessageReceived<"message1">() {
 		string[4] strArray;
 		bool[3] boolArray = {true, false, true};
 
