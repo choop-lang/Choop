@@ -27,7 +27,40 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            return BuildIfElse(context, 0);
+        }
+
+        /// <summary>
+        /// Recursively builds an if-else statement.
+        /// </summary>
+        /// <param name="context">The context of the translation.</param>
+        /// <param name="element">The current block.</param>
+        /// <returns>The translated if-else statement.</returns>
+        private Block[] BuildIfElse(TranslationContext context, int element)
+        {
+            if (element == Blocks.Count)
+                throw new IndexOutOfRangeException("Element is out of range");
+
+            if (element + 1 != Blocks.Count)
+                return new[]
+                {
+                    new Block(
+                        BlockSpecs.IfThenElse,
+                        Blocks[element].Conditions[0].Translate(context),
+                        BuildIfElse(context, element + 1)
+                    )
+                };
+
+            if (Blocks[element].IsDefault)
+                return Blocks[element].Translate(context);
+
+            return new[]
+            {
+                new Block(
+                    BlockSpecs.IfThen,
+                    new object[] {Blocks[element].Translate(context)}
+                )
+            };
         }
 
         #endregion
