@@ -64,7 +64,7 @@ namespace Choop.Compiler.BlockModel
         public BlockDef(string spec, bool atomic = false, int x = 0, int y = 0)
         {
             Location = new Point(x, y);
-            Spec = "";
+            Spec = spec;
             Atomic = atomic;
         }
 
