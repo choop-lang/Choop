@@ -113,9 +113,7 @@ namespace Choop.Compiler.ChoopModel
             eventHandler.Blocks.Add(new Block(BlockSpecs.DeleteItemOfList, "all", new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar))); // Clear (/create) stack
             eventHandler.Blocks.Add(new Block(BlockSpecs.CustomMethodCall, internalName, new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar))); // Call internal method
             eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar, -1)); // Decrement CurrentStack
-
-            // TODO event handler args
-
+            
             // Create internal method
             BlockDef internalMethod = new BlockDef(internalName, Atomic);
             internalMethod.InputNames.Add(Settings.StackRefParam);
