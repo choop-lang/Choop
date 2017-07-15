@@ -113,7 +113,6 @@
     <Compile Include="ChoopModel\AssignOperator.cs" />
     <Compile Include="ChoopModel\ConstDeclaration.cs" />
     <Compile Include="ChoopModel\DataType.cs" />
-    <Compile Include="ChoopModel\DataTypeExtension.cs" />
     <Compile Include="ChoopModel\IArrayDeclaration.cs" />
     <Compile Include="ChoopModel\IAssignStmt.cs" />
     <Compile Include="ChoopModel\ISpriteDeclaration.cs" />

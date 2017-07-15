@@ -9,6 +9,10 @@ namespace Choop.Compiler.TranslationUtils
     /// </summary>
     internal static class ExtensionMethods
     {
+        #region Methods
+
+        // TypeSpecifierContext
+
         /// <summary>
         /// Converts a <see cref="ChoopParser.TypeSpecifierContext"/> instance into a <see cref="DataType"/> value.
         /// </summary>
@@ -18,7 +22,7 @@ namespace Choop.Compiler.TranslationUtils
         {
             if (typeSpecifierAst == null)
                 return DataType.Object;
-            
+
             switch (typeSpecifierAst.start.Type)
             {
                 case ChoopParser.TypeNum:
@@ -31,6 +35,8 @@ namespace Choop.Compiler.TranslationUtils
                     throw new ArgumentException("Unknown type", nameof(typeSpecifierAst));
             }
         }
+
+        // AssignOpContext
 
         /// <summary>
         /// Converts a <see cref="ChoopParser.AssignOpContext"/> instance into a <see cref="AssignOperator"/> value.
@@ -56,6 +62,8 @@ namespace Choop.Compiler.TranslationUtils
             }
         }
 
+        // RotationType
+
         /// <summary>
         /// Converts a <see cref="RotationType"/> object into its string form for JSON serialization.
         /// </summary>
@@ -75,5 +83,41 @@ namespace Choop.Compiler.TranslationUtils
                     throw new ArgumentOutOfRangeException(nameof(rotationType), rotationType, null);
             }
         }
+
+        // DataType
+
+        /// <summary>
+        /// Returns whether the specified data type is able to be stored within the current data type.
+        /// </summary>
+        /// <param name="type">The current data type.</param>
+        /// <param name="other">The data type to store.</param>
+        /// <returns>Whether the specified data type is able to be stored within the current data type.</returns>
+        public static bool IsCompatible(this DataType type, DataType other)
+        {
+            return type == DataType.Object || type == other;
+        }
+
+        /// <summary>
+        /// Returns the default value for the specified data type.
+        /// </summary>
+        /// <param name="type">The type to get the default value for.</param>
+        /// <returns>The default value for the specified data type.</returns>
+        public static object GetDefault(this DataType type)
+        {
+            switch (type)
+            {
+                case DataType.Number:
+                    return 0;
+                case DataType.Boolean:
+                    return false;
+                case DataType.String:
+                case DataType.Object:
+                    return "";
+                default:
+                    throw new InvalidOperationException("Unknown data type");
+            }
+        }
+
+        #endregion
     }
 }
