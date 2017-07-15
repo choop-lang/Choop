@@ -18,7 +18,7 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets the collection of values in the list.
         /// </summary>
-        public Collection<object> Contents { get; } = new Collection<object>();
+        public Collection<object> Contents { get; }
 
         /// <summary>
         /// Gets or sets whether the list is a cloud list. (Default is false)

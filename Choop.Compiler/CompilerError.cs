@@ -74,6 +74,7 @@ namespace Choop.Compiler
         /// <param name="startIndex">The starting character index of the token that caused the error.</param>
         /// <param name="stopIndex">The last character index of the token that caused the error.</param>
         /// <param name="tokenText">The text of the token that caused the error.</param>
+        /// <param name="fileName">The name of the file that contains the error.</param>
         /// <param name="type">The type of the compiler error.</param>
         public CompilerError(string message, int line, int col, int startIndex, int stopIndex, string tokenText, string fileName,
             ErrorType type)

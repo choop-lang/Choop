@@ -64,10 +64,10 @@
         public const string GetItemOfList = "getLine:ofList:";
         public const string GetParameter = "getParam";
         public const string GetUsername = "getUserName";
-        public const string GlideSecsToXY = "glideSecs:toX:y:elapsed:from:";
+        public const string GlideSecsToXy = "glideSecs:toX:y:elapsed:from:";
         public const string GoBackLayers = "goBackByLayers:";
         public const string GoToSprite = "gotoSpriteOrMouse:";
-        public const string GoToXY = "gotoX:y:";
+        public const string GoToXy = "gotoX:y:";
         public const string Direction = "heading";
         public const string PointInDirection = "heading:";
         public const string Hide = "hide";

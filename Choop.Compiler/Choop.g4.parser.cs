@@ -12,6 +12,7 @@ namespace Choop.Compiler
         /// </summary>
         /// <param name="input">The token stream to parse.</param>
         /// <param name="errorCollection">The collection to record compiler errors to.</param>
+        /// <param name="fileName">The name of the file being parsed.</param>
         public ChoopParser(ITokenStream input, Collection<CompilerError> errorCollection, string fileName) : this(input)
         {
             // Set error listener

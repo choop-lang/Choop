@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 
 namespace Choop.Compiler.ObjectModel
