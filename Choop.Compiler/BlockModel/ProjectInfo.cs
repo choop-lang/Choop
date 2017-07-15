@@ -1,11 +1,14 @@
-﻿namespace Choop.Compiler.BlockModel
+﻿using Newtonsoft.Json.Linq;
+
+namespace Choop.Compiler.BlockModel
 {
     /// <summary>
     /// Represents the info for a Scratch project.
     /// </summary>
-    public class ProjectInfo
+    public class ProjectInfo : IJsonConvertable
     {
         #region Properties
+
         /// <summary>
         /// Gets or sets the version of the flash player plugin under which the project was running.
         /// </summary>
@@ -35,6 +38,28 @@
         /// Gets or sets the version of the Scratch editor which the project was created using.
         /// </summary>
         public string SwfVersion { get; set; } = "v454";
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Serializes the current instance into a JSON object.
+        /// </summary>
+        /// <returns>The JSON representation of the current instance.</returns>
+        public JToken ToJson()
+        {
+            return new JObject
+            {
+                {"scriptCount", ScriptCount},
+                {"videoOn", VideoOn},
+                {"spriteCount", SpriteCount},
+                {"swfVersion", SwfVersion},
+                {"flashVersion", FlashVersion},
+                {"userAgent", UserAgent}
+            };
+        }
+
         #endregion
     }
 }

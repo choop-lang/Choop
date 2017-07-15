@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.BlockModel
 {
@@ -9,6 +11,7 @@ namespace Choop.Compiler.BlockModel
     public class Sprite : ISprite, IMonitor, IComponent
     {
         #region Properties
+
         /// <summary>
         /// Gets or sets the name of the sprite.
         /// </summary>
@@ -88,6 +91,39 @@ namespace Choop.Compiler.BlockModel
         /// Gets or sets the info for the sprite. (Unused)
         /// </summary>
         public object SpriteInfo { get; set; } = null;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Serializes the current instance into a JSON object.
+        /// </summary>
+        /// <returns>The JSON representation of the current instance.</returns>
+        public JToken ToJson()
+        {
+            return new JObject
+            {
+                {"objName", Name},
+                {"variable", new JArray(Variables.Select(x => x.ToJson()))},
+                {"lists", new JArray(Lists.Select(x => x.ToJson()))},
+                {"scripts", new JArray(Scripts.Select(x => x.ToJson()))},
+                {"scriptComments", new JArray(Comments.Select(x => x.ToJson()))},
+                {"sounds", new JArray(Sounds.Select(x => x.ToJson())) },
+                {"costumes", new JArray(Costumes.Select(x => x.ToJson())) },
+                {"currentCostumeIndex", CurrentCostume },
+                {"scratchX", Location.X },
+                {"scratchY", Location.Y },
+                {"scale", Scale },
+                {"direction", Direction },
+                {"rotationStyle", RotationStyle.ToSerializedString()},
+                {"isDraggable", Draggable },
+                {"indexInLibrary", LibraryIndex },
+                {"visible", Visible },
+                {"spriteInfo", new JObject(SpriteInfo) }
+            };
+        }
+
         #endregion
     }
 }

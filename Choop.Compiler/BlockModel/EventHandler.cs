@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Drawing;
+using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.BlockModel
 {
@@ -43,6 +44,38 @@ namespace Choop.Compiler.BlockModel
         {
             Opcode = opcode;
             Args = new Collection<object>(args);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Serializes the current instance into a JSON object.
+        /// </summary>
+        /// <returns>The JSON representation of the current instance.</returns>
+        public JToken ToJson()
+        {
+            JArray eventBlock = new JArray
+            {
+                Opcode
+            };
+
+            foreach (object arg in Args)
+                eventBlock.Add(arg);
+
+            JArray blocks = new JArray
+            {
+                eventBlock
+            };
+
+            foreach (Block block in Blocks)
+                blocks.Add(block.ToJson());
+
+            return new JArray(
+                Location.X,
+                Location.Y,
+                blocks);
         }
 
         #endregion

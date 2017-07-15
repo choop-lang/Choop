@@ -1,4 +1,6 @@
-﻿namespace Choop.Compiler.BlockModel
+﻿using Newtonsoft.Json.Linq;
+
+namespace Choop.Compiler.BlockModel
 {
     /// <summary>
     /// Represents a variable.
@@ -35,6 +37,24 @@
         {
             Name = name;
             Value = value;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Serializes the current instance into a JSON object.
+        /// </summary>
+        /// <returns>The JSON representation of the current instance.</returns>
+        public JToken ToJson()
+        {
+            return new JObject
+            {
+                {"name", Name},
+                {"value", new JObject(Value)},
+                {"isPersistant", Persistant}
+            };
         }
 
         #endregion

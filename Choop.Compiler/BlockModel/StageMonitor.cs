@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.BlockModel
 {
@@ -8,6 +9,7 @@ namespace Choop.Compiler.BlockModel
     public class StageMonitor : IMonitor, IComponent
     {
         #region Properties
+
         /// <summary>
         /// Gets or sets the name of the stage or sprite to which the monitor refers.
         /// </summary>
@@ -62,6 +64,34 @@ namespace Choop.Compiler.BlockModel
         /// Gets or sets whether the monitor is visible. (Default is false)
         /// </summary>
         public bool Visible { get; set; } = true;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Serializes the current instance into a JSON object.
+        /// </summary>
+        /// <returns>The JSON representation of the current instance.</returns>
+        public JToken ToJson()
+        {
+            return new JObject
+            {
+                {"target", Target},
+                {"cmd", (int) Cmd},
+                {"param", new JObject(Param)},
+                {"color", "#" + Color.ToArgb().ToString("X8")},
+                {"label", Label},
+                {"mode", (int) Mode},
+                {"sliderMin", SliderMin},
+                {"sliderMax", SliderMax},
+                {"isDiscrete", Discrete},
+                {"x", Location.X},
+                {"y", Location.Y},
+                {"visible", Visible}
+            };
+        }
+
         #endregion
     }
 }

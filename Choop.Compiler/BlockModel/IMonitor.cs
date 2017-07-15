@@ -5,9 +5,10 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a monitor on the stage.
     /// </summary>
-    public interface IMonitor
+    public interface IMonitor : IJsonConvertable
     {
         #region Properties
+
         /// <summary>
         /// Gets or sets the location of the monitor.
         /// </summary>
@@ -17,6 +18,7 @@ namespace Choop.Compiler.BlockModel
         /// Gets or sets whether the monitor is visible.
         /// </summary>
         bool Visible { get; set; }
+
         #endregion
     }
 }

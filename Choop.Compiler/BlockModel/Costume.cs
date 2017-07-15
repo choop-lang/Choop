@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.BlockModel
 {
@@ -8,6 +9,7 @@ namespace Choop.Compiler.BlockModel
     public class Costume : IResource
     {
         #region Properties
+
         /// <summary>
         /// Gets or sets the display name of the costume.
         /// </summary>
@@ -33,6 +35,28 @@ namespace Choop.Compiler.BlockModel
         /// Gets or sets the rotation centre of the costume.
         /// </summary>
         public Point RotationCenter { get; set; } = Point.Empty;
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Serializes the current instance into a JSON object.
+        /// </summary>
+        /// <returns>The JSON representation of the current instance.</returns>
+        public JToken ToJson()
+        {
+            return new JObject
+            {
+                {"costumeName", Name},
+                {"baseLayerID", Id},
+                {"baseLayerMD5", Md5},
+                {"bitmapResolution", BitmapResolution},
+                {"rotationCenterX", RotationCenter.X},
+                {"rotationCenterY", RotationCenter.Y}
+            };
+        }
+
         #endregion
     }
 }

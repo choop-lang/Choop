@@ -1,4 +1,5 @@
 ﻿using System;
+using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 
 namespace Choop.Compiler
@@ -52,6 +53,26 @@ namespace Choop.Compiler
                     return AssignOperator.DotEquals;
                 default:
                     throw new ArgumentException("Unknown type", nameof(assignOpAst));
+            }
+        }
+
+        /// <summary>
+        /// Converts a <see cref="RotationType"/> object into its string form for JSON serialization.
+        /// </summary>
+        /// <param name="rotationType">The rotation type to convert.</param>
+        /// <returns>The JSON string representing the rotation type.</returns>
+        public static string ToSerializedString(this RotationType rotationType)
+        {
+            switch (rotationType)
+            {
+                case RotationType.LeftRight:
+                    return "leftRight";
+                case RotationType.Normal:
+                    return "normal";
+                case RotationType.None:
+                    return "none";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(rotationType), rotationType, null);
             }
         }
     }

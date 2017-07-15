@@ -1,11 +1,14 @@
-﻿namespace Choop.Compiler.BlockModel
+﻿using Newtonsoft.Json.Linq;
+
+namespace Choop.Compiler.BlockModel
 {
     /// <summary>
     /// Represents a sound.
     /// </summary>
-    public class Sound : IResource
+    public class Sound : IResource, IJsonConvertable
     {
         #region Properties
+
         /// <summary>
         /// Gets or sets the display name of the sound.
         /// </summary>
@@ -35,6 +38,24 @@
         /// Gets or sets a string describing the sound format. (Unused)
         /// </summary>
         public string Format { get; set; } = "";
+
+        #endregion
+
+        #region Methods
+
+        public JToken ToJson()
+        {
+            return new JObject
+            {
+                {"soundName", Name},
+                {"soundID", Id},
+                {"md5", Md5},
+                {"sampleCount", SampleCount},
+                {"rate", Rate},
+                {"format", Format}
+            };
+        }
+
         #endregion
     }
 }

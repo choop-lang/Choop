@@ -9,10 +9,12 @@
         /// Indicates standard rotation.
         /// </summary>
         Normal,
+
         /// <summary>
         /// Indicates that the sprite should not rotate but flip horizontally beyond 180 degrees.
         /// </summary>
         LeftRight,
+
         /// <summary>
         /// Indicates that the sprite should not rotate or flip.
         /// </summary>

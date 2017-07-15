@@ -6,9 +6,10 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a script.
     /// </summary>
-    public interface IScript
+    public interface IScript : IJsonConvertable
     {
         #region Properties
+
         /// <summary>
         /// Gets or sets the opcode of the script hat block.
         /// </summary>
@@ -23,6 +24,7 @@ namespace Choop.Compiler.BlockModel
         /// Gets the collection of blocks inside this script.
         /// </summary>
         Collection<Block> Blocks { get; }
+
         #endregion
     }
 }

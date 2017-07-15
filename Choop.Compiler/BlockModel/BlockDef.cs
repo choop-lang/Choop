@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.BlockModel
 {
@@ -66,6 +67,36 @@ namespace Choop.Compiler.BlockModel
             Location = new Point(x, y);
             Spec = spec;
             Atomic = atomic;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Serializes the current instance into a JSON object.
+        /// </summary>
+        /// <returns>The JSON representation of the current instance.</returns>
+        public JToken ToJson()
+        {
+            JArray blocks = new JArray
+            {
+                new JArray(
+                    Opcode,
+                    Spec,
+                    InputNames,
+                    DefaultValues,
+                    Atomic
+                )
+            };
+
+            foreach (Block block in Blocks)
+                blocks.Add(block.ToJson());
+
+            return new JArray(
+                Location.X,
+                Location.Y,
+                blocks);
         }
 
         #endregion

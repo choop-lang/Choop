@@ -5,9 +5,10 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents the base of sprite.
     /// </summary>
-    public interface ISprite
+    public interface ISprite : IJsonConvertable
     {
         #region Properties
+
         /// <summary>
         /// Gets or sets the name of the <see cref="ISprite"/>. 
         /// </summary>
@@ -47,6 +48,7 @@ namespace Choop.Compiler.BlockModel
         /// Gets or sets the zerio-based index of the current costume of the <see cref="ISprite"/>. 
         /// </summary>
         int CurrentCostume { get; set; }
+
         #endregion
     }
 }
