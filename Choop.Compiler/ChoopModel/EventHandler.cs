@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics.SymbolStore;
 using System.IO;
+using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ObjectModel;
 
@@ -39,6 +40,16 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         public Collection<IStatement> Statements { get; } = new Collection<IStatement>();
 
+        /// <summary>
+        /// Gets the token to report any compiler errors to.
+        /// </summary>
+        public IToken ErrorToken { get; }
+
+        /// <summary>
+        /// Gets the file name where the grammar structure was found.
+        /// </summary>
+        public string FileName { get; }
+
         #endregion
 
         #region Constructor
@@ -72,7 +83,7 @@ namespace Choop.Compiler.ChoopModel
             Scope newScope = new Scope();
 
             string internalName = $"{newScope.ID}: {Name} %n"; // Internal name used for custom block
-            
+
             // Create calling code
             BlockModel.EventHandler eventHandler;
             switch (Name)
@@ -87,7 +98,8 @@ namespace Choop.Compiler.ChoopModel
                     eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSpriteClicked);
                     break;
                 case "BackdropChanged":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenBackdropSwitchesTo, Parameter.Translate(context));
+                    eventHandler =
+                        new BlockModel.EventHandler(BlockSpecs.WhenBackdropSwitchesTo, Parameter.Translate(context));
                     break;
                 case "MessageReceived":
                     eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenIReceive, Parameter.Translate(context));
@@ -96,28 +108,35 @@ namespace Choop.Compiler.ChoopModel
                     eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSpriteCloned);
                     break;
                 case "TimerGreaterThan":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "timer", Parameter.Translate(context));
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "timer",
+                        Parameter.Translate(context));
                     break;
                 case "LoudnessGreaterThan":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "loudness", Parameter.Translate(context));
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "loudness",
+                        Parameter.Translate(context));
                     break;
                 case "VideoMotionGreaterThan":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "video motion", Parameter.Translate(context));
+                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "video motion",
+                        Parameter.Translate(context));
                     break;
                 default:
                     throw new ArgumentException("Invalid event name", nameof(Name));
             }
 
-            eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar, 1)); // Increment CurrentStack
-            eventHandler.Blocks.Add(new Block(BlockSpecs.DeleteItemOfList, "all", new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar))); // Clear (/create) stack
-            eventHandler.Blocks.Add(new Block(BlockSpecs.CustomMethodCall, internalName, new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar))); // Call internal method
-            eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar, -1)); // Decrement CurrentStack
-            
+            eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar,
+                1)); // Increment CurrentStack
+            eventHandler.Blocks.Add(new Block(BlockSpecs.DeleteItemOfList, "all",
+                new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar))); // Clear (/create) stack
+            eventHandler.Blocks.Add(new Block(BlockSpecs.CustomMethodCall, internalName,
+                new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar))); // Call internal method
+            eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar,
+                -1)); // Decrement CurrentStack
+
             // Create internal method
             BlockDef internalMethod = new BlockDef(internalName, Atomic);
             internalMethod.InputNames.Add(Settings.StackRefParam);
             internalMethod.DefaultValues.Add(DataType.Number.GetDefault());
-            
+
             // Translate event code
             TranslationContext newContext = new TranslationContext(newScope, context.ErrorList);
             foreach (IStatement statement in Statements)

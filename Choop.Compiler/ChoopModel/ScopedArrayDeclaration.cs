@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ObjectModel;
 
@@ -32,6 +33,16 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the expressions for the initial values stored in the array.
         /// </summary>
         public Collection<IExpression> Value { get; } = new Collection<IExpression>();
+
+        /// <summary>
+        /// Gets the token to report any compiler errors to.
+        /// </summary>
+        public IToken ErrorToken { get; }
+
+        /// <summary>
+        /// Gets the file name where the grammar structure was found.
+        /// </summary>
+        public string FileName { get; }
 
         IEnumerable<IExpression> IVarDeclaration<IEnumerable<IExpression>>.Value => Value;
 

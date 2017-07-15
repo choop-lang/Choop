@@ -1,4 +1,5 @@
 ﻿using System;
+using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ObjectModel;
 
@@ -25,6 +26,16 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the initial value stored in the variable.
         /// </summary>
         public IExpression Value { get; }
+
+        /// <summary>
+        /// Gets the token to report any compiler errors to.
+        /// </summary>
+        public IToken ErrorToken { get; }
+
+        /// <summary>
+        /// Gets the file name where the grammar structure was found.
+        /// </summary>
+        public string FileName { get; }
 
         #endregion
 

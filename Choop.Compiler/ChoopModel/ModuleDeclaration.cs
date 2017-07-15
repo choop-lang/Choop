@@ -1,11 +1,12 @@
 ﻿using System.Collections.ObjectModel;
+using Antlr4.Runtime;
 
 namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents a module declaration.
     /// </summary>
-    public class ModuleDeclaration : ISpriteDeclaration
+    public class ModuleDeclaration : ISpriteDeclaration, IRule
     {
         #region Properties
 
@@ -38,6 +39,16 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of method declarations.
         /// </summary>
         public Collection<MethodDeclaration> Methods { get; } = new Collection<MethodDeclaration>();
+
+        /// <summary>
+        /// Gets the token to report any compiler errors to.
+        /// </summary>
+        public IToken ErrorToken { get; }
+
+        /// <summary>
+        /// Gets the file name where the grammar structure was found.
+        /// </summary>
+        public string FileName { get; }
 
         #endregion
 

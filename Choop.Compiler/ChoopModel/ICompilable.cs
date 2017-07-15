@@ -4,7 +4,7 @@
     /// Represents a Choop grammar structure that can be translated to Scratch blocks.
     /// </summary>
     /// <typeparam name="T">The output type of the translated code.</typeparam>
-    public interface ICompilable<out T>
+    public interface ICompilable<out T> : IRule
     {
         #region Methods
 

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -60,6 +62,18 @@ namespace Choop.Compiler.ChoopModel
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public Collection<MethodDeclaration> Methods => null;
+
+        /// <summary>
+        /// Gets the token to report any compiler errors to.
+        /// </summary>
+        /// <exception cref="NotSupportedException"></exception>
+        public IToken ErrorToken => throw new NotSupportedException();
+
+        /// <summary>
+        /// Gets the file name where the grammar structure was found.
+        /// </summary>
+        /// <exception cref="NotSupportedException"></exception>
+        public string FileName => throw new NotSupportedException();
 
         #endregion
 

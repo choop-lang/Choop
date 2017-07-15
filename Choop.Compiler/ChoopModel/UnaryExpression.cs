@@ -1,4 +1,5 @@
 ﻿using System;
+using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -19,6 +20,16 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the expression that the unary operator modifies.
         /// </summary>
         public IExpression Expression { get; }
+
+        /// <summary>
+        /// Gets the token to report any compiler errors to.
+        /// </summary>
+        public IToken ErrorToken { get; }
+
+        /// <summary>
+        /// Gets the file name where the grammar structure was found.
+        /// </summary>
+        public string FileName { get; }
 
         #endregion
 

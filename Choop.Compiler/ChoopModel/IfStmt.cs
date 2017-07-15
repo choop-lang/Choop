@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -16,6 +17,16 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <remarks>The code blocks should be in order, with the primary case first and the default case (if specified) last.</remarks>
         public Collection<ConditionalBlock> Blocks { get; } = new Collection<ConditionalBlock>();
+
+        /// <summary>
+        /// Gets the token to report any compiler errors to.
+        /// </summary>
+        public IToken ErrorToken { get; }
+
+        /// <summary>
+        /// Gets the file name where the grammar structure was found.
+        /// </summary>
+        public string FileName { get; }
 
         #endregion
 

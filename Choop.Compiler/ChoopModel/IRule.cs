@@ -10,12 +10,12 @@ namespace Choop.Compiler.ChoopModel
         #region Properties
 
         /// <summary>
-        /// Gets the token to mark any syntax errors detected during translation at.
+        /// Gets the token to report any compiler errors to.
         /// </summary>
         IToken ErrorToken { get; }
 
         /// <summary>
-        /// Gets the file name where the rule was specified.
+        /// Gets the file name where the grammar structure was found.
         /// </summary>
         string FileName { get; }
 

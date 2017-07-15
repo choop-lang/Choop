@@ -1,9 +1,11 @@
-﻿namespace Choop.Compiler.ChoopModel
+﻿using Antlr4.Runtime;
+
+namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents a paramter declaration.
     /// </summary>
-    public class ParamDeclaration : ITypedDeclaration
+    public class ParamDeclaration : ITypedDeclaration, IRule
     {
         #region Properties
 
@@ -21,6 +23,16 @@
         /// Gets the default value for the parameter, if specified.
         /// </summary>
         public object Default { get; }
+        
+        /// <summary>
+        /// Gets the token to report any compiler errors to.
+        /// </summary>
+        public IToken ErrorToken { get; }
+
+        /// <summary>
+        /// Gets the file name where the grammar structure was found.
+        /// </summary>
+        public string FileName { get; }
 
         /// <summary>
         /// Gets whether the parameter is optional.
