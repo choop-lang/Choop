@@ -134,7 +134,6 @@
     <Compile Include="ChoopModel\ModuleDeclaration.cs" />
     <Compile Include="ChoopModel\SpriteDeclaration.cs" />
     <Compile Include="ChoopParserErrorListener.cs" />
-    <Compile Include="ChoopListener.cs" />
     <Compile Include="ChoopTokenErrorListener.cs" />
     <Compile Include="CompilerError.cs" />
     <Compile Include="ErrorType.cs" />
