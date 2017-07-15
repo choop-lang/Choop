@@ -40,6 +40,21 @@ namespace Choop.Compiler.ChoopModel
 
         #endregion
 
+        #region Constructor
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="ConditionalBlock"/> class.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ConditionalBlock(string fileName, IToken errorToken)
+        {
+            FileName = fileName;
+            ErrorToken = errorToken;
+        }
+
+        #endregion
+
         #region Methods
 
         /// <summary>

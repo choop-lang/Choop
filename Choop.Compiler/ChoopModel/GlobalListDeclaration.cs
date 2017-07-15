@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
@@ -61,11 +60,15 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="name">The name of the list.</param>
         /// <param name="type">The data type of items in the list.</param>
         /// <param name="isArray">Whether the list acts as an array.</param>
-        public GlobalListDeclaration(string name, DataType type, bool isArray)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public GlobalListDeclaration(string name, DataType type, bool isArray, string fileName, IToken errorToken)
         {
             Name = name;
             Type = type;
             IsArray = isArray;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

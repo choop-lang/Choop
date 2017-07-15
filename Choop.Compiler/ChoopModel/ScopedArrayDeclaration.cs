@@ -51,14 +51,18 @@ namespace Choop.Compiler.ChoopModel
         #region Constructor
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ScopedArrayDeclaration"/> class. 
+        /// Creates a new instance of the <see cref="ScopedArrayDeclaration"/> class.
         /// </summary>
         /// <param name="name">The name of the array.</param>
         /// <param name="type">The data type of items inside the array.</param>
-        public ScopedArrayDeclaration(string name, DataType type)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ScopedArrayDeclaration(string name, DataType type, string fileName, IToken errorToken)
         {
             Name = name;
             Type = type;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

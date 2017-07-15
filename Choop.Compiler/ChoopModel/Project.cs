@@ -67,12 +67,16 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the token to report any compiler errors to.
         /// </summary>
         /// <exception cref="NotSupportedException"></exception>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IToken ErrorToken => throw new NotSupportedException();
 
         /// <summary>
         /// Gets the file name where the grammar structure was found.
         /// </summary>
         /// <exception cref="NotSupportedException"></exception>
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public string FileName => throw new NotSupportedException();
 
         #endregion
@@ -161,7 +165,7 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public ProjectInfo Translate(TranslationContext context)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         #endregion

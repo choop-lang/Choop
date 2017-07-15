@@ -41,9 +41,13 @@ namespace Choop.Compiler.ChoopModel
         /// Creates a new instance of the <see cref="SwitchStmt"/> class.
         /// </summary>
         /// <param name="variable">The expression for the switch variable.</param>
-        public SwitchStmt(IExpression variable)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public SwitchStmt(IExpression variable, string fileName, IToken errorToken)
         {
             Variable = variable;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

@@ -41,9 +41,13 @@ namespace Choop.Compiler.ChoopModel
         /// Creates a new instance of the <see cref="MethodCall"/> class.
         /// </summary>
         /// <param name="methodName">The name of the method being called.</param>
-        public MethodCall(string methodName)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public MethodCall(string methodName, string fileName, IToken errorToken)
         {
             MethodName = methodName;
+            FileName = fileName;
+            ErrorToken = errorToken;
             Parameters = new Collection<IExpression>();
         }
 
@@ -51,10 +55,14 @@ namespace Choop.Compiler.ChoopModel
         /// Creates a new instance of the <see cref="MethodCall"/> class.
         /// </summary>
         /// <param name="methodName">The name of the method being called.</param>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
         /// <param name="parameters">The parameters for the method.</param>
-        public MethodCall(string methodName, params IExpression[] parameters)
+        public MethodCall(string methodName, string fileName, IToken errorToken, params IExpression[] parameters)
         {
             MethodName = methodName;
+            FileName = fileName;
+            ErrorToken = errorToken;
             Parameters = new Collection<IExpression>(parameters);
         }
 

@@ -40,9 +40,13 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="expression">The expression that the unary operator modifies.</param>
         /// <param name="operator">The unary operator use in the unary expression.</param>
-        public UnaryExpression(IExpression expression, UnaryOperator @operator)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public UnaryExpression(IExpression expression, UnaryOperator @operator, string fileName, IToken errorToken)
         {
             Operator = @operator;
+            FileName = fileName;
+            ErrorToken = errorToken;
             Expression = expression;
         }
 

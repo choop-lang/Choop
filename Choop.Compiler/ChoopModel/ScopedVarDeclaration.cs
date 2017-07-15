@@ -42,16 +42,20 @@ namespace Choop.Compiler.ChoopModel
         #region Constructor
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ScopedVarDeclaration"/> class. 
+        /// Creates a new instance of the <see cref="ScopedVarDeclaration"/> class.
         /// </summary>
         /// <param name="name">The name of the variable.</param>
         /// <param name="type">The data type of the variable.</param>
         /// <param name="value">The initial value of the variable.</param>
-        public ScopedVarDeclaration(string name, DataType type, IExpression value)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ScopedVarDeclaration(string name, DataType type, IExpression value, string fileName, IToken errorToken)
         {
             Name = name;
             Type = type;
             Value = value;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

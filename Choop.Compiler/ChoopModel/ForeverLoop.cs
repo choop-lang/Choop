@@ -29,6 +29,21 @@ namespace Choop.Compiler.ChoopModel
 
         #endregion
 
+        #region Constructor
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="ForeverLoop"/> class.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ForeverLoop(string fileName, IToken errorToken)
+        {
+            FileName = fileName;
+            ErrorToken = errorToken;
+        }
+
+        #endregion
+
         #region Methods
 
         /// <summary>

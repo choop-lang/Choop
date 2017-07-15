@@ -1,4 +1,5 @@
-﻿using Choop.Compiler.BlockModel;
+﻿using Antlr4.Runtime;
+using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -23,7 +24,9 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="identifierName">The name of the array being looked up.</param>
         /// <param name="index">The expression for the index of the item being looked up.</param>
-        public ArrayLookupExpression(string identifierName, IExpression index) : base(identifierName)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ArrayLookupExpression(string identifierName, IExpression index, string fileName, IToken errorToken) : base(identifierName, fileName, errorToken)
         {
             Index = index;
         }

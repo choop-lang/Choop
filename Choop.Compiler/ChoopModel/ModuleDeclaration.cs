@@ -58,9 +58,13 @@ namespace Choop.Compiler.ChoopModel
         /// Creates a new instance of the <see cref="ModuleDeclaration"/> class.
         /// </summary>
         /// <param name="name">The name of the module.</param>
-        public ModuleDeclaration(string name)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ModuleDeclaration(string name, string fileName, IToken errorToken)
         {
             Name = name;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

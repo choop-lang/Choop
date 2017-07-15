@@ -48,9 +48,14 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="variableName">The name of the variable being assigned.</param>
         /// <param name="operator">The operator to use for the assignment.</param>
         /// <param name="value">The input to the assignment operator.</param>
-        public VarAssignStmt(string variableName, AssignOperator @operator, IExpression value = null)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public VarAssignStmt(string variableName, AssignOperator @operator, string fileName, IToken errorToken,
+            IExpression value = null)
         {
             Operator = @operator;
+            FileName = fileName;
+            ErrorToken = errorToken;
             VariableName = variableName;
             Value = value;
         }

@@ -44,11 +44,15 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="name">The name of the constant.</param>
         /// <param name="type">The data type of the constant.</param>
         /// <param name="value">The initial value of the constant.</param>
-        public ConstDeclaration(string name, DataType type, TerminalExpression value)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ConstDeclaration(string name, DataType type, TerminalExpression value, string fileName, IToken errorToken)
         {
             Name = name;
             Type = type;
             Value = value;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

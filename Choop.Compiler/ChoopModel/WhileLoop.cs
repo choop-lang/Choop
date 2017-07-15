@@ -40,9 +40,13 @@ namespace Choop.Compiler.ChoopModel
         /// Creates a new instance of the <see cref="WhileLoop"/> class.
         /// </summary>
         /// <param name="condition">The stopping condition for the loop.</param>
-        public WhileLoop(IExpression condition)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public WhileLoop(IExpression condition, string fileName, IToken errorToken)
         {
             Condition = condition;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

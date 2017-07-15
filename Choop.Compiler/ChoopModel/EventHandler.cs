@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics.SymbolStore;
-using System.IO;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ObjectModel;
@@ -61,12 +59,16 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="parameter">The parameter for the event handler, if necessary.</param>
         /// <param name="unsafe">Whether the event handler is unsafe.</param>
         /// <param name="atomic">Whether the event handler is atomic.</param>
-        public EventHandler(string name, TerminalExpression parameter, bool @unsafe, bool atomic)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public EventHandler(string name, TerminalExpression parameter, bool @unsafe, bool atomic, string fileName, IToken errorToken)
         {
             Name = name;
             Parameter = parameter;
             Unsafe = @unsafe;
             Atomic = atomic;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

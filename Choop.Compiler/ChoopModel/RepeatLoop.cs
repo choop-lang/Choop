@@ -46,10 +46,14 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="inline">Whether to inline the repeat loop.</param>
         /// <param name="iterations">The expression for the number of iterations to be run.</param>
-        public RepeatLoop(bool inline, IExpression iterations)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public RepeatLoop(bool inline, IExpression iterations, string fileName, IToken errorToken)
         {
             Inline = inline;
             Iterations = iterations;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

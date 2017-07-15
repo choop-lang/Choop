@@ -34,9 +34,13 @@ namespace Choop.Compiler.ChoopModel
         /// Creates a new instance of the <see cref="LookupExpression"/> class.
         /// </summary>
         /// <param name="identifierName">The name of the identifier being looked up.</param>
-        public LookupExpression(string identifierName)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public LookupExpression(string identifierName, string fileName, IToken errorToken)
         {
             IdentifierName = identifierName;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

@@ -70,10 +70,14 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="name">The name of the sprite.</param>
         /// <param name="metaFile">The file path to the metadata file for this sprite.</param>
-        protected SpriteBaseDeclaration(string name, string metaFile)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        protected SpriteBaseDeclaration(string name, string metaFile, string fileName, IToken errorToken)
         {
             Name = name;
             MetaFile = metaFile;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

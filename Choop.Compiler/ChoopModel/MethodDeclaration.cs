@@ -75,7 +75,10 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="unsafe">Whether the method is unsafe.</param>
         /// <param name="inline">Whether the method should be inlined.</param>
         /// <param name="atomic">Whether the method should be atomic.</param>
-        public MethodDeclaration(string name, DataType type, bool hasReturn, bool @unsafe, bool inline, bool atomic)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public MethodDeclaration(string name, DataType type, bool hasReturn, bool @unsafe, bool inline, bool atomic,
+            string fileName, IToken errorToken)
         {
             Name = name;
             Type = type;
@@ -83,6 +86,8 @@ namespace Choop.Compiler.ChoopModel
             Unsafe = @unsafe;
             Inline = inline;
             Atomic = atomic;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

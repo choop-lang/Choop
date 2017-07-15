@@ -35,7 +35,7 @@ namespace Choop.Compiler
         private readonly Collection<CompilerError> _compilerErrors;
 
         #endregion
-        
+
         #region Properties
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Choop.Compiler
         public string FileName { get; set; }
 
         #endregion
-        
+
         #region Constructor
 
         /// <summary>
@@ -99,15 +99,16 @@ namespace Choop.Compiler
                 // Check stage hasn't been declared before
                 if (Project.Stage == null)
                 {
-                    sprite = new StageDeclaration(metaFile);
+                    sprite = new StageDeclaration(metaFile, FileName, identifier.Symbol);
 
                     Project.Stage = (StageDeclaration) sprite;
                 }
                 else
                 {
                     // Syntax error - stage declared twice
-                    _compilerErrors.Add(new CompilerError(identifier.Symbol, 
-                        $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
+                    _compilerErrors.Add(new CompilerError(identifier.Symbol,
+                        $"Project already contains a definition for '{name}'", FileName,
+                        ErrorType.DuplicateDeclaration));
                     return;
                 }
             }
@@ -118,7 +119,7 @@ namespace Choop.Compiler
                 // Check anything with same name hasn't already been declared
                 if (Project.GetDeclaration(name) == null)
                 {
-                    sprite = new SpriteDeclaration(name, metaFile);
+                    sprite = new SpriteDeclaration(name, metaFile, FileName, identifier.Symbol);
 
                     Project.Sprites.Add((SpriteDeclaration) sprite);
                 }
@@ -126,7 +127,8 @@ namespace Choop.Compiler
                 {
                     // Syntax error - definition already exists
                     _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                        $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
+                        $"Project already contains a definition for '{name}'", FileName,
+                        ErrorType.DuplicateDeclaration));
                     return;
                 }
             }
@@ -165,7 +167,7 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
-                ModuleDeclaration module = new ModuleDeclaration(name);
+                ModuleDeclaration module = new ModuleDeclaration(name, FileName, identifier.Symbol);
 
                 Project.Modules.Add(module);
 
@@ -209,14 +211,15 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
-                ConstDeclaration constDeclaration = new ConstDeclaration(name, type, expression);
+                ConstDeclaration constDeclaration =
+                    new ConstDeclaration(name, type, expression, FileName, identifier.Symbol);
 
                 _currentSprite.Constants.Add(constDeclaration);
             }
             else
             {
                 // Syntax error - definition already exists
-                _compilerErrors.Add(new CompilerError(identifier.Symbol, 
+                _compilerErrors.Add(new CompilerError(identifier.Symbol,
                     $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
@@ -243,7 +246,8 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
-                GlobalVarDeclaration varDeclaration = new GlobalVarDeclaration(name, type, expression);
+                GlobalVarDeclaration varDeclaration =
+                    new GlobalVarDeclaration(name, type, expression, FileName, identifier.Symbol);
 
                 _currentSprite.Variables.Add(varDeclaration);
             }
@@ -268,7 +272,8 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
-                GlobalListDeclaration arrayDeclaration = new GlobalListDeclaration(name, type, true);
+                GlobalListDeclaration arrayDeclaration =
+                    new GlobalListDeclaration(name, type, true, FileName, identifier.Symbol);
 
                 _currentSprite.Lists.Add(arrayDeclaration);
 
@@ -294,7 +299,8 @@ namespace Choop.Compiler
                     {
                         // Syntax error - bounds should match
                         _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                            "Array bounds does not match length of supplied values", FileName, ErrorType.InvalidArgument));
+                            "Array bounds does not match length of supplied values", FileName,
+                            ErrorType.InvalidArgument));
                         return;
                     }
 
@@ -305,9 +311,8 @@ namespace Choop.Compiler
                 else
                 {
                     for (int i = 0; i < bounds; i++)
-                    {
-                        arrayDeclaration.Value.Add(new TerminalExpression("", DataType.String));
-                    }
+                        arrayDeclaration.Value.Add(
+                            new TerminalExpression("", DataType.String, FileName, identifier.Symbol));
                 }
             }
             else
@@ -340,10 +345,11 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
-                GlobalListDeclaration listDeclaration = new GlobalListDeclaration(name, type, false);
+                GlobalListDeclaration listDeclaration =
+                    new GlobalListDeclaration(name, type, false, FileName, identifier.Symbol);
 
                 _currentSprite.Lists.Add(listDeclaration);
-                
+
                 // Get the default values
                 while (_currentExpressions.Count > 0)
                     listDeclaration.Value.Add(_currentExpressions.Pop() as TerminalExpression);
@@ -354,7 +360,7 @@ namespace Choop.Compiler
                     return;
 
                 int bounds = int.Parse(boundSpecifier.GetText());
-                
+
                 if (listDeclaration.Value.Count > 0)
                 {
                     // Check bounds match supplied values
@@ -362,16 +368,15 @@ namespace Choop.Compiler
                     {
                         // Syntax error - bounds should match
                         _compilerErrors.Add(new CompilerError(boundSpecifier.Symbol,
-                            "List bounds does not match length of supplied values", FileName, ErrorType.InvalidArgument));
+                            "List bounds does not match length of supplied values", FileName,
+                            ErrorType.InvalidArgument));
                     }
-
                 }
                 else
                 {
                     for (int i = 0; i < bounds; i++)
-                    {
-                        listDeclaration.Value.Add(new TerminalExpression("", DataType.String));
-                    }
+                        listDeclaration.Value.Add(
+                            new TerminalExpression("", DataType.String, FileName, identifier.Symbol));
                 }
             }
             else
@@ -417,7 +422,9 @@ namespace Choop.Compiler
                 hasReturn,
                 unsafeTags.Length > 0,
                 inlineTags.Length > 0,
-                atomicTags.Length > 0
+                atomicTags.Length > 0,
+                FileName,
+                identifier.Symbol
             );
 
             _currentSprite.Methods.Add(method);
@@ -444,14 +451,14 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create parameter declaration
-                ParamDeclaration param = new ParamDeclaration(name, type);
+                ParamDeclaration param = new ParamDeclaration(name, type, FileName, identifier.Symbol);
 
                 method.Params.Add(param);
             }
             else
             {
                 // Syntax error - definition already exists
-                _compilerErrors.Add(new CompilerError(identifier.Symbol, 
+                _compilerErrors.Add(new CompilerError(identifier.Symbol,
                     $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
@@ -477,7 +484,7 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create parameter declaration
-                ParamDeclaration param = new ParamDeclaration(name, type, expression);
+                ParamDeclaration param = new ParamDeclaration(name, type, FileName, identifier.Symbol, expression);
 
                 method.Params.Add(param);
             }
@@ -526,7 +533,9 @@ namespace Choop.Compiler
                     eventName,
                     expression,
                     unsafeTags.Length > 0,
-                    atomicTags.Length > 0
+                    atomicTags.Length > 0,
+                    FileName,
+                    eventTag.Symbol
                 );
 
             _currentSprite.EventHandlers.Add(eventHandler);
@@ -575,14 +584,15 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
-                ScopedVarDeclaration varDeclaration = new ScopedVarDeclaration(name, type, expression);
+                ScopedVarDeclaration varDeclaration =
+                    new ScopedVarDeclaration(name, type, expression, FileName, identifier.Symbol);
 
                 _currentBlocks.Peek().Statements.Add(varDeclaration);
             }
             else
             {
                 // Syntax error - definition already exists
-                _compilerErrors.Add(new CompilerError(identifier.Symbol, 
+                _compilerErrors.Add(new CompilerError(identifier.Symbol,
                     $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
@@ -600,7 +610,8 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
-                ScopedArrayDeclaration arrayDeclaration = new ScopedArrayDeclaration(name, type);
+                ScopedArrayDeclaration arrayDeclaration =
+                    new ScopedArrayDeclaration(name, type, FileName, identifier.Symbol);
                 _currentBlocks.Peek().Statements.Add(arrayDeclaration);
 
                 // Get bounds
@@ -625,7 +636,8 @@ namespace Choop.Compiler
                     {
                         // Syntax error - bounds should match
                         _compilerErrors.Add(new CompilerError(identifier.Symbol,
-                            "Array bounds does not match length of supplied values", FileName, ErrorType.InvalidArgument));
+                            "Array bounds does not match length of supplied values", FileName,
+                            ErrorType.InvalidArgument));
                         return;
                     }
 
@@ -636,15 +648,14 @@ namespace Choop.Compiler
                 else
                 {
                     for (int i = 0; i < bounds; i++)
-                    {
-                        arrayDeclaration.Value.Add(new TerminalExpression("", DataType.String));
-                    }
+                        arrayDeclaration.Value.Add(
+                            new TerminalExpression("", DataType.String, FileName, identifier.Symbol));
                 }
             }
             else
             {
                 // Syntax error - definition already exists
-                _compilerErrors.Add(new CompilerError(identifier.Symbol, 
+                _compilerErrors.Add(new CompilerError(identifier.Symbol,
                     $"Project already contains a definition for '{name}'", FileName, ErrorType.DuplicateDeclaration));
             }
         }
@@ -657,11 +668,12 @@ namespace Choop.Compiler
         {
             base.ExitAssignVar(context);
 
-            string variable = context.Identifier().GetText();
+            ITerminalNode identifier = context.Identifier();
+            string variable = identifier.GetText();
             AssignOperator op = context.assignOp().ToAssignOperator();
             IExpression expression = _currentExpressions.Pop();
 
-            VarAssignStmt stmt = new VarAssignStmt(variable, op, expression);
+            VarAssignStmt stmt = new VarAssignStmt(variable, op, FileName, identifier.Symbol, expression);
             _currentBlocks.Peek().Statements.Add(stmt);
         }
 
@@ -669,9 +681,10 @@ namespace Choop.Compiler
         {
             base.EnterAssignVarInc(context);
 
-            string variable = context.Identifier().GetText();
+            ITerminalNode identifier = context.Identifier();
+            string variable = identifier.GetText();
 
-            VarAssignStmt stmt = new VarAssignStmt(variable, AssignOperator.PlusPlus);
+            VarAssignStmt stmt = new VarAssignStmt(variable, AssignOperator.PlusPlus, FileName, identifier.Symbol);
             _currentBlocks.Peek().Statements.Add(stmt);
         }
 
@@ -679,9 +692,10 @@ namespace Choop.Compiler
         {
             base.EnterAssignVarDec(context);
 
-            string variable = context.Identifier().GetText();
+            ITerminalNode identifier = context.Identifier();
+            string variable = identifier.GetText();
 
-            VarAssignStmt stmt = new VarAssignStmt(variable, AssignOperator.PlusPlus);
+            VarAssignStmt stmt = new VarAssignStmt(variable, AssignOperator.PlusPlus, FileName, identifier.Symbol);
             _currentBlocks.Peek().Statements.Add(stmt);
         }
 
@@ -689,12 +703,13 @@ namespace Choop.Compiler
         {
             base.ExitAssignArray(context);
 
-            string array = context.Identifier().GetText();
+            ITerminalNode identifier = context.Identifier();
+            string array = identifier.GetText();
             AssignOperator op = context.assignOp().ToAssignOperator();
             IExpression expression = _currentExpressions.Pop();
             IExpression index = _currentExpressions.Pop();
 
-            ArrayAssignStmt stmt = new ArrayAssignStmt(array, index, op, expression);
+            ArrayAssignStmt stmt = new ArrayAssignStmt(array, index, op, expression, FileName, identifier.Symbol);
             _currentBlocks.Peek().Statements.Add(stmt);
         }
 
@@ -702,10 +717,12 @@ namespace Choop.Compiler
         {
             base.EnterAssignArrayInc(context);
 
-            string array = context.Identifier().GetText();
+            ITerminalNode identifier = context.Identifier();
+            string array = identifier.GetText();
             IExpression index = _currentExpressions.Pop();
 
-            ArrayAssignStmt stmt = new ArrayAssignStmt(array, index, AssignOperator.PlusPlus);
+            ArrayAssignStmt stmt = new ArrayAssignStmt(array, index, AssignOperator.PlusPlus, null, FileName,
+                identifier.Symbol);
             _currentBlocks.Peek().Statements.Add(stmt);
         }
 
@@ -713,10 +730,12 @@ namespace Choop.Compiler
         {
             base.EnterAssignArrayDec(context);
 
-            string array = context.Identifier().GetText();
+            ITerminalNode identifier = context.Identifier();
+            string array = identifier.GetText();
             IExpression index = _currentExpressions.Pop();
 
-            ArrayAssignStmt stmt = new ArrayAssignStmt(array, index, AssignOperator.MinusMinus);
+            ArrayAssignStmt stmt = new ArrayAssignStmt(array, index, AssignOperator.MinusMinus, null, FileName,
+                identifier.Symbol);
             _currentBlocks.Peek().Statements.Add(stmt);
         }
 
@@ -724,9 +743,10 @@ namespace Choop.Compiler
         {
             base.ExitArrayFullAssignment(context);
 
-            string array = context.Identifier().GetText();
+            ITerminalNode identifier = context.Identifier();
+            string array = identifier.GetText();
 
-            ArrayReAssignStmt stmt = new ArrayReAssignStmt(array);
+            ArrayReAssignStmt stmt = new ArrayReAssignStmt(array, FileName, identifier.Symbol);
 
             // Get the new values
             while (_currentExpressions.Count > 0)
@@ -747,7 +767,7 @@ namespace Choop.Compiler
 
             IExpression variable = _currentExpressions.Pop();
 
-            SwitchStmt stmt = new SwitchStmt(variable);
+            SwitchStmt stmt = new SwitchStmt(variable, FileName, variable.ErrorToken);
 
             _currentBlocks.Peek().Statements.Add(stmt);
         }
@@ -768,7 +788,7 @@ namespace Choop.Compiler
             if (stmt == null) throw new InvalidOperationException();
 
             // Create case block
-            ConditionalBlock caseBlock = new ConditionalBlock();
+            ConditionalBlock caseBlock = new ConditionalBlock(FileName, context.Start);
 
             // Add all conditions
             while (_currentExpressions.Count > 0)
@@ -786,7 +806,7 @@ namespace Choop.Compiler
             if (stmt == null) throw new InvalidOperationException();
 
             // Create case block
-            ConditionalBlock caseBlock = new ConditionalBlock();
+            ConditionalBlock caseBlock = new ConditionalBlock(FileName, context.Start);
 
             // No conditions (default)
 
@@ -809,9 +829,9 @@ namespace Choop.Compiler
         {
             base.ExitIfHead(context);
 
-            IfStmt stmt = new IfStmt();
+            IfStmt stmt = new IfStmt(FileName, context.Start);
 
-            ConditionalBlock mainBlock = new ConditionalBlock();
+            ConditionalBlock mainBlock = new ConditionalBlock(FileName, context.Start);
             mainBlock.Conditions.Add(_currentExpressions.Pop());
 
             stmt.Blocks.Add(mainBlock);
@@ -827,7 +847,7 @@ namespace Choop.Compiler
             IfStmt ifStmt = _currentBlocks.Peek().Statements.Last() as IfStmt;
             if (ifStmt == null) throw new InvalidOperationException();
 
-            ConditionalBlock elseBlock = new ConditionalBlock();
+            ConditionalBlock elseBlock = new ConditionalBlock(FileName, context.Start);
             elseBlock.Conditions.Add(_currentExpressions.Pop());
 
             ifStmt.Blocks.Add(elseBlock);
@@ -841,7 +861,7 @@ namespace Choop.Compiler
             IfStmt ifStmt = _currentBlocks.Peek().Statements.Last() as IfStmt;
             if (ifStmt == null) throw new InvalidOperationException();
 
-            ConditionalBlock elseBlock = new ConditionalBlock();
+            ConditionalBlock elseBlock = new ConditionalBlock(FileName, context.Start);
 
             // No conditions - default
 
@@ -870,7 +890,7 @@ namespace Choop.Compiler
                 return;
             }
 
-            RepeatLoop loop = new RepeatLoop(inlineTag != null, expression);
+            RepeatLoop loop = new RepeatLoop(inlineTag != null, expression, FileName, context.Start);
             _currentBlocks.Peek().Statements.Add(loop);
             _currentBlocks.Push(loop);
         }
@@ -897,7 +917,7 @@ namespace Choop.Compiler
             IExpression start = _currentExpressions.Pop();
 
             // Create for loop
-            ForLoop loop = new ForLoop(varName, varType, start, end, step);
+            ForLoop loop = new ForLoop(varName, varType, start, end, step, FileName, identifier.Symbol);
             _currentBlocks.Peek().Statements.Add(loop);
             _currentBlocks.Push(loop);
         }
@@ -911,7 +931,9 @@ namespace Choop.Compiler
             ForeachLoop loop = new ForeachLoop(
                 identifiers[0].GetText(),
                 context.typeSpecifier().ToDataType(),
-                identifiers[1].GetText()
+                identifiers[1].GetText(),
+                FileName,
+                identifiers[0].Symbol
             );
 
             _currentBlocks.Peek().Statements.Add(loop);
@@ -922,7 +944,7 @@ namespace Choop.Compiler
         {
             base.EnterForeverLoop(context);
 
-            ForeverLoop loop = new ForeverLoop();
+            ForeverLoop loop = new ForeverLoop(FileName, context.Start);
 
             _currentBlocks.Peek().Statements.Add(loop);
             _currentBlocks.Push(loop);
@@ -932,7 +954,7 @@ namespace Choop.Compiler
         {
             base.ExitWhileHead(context);
 
-            WhileLoop loop = new WhileLoop(_currentExpressions.Pop());
+            WhileLoop loop = new WhileLoop(_currentExpressions.Pop(), FileName, context.Start);
 
             _currentBlocks.Peek().Statements.Add(loop);
             _currentBlocks.Push(loop);
@@ -949,7 +971,7 @@ namespace Choop.Compiler
             // Expressions list should be empty
             if (_currentExpressions.Count > 0) throw new InvalidOperationException();
         }
-        
+
         public override void ExitStmtMethodCall(ChoopParser.StmtMethodCallContext context)
         {
             base.ExitStmtMethodCall(context);
@@ -965,7 +987,9 @@ namespace Choop.Compiler
         {
             base.ExitReturnStmt(context);
 
-            ReturnStmt stmt = context.expression() != null ? new ReturnStmt(_currentExpressions.Pop()) : new ReturnStmt(null);
+            ReturnStmt stmt = context.expression() != null
+                ? new ReturnStmt(_currentExpressions.Pop(), FileName, context.Start)
+                : new ReturnStmt(null, FileName, context.Start);
 
             _currentBlocks.Peek().Statements.Add(stmt);
         }
@@ -974,7 +998,7 @@ namespace Choop.Compiler
         {
             base.EnterStmtScope(context);
 
-            ScopeDeclaration scope = new ScopeDeclaration();
+            ScopeDeclaration scope = new ScopeDeclaration(FileName, context.Start);
             _currentBlocks.Peek().Statements.Add(scope);
             _currentBlocks.Push(scope);
         }
@@ -1000,14 +1024,16 @@ namespace Choop.Compiler
         {
             base.EnterUConstantTrue(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean));
+            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean, FileName,
+                context.Start));
         }
 
         public override void EnterUConstantFalse(ChoopParser.UConstantFalseContext context)
         {
             base.EnterUConstantFalse(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean));
+            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean, FileName,
+                context.Start));
         }
 
         // TODO: Remove string quote marks
@@ -1015,35 +1041,40 @@ namespace Choop.Compiler
         {
             base.EnterUConstantString(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.String));
+            _currentExpressions.Push(
+                new TerminalExpression(context.GetText(), DataType.String, FileName, context.Start));
         }
 
         public override void EnterUConstantInt(ChoopParser.UConstantIntContext context)
         {
             base.EnterUConstantInt(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Number));
+            _currentExpressions.Push(
+                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
         }
 
         public override void EnterUConstantDec(ChoopParser.UConstantDecContext context)
         {
             base.EnterUConstantDec(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Number));
+            _currentExpressions.Push(
+                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
         }
 
         public override void EnterUConstantHex(ChoopParser.UConstantHexContext context)
         {
             base.EnterUConstantHex(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Number));
+            _currentExpressions.Push(
+                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
         }
 
         public override void EnterUConstantSci(ChoopParser.UConstantSciContext context)
         {
             base.EnterUConstantSci(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Number));
+            _currentExpressions.Push(
+                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
         }
 
         #endregion
@@ -1054,14 +1085,16 @@ namespace Choop.Compiler
         {
             base.EnterConstantTrue(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean));
+            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean, FileName,
+                context.Start));
         }
 
         public override void EnterConstantFalse(ChoopParser.ConstantFalseContext context)
         {
             base.EnterConstantFalse(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean));
+            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean, FileName,
+                context.Start));
         }
 
         // TODO: Remove string quote marks
@@ -1069,35 +1102,40 @@ namespace Choop.Compiler
         {
             base.EnterConstantString(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.String));
+            _currentExpressions.Push(
+                new TerminalExpression(context.GetText(), DataType.String, FileName, context.Start));
         }
 
         public override void EnterConstantInt(ChoopParser.ConstantIntContext context)
         {
             base.EnterConstantInt(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Number));
+            _currentExpressions.Push(
+                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
         }
 
         public override void EnterConstantDec(ChoopParser.ConstantDecContext context)
         {
             base.EnterConstantDec(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Number));
+            _currentExpressions.Push(
+                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
         }
 
         public override void EnterConstantHex(ChoopParser.ConstantHexContext context)
         {
             base.EnterConstantHex(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Number));
+            _currentExpressions.Push(
+                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
         }
 
         public override void EnterConstantSci(ChoopParser.ConstantSciContext context)
         {
             base.EnterConstantSci(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Number));
+            _currentExpressions.Push(
+                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
         }
 
         #endregion
@@ -1112,27 +1150,31 @@ namespace Choop.Compiler
 
             ITerminalNode identifier = context.Identifier();
 
-            MethodCall methodCall = new MethodCall(identifier.GetText());
-            
+            MethodCall methodCall = new MethodCall(identifier.GetText(), FileName, identifier.Symbol);
+
             while (_currentExpressions.Count > 0)
                 methodCall.Parameters.Insert(0, _currentExpressions.Pop());
 
             _currentExpressions.Push(methodCall);
         }
-        
+
         public override void ExitPrimaryVarLookup(ChoopParser.PrimaryVarLookupContext context)
         {
             base.ExitPrimaryVarLookup(context);
 
-            _currentExpressions.Push(new LookupExpression(context.Identifier().GetText()));
+            ITerminalNode identifier = context.Identifier();
+
+            _currentExpressions.Push(new LookupExpression(identifier.GetText(), FileName, identifier.Symbol));
         }
 
         public override void ExitPrimaryArrayLookup(ChoopParser.PrimaryArrayLookupContext context)
         {
             base.ExitPrimaryArrayLookup(context);
 
+            ITerminalNode identifier = context.Identifier();
             IExpression index = _currentExpressions.Pop();
-            ArrayLookupExpression lookup = new ArrayLookupExpression(context.Identifier().GetText(), index);
+            ArrayLookupExpression lookup =
+                new ArrayLookupExpression(identifier.GetText(), index, FileName, identifier.Symbol);
 
             _currentExpressions.Push(lookup);
         }
@@ -1148,7 +1190,7 @@ namespace Choop.Compiler
             base.ExitUnaryMinus(context);
 
             IExpression expression = _currentExpressions.Pop();
-            _currentExpressions.Push(new UnaryExpression(expression, UnaryOperator.Minus));
+            _currentExpressions.Push(new UnaryExpression(expression, UnaryOperator.Minus, FileName, context.Start));
         }
 
         public override void ExitUnaryNot(ChoopParser.UnaryNotContext context)
@@ -1156,7 +1198,7 @@ namespace Choop.Compiler
             base.ExitUnaryNot(context);
 
             IExpression expression = _currentExpressions.Pop();
-            _currentExpressions.Push(new UnaryExpression(expression, UnaryOperator.Not));
+            _currentExpressions.Push(new UnaryExpression(expression, UnaryOperator.Not, FileName, context.Start));
         }
 
         #endregion
@@ -1169,7 +1211,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Pow, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.Pow, first, second, FileName,
+                context.OpPow().Symbol));
         }
 
         public override void ExitExpressionMult(ChoopParser.ExpressionMultContext context)
@@ -1178,7 +1221,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Multiply, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.Multiply, first, second, FileName,
+                context.OpMult().Symbol));
         }
 
         public override void ExitExpressionDivide(ChoopParser.ExpressionDivideContext context)
@@ -1187,7 +1231,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Divide, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.Divide, first, second, FileName,
+                context.OpDivide().Symbol));
         }
 
         public override void ExitExpressionMod(ChoopParser.ExpressionModContext context)
@@ -1196,7 +1241,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Mod, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.Mod, first, second, FileName,
+                context.OpMod().Symbol));
         }
 
         public override void ExitExpressionConcat(ChoopParser.ExpressionConcatContext context)
@@ -1205,7 +1251,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Concat, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.Concat, first, second, FileName,
+                context.OpConcat().Symbol));
         }
 
         public override void ExitExpressionPlus(ChoopParser.ExpressionPlusContext context)
@@ -1214,7 +1261,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Plus, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.Plus, first, second, FileName,
+                context.OpPlus().Symbol));
         }
 
         public override void ExitExpressionMinus(ChoopParser.ExpressionMinusContext context)
@@ -1223,7 +1271,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Minus, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.Minus, first, second, FileName,
+                context.OpMinus().Symbol));
         }
 
         public override void ExitExpressionLShift(ChoopParser.ExpressionLShiftContext context)
@@ -1232,7 +1281,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.LShift, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.LShift, first, second, FileName,
+                context.OpLShift().Symbol));
         }
 
         public override void ExitExpressionRShift(ChoopParser.ExpressionRShiftContext context)
@@ -1241,7 +1291,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.RShift, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.RShift, first, second, FileName,
+                context.OpRShift().Symbol));
         }
 
         public override void ExitExpressionLT(ChoopParser.ExpressionLTContext context)
@@ -1250,7 +1301,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.LessThan, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.LessThan, first, second, FileName,
+                context.OpLT().Symbol));
         }
 
         public override void ExitExpressionGT(ChoopParser.ExpressionGTContext context)
@@ -1259,7 +1311,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.GreaterThan, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.GreaterThan, first, second, FileName,
+                context.OpGT().Symbol));
         }
 
         public override void ExitExpressionLTE(ChoopParser.ExpressionLTEContext context)
@@ -1268,7 +1321,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.LessThanEq, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.LessThanEq, first, second, FileName,
+                context.OpLTE().Symbol));
         }
 
         public override void ExitExpressionGTE(ChoopParser.ExpressionGTEContext context)
@@ -1277,7 +1331,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.GreaterThanEq, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.GreaterThanEq, first, second, FileName,
+                context.OpGTE().Symbol));
         }
 
         public override void ExitExpressionEquals(ChoopParser.ExpressionEqualsContext context)
@@ -1286,7 +1341,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Equal, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.Equal, first, second, FileName,
+                context.OpEquals().Symbol));
         }
 
         public override void ExitExpressionNEquals(ChoopParser.ExpressionNEqualsContext context)
@@ -1295,7 +1351,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.NotEqual, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.NotEqual, first, second, FileName,
+                context.OpNEquals().Symbol));
         }
 
         public override void ExitExpressionAnd(ChoopParser.ExpressionAndContext context)
@@ -1304,7 +1361,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.And, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.And, first, second, FileName,
+                context.OpAnd().Symbol));
         }
 
         public override void ExitExpressionOr(ChoopParser.ExpressionOrContext context)
@@ -1313,7 +1371,8 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Or, first, second));
+            _currentExpressions.Push(new CompoundExpression(CompundOperator.Or, first, second, FileName,
+                context.OpOr().Symbol));
         }
 
         #endregion

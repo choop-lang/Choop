@@ -40,10 +40,14 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="literal">The unparsed string value of the expression.</param>
         /// <param name="literalType">The data type of the literal value.</param>
-        public TerminalExpression(string literal, DataType literalType)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public TerminalExpression(string literal, DataType literalType, string fileName, IToken errorToken)
         {
             Literal = literal;
             LiteralType = literalType;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

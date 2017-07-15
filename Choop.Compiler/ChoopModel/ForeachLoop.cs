@@ -54,11 +54,15 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="variable">The name of the counter variable.</param>
         /// <param name="varType">The data type of the counter variable.</param>
         /// <param name="sourceName">The name of the source array for the loop.</param>
-        public ForeachLoop(string variable, DataType varType, string sourceName)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ForeachLoop(string variable, DataType varType, string sourceName, string fileName, IToken errorToken)
         {
             Variable = variable;
             VarType = varType;
             SourceName = sourceName;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion
@@ -91,14 +95,14 @@ namespace Choop.Compiler.ChoopModel
 
             // Get stackvalue for array
             StackValue arrayValue = null; // TODO
-            
+
             // Translate loop contents
             List<Block> loopContents = new List<Block>
             {
                 itemVar.CreateVariableAssignment(arrayValue.CreateArrayLookup(internalCounter.CreateVariableLookup())),
                 itemVar.CreateVariableIncrement(1)
             };
-            
+
             foreach (Block[] translated in Statements.Select(x => x.Translate(newContext)))
                 loopContents.AddRange(translated);
 

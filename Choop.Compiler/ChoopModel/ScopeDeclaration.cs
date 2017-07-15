@@ -29,6 +29,21 @@ namespace Choop.Compiler.ChoopModel
 
         #endregion
 
+        #region Constructor
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="ScopeDeclaration"/> class.
+        /// </summary>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ScopeDeclaration(string fileName, IToken errorToken)
+        {
+            FileName = fileName;
+            ErrorToken = errorToken;
+        }
+
+        #endregion
+
         #region Methods
 
         /// <summary>

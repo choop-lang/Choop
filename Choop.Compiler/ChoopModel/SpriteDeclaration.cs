@@ -1,4 +1,5 @@
 ﻿using System;
+using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -15,7 +16,9 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="name">The name of the sprite.</param>
         /// <param name="metaFile">The file path to the metadata file for this sprite.</param>
-        public SpriteDeclaration(string name, string metaFile) : base(name, metaFile)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public SpriteDeclaration(string name, string metaFile, string fileName, IToken errorToken) : base(name, metaFile, fileName, errorToken)
         {
         }
 

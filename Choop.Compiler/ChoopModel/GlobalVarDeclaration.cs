@@ -45,11 +45,16 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="name">The name of the variable.</param>
         /// <param name="type">The data type of the variable.</param>
         /// <param name="value">The initial value of the variable.</param>
-        public GlobalVarDeclaration(string name, DataType type, TerminalExpression value)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public GlobalVarDeclaration(string name, DataType type, TerminalExpression value, string fileName,
+            IToken errorToken)
         {
             Name = name;
             Type = type;
             Value = value;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

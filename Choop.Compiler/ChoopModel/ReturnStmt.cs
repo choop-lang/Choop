@@ -34,9 +34,13 @@ namespace Choop.Compiler.ChoopModel
         /// Creates a new instance of the <see cref="ReturnStmt"/> class.
         /// </summary>
         /// <param name="value">The value to be returned.</param>
-        public ReturnStmt(IExpression value)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ReturnStmt(IExpression value, string fileName, IToken errorToken)
         {
             Value = value;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

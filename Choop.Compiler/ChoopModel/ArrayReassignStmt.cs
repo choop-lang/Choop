@@ -39,9 +39,13 @@ namespace Choop.Compiler.ChoopModel
         /// Creates a new instance of the <see cref="VarAssignStmt"/> class.
         /// </summary>
         /// <param name="arrayName">The name of the array being assigned.</param>
-        public ArrayReAssignStmt(string arrayName)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ArrayReAssignStmt(string arrayName, string fileName, IToken errorToken)
         {
             ArrayName = arrayName;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion

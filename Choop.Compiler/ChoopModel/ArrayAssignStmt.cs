@@ -54,12 +54,17 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="index">The index of the element being assigned.</param>
         /// <param name="operator">The operator to use for the assignment.</param>
         /// <param name="value">The input to the assignment operator.</param>
-        public ArrayAssignStmt(string arrayName, IExpression index, AssignOperator @operator, IExpression value = null)
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ArrayAssignStmt(string arrayName, IExpression index, AssignOperator @operator, IExpression value,
+            string fileName, IToken errorToken)
         {
             Operator = @operator;
             Index = index;
             ArrayName = arrayName;
             Value = value;
+            FileName = fileName;
+            ErrorToken = errorToken;
         }
 
         #endregion
@@ -80,30 +85,37 @@ namespace Choop.Compiler.ChoopModel
                     value = Value;
                     break;
                 case AssignOperator.AddEquals:
-                    value = new CompoundExpression(CompundOperator.Plus, new ArrayLookupExpression(ArrayName, Index),
-                        Value);
+                    value = new CompoundExpression(CompundOperator.Plus,
+                        new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
+                        Value, FileName, ErrorToken);
                     break;
                 case AssignOperator.MinusEquals:
-                    value = new CompoundExpression(CompundOperator.Minus, new ArrayLookupExpression(ArrayName, Index),
-                        Value);
+                    value = new CompoundExpression(CompundOperator.Minus,
+                        new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
+                        Value, FileName, ErrorToken);
                     break;
                 case AssignOperator.DotEquals:
                     value = new CompoundExpression(CompundOperator.Multiply,
-                        new ArrayLookupExpression(ArrayName, Index), Value);
+                        new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken), Value, FileName, ErrorToken);
                     break;
                 case AssignOperator.PlusPlus:
-                    value = new CompoundExpression(CompundOperator.Plus, new ArrayLookupExpression(ArrayName, Index),
-                        new TerminalExpression("1", DataType.Number));
+                    value = new CompoundExpression(CompundOperator.Plus,
+                        new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
+                        new TerminalExpression("1", DataType.Number, FileName, ErrorToken), FileName, ErrorToken);
                     break;
                 case AssignOperator.MinusMinus:
-                    value = new CompoundExpression(CompundOperator.Minus, new ArrayLookupExpression(ArrayName, Index),
-                        new TerminalExpression("1", DataType.Number));
+                    value = new CompoundExpression(CompundOperator.Minus,
+                        new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
+                        new TerminalExpression("1", DataType.Number, FileName, ErrorToken), FileName, ErrorToken);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new[] {new Block(BlockSpecs.ReplaceItemOfList, Index.Translate(context), ArrayName, value.Translate(context))};
+            return new[]
+            {
+                new Block(BlockSpecs.ReplaceItemOfList, Index.Translate(context), ArrayName, value.Translate(context))
+            };
         }
 
         #endregion
