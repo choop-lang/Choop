@@ -1,7 +1,7 @@
 ﻿using System;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
-using Choop.Compiler.ObjectModel;
+using Choop.Compiler.TranslationUtils;
 
 namespace Choop.Compiler.ChoopModel
 {

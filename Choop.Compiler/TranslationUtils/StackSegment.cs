@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Choop.Compiler.ObjectModel
+namespace Choop.Compiler.TranslationUtils
 {
     /// <summary>
     /// Represents a segment of the stack for a single scope.

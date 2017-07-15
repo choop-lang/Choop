@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using Choop.Compiler.ChoopModel;
 
-namespace Choop.Compiler.ObjectModel
+namespace Choop.Compiler.TranslationUtils
 {
     /// <summary>
     /// Represents a scope for variables.

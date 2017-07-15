@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Antlr4.Runtime.Tree;
 using Choop.Compiler.ChoopModel;
+using Choop.Compiler.TranslationUtils;
 
 namespace Choop.Compiler
 {

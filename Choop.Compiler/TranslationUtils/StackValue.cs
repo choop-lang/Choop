@@ -1,8 +1,8 @@
-﻿using Choop.Compiler.ChoopModel;
-using System;
+﻿using System;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.ChoopModel;
 
-namespace Choop.Compiler.ObjectModel
+namespace Choop.Compiler.TranslationUtils
 {
     /// <summary>
     /// Represents a variable or array stored on the stack.

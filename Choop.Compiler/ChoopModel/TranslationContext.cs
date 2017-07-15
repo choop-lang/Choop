@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using Choop.Compiler.ObjectModel;
+using Choop.Compiler.TranslationUtils;
 
 namespace Choop.Compiler.ChoopModel
 {

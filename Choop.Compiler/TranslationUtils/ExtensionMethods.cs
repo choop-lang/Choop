@@ -2,7 +2,7 @@
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 
-namespace Choop.Compiler
+namespace Choop.Compiler.TranslationUtils
 {
     /// <summary>
     /// Provides various extension methods for the Choop compiler unit.

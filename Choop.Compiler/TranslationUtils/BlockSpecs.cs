@@ -1,4 +1,4 @@
-﻿namespace Choop.Compiler.BlockModel
+﻿namespace Choop.Compiler.TranslationUtils
 {
     /// <summary>
     /// Contains the block spec for every Scratch block.

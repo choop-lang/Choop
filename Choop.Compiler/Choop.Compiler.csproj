@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockModel\BlockDef.cs" />
-    <Compile Include="BlockModel\BlockSpecs.cs" />
+    <Compile Include="TranslationUtils\BlockSpecs.cs" />
     <Compile Include="BlockModel\Comment.cs" />
     <Compile Include="BlockModel\IJsonConvertable.cs" />
     <Compile Include="BlockModel\Sound.cs" />
@@ -89,7 +89,7 @@
     <Compile Include="ChoopModel\EventHandler.cs" />
     <Compile Include="ChoopModel\IRule.cs" />
     <Compile Include="ChoopModel\Project.cs" />
-    <Compile Include="ChoopModel\Settings.cs" />
+    <Compile Include="TranslationUtils\Settings.cs" />
     <Compile Include="ChoopModel\SpriteBaseDeclaration.cs" />
     <Compile Include="ChoopModel\StageDeclaration.cs" />
     <Compile Include="ChoopModel\TranslationContext.cs" />
@@ -139,10 +139,10 @@
     <Compile Include="ChoopTokenErrorListener.cs" />
     <Compile Include="CompilerError.cs" />
     <Compile Include="ErrorType.cs" />
-    <Compile Include="ExtensionMethods.cs" />
-    <Compile Include="ObjectModel\Scope.cs" />
-    <Compile Include="ObjectModel\StackSegment.cs" />
-    <Compile Include="ObjectModel\StackValue.cs" />
+    <Compile Include="TranslationUtils\ExtensionMethods.cs" />
+    <Compile Include="TranslationUtils\Scope.cs" />
+    <Compile Include="TranslationUtils\StackSegment.cs" />
+    <Compile Include="TranslationUtils\StackValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Choop.Compiler.TranslationUtils;
 using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.BlockModel
@@ -98,7 +99,7 @@ namespace Choop.Compiler.BlockModel
         {
             return new JObject
             {
-                {"objName", ChoopModel.Settings.StageName},
+                {"objName", Settings.StageName},
                 {"variables", new JArray(Variables.Select(x => x.ToJson()))},
                 {"lists", new JArray(Lists.Select(x => x.ToJson()))},
                 {"scripts", new JArray(Scripts.Select(x => x.ToJson()))},
