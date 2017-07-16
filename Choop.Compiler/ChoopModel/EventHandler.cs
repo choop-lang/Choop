@@ -135,7 +135,11 @@ namespace Choop.Compiler.ChoopModel
                 -1)); // Decrement CurrentStack
 
             // Create internal method
-            BlockDef internalMethod = new BlockDef(internalName, Atomic);
+            BlockDef internalMethod = new BlockDef
+            {
+                Spec = internalName,
+                Atomic = Atomic
+            };
             internalMethod.InputNames.Add(Settings.StackRefParam);
             internalMethod.DefaultValues.Add(DataType.Number.GetDefault());
 
