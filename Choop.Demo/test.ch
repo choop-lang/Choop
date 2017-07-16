@@ -203,3 +203,7 @@ module Module1 {
 		return input1 > input2;
 	}
 }
+
+sprite Stage {
+
+}
