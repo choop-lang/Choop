@@ -5,6 +5,8 @@
     /// </summary>
     public static class BlockSpecs
     {
+        #region Block Specs
+
         public const string Minus = "-";
         public const string Times = "*";
         public const string Divide = "/";
@@ -150,5 +152,16 @@
         public const string SetXTo = "xpos:";
         public const string YPos = "ypos";
         public const string SetYTo = "ypos:";
+
+        #endregion
+
+        #region Input Codes
+
+        public const string InputBool = "%b";
+        public const string InputColor = "%c";
+        public const string InputNum = "%n";
+        public const string InputString = "%s";
+
+        #endregion
     }
 }
