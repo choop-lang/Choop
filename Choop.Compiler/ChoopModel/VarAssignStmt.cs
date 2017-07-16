@@ -73,7 +73,37 @@ namespace Choop.Compiler.ChoopModel
         {
             // TODO: variables on stack
 
-            return new[] {new Block(BlockSpecs.SetVariableTo, VariableName, Value.Translate(context))};
+            Block setBlock;
+
+            switch (Operator)
+            {
+                case AssignOperator.Equals:
+                    setBlock = new Block(BlockSpecs.SetVariableTo, VariableName, Value.Translate(context));
+                    break;
+                case AssignOperator.AddEquals:
+                    setBlock = new Block(BlockSpecs.ChangeVarBy, VariableName, Value.Translate(context));
+                    break;
+                case AssignOperator.MinusEquals:
+                    setBlock = new Block(BlockSpecs.ChangeVarBy, VariableName,
+                        new UnaryExpression(Value, UnaryOperator.Minus, FileName, ErrorToken).Translate(context));
+                    break;
+                case AssignOperator.DotEquals:
+                    setBlock = new Block(BlockSpecs.SetVariableTo, VariableName,
+                        new CompoundExpression(CompundOperator.Concat,
+                                new LookupExpression(VariableName, FileName, ErrorToken), Value, FileName, ErrorToken)
+                            .Translate(context));
+                    break;
+                case AssignOperator.PlusPlus:
+                    setBlock = new Block(BlockSpecs.ChangeVarBy, VariableName, 1);
+                    break;
+                case AssignOperator.MinusMinus:
+                    setBlock = new Block(BlockSpecs.ChangeVarBy, VariableName, -1);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return new[] {setBlock};
         }
 
         #endregion
