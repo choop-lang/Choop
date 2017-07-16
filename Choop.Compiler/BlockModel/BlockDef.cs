@@ -85,8 +85,8 @@ namespace Choop.Compiler.BlockModel
                 new JArray(
                     Opcode,
                     Spec,
-                    InputNames,
-                    DefaultValues,
+                    new JArray(InputNames),
+                    new JArray(DefaultValues),
                     Atomic
                 )
             };
