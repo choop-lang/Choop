@@ -12,17 +12,17 @@ namespace Choop.Demo
         /// <param name="args">The arguments supplied to the program.</param>
         private static void Main(string[] args)
         {
-            // The path of the file to compile
-            const string filepath = "testsimple.ch";
+            const string inputFile = @"testsimple.ch";
+            const string outputFile = @"Output/project.json";
 
             // Open file
-            using (StreamReader reader = new StreamReader(filepath))
+            using (StreamReader reader = new StreamReader(inputFile))
             {
                 // Create compiler instance
                 ChoopCompiler compiler = new ChoopCompiler("Test");
 
                 // Compile code
-                compiler.AddCode(reader.BaseStream, filepath);
+                compiler.AddCode(reader.BaseStream, inputFile);
                 compiler.Compile();
 
                 // Check if compilation was successful
@@ -47,7 +47,10 @@ namespace Choop.Demo
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine(compiler.ProjectJson.ToString());
 
-                    compiler.Save(@"project.json");
+                    compiler.Save(outputFile);
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Saved to {0}", outputFile);
                 }
             }
 
