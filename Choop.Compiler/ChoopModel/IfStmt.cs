@@ -86,7 +86,8 @@ namespace Choop.Compiler.ChoopModel
             {
                 new Block(
                     BlockSpecs.IfThen,
-                    new object[] {Blocks[element].Translate(context)}
+                    Blocks[element].Conditions[0].Translate(context),
+                    Blocks[element].Translate(context)
                 )
             };
         }
