@@ -152,6 +152,13 @@ namespace Choop.Compiler
             // Don't bother compiling if compile errors were previously detected
             if (HasErrors) return;
 
+            // Check stage has been declared
+            if (ChoopProject.Stage == null)
+            {
+                CompilerErrors.Add(new CompilerError("Stage not declared", ErrorType.TokenMissing));
+                return;
+            }
+
             // Create translation context (Superglobal level)
             TranslationContext context = new TranslationContext(null, CompilerErrors);
 
