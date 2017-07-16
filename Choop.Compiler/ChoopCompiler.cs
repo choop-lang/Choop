@@ -146,7 +146,11 @@ namespace Choop.Compiler
             // Check not previously compiled
             if (Compiled) throw new InvalidOperationException("Project already compiled");
 
+            // Mark as compiled
             Compiled = true;
+
+            // Don't bother compiling if compile errors were previously detected
+            if (HasErrors) return;
 
             // Create translation context (Superglobal level)
             TranslationContext context = new TranslationContext(null, CompilerErrors);
