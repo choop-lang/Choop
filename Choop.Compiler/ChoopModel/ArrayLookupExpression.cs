@@ -40,7 +40,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public override Block Translate(TranslationContext context)
+        public override object Translate(TranslationContext context)
         {
             return new Block(BlockSpecs.GetItemOfList, Index.Translate(context), IdentifierName);
         }

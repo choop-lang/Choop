@@ -74,12 +74,12 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block Translate(TranslationContext context)
+        public object Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }
 
-        Block[] ICompilable<Block[]>.Translate(TranslationContext context) => new[] {Translate(context)};
+        Block[] ICompilable<Block[]>.Translate(TranslationContext context) => new[] {(Block) Translate(context)};
 
         #endregion
     }
