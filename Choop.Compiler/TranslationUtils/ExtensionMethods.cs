@@ -118,6 +118,28 @@ namespace Choop.Compiler.TranslationUtils
             }
         }
 
+        /// <summary>
+        /// Returns the input notation for the specified <see cref="DataType"/> instance.
+        /// </summary>
+        /// <param name="type">The data type to get the input notation for.</param>
+        /// <returns>The input notation for the specified <see cref="DataType"/> instance.</returns>
+        public static string ToInputNotation(this DataType type)
+        {
+            switch (type)
+            {
+                case DataType.Object:
+                    return BlockSpecs.InputString;
+                case DataType.String:
+                    return BlockSpecs.InputString;
+                case DataType.Number:
+                    return BlockSpecs.InputNum;
+                case DataType.Boolean:
+                    return BlockSpecs.InputBool;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
         #endregion
     }
 }
