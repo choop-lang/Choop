@@ -90,8 +90,6 @@
     <Compile Include="ChoopModel\IRule.cs" />
     <Compile Include="ChoopModel\Project.cs" />
     <Compile Include="TranslationUtils\Settings.cs" />
-    <Compile Include="ChoopModel\SpriteBaseDeclaration.cs" />
-    <Compile Include="ChoopModel\StageDeclaration.cs" />
     <Compile Include="ChoopModel\TranslationContext.cs" />
     <Compile Include="ChoopModel\WhileLoop.cs" />
     <Compile Include="ChoopModel\RepeatLoop.cs" />

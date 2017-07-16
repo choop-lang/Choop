@@ -76,6 +76,9 @@ sprite MySprite {
 }
 ```
 
+Note that it is not possible to declarate the Stage in Choop.
+Instead, you must access it indirectly through methods such as `SetBackdropTo`.
+
 ## Metadata Files
 Each sprite must have an associated sprite metadata (*.sm) file.
 These contain information about the sprite, including:

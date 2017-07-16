@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
@@ -35,11 +36,6 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the collection of superglobal list declarations.
         /// </summary>
         public Collection<GlobalListDeclaration> Lists { get; } = new Collection<GlobalListDeclaration>();
-
-        /// <summary>
-        /// Gets or sets the stage sprite in the project.
-        /// </summary>
-        public StageDeclaration Stage { get; set; }
 
         /// <summary>
         /// Gets the collection of sprites in the project.
@@ -160,8 +156,8 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Stage Translate(TranslationContext context)
         {
-            // Create base stage object from code
-            Stage stage = Stage.Translate(context);
+            // Create blank stage instance
+            Stage stage = new Stage();
 
             // Translate superglobal variables
             foreach (GlobalVarDeclaration globalVarDeclaration in Variables)
@@ -184,6 +180,17 @@ namespace Choop.Compiler.ChoopModel
                 scriptCount += translated.Scripts.Count;
                 spriteCount++;
             }
+
+            // Insert default costume
+            // TODO use meta file
+            stage.Costumes.Add(new Costume
+            {
+                Name = "backdrop1",
+                Id = 3,
+                Md5 = "739b5e2a2435f6e1ec2993791b423146.png",
+                BitmapResolution = 1,
+                RotationCenter = new Point(240, 180)
+            });
 
             // Store project info / stats
             stage.Info = new ProjectInfo

@@ -204,6 +204,6 @@ module Module1 {
 	}
 }
 
-sprite Stage {
+sprite Other {
 
 }

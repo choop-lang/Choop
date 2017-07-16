@@ -17,7 +17,7 @@ sprite MySprite {
 	}
 }
 
-sprite Stage {
+sprite Other {
 	var test = 1;
 
 	event GreenFlag() {

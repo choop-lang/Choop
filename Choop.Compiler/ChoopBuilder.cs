@@ -88,47 +88,20 @@ namespace Choop.Compiler
             if (metaAttribute != null)
                 metaFile = metaAttribute.StringLiteral().GetText();
 
-            // Create declaration object
-            SpriteBaseDeclaration sprite;
 
-            if (name.Equals("stage", StringComparison.CurrentCultureIgnoreCase))
+            // Check anything with same name hasn't already been declared
+            if (Project.GetDeclaration(name) != null)
             {
-                // Stage
-
-                // Check stage hasn't been declared before
-                if (Project.Stage == null)
-                {
-                    sprite = new StageDeclaration(metaFile, FileName, identifier.Symbol);
-
-                    Project.Stage = (StageDeclaration) sprite;
-                }
-                else
-                {
-                    // Syntax error - stage declared twice
-                    _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                        ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
-                    return;
-                }
+                // Syntax error - definition already exists
+                _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
+                    ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
+                return;
             }
-            else
-            {
-                // Sprite
 
-                // Check anything with same name hasn't already been declared
-                if (Project.GetDeclaration(name) == null)
-                {
-                    sprite = new SpriteDeclaration(name, metaFile, FileName, identifier.Symbol);
+            // Create declaration
+            SpriteDeclaration sprite = new SpriteDeclaration(name, metaFile, FileName, identifier.Symbol);
 
-                    Project.Sprites.Add((SpriteDeclaration) sprite);
-                }
-                else
-                {
-                    // Syntax error - definition already exists
-                    _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                        ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
-                    return;
-                }
-            }
+            Project.Sprites.Add(sprite);
 
             // Get imported modules
             foreach (ChoopParser.UsingStmtContext usingStmtAst in context.usingStmt())
