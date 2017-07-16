@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
@@ -149,16 +150,9 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="name">The name of the item to search for.</param>
         /// <param name="locals">The collection of local items to search inside.</param>
         /// <returns>The declaration of the item with the specified name; null if not found.</returns>
-        private static T GetItem<T>(string name, IEnumerable<T> locals) where T : class, IDeclaration
-        {
-            // Local
-            foreach (T item in locals)
-                if (item.Name.Equals(name, Settings.IdentifierComparisonMode))
-                    return item;
-
-            // Not found
-            return null;
-        }
+        private static T GetItem<T>(string name, IEnumerable<T> locals)
+            where T : class, IDeclaration => locals.FirstOrDefault(
+            item => item.Name.Equals(name, Settings.IdentifierComparisonMode));
 
         /// <summary>
         /// Gets the translated code for the grammar structure.
