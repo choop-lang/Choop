@@ -82,10 +82,9 @@ namespace Choop.Compiler.ChoopModel
         public List Translate(TranslationContext context)
         {
             List result = new List(Name);
+
             foreach (TerminalExpression expression in Value)
-            {
                 result.Contents.Add(expression.Literal);
-            }
 
             return result;
         }

@@ -49,6 +49,16 @@ namespace Choop.Compiler.BlockModel
         /// Creates a new instance of the <see cref="List"/> class.
         /// </summary>
         /// <param name="name">The name of the list.</param>
+        public List(string name)
+        {
+            Name = name;
+            Contents = new Collection<object>();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="List"/> class.
+        /// </summary>
+        /// <param name="name">The name of the list.</param>
         /// <param name="contents">The collection of default values within the list.</param>
         public List(string name, params object[] contents)
         {
