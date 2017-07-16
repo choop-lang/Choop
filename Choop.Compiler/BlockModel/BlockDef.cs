@@ -23,9 +23,9 @@ namespace Choop.Compiler.BlockModel
         }
 
         /// <summary>
-        /// Gets the signature of the custom block.
+        /// Gets or sets the signature of the custom block.
         /// </summary>
-        public string Spec { get; }
+        public string Spec { get; set; }
 
         /// <summary>
         /// Gets the collection of input names of the custom block.
@@ -38,9 +38,9 @@ namespace Choop.Compiler.BlockModel
         public Collection<object> DefaultValues { get; } = new Collection<object>();
 
         /// <summary>
-        /// Gets whether the custom block is atomic.
+        /// Gets or sets whether the custom block is atomic.
         /// </summary>
-        public bool Atomic { get; }
+        public bool Atomic { get; set; }
 
         /// <summary>
         /// Gets or sets the display location of the script.
@@ -51,24 +51,6 @@ namespace Choop.Compiler.BlockModel
         /// Gets the collection of blocks inside this script.
         /// </summary>
         public Collection<Block> Blocks { get; } = new Collection<Block>();
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="BlockDef"/> class.
-        /// </summary>
-        /// <param name="spec">The block spec.</param>
-        /// <param name="atomic">Whether the block is atomic.</param>
-        /// <param name="x">The x position of the script.</param>
-        /// <param name="y">The y position of the script.</param>
-        public BlockDef(string spec, bool atomic = false, int x = 0, int y = 0)
-        {
-            Location = new Point(x, y);
-            Spec = spec;
-            Atomic = atomic;
-        }
 
         #endregion
 
