@@ -42,7 +42,10 @@ namespace Choop.Demo
                 {
                     // Compilation finished
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Successfully compiled!");
+                    Console.WriteLine("Successfully compiled!\r\n");
+
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine(compiler.ProjectJson.ToString());
                 }
             }
 
