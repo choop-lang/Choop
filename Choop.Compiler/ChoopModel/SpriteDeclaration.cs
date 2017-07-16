@@ -32,7 +32,32 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Sprite Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            // Create blank sprite instance
+            Sprite sprite = new Sprite();
+
+            // TODO: Import modules
+
+            // Variables
+            foreach (GlobalVarDeclaration globalVarDeclaration in Variables)
+                sprite.Variables.Add(globalVarDeclaration.Translate(context));
+
+            // Lists
+            foreach (GlobalListDeclaration globalListDeclaration in Lists)
+                sprite.Lists.Add(globalListDeclaration.Translate(context));
+
+            // Events
+            foreach (EventHandler eventHandler in EventHandlers)
+            {
+                Tuple<BlockModel.EventHandler, BlockDef> translated = eventHandler.Translate(context);
+                sprite.Scripts.Add(translated.Item1);
+                sprite.Scripts.Add(translated.Item2);
+            }
+
+            // Methods
+            foreach (MethodDeclaration methodDeclaration in Methods)
+                sprite.Scripts.Add(methodDeclaration.Translate(context));
+
+            return sprite;
         }
 
         #endregion
