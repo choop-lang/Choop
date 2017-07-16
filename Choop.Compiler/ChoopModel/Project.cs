@@ -166,14 +166,14 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Stage Translate(TranslationContext context)
         {
-            // Create stage object
-            Stage stage = new Stage();
+            // Create base stage object from code
+            Stage stage = Stage.Translate(context);
 
-            // Translate variables
+            // Translate superglobal variables
             foreach (GlobalVarDeclaration globalVarDeclaration in Variables)
                 stage.Variables.Add(globalVarDeclaration.Translate(context));
 
-            // Translate lists
+            // Translate superglobal lists
             foreach (GlobalListDeclaration globalListDeclaration in Lists)
                 stage.Lists.Add(globalListDeclaration.Translate(context));
 
