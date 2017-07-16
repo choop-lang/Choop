@@ -1,5 +1,7 @@
 ﻿using System;
 using Antlr4.Runtime;
+using Choop.Compiler.BlockModel;
+using Choop.Compiler.TranslationUtils;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -59,7 +61,17 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public object Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            // TODO optimise for constants
+
+            switch (Operator)
+            {
+                case UnaryOperator.Minus:
+                    return new Block(BlockSpecs.Minus, 0, Expression);
+                case UnaryOperator.Not:
+                    return new Block(BlockSpecs.Not, Expression);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         #endregion
