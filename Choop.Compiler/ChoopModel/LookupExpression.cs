@@ -1,5 +1,7 @@
 ﻿using System;
 using Antlr4.Runtime;
+using Choop.Compiler.BlockModel;
+using Choop.Compiler.TranslationUtils;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -52,7 +54,9 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public virtual object Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            // TODO variables on stack, parameters
+
+            return new Block(BlockSpecs.GetVariable, IdentifierName);
         }
 
         #endregion
