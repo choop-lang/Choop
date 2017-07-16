@@ -50,23 +50,28 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Unused. Gets the collection of event handlers.
         /// </summary>
+        /// <exception cref="NotSupportedException"></exception>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete]
         public Collection<EventHandler> EventHandlers => null;
 
         /// <summary>
         /// Unused. Gets the collection of method declarations.
         /// </summary>
+        /// <exception cref="NotSupportedException"></exception>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete]
         public Collection<MethodDeclaration> Methods => null;
 
         /// <summary>
-        /// Gets the token to report any compiler errors to.
+        /// Unused. Gets the token to report any compiler errors to.
         /// </summary>
         /// <exception cref="NotSupportedException"></exception>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete]
         public IToken ErrorToken => throw new NotSupportedException();
 
         /// <summary>
@@ -75,6 +80,7 @@ namespace Choop.Compiler.ChoopModel
         /// <exception cref="NotSupportedException"></exception>
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete]
         public string FileName => throw new NotSupportedException();
 
         #endregion
