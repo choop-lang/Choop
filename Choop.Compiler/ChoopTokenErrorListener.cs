@@ -69,8 +69,8 @@ namespace Choop.Compiler
             }
 
             // Add error to collection
-            _errorCollection.Add(new CompilerError(message, line, charPositionInLine, startIndex, endIndex, token,
-                _fileName, errorType));
+            _errorCollection.Add(new CompilerError(message, errorType, line, charPositionInLine, startIndex, endIndex,
+                token, _fileName));
         }
 
         #endregion

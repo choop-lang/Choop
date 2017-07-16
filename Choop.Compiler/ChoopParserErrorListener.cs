@@ -115,13 +115,13 @@ namespace Choop.Compiler
             _errorCollection.Add(
                 new CompilerError(
                     message,
+                    errorType,
                     line,
                     charPositionInLine,
                     symbol.StartIndex,
                     symbol.StopIndex,
                     symbol.Text,
-                    _fileName,
-                    errorType
+                    _fileName
                 )
             );
         }

@@ -54,30 +54,29 @@ namespace Choop.Compiler
         #region Constructor
 
         /// <summary>
-        /// Creates a new instance of the <see cref="CompilerError"/> class. 
+        /// Creates a new instance of the <see cref="CompilerError"/> class.
         /// </summary>
-        /// <param name="token">The token that caused the compiler error.</param>
         /// <param name="message">The error message to display.</param>
-        /// <param name="fileName">The name of the file currently being compiled.</param>
         /// <param name="type">The type of the compiler error.</param>
-        internal CompilerError(IToken token, string message, string fileName = null, ErrorType type = ErrorType.Unspecified)
-            : this(message, token.Column, token.Line, token.StartIndex, token.StopIndex, token.Text, fileName, type)
+        public CompilerError(string message, ErrorType type)
         {
+            Message = message;
+            Type = type;
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="CompilerError"/> class. 
+        /// Creates a new instance of the <see cref="CompilerError"/> class.
         /// </summary>
         /// <param name="message">The error message to display.</param>
+        /// <param name="type">The type of the compiler error.</param>
         /// <param name="line">The line number where the error occured.</param>
         /// <param name="col">The column number where the error occured.</param>
         /// <param name="startIndex">The starting character index of the token that caused the error.</param>
         /// <param name="stopIndex">The last character index of the token that caused the error.</param>
         /// <param name="tokenText">The text of the token that caused the error.</param>
         /// <param name="fileName">The name of the file that contains the error.</param>
-        /// <param name="type">The type of the compiler error.</param>
-        public CompilerError(string message, int line, int col, int startIndex, int stopIndex, string tokenText, string fileName,
-            ErrorType type)
+        public CompilerError(string message, ErrorType type, int line, int col, int startIndex, int stopIndex,
+            string tokenText, string fileName)
         {
             Message = message;
             Line = line;
@@ -87,6 +86,18 @@ namespace Choop.Compiler
             TokenText = tokenText;
             FileName = fileName;
             Type = type;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="CompilerError"/> class.
+        /// </summary>
+        /// <param name="message">The error message to display.</param>
+        /// <param name="type">The type of the compiler error.</param>
+        /// <param name="token">The token that caused the compiler error.</param>
+        /// <param name="fileName">The name of the file currently being compiled.</param>
+        internal CompilerError(string message, ErrorType type, IToken token, string fileName)
+            : this(message, type, token.Column, token.Line, token.StartIndex, token.StopIndex, token.Text, fileName)
+        {
         }
 
         #endregion
