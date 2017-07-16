@@ -1019,13 +1019,14 @@ namespace Choop.Compiler
                 context.Start));
         }
 
-        // TODO: Remove string quote marks
         public override void EnterUConstantString(ChoopParser.UConstantStringContext context)
         {
             base.EnterUConstantString(context);
 
+            string rawString = context.GetText();
+
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.String, FileName, context.Start));
+                new TerminalExpression(rawString.Substring(1, rawString.Length - 2), DataType.String, FileName, context.Start));
         }
 
         public override void EnterUConstantInt(ChoopParser.UConstantIntContext context)
@@ -1080,13 +1081,14 @@ namespace Choop.Compiler
                 context.Start));
         }
 
-        // TODO: Remove string quote marks
         public override void EnterConstantString(ChoopParser.ConstantStringContext context)
         {
             base.EnterConstantString(context);
 
+            string rawString = context.GetText();
+
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.String, FileName, context.Start));
+                new TerminalExpression(rawString.Substring(1, rawString.Length - 2), DataType.String, FileName, context.Start));
         }
 
         public override void EnterConstantInt(ChoopParser.ConstantIntContext context)
