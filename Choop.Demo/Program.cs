@@ -46,6 +46,8 @@ namespace Choop.Demo
 
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.WriteLine(compiler.ProjectJson.ToString());
+
+                    compiler.Save(@"project.json");
                 }
             }
 

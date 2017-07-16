@@ -170,6 +170,24 @@ namespace Choop.Compiler
                 ProjectJson = (JObject) ScratchProject.ToJson();
         }
 
+        /// <summary>
+        /// Saves the output SB2 file.
+        /// </summary>
+        /// <param name="filepath">The file path to save the file to.</param>
+        public void Save(string filepath)
+        {
+            // Check compiled and no errors
+            if (!Compiled) throw new InvalidOperationException("Project not compiled");
+            if (HasErrors) throw new InvalidOperationException("Project has compiler errors");
+
+            // TODO: generate + save entire sb2
+
+            using (StreamWriter writer = new StreamWriter(filepath, false))
+            {
+                writer.Write(ProjectJson.ToString());
+            }
+        }
+
         #endregion
     }
 }
