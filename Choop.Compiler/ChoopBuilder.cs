@@ -626,7 +626,7 @@ namespace Choop.Compiler
 
                     // Get the default values
                     while (_currentExpressions.Count > 0)
-                        arrayDeclaration.Value.Insert(0, _currentExpressions.Pop() as TerminalExpression);
+                        arrayDeclaration.Value.Insert(0, _currentExpressions.Pop());
                 }
                 else
                 {
