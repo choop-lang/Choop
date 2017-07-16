@@ -1,0 +1,10 @@
+﻿NOTICE:
+
+This Scratch Project was compiled using Choop:
+	https://github.com/chooper100/Choop
+
+Please be aware that it is up to the author of the Choop project to determine
+whether the Choop source code used to create this project should be released.
+
+To learn how to compile your own Choop projects, please see here:
+	https://github.com/chooper100/Choop/blob/master/README.md

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
@@ -204,6 +205,16 @@ namespace Choop.Compiler.ChoopModel
                 SpriteCount = spriteCount,
                 ScriptCount = scriptCount
             };
+
+            // Insert Choop notice
+            stage.Comments.Add(new Comment
+            {
+                Text = Properties.Resources.ChoopNotice,
+                Location = new Point(20, 20),
+                Size = new Size(500, 200),
+                Open = true,
+                BlockId = -1
+            });
 
             return stage;
         }
