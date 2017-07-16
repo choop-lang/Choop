@@ -1,8 +1,8 @@
 ﻿using System;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
 using System.Collections.ObjectModel;
 using System.IO;
+using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 using Newtonsoft.Json.Linq;

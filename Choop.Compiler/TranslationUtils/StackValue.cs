@@ -108,9 +108,7 @@ namespace Choop.Compiler.TranslationUtils
                 Block[] blocks = new Block[StackSpace + 1];
                 blocks[0] = new Block(BlockSpecs.DeleteItemOfList, "all", GetUnsafeName());
                 for (int i = 0; i < StackSpace; i++)
-                {
                     blocks[i + 1] = new Block(BlockSpecs.AddToList, initalValues[i], GetUnsafeName());
-                }
                 return blocks;
             }
             else
@@ -118,9 +116,7 @@ namespace Choop.Compiler.TranslationUtils
                 // Stack
                 Block[] blocks = new Block[StackSpace];
                 for (int i = 0; i < StackSpace; i++)
-                {
                     blocks[i] = new Block("append:toList:", initalValues[i], Settings.StackIdentifier);
-                }
                 return blocks;
             }
         }
@@ -199,9 +195,7 @@ namespace Choop.Compiler.TranslationUtils
 
             Block[] result = new Block[StackSpace];
             for (int i = 0; i < StackSpace; i++)
-            {
                 result[i] = new Block(BlockSpecs.DeleteItemOfList, "last", Settings.StackIdentifier);
-            }
             return result;
         }
 

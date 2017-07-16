@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Choop.Compiler.ChoopModel;
 
 namespace Choop.Compiler.TranslationUtils
 {
@@ -104,10 +103,8 @@ namespace Choop.Compiler.TranslationUtils
         {
             // Loop through stack values in this scope
             foreach (StackValue value in StackValues)
-            {
                 if (value.Name.Equals(name, Settings.IdentifierComparisonMode))
                     return value; // Match found
-            }
 
             if (recursive && Parent != null)
                 return Parent.Search(name); // Recursion allowed and parent exists

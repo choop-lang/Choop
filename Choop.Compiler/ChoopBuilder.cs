@@ -5,6 +5,7 @@ using System.Linq;
 using Antlr4.Runtime.Tree;
 using Choop.Compiler.ChoopModel;
 using Choop.Compiler.TranslationUtils;
+using EventHandler = Choop.Compiler.ChoopModel.EventHandler;
 
 namespace Choop.Compiler
 {
@@ -85,10 +86,7 @@ namespace Choop.Compiler
 
             ChoopParser.MetaAttributeContext metaAttribute = context.metaAttribute();
             if (metaAttribute != null)
-            {
-                // Meta attribute used to specify non-standard meta file path
                 metaFile = metaAttribute.StringLiteral().GetText();
-            }
 
             // Create declaration object
             SpriteBaseDeclaration sprite;
@@ -139,15 +137,10 @@ namespace Choop.Compiler
                 string moduleName = module.GetText();
 
                 if (!sprite.ImportedModules.Contains(moduleName))
-                {
                     sprite.ImportedModules.Add(moduleName);
-                }
                 else
-                {
-                    // Module already included, raise error
                     _compilerErrors.Add(new CompilerError($"Module '{moduleName}' already imported",
                         ErrorType.ModuleAlreadyImported, module.Symbol, FileName));
-                }
             }
 
             // Set sprite as current
@@ -363,11 +356,8 @@ namespace Choop.Compiler
                 {
                     // Check bounds match supplied values
                     if (bounds != listDeclaration.Value.Count)
-                    {
-                        // Syntax error - bounds should match
                         _compilerErrors.Add(new CompilerError("List bounds does not match length of supplied values",
                             ErrorType.InvalidArgument, boundSpecifier.Symbol, FileName));
-                    }
                 }
                 else
                 {
@@ -525,8 +515,8 @@ namespace Choop.Compiler
             }
 
             // Create declaration
-            ChoopModel.EventHandler eventHandler =
-                new ChoopModel.EventHandler(
+            EventHandler eventHandler =
+                new EventHandler(
                     eventName,
                     expression,
                     unsafeTags.Length > 0,
@@ -572,10 +562,7 @@ namespace Choop.Compiler
             // Check if initial value specified
             IExpression expression = null;
             if (_currentExpressions.Count > 0)
-            {
-                // Get initial value
                 expression = _currentExpressions.Pop();
-            }
 
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)

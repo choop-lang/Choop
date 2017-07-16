@@ -1,5 +1,5 @@
-﻿using Antlr4.Runtime;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using Antlr4.Runtime;
 
 namespace Choop.Compiler
 {
