@@ -5,7 +5,7 @@ namespace Choop.Compiler.BlockModel
     /// <summary>
     /// Represents a sound.
     /// </summary>
-    public class Sound : IResource, IJsonConvertable
+    public class Sound : IResource
     {
         #region Properties
 
