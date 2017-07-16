@@ -1,5 +1,4 @@
-﻿using System;
-using Antlr4.Runtime;
+﻿using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
 
@@ -68,7 +67,7 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The stack reference for this variable.</returns>
         public StackValue GetStackRef()
         {
-            throw new NotImplementedException();
+            return new StackValue(Name, Type);
         }
 
         /// <summary>
@@ -77,7 +76,7 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            return new[] {new Block(BlockSpecs.AddToList, Value.Translate(context), Settings.StackIdentifier)};
         }
 
         #endregion
