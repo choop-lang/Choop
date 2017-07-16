@@ -1,4 +1,6 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
+using Choop.Compiler.ChoopModel;
 using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.BlockModel
@@ -52,7 +54,13 @@ namespace Choop.Compiler.BlockModel
                 if (jsonArg != null)
                     array.Add(jsonArg.ToJson());
                 else
-                    array.Add(arg);
+                {
+                    IJsonConvertable[] arrayArg = arg as IJsonConvertable[];
+                    if (arrayArg != null)
+                        array.Add(new JArray(arrayArg.Select(x => x.ToJson())));
+                    else
+                        array.Add(arg);
+                }
             }
 
             return array;

@@ -66,9 +66,9 @@ namespace Choop.Compiler.ChoopModel
             switch (Operator)
             {
                 case UnaryOperator.Minus:
-                    return new Block(BlockSpecs.Minus, 0, Expression);
+                    return new Block(BlockSpecs.Minus, 0, Expression.Translate(context));
                 case UnaryOperator.Not:
-                    return new Block(BlockSpecs.Not, Expression);
+                    return new Block(BlockSpecs.Not, Expression.Translate(context));
                 default:
                     throw new ArgumentOutOfRangeException();
             }
