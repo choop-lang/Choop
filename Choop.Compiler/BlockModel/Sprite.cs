@@ -121,7 +121,7 @@ namespace Choop.Compiler.BlockModel
                 {"isDraggable", Draggable },
                 {"indexInLibrary", LibraryIndex },
                 {"visible", Visible },
-                {"spriteInfo", new JObject(SpriteInfo) }
+                {"spriteInfo", new JValue(SpriteInfo) }
             };
         }
 

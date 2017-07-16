@@ -52,7 +52,7 @@ namespace Choop.Compiler.BlockModel
             return new JObject
             {
                 {"name", Name},
-                {"value", new JObject(Value)},
+                {"value", new JValue(Value)},
                 {"isPersistant", Persistant}
             };
         }

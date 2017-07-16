@@ -85,7 +85,7 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets or sets the info for the Scratch project.
         /// </summary>
-        public ProjectInfo Info { get; set; }
+        public ProjectInfo Info { get; set; } = new ProjectInfo();
 
         #endregion
 

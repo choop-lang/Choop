@@ -166,7 +166,7 @@ namespace Choop.Compiler
             ScratchProject = ChoopProject.Translate(context);
 
             // Convert BlockModel representation into json
-            if (HasErrors)
+            if (!HasErrors)
                 ProjectJson = (JObject) ScratchProject.ToJson();
         }
 

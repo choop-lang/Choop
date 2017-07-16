@@ -47,7 +47,13 @@ namespace Choop.Compiler.BlockModel
         {
             JArray array = new JArray(Opcode);
             foreach (object arg in Args)
-                array.Add(arg);
+            {
+                IJsonConvertable jsonArg = arg as IJsonConvertable;
+                if (jsonArg != null)
+                    array.Add(jsonArg.ToJson());
+                else
+                    array.Add(arg);
+            }
 
             return array;
         }
