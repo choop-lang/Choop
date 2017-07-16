@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 
@@ -32,8 +33,12 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Sprite Translate(TranslationContext context)
         {
-            // Create blank sprite instance
-            Sprite sprite = new Sprite();
+            // Create new sprite instance
+            // TODO use metafile
+            Sprite sprite = new Sprite
+            {
+                Name = Name
+            };
 
             // TODO: Import modules
 
@@ -56,6 +61,17 @@ namespace Choop.Compiler.ChoopModel
             // Methods
             foreach (MethodDeclaration methodDeclaration in Methods)
                 sprite.Scripts.Add(methodDeclaration.Translate(context));
+
+            // Insert default costume
+            // TODO use metafile
+            sprite.Costumes.Add(new Costume
+            {
+                Name = "costume1",
+                Id = 1,
+                Md5 = "09dc888b0b7df19f70d81588ae73420e.svg",
+                BitmapResolution = 1,
+                RotationCenter = new Point(47, 55)
+            });
 
             return sprite;
         }

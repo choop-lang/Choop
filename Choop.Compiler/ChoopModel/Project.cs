@@ -171,9 +171,26 @@ namespace Choop.Compiler.ChoopModel
             foreach (GlobalListDeclaration globalListDeclaration in Lists)
                 stage.Lists.Add(globalListDeclaration.Translate(context));
 
-            // Translate sprites
+            // Translate sprites and get statistics
+            int spriteCount = 0;
+            int scriptCount = 0;
             foreach (SpriteDeclaration spriteDeclaration in Sprites)
-                stage.Children.Add(spriteDeclaration.Translate(context));
+            {
+                // Translate sprite
+                Sprite translated = spriteDeclaration.Translate(context);
+                stage.Children.Add(translated);
+
+                // Update statistics
+                scriptCount += translated.Scripts.Count;
+                spriteCount++;
+            }
+
+            // Store project info / stats
+            stage.Info = new ProjectInfo
+            {
+                SpriteCount = spriteCount,
+                ScriptCount = scriptCount
+            };
 
             return stage;
         }

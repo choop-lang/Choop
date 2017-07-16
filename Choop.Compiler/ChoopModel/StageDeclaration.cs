@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
@@ -56,6 +57,17 @@ namespace Choop.Compiler.ChoopModel
             // Methods
             foreach (MethodDeclaration methodDeclaration in Methods)
                 stage.Scripts.Add(methodDeclaration.Translate(context));
+
+            // Insert default costume
+            // TODO use meta file
+            stage.Costumes.Add(new Costume
+            {
+                Name = "backdrop1",
+                Id = 3,
+                Md5 = "739b5e2a2435f6e1ec2993791b423146.png",
+                BitmapResolution = 1,
+                RotationCenter = new Point(240, 180)
+            });
 
             return stage;
         }

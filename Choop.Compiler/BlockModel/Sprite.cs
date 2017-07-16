@@ -106,7 +106,7 @@ namespace Choop.Compiler.BlockModel
             return new JObject
             {
                 {"objName", Name},
-                {"variable", new JArray(Variables.Select(x => x.ToJson()))},
+                {"variables", new JArray(Variables.Select(x => x.ToJson()))},
                 {"lists", new JArray(Lists.Select(x => x.ToJson()))},
                 {"scripts", new JArray(Scripts.Select(x => x.ToJson()))},
                 {"scriptComments", new JArray(Comments.Select(x => x.ToJson()))},
