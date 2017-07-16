@@ -15,7 +15,7 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the operator used in the expression.
         /// </summary>
-        public CompundOperator Operator { get; }
+        public CompoundOperator Operator { get; }
 
         /// <summary>
         /// Gets the  first input to the operator.
@@ -49,7 +49,7 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="second">The second input to the operator.</param>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="errorToken">The token to report any compiler errors to.</param>
-        public CompoundExpression(CompundOperator @operator, IExpression first, IExpression second, string fileName,
+        public CompoundExpression(CompoundOperator @operator, IExpression first, IExpression second, string fileName,
             IToken errorToken)
         {
             Operator = @operator;
@@ -73,53 +73,53 @@ namespace Choop.Compiler.ChoopModel
 
             switch (Operator)
             {
-                case CompundOperator.Pow:
+                case CompoundOperator.Pow:
                     // TODO: negative inputs
                     return new Block(BlockSpecs.ComputeFunction, "e ^",
                         new Block(BlockSpecs.Times,
                             new MethodCall("ln", FileName, ErrorToken, First).Translate(context),
                             Second.Translate(context)));
-                case CompundOperator.Multiply:
+                case CompoundOperator.Multiply:
                     return new Block(BlockSpecs.Times, First.Translate(context), Second.Translate(context));
-                case CompundOperator.Divide:
+                case CompoundOperator.Divide:
                     return new Block(BlockSpecs.Divide, First.Translate(context), Second.Translate(context));
-                case CompundOperator.Mod:
+                case CompoundOperator.Mod:
                     return new Block(BlockSpecs.Mod, First.Translate(context), Second.Translate(context));
-                case CompundOperator.Concat:
+                case CompoundOperator.Concat:
                     return new Block(BlockSpecs.Join, First.Translate(context), Second.Translate(context));
-                case CompundOperator.Plus:
+                case CompoundOperator.Plus:
                     return new Block(BlockSpecs.Add, First.Translate(context), Second.Translate(context));
-                case CompundOperator.Minus:
+                case CompoundOperator.Minus:
                     return new Block(BlockSpecs.Minus, First.Translate(context), Second.Translate(context));
-                case CompundOperator.LShift:
+                case CompoundOperator.LShift:
                     return new Block(BlockSpecs.Times, First.Translate(context),
-                        new CompoundExpression(CompundOperator.Pow,
+                        new CompoundExpression(CompoundOperator.Pow,
                             new TerminalExpression("2", DataType.Number, FileName, ErrorToken),
                             Second, FileName, ErrorToken).Translate(context));
-                case CompundOperator.RShift:
+                case CompoundOperator.RShift:
                     return new Block(BlockSpecs.Divide, First.Translate(context),
-                        new CompoundExpression(CompundOperator.Pow,
+                        new CompoundExpression(CompoundOperator.Pow,
                             new TerminalExpression("2", DataType.Number, FileName, ErrorToken),
                             Second, FileName, ErrorToken).Translate(context));
-                case CompundOperator.LessThan:
+                case CompoundOperator.LessThan:
                     return new Block(BlockSpecs.LessThan, First.Translate(context), Second.Translate(context));
-                case CompundOperator.GreaterThan:
+                case CompoundOperator.GreaterThan:
                     return new Block(BlockSpecs.GreaterThan, First.Translate(context), Second.Translate(context));
-                case CompundOperator.LessThanEq:
+                case CompoundOperator.LessThanEq:
                     return new Block(BlockSpecs.Not,
                         new Block(BlockSpecs.GreaterThan, First.Translate(context), Second.Translate(context)));
-                case CompundOperator.GreaterThanEq:
+                case CompoundOperator.GreaterThanEq:
                     return new Block(BlockSpecs.Not,
                         new Block(BlockSpecs.LessThan, First.Translate(context), Second.Translate(context)));
-                case CompundOperator.Equal:
+                case CompoundOperator.Equal:
                     return new Block(BlockSpecs.Equal, First.Translate(context), Second.Translate(context));
-                case CompundOperator.NotEqual:
+                case CompoundOperator.NotEqual:
                     return new Block(BlockSpecs.Not,
                         new Block(BlockSpecs.Equal, First.Translate(context), Second.Translate(context)));
-                case CompundOperator.And:
+                case CompoundOperator.And:
                     // TODO: Extra optimisation here for when one input is known
                     return new Block(BlockSpecs.And, First.Translate(context), Second.Translate(context));
-                case CompundOperator.Or:
+                case CompoundOperator.Or:
                     return new Block(BlockSpecs.Or, First.Translate(context), Second.Translate(context));
                 default:
                     throw new ArgumentOutOfRangeException();

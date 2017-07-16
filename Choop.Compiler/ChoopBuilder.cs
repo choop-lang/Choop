@@ -1196,7 +1196,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Pow, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.Pow, first, second, FileName,
                 context.OpPow().Symbol));
         }
 
@@ -1206,7 +1206,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Multiply, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.Multiply, first, second, FileName,
                 context.OpMult().Symbol));
         }
 
@@ -1216,7 +1216,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Divide, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.Divide, first, second, FileName,
                 context.OpDivide().Symbol));
         }
 
@@ -1226,7 +1226,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Mod, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.Mod, first, second, FileName,
                 context.OpMod().Symbol));
         }
 
@@ -1236,7 +1236,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Concat, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.Concat, first, second, FileName,
                 context.OpConcat().Symbol));
         }
 
@@ -1246,7 +1246,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Plus, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.Plus, first, second, FileName,
                 context.OpPlus().Symbol));
         }
 
@@ -1256,7 +1256,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Minus, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.Minus, first, second, FileName,
                 context.OpMinus().Symbol));
         }
 
@@ -1266,7 +1266,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.LShift, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.LShift, first, second, FileName,
                 context.OpLShift().Symbol));
         }
 
@@ -1276,7 +1276,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.RShift, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.RShift, first, second, FileName,
                 context.OpRShift().Symbol));
         }
 
@@ -1286,7 +1286,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.LessThan, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.LessThan, first, second, FileName,
                 context.OpLT().Symbol));
         }
 
@@ -1296,7 +1296,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.GreaterThan, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.GreaterThan, first, second, FileName,
                 context.OpGT().Symbol));
         }
 
@@ -1306,7 +1306,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.LessThanEq, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.LessThanEq, first, second, FileName,
                 context.OpLTE().Symbol));
         }
 
@@ -1316,7 +1316,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.GreaterThanEq, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.GreaterThanEq, first, second, FileName,
                 context.OpGTE().Symbol));
         }
 
@@ -1326,7 +1326,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Equal, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.Equal, first, second, FileName,
                 context.OpEquals().Symbol));
         }
 
@@ -1336,7 +1336,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.NotEqual, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.NotEqual, first, second, FileName,
                 context.OpNEquals().Symbol));
         }
 
@@ -1346,7 +1346,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.And, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.And, first, second, FileName,
                 context.OpAnd().Symbol));
         }
 
@@ -1356,7 +1356,7 @@ namespace Choop.Compiler
 
             IExpression second = _currentExpressions.Pop();
             IExpression first = _currentExpressions.Pop();
-            _currentExpressions.Push(new CompoundExpression(CompundOperator.Or, first, second, FileName,
+            _currentExpressions.Push(new CompoundExpression(CompoundOperator.Or, first, second, FileName,
                 context.OpOr().Symbol));
         }
 

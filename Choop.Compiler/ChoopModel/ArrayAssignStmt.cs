@@ -86,26 +86,26 @@ namespace Choop.Compiler.ChoopModel
                     value = Value;
                     break;
                 case AssignOperator.AddEquals:
-                    value = new CompoundExpression(CompundOperator.Plus,
+                    value = new CompoundExpression(CompoundOperator.Plus,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
                         Value, FileName, ErrorToken);
                     break;
                 case AssignOperator.MinusEquals:
-                    value = new CompoundExpression(CompundOperator.Minus,
+                    value = new CompoundExpression(CompoundOperator.Minus,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
                         Value, FileName, ErrorToken);
                     break;
                 case AssignOperator.DotEquals:
-                    value = new CompoundExpression(CompundOperator.Multiply,
+                    value = new CompoundExpression(CompoundOperator.Multiply,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken), Value, FileName, ErrorToken);
                     break;
                 case AssignOperator.PlusPlus:
-                    value = new CompoundExpression(CompundOperator.Plus,
+                    value = new CompoundExpression(CompoundOperator.Plus,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
                         new TerminalExpression("1", DataType.Number, FileName, ErrorToken), FileName, ErrorToken);
                     break;
                 case AssignOperator.MinusMinus:
-                    value = new CompoundExpression(CompundOperator.Minus,
+                    value = new CompoundExpression(CompoundOperator.Minus,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
                         new TerminalExpression("1", DataType.Number, FileName, ErrorToken), FileName, ErrorToken);
                     break;

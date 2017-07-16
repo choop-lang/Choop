@@ -89,7 +89,7 @@ namespace Choop.Compiler.ChoopModel
                     break;
                 case AssignOperator.DotEquals:
                     setBlock = new Block(BlockSpecs.SetVariableTo, VariableName,
-                        new CompoundExpression(CompundOperator.Concat,
+                        new CompoundExpression(CompoundOperator.Concat,
                                 new LookupExpression(VariableName, FileName, ErrorToken), Value, FileName, ErrorToken)
                             .Translate(context));
                     break;

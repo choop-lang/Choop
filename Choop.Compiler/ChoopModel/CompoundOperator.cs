@@ -3,7 +3,7 @@
     /// <summary>
     /// Specifies the possible compound operators.
     /// </summary>
-    public enum CompundOperator
+    public enum CompoundOperator
     {
         /// <summary>
         /// Indicates the ^ operator.
