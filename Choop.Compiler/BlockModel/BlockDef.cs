@@ -45,7 +45,7 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets or sets the display location of the script.
         /// </summary>
-        public Point Location { get; set; }
+        public Point Location { get; set; } = new Point(20, 20);
 
         /// <summary>
         /// Gets the collection of blocks inside this script.
