@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
@@ -75,7 +76,7 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The stack reference for this array.</returns>
         public StackValue GetStackRef()
         {
-            throw new NotImplementedException();
+            return new StackValue(Name, Type, Length);
         }
 
         /// <summary>
@@ -84,7 +85,13 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            // Add to stack
+            context.CurrentScope.StackValues.Add(GetStackRef());
+
+            // Create blocks
+            return Value.Select(
+                expression => new Block(BlockSpecs.AddToList, expression.Translate(context), Settings.StackIdentifier)
+            ).ToArray();
         }
 
         #endregion
