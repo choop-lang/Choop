@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.TranslationUtils;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -100,7 +101,38 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public BlockDef Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            BlockDef translated = new BlockDef
+            {
+                Atomic = Atomic
+            };
+
+            string spec = Name;
+
+            // Add parameters
+            foreach (ParamDeclaration paramDeclaration in Params)
+            {
+                spec += " " + paramDeclaration.Type.ToInputNotation();
+                translated.InputNames.Add(paramDeclaration.Name);
+                translated.DefaultValues.Add(paramDeclaration.Type.GetDefault());
+            }
+
+            // Add hidden scope parameter
+            spec += " " + BlockSpecs.InputNum;
+            translated.InputNames.Add(Settings.StackRefParam);
+            translated.DefaultValues.Add(0);
+
+            translated.Spec = spec;
+
+            // Create translation context
+            Scope scope = new Scope(context.CurrentScope);
+            TranslationContext newContext = new TranslationContext(scope, context.ErrorList);
+
+            // Translate blocks
+            foreach (IStatement statement in Statements)
+                foreach (Block block in statement.Translate(newContext))
+                    translated.Blocks.Add(block);
+
+            return translated;
         }
 
         #endregion
