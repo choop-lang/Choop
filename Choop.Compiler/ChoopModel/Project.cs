@@ -11,7 +11,7 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents an entire Choop project.
     /// </summary>
-    public class Project : ISpriteDeclaration, ICompilable<ProjectInfo>
+    public class Project : ISpriteDeclaration, ICompilable<Stage>
     {
         #region Properties
 
@@ -164,7 +164,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public ProjectInfo Translate(TranslationContext context)
+        public Stage Translate(TranslationContext context)
         {
             throw new NotImplementedException();
         }

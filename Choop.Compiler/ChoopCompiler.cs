@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
+using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler
 {
@@ -52,7 +53,12 @@ namespace Choop.Compiler
         /// <summary>
         /// Gets the internal representation of the Scratch project produced.
         /// </summary>
-        public ProjectInfo ScratchProject { get; }
+        public Stage ScratchProject { get; private set; }
+
+        /// <summary>
+        /// Gets the compiled JSON of the project.
+        /// </summary>
+        public JObject ProjectJson { get; private set; }
 
         #endregion
 
@@ -115,7 +121,7 @@ namespace Choop.Compiler
 
             // Gets the parse tree
             ChoopParser.RootContext root = parser.root();
-            
+
             // Check that no fatal syntax errors occured
             if (compilerErrorsTemp.Count > 0)
             {
@@ -137,7 +143,20 @@ namespace Choop.Compiler
         /// </summary>
         public void Compile()
         {
+            // Check not previously compiled
+            if (Compiled) throw new InvalidOperationException("Project already compiled");
+
             Compiled = true;
+
+            // Create translation context (Superglobal level)
+            TranslationContext context = new TranslationContext(null, CompilerErrors);
+
+            // Translate project into BlockModel representation
+            ScratchProject = ChoopProject.Translate(context);
+
+            // Convert BlockModel representation into json
+            if (HasErrors)
+                ProjectJson = (JObject) ScratchProject.ToJson();
         }
 
         #endregion
