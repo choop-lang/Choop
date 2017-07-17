@@ -865,9 +865,16 @@ namespace Choop.Compiler
                     ErrorType.TypeMismatch, typeSpecifier.Start, FileName));
 
             // Get expressions
-            IExpression step = null;
-            if (context.StepTag() != null) // Step value was specified
-                step = _currentExpressions.Pop();
+            TerminalExpression step = null;
+            if (context.StepTag() != null)
+            {
+                // Step value was specified
+                step = _currentExpressions.Pop() as TerminalExpression;
+                if (step == null) throw new InvalidOperationException();
+                if (step.LiteralType != DataType.Number)
+                    _compilerErrors.Add(new CompilerError("Step value must be a number", ErrorType.InvalidArgument,
+                        context.constant().start, FileName));
+            }
 
             IExpression end = _currentExpressions.Pop();
             IExpression start = _currentExpressions.Pop();
@@ -999,7 +1006,8 @@ namespace Choop.Compiler
             string rawString = context.GetText();
 
             _currentExpressions.Push(
-                new TerminalExpression(rawString.Substring(1, rawString.Length - 2), DataType.String, FileName, context.Start));
+                new TerminalExpression(rawString.Substring(1, rawString.Length - 2), DataType.String, FileName,
+                    context.Start));
         }
 
         public override void EnterUConstantInt(ChoopParser.UConstantIntContext context)
@@ -1061,7 +1069,8 @@ namespace Choop.Compiler
             string rawString = context.GetText();
 
             _currentExpressions.Push(
-                new TerminalExpression(rawString.Substring(1, rawString.Length - 2), DataType.String, FileName, context.Start));
+                new TerminalExpression(rawString.Substring(1, rawString.Length - 2), DataType.String, FileName,
+                    context.Start));
         }
 
         public override void EnterConstantInt(ChoopParser.ConstantIntContext context)

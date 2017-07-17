@@ -1,7 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.TranslationUtils;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -35,7 +36,7 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the expression for the counter step value.
         /// </summary>
-        public IExpression Step { get; }
+        public TerminalExpression Step { get; }
 
         /// <summary>
         /// Gets the collection of statements within the loop.
@@ -66,7 +67,7 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="step">The expression for the counter stop value. Default is +1.</param>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="errorToken">The token to report any compiler errors to.</param>
-        public ForLoop(string variable, DataType varType, IExpression start, IExpression end, IExpression step,
+        public ForLoop(string variable, DataType varType, IExpression start, IExpression end, TerminalExpression step,
             string fileName, IToken errorToken)
         {
             Variable = variable;
@@ -88,7 +89,39 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            // Create new scope
+            Scope newScope = new Scope(context.CurrentScope);
+
+            // Create translation context
+            TranslationContext newContext = new TranslationContext(newScope, context.ErrorList);
+
+            // Create counter variable
+            StackValue counter = new StackValue(Variable, VarType);
+            newScope.StackValues.Add(counter);
+
+            // Create main loop contents
+            List<Block> loopContents = new List<Block>();
+            foreach (IStatement statement in Statements)
+                loopContents.AddRange(statement.Translate(newContext));
+            loopContents.Add(counter.CreateVariableIncrement(Step.Translate(newContext)));
+
+            // Create output
+            object startTranslated = Start.Translate(context);
+            return new[]
+            {
+                counter.CreateDeclaration(startTranslated)[0],
+                new Block(BlockSpecs.Repeat,
+                    new CompoundExpression(
+                        CompoundOperator.Divide,
+                        new CompoundExpression(CompoundOperator.Minus, End,
+                            startTranslated is Block
+                                ? new LookupExpression(counter.Name, FileName, ErrorToken)
+                                : Start, FileName, ErrorToken),
+                        Step,
+                        FileName,
+                        ErrorToken
+                    ).Translate(newContext), loopContents.ToArray())
+            };
         }
 
         #endregion

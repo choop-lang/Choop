@@ -425,7 +425,7 @@ forHead
 	  ToTag
 	  expression
 	  ( StepTag
-	    expression
+	    constant
 	  )?
       BracketClose
 	;

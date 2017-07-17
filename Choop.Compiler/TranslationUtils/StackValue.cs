@@ -116,7 +116,7 @@ namespace Choop.Compiler.TranslationUtils
                 // Stack
                 Block[] blocks = new Block[StackSpace];
                 for (int i = 0; i < StackSpace; i++)
-                    blocks[i] = new Block("append:toList:", initalValues[i], Settings.StackIdentifier);
+                    blocks[i] = new Block(BlockSpecs.AddToList, initalValues[i], Settings.StackIdentifier);
                 return blocks;
             }
         }
