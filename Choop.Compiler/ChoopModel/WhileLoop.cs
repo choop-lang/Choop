@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
@@ -63,7 +62,6 @@ namespace Choop.Compiler.ChoopModel
         {
             List<Block> blocks = new List<Block>();
             TranslationContext newContext = new TranslationContext(new Scope(context.CurrentScope), context.ErrorList);
-
 
             foreach (IStatement statement in Statements)
                 blocks.AddRange(statement.Translate(newContext));
