@@ -52,7 +52,7 @@ namespace Choop.Compiler.TranslationUtils
         public StackSegment(Scope scope)
         {
             // Get start index
-            _startIndex = scope.Parent?.StackValues.GetNextIndex() ?? 0;
+            _startIndex = scope.Parent?.StackValues.GetNextIndex() ?? 1;
 
             // Set scope
             Scope = scope;
