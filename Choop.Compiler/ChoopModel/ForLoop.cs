@@ -107,21 +107,23 @@ namespace Choop.Compiler.ChoopModel
 
             // Create output
             object startTranslated = Start.Translate(context);
-            return new[]
-            {
-                counter.CreateDeclaration(startTranslated)[0],
-                new Block(BlockSpecs.Repeat,
-                    new CompoundExpression(
-                        CompoundOperator.Divide,
-                        new CompoundExpression(CompoundOperator.Minus, End,
-                            startTranslated is Block
-                                ? new LookupExpression(counter.Name, FileName, ErrorToken)
-                                : Start, FileName, ErrorToken),
-                        Step,
-                        FileName,
-                        ErrorToken
-                    ).Translate(newContext), loopContents.ToArray())
-            };
+
+            List<Block> output = new List<Block>();
+            output.AddRange(counter.CreateDeclaration(startTranslated));
+            output.Add(new Block(BlockSpecs.Repeat,
+                new CompoundExpression(
+                    CompoundOperator.Divide,
+                    new CompoundExpression(CompoundOperator.Minus, End,
+                        startTranslated is Block
+                            ? new LookupExpression(counter.Name, FileName, ErrorToken)
+                            : Start, FileName, ErrorToken),
+                    Step,
+                    FileName,
+                    ErrorToken
+                ).Translate(newContext), loopContents.ToArray()));
+            output.AddRange(counter.CreateDestruction());
+
+            return output.ToArray();
         }
 
         #endregion
