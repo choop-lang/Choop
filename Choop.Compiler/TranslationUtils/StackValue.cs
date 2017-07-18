@@ -7,7 +7,7 @@ namespace Choop.Compiler.TranslationUtils
     /// <summary>
     /// Represents a variable or array stored on the stack.
     /// </summary>
-    public class StackValue
+    public class StackValue : ITypedDeclaration
     {
         #region Fields
 
