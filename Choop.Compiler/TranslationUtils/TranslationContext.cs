@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using Choop.Compiler.TranslationUtils;
 
-namespace Choop.Compiler.ChoopModel
+namespace Choop.Compiler.TranslationUtils
 {
     public class TranslationContext
     {

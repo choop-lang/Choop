@@ -1,4 +1,6 @@
-﻿namespace Choop.Compiler.ChoopModel
+﻿using Choop.Compiler.TranslationUtils;
+
+namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents a Choop grammar structure that can be translated to Scratch blocks.

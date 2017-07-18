@@ -5,6 +5,7 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
+using Choop.Compiler.TranslationUtils;
 using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler
