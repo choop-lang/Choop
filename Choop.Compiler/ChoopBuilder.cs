@@ -80,40 +80,36 @@ namespace Choop.Compiler
             base.EnterSprite(context);
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
+            string name = context.Name.Text;
             string metaFile = name + ".sm";
 
-            ChoopParser.MetaAttributeContext metaAttribute = context.metaAttribute();
-            if (metaAttribute != null)
-                metaFile = metaAttribute.StringLiteral().GetText();
-
+            if (context.MetaAttr != null)
+                metaFile = context.MetaAttr.FileName.Text;
 
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) != null)
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
+                    ErrorType.DuplicateDeclaration, context.Name, FileName));
                 return;
             }
 
             // Create declaration
-            SpriteDeclaration sprite = new SpriteDeclaration(name, metaFile, FileName, identifier.Symbol);
+            SpriteDeclaration sprite = new SpriteDeclaration(name, metaFile, FileName, context.Name);
 
             Project.Sprites.Add(sprite);
 
             // Get imported modules
             foreach (ChoopParser.UsingStmtContext usingStmtAst in context.usingStmt())
             {
-                ITerminalNode module = usingStmtAst.Identifier();
-                string moduleName = module.GetText();
+                string moduleName = usingStmtAst.Module.Text;
 
                 if (!sprite.ImportedModules.Contains(moduleName))
                     sprite.ImportedModules.Add(moduleName);
                 else
                     _compilerErrors.Add(new CompilerError($"Module '{moduleName}' already imported",
-                        ErrorType.ModuleAlreadyImported, module.Symbol, FileName));
+                        ErrorType.ModuleAlreadyImported, usingStmtAst.Module, FileName));
             }
 
             // Set sprite as current
@@ -125,14 +121,13 @@ namespace Choop.Compiler
             base.EnterModule(context);
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
+            string name = context.Name.Text;
 
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
-                ModuleDeclaration module = new ModuleDeclaration(name, FileName, identifier.Symbol);
+                ModuleDeclaration module = new ModuleDeclaration(name, FileName, context.Name);
 
                 Project.Modules.Add(module);
 
@@ -143,7 +138,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
+                    ErrorType.DuplicateDeclaration, context.Name, FileName));
             }
         }
 
@@ -164,9 +159,8 @@ namespace Choop.Compiler
             base.ExitConstDeclaration(context);
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
-            DataType type = context.typeSpecifier().ToDataType();
+            string name = context.Name.Text;
+            DataType type = context.Type.ToDataType();
 
             // Get terminal expression
             TerminalExpression expression = _currentExpressions.Pop() as TerminalExpression;
@@ -177,7 +171,7 @@ namespace Choop.Compiler
             {
                 // Create declaration
                 ConstDeclaration constDeclaration =
-                    new ConstDeclaration(name, type, expression, FileName, identifier.Symbol);
+                    new ConstDeclaration(name, type, expression, FileName, context.Name);
 
                 _currentSprite.Constants.Add(constDeclaration);
             }
@@ -185,7 +179,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
+                    ErrorType.DuplicateDeclaration, context.Name, FileName));
             }
         }
 
@@ -194,9 +188,8 @@ namespace Choop.Compiler
             base.ExitVarGlobalDeclaration(context);
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
-            DataType type = context.typeSpecifier().ToDataType();
+            string name = context.Name.Text;
+            DataType type = context.Type.ToDataType();
 
             // Check if default value specified
             TerminalExpression expression = null;
@@ -212,7 +205,7 @@ namespace Choop.Compiler
             {
                 // Create declaration
                 GlobalVarDeclaration varDeclaration =
-                    new GlobalVarDeclaration(name, type, expression, FileName, identifier.Symbol);
+                    new GlobalVarDeclaration(name, type, expression, FileName, context.Name);
 
                 _currentSprite.Variables.Add(varDeclaration);
             }
@@ -220,7 +213,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
+                    ErrorType.DuplicateDeclaration, context.Name, FileName));
             }
         }
 
@@ -229,31 +222,26 @@ namespace Choop.Compiler
             base.ExitArrayGlobalDeclaration(context);
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
-            DataType type = context.typeSpecifier().ToDataType();
+            string name = context.Name.Text;
+            DataType type = context.Type.ToDataType();
 
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
                 GlobalListDeclaration arrayDeclaration =
-                    new GlobalListDeclaration(name, type, true, FileName, identifier.Symbol);
+                    new GlobalListDeclaration(name, type, true, FileName, context.Name);
 
                 _currentSprite.Lists.Add(arrayDeclaration);
 
                 // Get bounds
-                ITerminalNode boundSpecifier = context.UInteger();
-                if (boundSpecifier == null)
-                    return;
-
-                int bounds = int.Parse(boundSpecifier.GetText());
+                int bounds = int.Parse(context.Bounds.Text);
 
                 if (bounds == 0)
                 {
                     // Syntax error - bound should be greater than 0
                     _compilerErrors.Add(new CompilerError("Array length must be greater than 0",
-                        ErrorType.InvalidArgument, boundSpecifier.Symbol, FileName));
+                        ErrorType.InvalidArgument, context.Bounds, FileName));
                     return;
                 }
 
@@ -264,7 +252,7 @@ namespace Choop.Compiler
                     {
                         // Syntax error - bounds should match
                         _compilerErrors.Add(new CompilerError("Array bounds does not match length of supplied values",
-                            ErrorType.InvalidArgument, boundSpecifier.Symbol, FileName));
+                            ErrorType.InvalidArgument, context.Bounds, FileName));
                         return;
                     }
 
@@ -276,24 +264,15 @@ namespace Choop.Compiler
                 {
                     for (int i = 0; i < bounds; i++)
                         arrayDeclaration.Value.Add(
-                            new TerminalExpression("", DataType.String, FileName, identifier.Symbol));
+                            new TerminalExpression("", DataType.String, FileName, context.Name));
                 }
             }
             else
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
+                    ErrorType.DuplicateDeclaration, context.Name, FileName));
             }
-        }
-
-        public override void EnterListGlobalDeclaration(ChoopParser.ListGlobalDeclarationContext context)
-        {
-            base.EnterListGlobalDeclaration(context);
-
-            // Ensure current expressions is empty
-            // (Should be anyway)
-            if (_currentExpressions.Count > 0) throw new InvalidOperationException();
         }
 
         public override void ExitListGlobalDeclaration(ChoopParser.ListGlobalDeclarationContext context)
@@ -301,16 +280,15 @@ namespace Choop.Compiler
             base.ExitListGlobalDeclaration(context);
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
-            DataType type = context.typeSpecifier().ToDataType();
+            string name = context.Name.Text;
+            DataType type = context.Type.ToDataType();
 
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
                 GlobalListDeclaration listDeclaration =
-                    new GlobalListDeclaration(name, type, false, FileName, identifier.Symbol);
+                    new GlobalListDeclaration(name, type, false, FileName, context.Name);
 
                 _currentSprite.Lists.Add(listDeclaration);
 
@@ -319,31 +297,30 @@ namespace Choop.Compiler
                     listDeclaration.Value.Add(_currentExpressions.Pop() as TerminalExpression);
 
                 // Get bounds
-                ITerminalNode boundSpecifier = context.UInteger();
-                if (boundSpecifier == null)
+                if (context.Bounds == null)
                     return;
 
-                int bounds = int.Parse(boundSpecifier.GetText());
+                int bounds = int.Parse(context.Bounds.Text);
 
                 if (listDeclaration.Value.Count > 0)
                 {
                     // Check bounds match supplied values
                     if (bounds != listDeclaration.Value.Count)
                         _compilerErrors.Add(new CompilerError("List bounds does not match length of supplied values",
-                            ErrorType.InvalidArgument, boundSpecifier.Symbol, FileName));
+                            ErrorType.InvalidArgument, context.Bounds, FileName));
                 }
                 else
                 {
                     for (int i = 0; i < bounds; i++)
                         listDeclaration.Value.Add(
-                            new TerminalExpression("", DataType.String, FileName, identifier.Symbol));
+                            new TerminalExpression("", DataType.String, FileName, context.Name));
                 }
             }
             else
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.InvalidArgument, identifier.Symbol, FileName));
+                    ErrorType.InvalidArgument, context.Name, FileName));
             }
         }
 
@@ -359,13 +336,12 @@ namespace Choop.Compiler
             if (_currentExpressions.Count > 0) throw new InvalidOperationException();
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
+            string name = context.Name.Text;
             ITerminalNode[] inlineTags = context.InlineTag();
             ITerminalNode[] atomicTags = context.AtomicTag();
             ITerminalNode[] unsafeTags = context.UnsafeTag();
-            bool hasReturn = context.VoidTag() != null;
-            DataType type = context.typeSpecifier().ToDataType();
+            bool hasReturn = context.Void != null;
+            DataType type = context.Type.ToDataType();
 
             // Validate modifiers
             ValidateModifier(inlineTags, "inline");
@@ -384,7 +360,7 @@ namespace Choop.Compiler
                 inlineTags.Length > 0,
                 atomicTags.Length > 0,
                 FileName,
-                identifier.Symbol
+                context.Name
             );
 
             _currentSprite.Methods.Add(method);
@@ -401,17 +377,15 @@ namespace Choop.Compiler
             if (method == null) throw new InvalidOperationException();
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
-            DataType type = context.typeSpecifier().ToDataType();
-
+            string name = context.Name.Text;
+            DataType type = context.Type.ToDataType();
 
             // Check not already defined
             // TODO
             if (Project.GetDeclaration(name) == null)
             {
                 // Create parameter declaration
-                ParamDeclaration param = new ParamDeclaration(name, type, FileName, identifier.Symbol);
+                ParamDeclaration param = new ParamDeclaration(name, type, FileName, context.Name);
 
                 method.Params.Add(param);
             }
@@ -419,7 +393,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
+                    ErrorType.DuplicateDeclaration, context.Name, FileName));
             }
         }
 
@@ -433,9 +407,8 @@ namespace Choop.Compiler
             if (method == null) throw new InvalidOperationException();
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
-            DataType type = context.typeSpecifier().ToDataType();
+            string name = context.Name.Text;
+            DataType type = context.Type.ToDataType();
             TerminalExpression expression = _currentExpressions.Pop() as TerminalExpression;
             if (expression == null) throw new InvalidOperationException();
 
@@ -444,7 +417,7 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create parameter declaration
-                ParamDeclaration param = new ParamDeclaration(name, type, FileName, identifier.Symbol, expression);
+                ParamDeclaration param = new ParamDeclaration(name, type, FileName, context.Name, expression);
 
                 method.Params.Add(param);
             }
@@ -452,7 +425,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.ExtraneousToken, identifier.Symbol, FileName));
+                    ErrorType.ExtraneousToken, context.Name, FileName));
             }
         }
 
@@ -469,8 +442,7 @@ namespace Choop.Compiler
             base.ExitEventHead(context);
 
             // Get basic info
-            ITerminalNode eventTag = context.Identifier();
-            string eventName = eventTag.GetText();
+            string eventName = context.Event.Text;
             ITerminalNode[] atomicTags = context.AtomicTag();
             ITerminalNode[] unsafeTags = context.UnsafeTag();
 
@@ -495,7 +467,7 @@ namespace Choop.Compiler
                     unsafeTags.Length > 0,
                     atomicTags.Length > 0,
                     FileName,
-                    eventTag.Symbol
+                    context.Event
                 );
 
             _currentSprite.EventHandlers.Add(eventHandler);
@@ -528,9 +500,8 @@ namespace Choop.Compiler
             base.ExitVarDeclaration(context);
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
-            DataType type = context.typeSpecifier().ToDataType();
+            string name = context.Name.Text;
+            DataType type = context.Type.ToDataType();
 
             // Check if initial value specified
             IExpression expression = null;
@@ -542,7 +513,7 @@ namespace Choop.Compiler
             {
                 // Create declaration
                 ScopedVarDeclaration varDeclaration =
-                    new ScopedVarDeclaration(name, type, expression, FileName, identifier.Symbol);
+                    new ScopedVarDeclaration(name, type, expression, FileName, context.Name);
 
                 _currentBlocks.Peek().Statements.Add(varDeclaration);
             }
@@ -550,7 +521,7 @@ namespace Choop.Compiler
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
+                    ErrorType.DuplicateDeclaration, context.Name, FileName));
             }
         }
 
@@ -559,30 +530,26 @@ namespace Choop.Compiler
             base.ExitArrayDeclaration(context);
 
             // Get basic info
-            ITerminalNode identifier = context.Identifier();
-            string name = identifier.GetText();
-            DataType type = context.typeSpecifier().ToDataType();
+            string name = context.Name.Text;
+            DataType type = context.Type.ToDataType();
 
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
                 ScopedArrayDeclaration arrayDeclaration =
-                    new ScopedArrayDeclaration(name, type, FileName, identifier.Symbol);
+                    new ScopedArrayDeclaration(name, type, FileName, context.Name);
                 _currentBlocks.Peek().Statements.Add(arrayDeclaration);
 
                 // Get bounds
-                ITerminalNode boundSpecifier = context.UInteger();
-                if (boundSpecifier == null)
-                    return;
 
-                int bounds = int.Parse(boundSpecifier.GetText());
+                int bounds = int.Parse(context.Bounds.Text);
 
                 if (bounds == 0)
                 {
                     // Syntax error - bound should be greater than 0
                     _compilerErrors.Add(new CompilerError("Array length must be greater than 0",
-                        ErrorType.InvalidArgument, boundSpecifier.Symbol, FileName));
+                        ErrorType.InvalidArgument, context.Bounds, FileName));
                     return;
                 }
 
@@ -593,7 +560,7 @@ namespace Choop.Compiler
                     {
                         // Syntax error - bounds should match
                         _compilerErrors.Add(new CompilerError("Array bounds does not match length of supplied values",
-                            ErrorType.InvalidArgument, boundSpecifier.Symbol, FileName));
+                            ErrorType.InvalidArgument, context.Bounds, FileName));
                         return;
                     }
 
@@ -605,14 +572,14 @@ namespace Choop.Compiler
                 {
                     for (int i = 0; i < bounds; i++)
                         arrayDeclaration.Value.Add(
-                            new TerminalExpression("", DataType.String, FileName, identifier.Symbol));
+                            new TerminalExpression("", DataType.String, FileName, context.Name));
                 }
             }
             else
             {
                 // Syntax error - definition already exists
                 _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.DuplicateDeclaration, identifier.Symbol, FileName));
+                    ErrorType.DuplicateDeclaration, context.Name, FileName));
             }
         }
 
@@ -699,10 +666,9 @@ namespace Choop.Compiler
         {
             base.ExitArrayFullAssignment(context);
 
-            ITerminalNode identifier = context.Identifier();
-            string array = identifier.GetText();
+            string array = context.Name.Text;
 
-            ArrayReAssignStmt stmt = new ArrayReAssignStmt(array, FileName, identifier.Symbol);
+            ArrayReAssignStmt stmt = new ArrayReAssignStmt(array, FileName, context.Name);
 
             // Get the new values
             while (_currentExpressions.Count > 0)
@@ -835,18 +801,17 @@ namespace Choop.Compiler
         {
             base.ExitRepeatHead(context);
 
-            ITerminalNode inlineTag = context.InlineTag();
             IExpression expression = _currentExpressions.Pop();
 
-            if (inlineTag != null && !(expression is TerminalExpression))
+            if (context.Inline != null && !(expression is TerminalExpression))
             {
                 // Loop cannot be inlined
                 _compilerErrors.Add(new CompilerError("Loop cannot be inlined",
-                    ErrorType.InvalidArgument, inlineTag.Symbol, FileName));
+                    ErrorType.InvalidArgument, context.Inline, FileName));
                 return;
             }
 
-            RepeatLoop loop = new RepeatLoop(inlineTag != null, expression, FileName, context.Start);
+            RepeatLoop loop = new RepeatLoop(context.Inline != null, expression, FileName, context.Start);
             _currentBlocks.Peek().Statements.Add(loop);
             _currentBlocks.Push(loop);
         }
@@ -856,8 +821,7 @@ namespace Choop.Compiler
             base.ExitForHead(context);
 
             // Get counter variable details
-            ITerminalNode identifier = context.Identifier();
-            string varName = identifier.GetText();
+            string varName = context.Variable.Text;
             ChoopParser.TypeSpecifierContext typeSpecifier = context.typeSpecifier();
             DataType varType = typeSpecifier.ToDataType();
             if (!varType.IsCompatible(DataType.Number))
@@ -866,21 +830,21 @@ namespace Choop.Compiler
 
             // Get expressions
             TerminalExpression step = null;
-            if (context.StepTag() != null)
+            if (context.Step != null)
             {
                 // Step value was specified
                 step = _currentExpressions.Pop() as TerminalExpression;
                 if (step == null) throw new InvalidOperationException();
                 if (step.LiteralType != DataType.Number)
                     _compilerErrors.Add(new CompilerError("Step value must be a number", ErrorType.InvalidArgument,
-                        context.constant().start, FileName));
+                        context.Step.start, FileName));
             }
 
             IExpression end = _currentExpressions.Pop();
             IExpression start = _currentExpressions.Pop();
 
             // Create for loop
-            ForLoop loop = new ForLoop(varName, varType, start, end, step, FileName, identifier.Symbol);
+            ForLoop loop = new ForLoop(varName, varType, start, end, step, FileName, context.Variable);
             _currentBlocks.Peek().Statements.Add(loop);
             _currentBlocks.Push(loop);
         }
@@ -889,14 +853,12 @@ namespace Choop.Compiler
         {
             base.EnterForeachLoop(context);
 
-            ITerminalNode[] identifiers = context.Identifier();
-
             ForeachLoop loop = new ForeachLoop(
-                identifiers[0].GetText(),
-                context.typeSpecifier().ToDataType(),
-                identifiers[1].GetText(),
+                context.Variable.Text,
+                context.Type.ToDataType(),
+                context.List.Text,
                 FileName,
-                identifiers[0].Symbol
+                context.Variable
             );
 
             _currentBlocks.Peek().Statements.Add(loop);
@@ -950,7 +912,7 @@ namespace Choop.Compiler
         {
             base.ExitReturnStmt(context);
 
-            ReturnStmt stmt = context.expression() != null
+            ReturnStmt stmt = context.Expression != null
                 ? new ReturnStmt(_currentExpressions.Pop(), FileName, context.Start)
                 : new ReturnStmt(null, FileName, context.Start);
 
@@ -1115,9 +1077,7 @@ namespace Choop.Compiler
         {
             base.ExitMethodCall(context);
 
-            ITerminalNode identifier = context.Identifier();
-
-            MethodCall methodCall = new MethodCall(identifier.GetText(), FileName, identifier.Symbol);
+            MethodCall methodCall = new MethodCall(context.Method.Text, FileName, context.Method);
 
             while (_currentExpressions.Count > 0)
                 methodCall.Parameters.Insert(0, _currentExpressions.Pop());

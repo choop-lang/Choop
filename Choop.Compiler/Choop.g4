@@ -14,9 +14,9 @@ root
     ;
 
 sprite
-    : metaAttribute?
+    : MetaAttr = metaAttribute?
       SpriteTag
-      Identifier
+      Name = Identifier
       BraceOpen
       usingStmt*
       spriteBody
@@ -27,7 +27,7 @@ metaAttribute
     : SquareOpen
       ( AttrMeta
         BracketOpen
-        StringLiteral
+        FileName = StringLiteral
         BracketClose
       )
       SquareClose
@@ -35,7 +35,7 @@ metaAttribute
 
 usingStmt
     : UsingTag
-      Identifier
+      Module = Identifier
       Terminator
     ;
 
@@ -48,7 +48,7 @@ spriteBody
 
 module
     : ModuleTag
-      Identifier
+      Name = Identifier
       BraceOpen
       spriteBody
       BraceClose
@@ -68,8 +68,8 @@ globalStmtNoTerminator
 
 constDeclaration
     : DeclConst
-      typeSpecifier?
-      Identifier
+      Type = typeSpecifier?
+      Name = Identifier
       Assign
       constant
     ;
@@ -82,9 +82,9 @@ typeSpecifier
 
 varGlobalDeclaration
     : ( DeclVar
-      | typeSpecifier
-      )
-      Identifier
+	  | Type = typeSpecifier
+	  )
+      Name = Identifier
       ( Assign
         constant
       )?
@@ -92,12 +92,12 @@ varGlobalDeclaration
 
 arrayGlobalDeclaration
     : ( DeclArray
-      | typeSpecifier
+      | Type = typeSpecifier
       )
       SquareOpen
-      UInteger
+      Bounds = UInteger
       SquareClose
-      Identifier
+      Name = Identifier
       ( Assign
         arrayConstant
       )?
@@ -106,13 +106,13 @@ arrayGlobalDeclaration
 listGlobalDeclaration
     : DeclList
       ( OpLT
-        typeSpecifier
+        Type = typeSpecifier
         OpGT
       )?
       SquareOpen
-      UInteger?
+      Bounds = UInteger?
       SquareClose
-      Identifier
+      Name = Identifier
       ( Assign
         arrayConstant
       )?
@@ -146,11 +146,11 @@ methodDeclaration
       | InlineTag
       | AtomicTag
       )*
-      ( VoidTag
+      ( Void = VoidTag
       | FunctionTag
-      | typeSpecifier
+      | Type = typeSpecifier
       )
-      Identifier
+      Name = Identifier
       parameterSet
       scopeBody
     ;
@@ -169,16 +169,16 @@ parameterSet
       BracketClose
     ;
 
-optionalParameter
-    : typeSpecifier?
-      Identifier
-      Assign
-      constant
+parameter
+    : Type = typeSpecifier?
+      Name = Identifier
     ;
 
-parameter
-    : typeSpecifier?
-      Identifier
+optionalParameter
+    : Type = typeSpecifier?
+      Name = Identifier
+      Assign
+      constant
     ;
 
 eventHandler
@@ -191,7 +191,7 @@ eventHead
       | AtomicTag
       )*
       EventTag
-      Identifier
+      Event = Identifier
       ( OpLT
         constant
         OpGT
@@ -231,9 +231,9 @@ stmtNoTerminator
 
 varDeclaration
     : ( DeclVar
-      | typeSpecifier
+      | Type = typeSpecifier
       )
-      Identifier
+      Name = Identifier
       ( Assign
         expression
       )?
@@ -241,12 +241,12 @@ varDeclaration
 
 arrayDeclaration
     : ( DeclArray
-      | typeSpecifier
+      | Type = typeSpecifier
       )
       SquareOpen
-      UInteger
+      Bounds = UInteger
       SquareClose
-      Identifier
+      Name = Identifier
       ( Assign
         arrayLiteral
       )?
@@ -262,7 +262,7 @@ arrayLiteral
     ;
 
 methodCall
-    : Identifier
+    : Method = Identifier
       BracketOpen
       ( ( expression
           Separator
@@ -302,16 +302,9 @@ arrayAssignment
     ;
 
 arrayFullAssignment
-    : Identifier
+    : Name = Identifier
       Assign
       arrayLiteral
-    ;
-
-assignmentSuffix
-    : assignOp
-      expression
-    | AssignInc
-    | AssignDec
     ;
 
 assignOp
@@ -323,7 +316,7 @@ assignOp
 
 returnStmt
     : ReturnTag
-      expression?
+      Expression = expression?
     ;
 
 ifStmt
@@ -401,7 +394,7 @@ repeatLoop
     ;
 
 repeatHead
-	: InlineTag?
+	: Inline = InlineTag?
       RepeatTag
       BracketOpen
       expression
@@ -417,15 +410,15 @@ forHead
 	: ForTag
       BracketOpen
 	  ( DeclVar
-      | typeSpecifier
+      | VariableType = typeSpecifier
 	  )
-	  Identifier
+	  Variable = Identifier
 	  Assign
 	  expression
 	  ToTag
 	  expression
 	  ( StepTag
-	    constant
+	    Step = constant
 	  )?
       BracketClose
 	;
@@ -434,11 +427,11 @@ foreachLoop
     : ForeachTag
       BracketOpen
       ( DeclVar
-      | typeSpecifier
+      | Type = typeSpecifier
       )
-      Identifier
+      Variable = Identifier
       InTag
-      Identifier
+      List = Identifier
       BracketClose
       scopeBody
     ;
