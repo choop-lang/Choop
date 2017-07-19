@@ -117,52 +117,15 @@ namespace Choop.Compiler.ChoopModel
         }
 
         /// <summary>
-        /// Finds the method which has the specified name and is compatible with the specified parameter types.
+        /// Finds the method which has the specified name and can be called with the specified number of parameters.
         /// </summary>
         /// <param name="name">The name of the method.</param>
-        /// <param name="paramTypes">The types of each of the supplied parameters, in order.</param>
+        /// <param name="params">The number of specified parameters.</param>
         /// <returns>The declaration of the method if found; otherwise null.</returns>
-        public MethodDeclaration GetMethod(string name, params DataType[] paramTypes)
-        {
-            foreach (MethodDeclaration method in Methods)
-            {
-                // Check name matches
-                if (!method.Name.Equals(name, Settings.IdentifierComparisonMode)) continue;
-                // Check valid amount of parameters
-                if (paramTypes.Length > method.Params.Count) continue;
-
-                // Default to valid
-                bool valid = true;
-
-                // Check each parameter
-                for (int i = 0; i < method.Params.Count; i++)
-                {
-                    if (i < paramTypes.Length)
-                    {
-                        // Check parameter types are compatible
-                        if (method.Params[i].Type.IsCompatible(paramTypes[i])) continue;
-
-                        // Not compatible
-                        valid = false;
-                        break;
-                    }
-
-                    // These parameters weren't specified, so they must be optional
-                    if (method.Params[i].IsOptional) continue;
-
-                    // Not optional
-                    valid = false;
-                    break;
-                }
-
-                // Return method if valid
-                if (valid)
-                    return method;
-            }
-
-            // Not found
-            return null;
-        }
+        public MethodDeclaration GetMethod(string name, int @params) => Methods.FirstOrDefault(
+            method => method.Name.Equals(name, Settings.IdentifierComparisonMode) &&
+                      (@params == method.Params.Count ||
+                       @params < method.Params.Count && method.Params[@params + 1].IsOptional));
 
         /// <summary>
         /// Gets a declaration that isn't a method with the specified name.
