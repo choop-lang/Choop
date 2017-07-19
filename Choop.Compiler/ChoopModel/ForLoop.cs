@@ -93,7 +93,7 @@ namespace Choop.Compiler.ChoopModel
             Scope newScope = new Scope(context.CurrentScope);
 
             // Create translation context
-            TranslationContext newContext = new TranslationContext(newScope, context.ErrorList);
+            TranslationContext newContext = new TranslationContext(newScope, context);
 
             // Create counter variable
             StackValue counter = new StackValue(Variable, VarType);

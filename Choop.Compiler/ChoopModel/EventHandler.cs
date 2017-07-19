@@ -144,7 +144,7 @@ namespace Choop.Compiler.ChoopModel
             internalMethod.DefaultValues.Add(DataType.Number.GetDefault());
 
             // Translate event code
-            TranslationContext newContext = new TranslationContext(newScope, context.ErrorList);
+            TranslationContext newContext = new TranslationContext(newScope, context);
             foreach (IStatement statement in Statements)
             {
                 Block[] translated = statement.Translate(newContext);

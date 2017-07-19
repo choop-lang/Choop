@@ -165,6 +165,15 @@ namespace Choop.Compiler.ChoopModel
         }
 
         /// <summary>
+        /// Gets a declaration that isn't a method with the specified name.
+        /// </summary>
+        /// <param name="name">The name of the declaration to search for.</param>
+        /// <returns>The declaration with the specified name, null if not found.</returns>
+        public ITypedDeclaration GetDeclaration(string name) => GetConstant(name) ??
+                                                                GetVariable(name) ??
+                                                                (ITypedDeclaration) GetList(name);
+
+        /// <summary>
         /// Finds the constant with the specified name within the sprite.
         /// </summary>
         /// <param name="name">The name of the constant to search for.</param>
@@ -210,25 +219,28 @@ namespace Choop.Compiler.ChoopModel
 
             // TODO: Import modules
 
+            // Create translation context
+            TranslationContext newContext = new TranslationContext(this, context);
+
             // Variables
             foreach (GlobalVarDeclaration globalVarDeclaration in Variables)
-                sprite.Variables.Add(globalVarDeclaration.Translate(context));
+                sprite.Variables.Add(globalVarDeclaration.Translate(newContext));
 
             // Lists
             foreach (GlobalListDeclaration globalListDeclaration in Lists)
-                sprite.Lists.Add(globalListDeclaration.Translate(context));
+                sprite.Lists.Add(globalListDeclaration.Translate(newContext));
 
             // Events
             foreach (EventHandler eventHandler in EventHandlers)
             {
-                Tuple<BlockModel.EventHandler, BlockDef> translated = eventHandler.Translate(context);
+                Tuple<BlockModel.EventHandler, BlockDef> translated = eventHandler.Translate(newContext);
                 sprite.Scripts.Add(translated.Item1);
                 sprite.Scripts.Add(translated.Item2);
             }
 
             // Methods
             foreach (MethodDeclaration methodDeclaration in Methods)
-                sprite.Scripts.Add(methodDeclaration.Translate(context));
+                sprite.Scripts.Add(methodDeclaration.Translate(newContext));
 
             // Insert default costume
             // TODO use metafile

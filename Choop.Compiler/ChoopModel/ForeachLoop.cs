@@ -79,7 +79,7 @@ namespace Choop.Compiler.ChoopModel
 
             // Create scope of loop
             Scope innerScope = new Scope(context.CurrentScope);
-            TranslationContext newContext = new TranslationContext(innerScope, context.ErrorList); // TODO
+            TranslationContext newContext = new TranslationContext(innerScope, context); // TODO
 
             // Create counter variable
             StackValue internalCounter = new StackValue("@counter", DataType.Number);

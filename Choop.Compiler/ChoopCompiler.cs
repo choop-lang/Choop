@@ -21,7 +21,7 @@ namespace Choop.Compiler
         /// The builder used for creating the internal Choop representation.
         /// </summary>
         private ChoopBuilder _builder;
-        
+
         #endregion
 
         #region Properties
@@ -154,7 +154,7 @@ namespace Choop.Compiler
             if (HasErrors) return;
 
             // Create translation context (Superglobal level)
-            TranslationContext context = new TranslationContext(null, CompilerErrors);
+            TranslationContext context = new TranslationContext(CompilerErrors);
 
             // Translate project into BlockModel representation
             ScratchProject = ChoopProject.Translate(context);

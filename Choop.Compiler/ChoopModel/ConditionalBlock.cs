@@ -65,7 +65,7 @@ namespace Choop.Compiler.ChoopModel
         public Block[] Translate(TranslationContext context)
         {
             Scope newScope = new Scope(context.CurrentScope);
-            TranslationContext newContext = new TranslationContext(newScope, context.ErrorList);
+            TranslationContext newContext = new TranslationContext(newScope, context);
 
             List<Block> blocks = new List<Block>();
 

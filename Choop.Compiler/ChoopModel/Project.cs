@@ -166,13 +166,16 @@ namespace Choop.Compiler.ChoopModel
             // Create blank stage instance
             Stage stage = new Stage();
 
+            // Create new translation context
+            TranslationContext newContext = new TranslationContext(this, context);
+
             // Translate superglobal variables
             foreach (GlobalVarDeclaration globalVarDeclaration in Variables)
-                stage.Variables.Add(globalVarDeclaration.Translate(context));
+                stage.Variables.Add(globalVarDeclaration.Translate(newContext));
 
             // Translate superglobal lists
             foreach (GlobalListDeclaration globalListDeclaration in Lists)
-                stage.Lists.Add(globalListDeclaration.Translate(context));
+                stage.Lists.Add(globalListDeclaration.Translate(newContext));
 
             // Translate sprites and get statistics
             int spriteCount = 0;
@@ -180,7 +183,7 @@ namespace Choop.Compiler.ChoopModel
             foreach (SpriteDeclaration spriteDeclaration in Sprites)
             {
                 // Translate sprite
-                Sprite translated = spriteDeclaration.Translate(context);
+                Sprite translated = spriteDeclaration.Translate(newContext);
                 stage.Children.Add(translated);
 
                 // Update statistics

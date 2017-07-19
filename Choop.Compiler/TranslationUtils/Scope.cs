@@ -115,11 +115,10 @@ namespace Choop.Compiler.TranslationUtils
                 if (value.Name.Equals(name, Settings.IdentifierComparisonMode))
                     return value; // Match found
 
-            if (recursive && Parent != null)
-                return Parent.Search(name); // Recursion allowed and parent exists
+            if (!recursive || Parent == null) return null;
 
-            // Base case, not found
-            return null;
+            // Parent exists and recursion enabled, so search
+            return Parent.Search(name);
         }
 
         /// <summary>

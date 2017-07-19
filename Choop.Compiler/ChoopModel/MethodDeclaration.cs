@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
@@ -124,7 +125,7 @@ namespace Choop.Compiler.ChoopModel
 
             // Create translation context
             Scope scope = new Scope(context.CurrentScope);
-            TranslationContext newContext = new TranslationContext(scope, context.ErrorList);
+            TranslationContext newContext = new TranslationContext(scope, context);
 
             // Translate blocks
             foreach (IStatement statement in Statements)
@@ -132,6 +133,16 @@ namespace Choop.Compiler.ChoopModel
                     translated.Blocks.Add(block);
 
             return translated;
+        }
+
+        /// <summary>
+        /// Returns the parameter with the specified name.
+        /// </summary>
+        /// <param name="name">The name of the parameter to search for.</param>
+        /// <returns>The parameter with the specified name, null if not found.</returns>
+        public ParamDeclaration FindParam(string name)
+        {
+            return Params.FirstOrDefault(x => x.Name == name);
         }
 
         #endregion
