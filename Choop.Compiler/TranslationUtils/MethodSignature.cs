@@ -13,14 +13,14 @@
         public string Name { get; }
 
         /// <summary>
-        /// Gets the number of inputs to the method.
-        /// </summary>
-        public int Inputs { get; }
-
-        /// <summary>
         /// Gets whether the method reports a value.
         /// </summary>
         public bool IsReporter { get; }
+
+        /// <summary>
+        /// The names of the inputs to the method, in order.
+        /// </summary>
+        public string[] Inputs { get; }
 
         #endregion
 
@@ -30,9 +30,9 @@
         /// Creates a new instance of the <see cref="MethodSignature"/> class.
         /// </summary>
         /// <param name="name">The name of the method.</param>
-        /// <param name="inputs">The number of inputs to the method.</param>
         /// <param name="isReporter">Whether the method reports a value.</param>
-        public MethodSignature(string name, int inputs, bool isReporter)
+        /// <param name="inputs">The names of inputs to the method, in order.</param>
+        public MethodSignature(string name, bool isReporter, params string[] inputs)
         {
             Name = name;
             Inputs = inputs;
