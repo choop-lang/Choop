@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Choop.Compiler.ChoopModel;
 
 namespace Choop.Compiler.TranslationUtils
 {
@@ -43,6 +44,11 @@ namespace Choop.Compiler.TranslationUtils
         public Scope Parent { get; }
 
         /// <summary>
+        /// Gets the method that contains the scope.
+        /// </summary>
+        public IHasBody Method { get; }
+
+        /// <summary>
         /// Gets the collection of child scopes.
         /// </summary>
         public ReadOnlyCollection<Scope> ChildScopes => _childScopes.AsReadOnly();
@@ -52,10 +58,11 @@ namespace Choop.Compiler.TranslationUtils
         #region Constructor
 
         /// <summary>
-        /// Creates a new instance of the <see cref="Scope"/> class. 
+        /// Creates a new instance of the <see cref="Scope"/> class.
         /// </summary>
+        /// <param name="method">Gets the method that contains the scope.</param>
         /// <param name="unsafe">Whether the scope contains unsafe variables.</param>
-        public Scope(bool @unsafe = false)
+        public Scope(IHasBody method, bool @unsafe = false)
         {
             // Increment ID
             ID = NextID++;
@@ -63,7 +70,8 @@ namespace Choop.Compiler.TranslationUtils
             // Create stack segment
             StackValues = new StackSegment(this);
 
-            // Set unsafe
+            // Misc
+            Method = method;
             Unsafe = @unsafe;
         }
 
@@ -85,7 +93,8 @@ namespace Choop.Compiler.TranslationUtils
             // (Must happen after setting parent)
             StackValues = new StackSegment(this);
 
-            // Set unsafe
+            // Misc
+            Method = parent.Method;
             Unsafe = parent.Unsafe || @unsafe;
         }
 

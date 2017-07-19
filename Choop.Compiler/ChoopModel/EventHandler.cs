@@ -82,7 +82,7 @@ namespace Choop.Compiler.ChoopModel
         public Tuple<BlockModel.EventHandler, BlockDef> Translate(TranslationContext context)
         {
             // Create event scope
-            Scope newScope = new Scope();
+            Scope newScope = new Scope(this);
 
             string internalName = $"{newScope.ID}: {Name} %n"; // Internal name used for custom block
 
