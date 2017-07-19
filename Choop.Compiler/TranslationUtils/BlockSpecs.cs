@@ -1,4 +1,6 @@
-﻿namespace Choop.Compiler.TranslationUtils
+﻿using System.Collections.Generic;
+
+namespace Choop.Compiler.TranslationUtils
 {
     /// <summary>
     /// Contains the block spec for every Scratch block.
@@ -161,6 +163,22 @@
         public const string InputColor = "%c";
         public const string InputNum = "%n";
         public const string InputString = "%s";
+
+        #endregion
+
+        #region Inbuilt Dictionary
+
+        /// <summary>
+        /// Represents the mapping from Choop methods to inbuilt common Scratch blocks.
+        /// </summary>
+        public static readonly Dictionary<string, MethodSignature> Inbuilt = new Dictionary<string, MethodSignature>()
+        {
+            {"abs", new MethodSignature(Abs, true, "value")},
+            {"backgroundNumber", new MethodSignature(BackdropNumber, true)},
+            {"ifOnEdgeBounce", new MethodSignature(IfOnEdgeBounce, false)},
+            {"broadcast", new MethodSignature(Broadcast, false, "message")},
+            {"changeEffectBy", new MethodSignature(ChangeEffectBy, false, "graphic effect", "amount")}
+        };
 
         #endregion
     }
