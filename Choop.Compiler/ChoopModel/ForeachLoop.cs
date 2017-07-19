@@ -79,7 +79,10 @@ namespace Choop.Compiler.ChoopModel
 
             // Create scope of loop
             Scope innerScope = new Scope(context.CurrentScope);
-            TranslationContext newContext = new TranslationContext(innerScope, context); // TODO
+            TranslationContext newContext = new TranslationContext(innerScope, context);
+
+            // TODO: Inbuilt foreach block optimisation
+            // TODO: Inline foreach
 
             // Create counter variable
             StackValue internalCounter = new StackValue("@counter", DataType.Number);
@@ -91,23 +94,44 @@ namespace Choop.Compiler.ChoopModel
             innerScope.StackValues.Add(itemVar);
             output.AddRange(itemVar.CreateDeclaration(VarType.GetDefault()));
 
-            // TODO: optimise to use inbuilt foreach in case of global arrays and unsafe arrays
+            List<Block> loopContents = new List<Block>();
 
-            // Get stackvalue for array
-            StackValue arrayValue = null; // TODO
+            GlobalListDeclaration globalList =
+                context.CurrentSprite.GetList(SourceName) ?? context.Project.GetList(SourceName);
+            StackValue arrayValue = null;
 
-            // Translate loop contents
-            List<Block> loopContents = new List<Block>
+            if (globalList != null)
             {
-                itemVar.CreateVariableAssignment(arrayValue.CreateArrayLookup(internalCounter.CreateVariableLookup())),
-                itemVar.CreateVariableIncrement(1)
-            };
+                // Translate loop contents
+                loopContents.Add(itemVar.CreateVariableAssignment(new Block(BlockSpecs.GetItemOfList,
+                    internalCounter.CreateVariableLookup(), SourceName)));
+            }
+            else
+            {
+                // Get stackvalue for array
+                arrayValue = context.CurrentScope.Search(SourceName);
 
+                if (arrayValue == null)
+                {
+                    context.ErrorList.Add(new CompilerError($"Array '{SourceName}' is not defined", ErrorType.NotDefined,
+                        ErrorToken, FileName));
+                    return new Block[0];
+                }
+
+                loopContents.Add(itemVar.CreateVariableAssignment(arrayValue.CreateArrayLookup(internalCounter.CreateVariableLookup())));
+            }
+
+            // Increment counter
+            loopContents.Add(internalCounter.CreateVariableIncrement(1));
+
+            // Translate loop main body
             foreach (Block[] translated in Statements.Select(x => x.Translate(newContext)))
                 loopContents.AddRange(translated);
 
             // Create loop Scratch block
-            output.Add(new Block(BlockSpecs.Repeat, new Block(BlockSpecs.LengthOfList, SourceName), loopContents));
+            object repeats = globalList != null ? new Block(BlockSpecs.LengthOfList, SourceName) : (object)arrayValue.StackSpace;
+
+            output.Add(new Block(BlockSpecs.Repeat, repeats, loopContents));
 
             // Clean up scope
             output.AddRange(internalCounter.CreateDestruction());

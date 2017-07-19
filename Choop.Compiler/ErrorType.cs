@@ -48,6 +48,10 @@
         /// <summary>
         /// Indicates that the type was not compatible with the target type.
         /// </summary>
-        TypeMismatch
+        TypeMismatch,
+        /// <summary>
+        /// Indicates that a name a declaration with a specified name could not be found.
+        /// </summary>
+        NotDefined
     }
 }
