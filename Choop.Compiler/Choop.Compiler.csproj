@@ -94,6 +94,7 @@
     <Compile Include="ChoopModel\EventHandler.cs" />
     <Compile Include="ChoopModel\IRule.cs" />
     <Compile Include="ChoopModel\Project.cs" />
+    <Compile Include="TranslationUtils\MethodSignature.cs" />
     <Compile Include="TranslationUtils\Settings.cs" />
     <Compile Include="TranslationUtils\TranslationContext.cs" />
     <Compile Include="ChoopModel\WhileLoop.cs" />
