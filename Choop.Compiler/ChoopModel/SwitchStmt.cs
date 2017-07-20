@@ -61,8 +61,55 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            return BuildIfElse(context, 0);
         }
+
+        /// <summary>
+        /// Recursively builds the tranlsated if-else statement.
+        /// </summary>
+        /// <param name="context">The context of the translation.</param>
+        /// <param name="element">The current block.</param>
+        /// <returns>The translated if-else statement.</returns>
+        private Block[] BuildIfElse(TranslationContext context, int element)
+        {
+            if (element == Blocks.Count)
+                throw new IndexOutOfRangeException("Element is out of range");
+
+            if (element + 1 != Blocks.Count)
+                return new[]
+                {
+                    new Block(
+                        BlockSpecs.IfThenElse,
+                        BuildCondition(Blocks[element].Conditions).Translate(context),
+                        Blocks[element].Translate(context),
+                        BuildIfElse(context, element + 1)
+                    )
+                };
+
+            if (Blocks[element].IsDefault)
+                return Blocks[element].Translate(context);
+
+            return new[]
+            {
+                new Block(
+                    BlockSpecs.IfThen,
+                    BuildCondition(Blocks[element].Conditions).Translate(context),
+                    Blocks[element].Translate(context)
+                )
+            };
+        }
+
+        /// <summary>
+        /// Recursively builds the condition for a case block.
+        /// </summary>
+        /// <param name="conditions">The collection of input conditions.</param>
+        /// <param name="index">The current index.</param>
+        /// <returns>The expression for the condition combining all input conditions.</returns>
+        private IExpression BuildCondition(Collection<IExpression> conditions, int index = 0) =>
+            index == conditions.Count - 1
+                ? conditions[index]
+                : new CompoundExpression(CompoundOperator.And, conditions[index],
+                    BuildCondition(conditions, index + 1), FileName, ErrorToken);
 
         #endregion
     }
