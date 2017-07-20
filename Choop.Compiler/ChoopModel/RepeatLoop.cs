@@ -77,7 +77,7 @@ namespace Choop.Compiler.ChoopModel
 
             if (!Inline) return new[]
             {
-                new Block(BlockSpecs.Repeat, Iterations, loopContents.ToArray())
+                new Block(BlockSpecs.Repeat, Iterations.Translate(context), loopContents.ToArray())
             };
 
             // Inline loop (assume already validated)
