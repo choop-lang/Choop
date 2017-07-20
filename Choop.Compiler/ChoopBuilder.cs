@@ -618,7 +618,7 @@ namespace Choop.Compiler
             ITerminalNode identifier = context.Identifier();
             string variable = identifier.GetText();
 
-            VarAssignStmt stmt = new VarAssignStmt(variable, AssignOperator.PlusPlus, FileName, identifier.Symbol);
+            VarAssignStmt stmt = new VarAssignStmt(variable, AssignOperator.MinusMinus, FileName, identifier.Symbol);
             _currentBlocks.Peek().Statements.Add(stmt);
         }
 
