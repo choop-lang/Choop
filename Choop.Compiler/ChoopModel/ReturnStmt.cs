@@ -54,7 +54,9 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            // TODO: return values
+
+            return new[] {new Block(BlockSpecs.Stop, "this script")};
         }
 
         #endregion
