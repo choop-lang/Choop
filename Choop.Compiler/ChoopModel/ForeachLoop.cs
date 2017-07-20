@@ -131,7 +131,7 @@ namespace Choop.Compiler.ChoopModel
             // Create loop Scratch block
             object repeats = globalList != null ? new Block(BlockSpecs.LengthOfList, SourceName) : (object)arrayValue.StackSpace;
 
-            output.Add(new Block(BlockSpecs.Repeat, repeats, loopContents));
+            output.Add(new Block(BlockSpecs.Repeat, repeats, loopContents.ToArray()));
 
             // Clean up scope
             output.AddRange(internalCounter.CreateDestruction());
