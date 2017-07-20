@@ -124,7 +124,7 @@ namespace Choop.Compiler.ChoopModel
             translated.Spec = spec;
 
             // Create translation context
-            Scope scope = new Scope(context.CurrentScope);
+            Scope scope = new Scope(this, Unsafe);
             TranslationContext newContext = new TranslationContext(scope, context);
 
             // Translate blocks
