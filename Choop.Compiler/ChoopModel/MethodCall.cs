@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Antlr4.Runtime;
@@ -98,8 +99,12 @@ namespace Choop.Compiler.ChoopModel
 
                 // TODO: inline
 
+                List<object> translatedParams = new List<object> { customMethod.GetInternalName() };
+                translatedParams.AddRange(Parameters.Select(x => x.Translate(context)));
+                translatedParams.Add(new Block(BlockSpecs.GetParameter, Settings.StackRefParam));
+
                 return new[]
-                    {new Block(BlockSpecs.CustomMethodCall, MethodName, Parameters.Select(x => x.Translate(context)).ToArray())};
+                    {new Block(BlockSpecs.CustomMethodCall, translatedParams.ToArray())};
             }
 
             // Custom method doesn't exist, so search inbuilt methods

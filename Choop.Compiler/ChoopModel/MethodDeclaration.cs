@@ -106,18 +106,16 @@ namespace Choop.Compiler.ChoopModel
                 Atomic = Atomic
             };
 
-            string spec = Name;
+            string spec = GetInternalName();
 
             // Add parameters
             foreach (ParamDeclaration paramDeclaration in Params)
             {
-                spec += " " + paramDeclaration.Type.ToInputNotation();
                 translated.InputNames.Add(paramDeclaration.Name);
                 translated.DefaultValues.Add(paramDeclaration.Type.GetDefault());
             }
 
             // Add hidden scope parameter
-            spec += " " + BlockSpecs.InputNum;
             translated.InputNames.Add(Settings.StackRefParam);
             translated.DefaultValues.Add(0);
 
@@ -129,8 +127,8 @@ namespace Choop.Compiler.ChoopModel
 
             // Translate blocks
             foreach (IStatement statement in Statements)
-                foreach (Block block in statement.Translate(newContext))
-                    translated.Blocks.Add(block);
+            foreach (Block block in statement.Translate(newContext))
+                translated.Blocks.Add(block);
 
             return translated;
         }
@@ -144,6 +142,13 @@ namespace Choop.Compiler.ChoopModel
         {
             return Params.FirstOrDefault(x => x.Name == name);
         }
+
+        /// <summary>
+        /// Returns the internal name of the method.
+        /// </summary>
+        /// <returns>The internal name of the method.</returns>
+        public string GetInternalName() =>
+            Name + string.Join(" ", Params.Select(x => x.Type.ToInputNotation())) + BlockSpecs.InputNum;
 
         #endregion
     }
