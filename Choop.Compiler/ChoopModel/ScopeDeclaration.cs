@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
@@ -53,7 +54,15 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            // Create new translation context
+            TranslationContext newContext = new TranslationContext(new Scope(context.CurrentScope), context);
+
+            // Translate
+            List<Block> translated = new List<Block>();
+            foreach (IStatement statement in Statements)
+                translated.AddRange(statement.Translate(newContext));
+
+            return translated.ToArray();
         }
 
         #endregion
