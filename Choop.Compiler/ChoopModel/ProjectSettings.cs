@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ChoopModel
@@ -19,6 +20,16 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the author of the Choop project.
         /// </summary>
         public string Author { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date of when the project was first created.
+        /// </summary>
+        public DateTime Created { get; set; }
+
+        /// <summary>
+        /// Gets or sets the date of when the project was last modified.
+        /// </summary>
+        public DateTime Modified { get; set; }
 
         /// <summary>
         /// Gets or sets the project tempo in BPM.
