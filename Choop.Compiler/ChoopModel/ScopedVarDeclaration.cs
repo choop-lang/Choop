@@ -76,11 +76,10 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
-            return new[]
-            {
-                new Block(BlockSpecs.AddToList, Value?.Translate(context) ?? DataType.Object.GetDefault(),
-                    Settings.StackIdentifier)
-            };
+            StackValue variable = new StackValue(Name, Type);
+            context.CurrentScope.StackValues.Add(variable);
+
+            return variable.CreateDeclaration(Value?.Translate(context) ?? Type.GetDefault());
         }
 
         #endregion
