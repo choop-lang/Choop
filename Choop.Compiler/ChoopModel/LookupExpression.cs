@@ -1,4 +1,6 @@
-﻿using Antlr4.Runtime;
+﻿using System;
+using System.Net;
+using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
 
@@ -26,6 +28,11 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         public string FileName { get; }
 
+        /// <summary>
+        /// Gets the variable being looked up.
+        /// </summary>
+        protected ITypedDeclaration Variable { get; set; }
+
         #endregion
 
         #region Constructor
@@ -43,6 +50,20 @@ namespace Choop.Compiler.ChoopModel
             ErrorToken = errorToken;
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="LookupExpression"/> class.
+        /// </summary>
+        /// <param name="variable">The variable being looked up.</param>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public LookupExpression(ITypedDeclaration variable, string fileName, IToken errorToken)
+        {
+            Variable = variable;
+            IdentifierName = variable.Name;
+            FileName = fileName;
+            ErrorToken = errorToken;
+        }
+
         #endregion
 
         #region Methods
@@ -53,9 +74,40 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public virtual object Translate(TranslationContext context)
         {
-            // TODO variables on stack, parameters
+            if (Variable == null)
+            {
+                IDeclaration identifier = context.GetDeclaration(IdentifierName);
 
-            return new Block(BlockSpecs.GetVariable, IdentifierName);
+                if (identifier is StackValue || identifier is ParamDeclaration || identifier is GlobalVarDeclaration || identifier is ConstDeclaration)
+                {
+                    Variable = (ITypedDeclaration) identifier;
+                }
+                else
+                {
+                    context.ErrorList.Add(new CompilerError($"'{IdentifierName}' is not a variable",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
+                    return null;
+                }
+            }
+
+            StackValue stackValue = Variable as StackValue;
+            if (stackValue != null)
+                return stackValue.CreateVariableLookup();
+
+            ParamDeclaration paramDeclaration = Variable as ParamDeclaration;
+            if (paramDeclaration != null)
+                return new Block(BlockSpecs.GetParameter, paramDeclaration.Name);
+
+            GlobalVarDeclaration globalVarDeclaration = Variable as GlobalVarDeclaration;
+            if (globalVarDeclaration != null)
+                 return new Block(BlockSpecs.GetVariable, IdentifierName);
+
+            ConstDeclaration constDeclaration = Variable as ConstDeclaration;
+            if (constDeclaration != null)
+                return constDeclaration.Value.Literal;
+
+            // Should not happen - throw error
+            throw new Exception("Unknown identifier type");
         }
 
         #endregion
