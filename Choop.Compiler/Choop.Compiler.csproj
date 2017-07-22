@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockModel\BlockDef.cs" />
+    <Compile Include="BlockModel\ScriptTuple.cs" />
     <Compile Include="ChoopModel\ProjectSettings.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -64,12 +65,10 @@
     <Compile Include="BlockModel\IJsonConvertable.cs" />
     <Compile Include="BlockModel\Sound.cs" />
     <Compile Include="BlockModel\Costume.cs" />
-    <Compile Include="BlockModel\EventHandler.cs" />
     <Compile Include="BlockModel\Block.cs" />
     <Compile Include="BlockModel\IComponent.cs" />
     <Compile Include="BlockModel\IResource.cs" />
     <Compile Include="BlockModel\IMonitor.cs" />
-    <Compile Include="BlockModel\IScript.cs" />
     <Compile Include="BlockModel\ISprite.cs" />
     <Compile Include="BlockModel\IVariable.cs" />
     <Compile Include="BlockModel\MonitorCmd.cs" />

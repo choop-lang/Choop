@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
@@ -196,9 +195,9 @@ namespace Choop.Compiler.ChoopModel
             // Events
             foreach (EventHandler eventHandler in EventHandlers)
             {
-                Tuple<BlockModel.EventHandler, BlockDef> translated = eventHandler.Translate(newContext);
-                sprite.Scripts.Add(translated.Item1);
-                sprite.Scripts.Add(translated.Item2);
+                ScriptTuple[] translated = eventHandler.Translate(newContext);
+                sprite.Scripts.Add(translated[0]);
+                sprite.Scripts.Add(translated[1]);
             }
 
             // Methods

@@ -27,7 +27,7 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets the collection of scripts in the <see cref="ISprite"/>. 
         /// </summary>
-        Collection<IScript> Scripts { get; }
+        Collection<ScriptTuple> Scripts { get; }
 
         /// <summary>
         /// Gets the collection of script comments in the <see cref="ISprite"/>.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
@@ -9,7 +10,7 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents an event handler.
     /// </summary>
-    public class EventHandler : IDeclaration, ICompilable<Tuple<BlockModel.EventHandler, BlockDef>>, IHasBody
+    public class EventHandler : IDeclaration, ICompilable<ScriptTuple[]>, IHasBody
     {
         #region Properties
 
@@ -61,7 +62,8 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="atomic">Whether the event handler is atomic.</param>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="errorToken">The token to report any compiler errors to.</param>
-        public EventHandler(string name, TerminalExpression parameter, bool @unsafe, bool atomic, string fileName, IToken errorToken)
+        public EventHandler(string name, TerminalExpression parameter, bool @unsafe, bool atomic, string fileName,
+            IToken errorToken)
         {
             Name = name;
             Parameter = parameter;
@@ -79,81 +81,87 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Tuple<BlockModel.EventHandler, BlockDef> Translate(TranslationContext context)
+        public ScriptTuple[] Translate(TranslationContext context)
         {
             // Create event scope
             Scope newScope = new Scope(this);
 
             string internalName = $"{newScope.ID}: {Name} %n"; // Internal name used for custom block
 
-            // Create calling code
-            BlockModel.EventHandler eventHandler;
+            ScriptTuple eventHandler = new ScriptTuple();
+
             switch (Name)
             {
                 case "GreenFlag":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenGreenFlagClicked);
+                    eventHandler.Blocks.Add(new Block(BlockSpecs.WhenGreenFlagClicked));
                     break;
                 case "KeyPressed":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenKeyPressed, Parameter.Translate(context));
+                    eventHandler.Blocks.Add(new Block(BlockSpecs.WhenKeyPressed, Parameter.Translate(context)));
                     break;
                 case "Clicked":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSpriteClicked);
+                    eventHandler.Blocks.Add(new Block(BlockSpecs.WhenSpriteClicked));
                     break;
                 case "BackdropChanged":
-                    eventHandler =
-                        new BlockModel.EventHandler(BlockSpecs.WhenBackdropSwitchesTo, Parameter.Translate(context));
+                    eventHandler.Blocks.Add(new Block(BlockSpecs.WhenBackdropSwitchesTo, Parameter.Translate(context)));
                     break;
                 case "MessageReceived":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenIReceive, Parameter.Translate(context));
+                    eventHandler.Blocks.Add(new Block(BlockSpecs.WhenIReceive, Parameter.Translate(context)));
                     break;
                 case "Cloned":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSpriteCloned);
+                    eventHandler.Blocks.Add(new Block(BlockSpecs.WhenSpriteCloned));
                     break;
                 case "TimerGreaterThan":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "timer",
-                        Parameter.Translate(context));
+                    eventHandler.Blocks.Add(new Block(BlockSpecs.WhenSensorGreaterThan, "timer",
+                        Parameter.Translate(context)));
                     break;
                 case "LoudnessGreaterThan":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "loudness",
-                        Parameter.Translate(context));
+                    eventHandler.Blocks.Add(new Block(BlockSpecs.WhenSensorGreaterThan, "loudness",
+                        Parameter.Translate(context)));
                     break;
                 case "VideoMotionGreaterThan":
-                    eventHandler = new BlockModel.EventHandler(BlockSpecs.WhenSensorGreaterThan, "video motion",
-                        Parameter.Translate(context));
+                    eventHandler.Blocks.Add(new Block(BlockSpecs.WhenSensorGreaterThan, "video motion",
+                        Parameter.Translate(context)));
                     break;
                 default:
                     throw new ArgumentException("Invalid event name", nameof(Name));
             }
 
-            eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar,
-                1)); // Increment CurrentStack
+            // Increment CurrentStack
+            eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar, 1));
+            // Clear (or create) stack
             eventHandler.Blocks.Add(new Block(BlockSpecs.DeleteItemOfList, "all",
-                new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar))); // Clear (/create) stack
+                new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar)));
+            // Call internal method
             eventHandler.Blocks.Add(new Block(BlockSpecs.CustomMethodCall, internalName,
-                new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar))); // Call internal method
-            eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar,
-                -1)); // Decrement CurrentStack
+                new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar)));
+            // Decrement CurrentStack
+            eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar, -1));
 
             // Create internal method
-            BlockDef internalMethod = new BlockDef
+            ScriptTuple internalMethod = new ScriptTuple();
+
+            BlockDef definition = new BlockDef
             {
                 Spec = internalName,
                 Atomic = Atomic
             };
-            internalMethod.InputNames.Add(Settings.StackRefParam);
-            internalMethod.DefaultValues.Add(DataType.Number.GetDefault());
+            definition.InputNames.Add(Settings.StackRefParam);
+            definition.DefaultValues.Add(DataType.Number.GetDefault());
+
+            internalMethod.Blocks.Add(definition);
 
             // Translate event code
             TranslationContext newContext = new TranslationContext(newScope, context);
             foreach (IStatement statement in Statements)
-            {
-                Block[] translated = statement.Translate(newContext);
-                foreach (Block block in translated)
+                foreach (Block block in statement.Translate(newContext))
                     internalMethod.Blocks.Add(block);
-            }
 
             // Return results
-            return new Tuple<BlockModel.EventHandler, BlockDef>(eventHandler, internalMethod);
+            return new[]
+            {
+                eventHandler,
+                internalMethod
+            };
         }
 
         #endregion

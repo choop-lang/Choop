@@ -31,7 +31,7 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets the collection of scripts in the sprite. 
         /// </summary>
-        public Collection<IScript> Scripts { get; } = new Collection<IScript>();
+        public Collection<ScriptTuple> Scripts { get; } = new Collection<ScriptTuple>();
 
         /// <summary>
         /// Gets the collection of script comments in the sprite.

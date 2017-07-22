@@ -9,7 +9,7 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents a function or void declaration.
     /// </summary>
-    public class MethodDeclaration : ITypedDeclaration, ICompilable<BlockDef>, IHasBody
+    public class MethodDeclaration : ITypedDeclaration, ICompilable<ScriptTuple>, IHasBody
     {
         #region Properties
 
@@ -99,27 +99,28 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public BlockDef Translate(TranslationContext context)
+        public ScriptTuple Translate(TranslationContext context)
         {
-            BlockDef translated = new BlockDef
+            BlockDef definition = new BlockDef
             {
+                Spec = GetInternalName(),
                 Atomic = Atomic
             };
-
-            string spec = GetInternalName();
 
             // Add parameters
             foreach (ParamDeclaration paramDeclaration in Params)
             {
-                translated.InputNames.Add(paramDeclaration.Name);
-                translated.DefaultValues.Add(paramDeclaration.Type.GetDefault());
+                definition.InputNames.Add(paramDeclaration.Name);
+                definition.DefaultValues.Add(paramDeclaration.Type.GetDefault());
             }
 
             // Add hidden scope parameter
-            translated.InputNames.Add(Settings.StackRefParam);
-            translated.DefaultValues.Add(0);
+            definition.InputNames.Add(Settings.StackRefParam);
+            definition.DefaultValues.Add(0);
 
-            translated.Spec = spec;
+            // Create script tuple
+            ScriptTuple script = new ScriptTuple();
+            script.Blocks.Add(definition);
 
             // Create translation context
             Scope scope = new Scope(this, Unsafe);
@@ -127,10 +128,10 @@ namespace Choop.Compiler.ChoopModel
 
             // Translate blocks
             foreach (IStatement statement in Statements)
-            foreach (Block block in statement.Translate(newContext))
-                translated.Blocks.Add(block);
+                foreach (Block block in statement.Translate(newContext))
+                    script.Blocks.Add(block);
 
-            return translated;
+            return script;
         }
 
         /// <summary>

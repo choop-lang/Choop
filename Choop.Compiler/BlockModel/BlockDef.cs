@@ -1,85 +1,56 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Drawing;
+﻿using System.Collections.ObjectModel;
 using Choop.Compiler.TranslationUtils;
-using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.BlockModel
 {
     /// <summary>
     /// Represents a custom block definition.
     /// </summary>
-    public class BlockDef : IScript, IComponent
+    public class BlockDef : Block
     {
         #region Properties
 
         /// <summary>
-        /// Gets the opcode of the custom block definition..
-        /// </summary>
-        public string Opcode
-        {
-            get { return BlockSpecs.MethodDeclaration; }
-            set { throw new NotSupportedException(); }
-        }
-
-        /// <summary>
         /// Gets or sets the signature of the custom block.
         /// </summary>
-        public string Spec { get; set; }
+        public string Spec
+        {
+            get => (string)Args[0];
+            set => Args[0] = value;
+        }
 
         /// <summary>
         /// Gets the collection of input names of the custom block.
         /// </summary>
-        public Collection<string> InputNames { get; } = new Collection<string>();
+        public Collection<string> InputNames => (Collection<string>) Args[1];
 
         /// <summary>
         /// Gets the collection of default values for each input of the custom block.
         /// </summary>
-        public Collection<object> DefaultValues { get; } = new Collection<object>();
+        public Collection<object> DefaultValues => (Collection<object>) Args[2];
 
         /// <summary>
         /// Gets or sets whether the custom block is atomic.
         /// </summary>
-        public bool Atomic { get; set; }
-
-        /// <summary>
-        /// Gets or sets the display location of the script.
-        /// </summary>
-        public Point Location { get; set; } = new Point(20, 20);
-
-        /// <summary>
-        /// Gets the collection of blocks inside this script.
-        /// </summary>
-        public Collection<Block> Blocks { get; } = new Collection<Block>();
+        public bool Atomic
+        {
+            get => (bool) Args[3];
+            set => Args[3] = value;
+        }
 
         #endregion
 
-        #region Methods
+        #region Constructor
 
         /// <summary>
-        /// Serializes the current instance into a JSON object.
+        /// Creates  a new instance of the <see cref="BlockDef"/> class.
         /// </summary>
-        /// <returns>The JSON representation of the current instance.</returns>
-        public JToken ToJson()
+        public BlockDef() : base(BlockSpecs.MethodDeclaration)
         {
-            JArray blocks = new JArray
-            {
-                new JArray(
-                    Opcode,
-                    Spec,
-                    new JArray(InputNames),
-                    new JArray(DefaultValues),
-                    Atomic
-                )
-            };
-
-            foreach (Block block in Blocks)
-                blocks.Add(block.ToJson());
-
-            return new JArray(
-                Location.X,
-                Location.Y,
-                blocks);
+            Args.Add("");
+            Args.Add(new Collection<string>());
+            Args.Add(new Collection<object>());
+            Args.Add(false);
         }
 
         #endregion
