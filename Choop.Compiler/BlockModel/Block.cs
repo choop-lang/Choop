@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
@@ -26,7 +27,17 @@ namespace Choop.Compiler.BlockModel
         #region Constructor
 
         /// <summary>
-        /// Creates a new instance of the <see cref="Block"/> class. 
+        /// Creates a new instance of the <see cref="Block"/> class.
+        /// </summary>
+        /// <param name="opcode">The opcode of the block.</param>
+        public Block(string opcode)
+        {
+            Opcode = opcode;
+            Args = new Collection<object>();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="Block"/> class.
         /// </summary>
         /// <param name="opcode">The opcode of the block.</param>
         /// <param name="args">The arguments for the block.</param>
@@ -47,24 +58,32 @@ namespace Choop.Compiler.BlockModel
         public JToken ToJson()
         {
             JArray array = new JArray(Opcode);
+
             foreach (object arg in Args)
-            {
-                IJsonConvertable jsonArg = arg as IJsonConvertable;
-                if (jsonArg != null)
-                {
-                    array.Add(jsonArg.ToJson());
-                }
-                else
-                {
-                    IJsonConvertable[] arrayArg = arg as IJsonConvertable[];
-                    if (arrayArg != null)
-                        array.Add(new JArray(arrayArg.Select(x => x.ToJson())));
-                    else
-                        array.Add(arg);
-                }
-            }
+                array.Add(RecurisveTranslate(arg));
 
             return array;
+        }
+
+        /// <summary>
+        /// Recursively translates an object into json.
+        /// </summary>
+        /// <param name="arg">The object to translate.</param>
+        /// <returns>The translated Json arg.</returns>
+        private static JToken RecurisveTranslate(object arg)
+        {
+            // Try Json convertible
+            IJsonConvertable jsonArg = arg as IJsonConvertable;
+            if (jsonArg != null)
+                return jsonArg.ToJson();
+
+            // Try collection
+            IEnumerable<object> arrayArg = arg as IEnumerable<object>;
+            if (arrayArg != null)
+                return new JArray(arrayArg.Select(x => (object)RecurisveTranslate(x)).ToArray());
+
+            // Try object value
+            return new JValue(arg);
         }
 
         #endregion
