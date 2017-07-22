@@ -123,7 +123,8 @@ namespace Choop.Compiler.ChoopModel
                         Parameter.Translate(context)));
                     break;
                 default:
-                    throw new ArgumentException("Invalid event name", nameof(Name));
+                    context.ErrorList.Add(new CompilerError($"Event '{Name}' is not supported", ErrorType.NotDefined, ErrorToken, FileName));
+                    return new ScriptTuple[2];
             }
 
             // Increment CurrentStack
