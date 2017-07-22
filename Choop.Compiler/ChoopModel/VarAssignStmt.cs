@@ -71,39 +71,84 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
-            // TODO: variables on stack
+            // Get variable
+            IDeclaration variable = context.GetDeclaration(VariableName);
 
-            Block setBlock;
-
-            switch (Operator)
+            // Check variable was found
+            if (variable == null)
             {
-                case AssignOperator.Equals:
-                    setBlock = new Block(BlockSpecs.SetVariableTo, VariableName, Value.Translate(context));
-                    break;
-                case AssignOperator.AddEquals:
-                    setBlock = new Block(BlockSpecs.ChangeVarBy, VariableName, Value.Translate(context));
-                    break;
-                case AssignOperator.MinusEquals:
-                    setBlock = new Block(BlockSpecs.ChangeVarBy, VariableName,
-                        new UnaryExpression(Value, UnaryOperator.Minus, FileName, ErrorToken).Translate(context));
-                    break;
-                case AssignOperator.DotEquals:
-                    setBlock = new Block(BlockSpecs.SetVariableTo, VariableName,
-                        new CompoundExpression(CompoundOperator.Concat,
-                                new LookupExpression(VariableName, FileName, ErrorToken), Value, FileName, ErrorToken)
-                            .Translate(context));
-                    break;
-                case AssignOperator.PlusPlus:
-                    setBlock = new Block(BlockSpecs.ChangeVarBy, VariableName, 1);
-                    break;
-                case AssignOperator.MinusMinus:
-                    setBlock = new Block(BlockSpecs.ChangeVarBy, VariableName, -1);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                context.ErrorList.Add(new CompilerError($"Variable '{VariableName}' was not defined",
+                    ErrorType.NotDefined, ErrorToken, FileName));
+                return new Block[0];
             }
 
-            return new[] {setBlock};
+            // Try as stack variable
+            StackValue stackValue = variable as StackValue;
+            if (stackValue != null && stackValue.StackSpace == 1)
+                switch (Operator)
+                {
+                    case AssignOperator.Equals:
+                        return new[] {stackValue.CreateVariableAssignment(Value.Translate(context))};
+                    case AssignOperator.AddEquals:
+                        return new[] {stackValue.CreateVariableIncrement(Value.Translate(context))};
+                    case AssignOperator.MinusEquals:
+                        return new[]
+                        {
+                            stackValue.CreateVariableIncrement(new UnaryExpression(Value, UnaryOperator.Minus, FileName,
+                                ErrorToken).Translate(context))
+                        };
+                    case AssignOperator.DotEquals:
+                        return new[]
+                        {
+                            stackValue.CreateVariableAssignment(new CompoundExpression(CompoundOperator.Concat,
+                                new LookupExpression(stackValue, FileName, ErrorToken), Value, FileName, ErrorToken)
+                                .Translate(context))
+                        };
+                    case AssignOperator.PlusPlus:
+                        return new[] {stackValue.CreateVariableIncrement(1)};
+                    case AssignOperator.MinusMinus:
+                        return new[] {stackValue.CreateVariableIncrement(-1)};
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+            // Try as global variable
+            GlobalVarDeclaration globalVarDeclaration = variable as GlobalVarDeclaration;
+            if (globalVarDeclaration != null)
+                switch (Operator)
+                {
+                    case AssignOperator.Equals:
+                        return new[] {new Block(BlockSpecs.SetVariableTo, VariableName, Value.Translate(context))};
+                    case AssignOperator.AddEquals:
+                        return new[] {new Block(BlockSpecs.ChangeVarBy, VariableName, Value.Translate(context))};
+                    case AssignOperator.MinusEquals:
+                        return new[]
+                        {
+                            new Block(BlockSpecs.ChangeVarBy, VariableName,
+                                new UnaryExpression(Value, UnaryOperator.Minus, FileName, ErrorToken)
+                                    .Translate(context))
+                        };
+                    case AssignOperator.DotEquals:
+                        return new[]
+                        {
+                            new Block(BlockSpecs.SetVariableTo, VariableName,
+                                new CompoundExpression(CompoundOperator.Concat,
+                                        new LookupExpression(VariableName, FileName, ErrorToken), Value, FileName,
+                                        ErrorToken)
+                                    .Translate(context))
+                        };
+                    case AssignOperator.PlusPlus:
+                        return new[] {new Block(BlockSpecs.ChangeVarBy, VariableName, 1)};
+                    case AssignOperator.MinusMinus:
+                        return new[] {new Block(BlockSpecs.ChangeVarBy, VariableName, -1)};
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+            // Fail
+            context.ErrorList.Add(new CompilerError($"'{VariableName}' is not a variable", ErrorType.InvalidArgument,
+                ErrorToken, FileName));
+            return new Block[0];
         }
 
         #endregion

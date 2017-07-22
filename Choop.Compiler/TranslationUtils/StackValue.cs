@@ -164,6 +164,7 @@ namespace Choop.Compiler.TranslationUtils
         /// <returns>The code to increase the variable by the specified amount.</returns>
         public Block CreateVariableIncrement(object value)
         {
+            // TODO: Optimise for when value is negative
             return Scope.Unsafe
                 ? new Block(BlockSpecs.ChangeVarBy, GetUnsafeName(), value)
                 : new Block(BlockSpecs.ReplaceItemOfList, StackStart, Settings.StackIdentifier,
