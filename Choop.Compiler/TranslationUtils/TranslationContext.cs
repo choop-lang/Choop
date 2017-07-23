@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 
 namespace Choop.Compiler.TranslationUtils
@@ -29,6 +30,16 @@ namespace Choop.Compiler.TranslationUtils
         /// Gets the collection of compiler errors.
         /// </summary>
         public Collection<CompilerError> ErrorList { get; }
+
+        /// <summary>
+        /// Gets the collection of blocks to include before the current context.
+        /// </summary>
+        public Collection<Block> Before { get; } = new Collection<Block>();
+
+        /// <summary>
+        /// Gets the collection of blocks to include after the current context.
+        /// </summary>
+        public Collection<Block> After { get; } = new Collection<Block>();
 
         #endregion
 
