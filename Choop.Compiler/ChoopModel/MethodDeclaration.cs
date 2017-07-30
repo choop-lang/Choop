@@ -151,6 +151,12 @@ namespace Choop.Compiler.ChoopModel
         public string GetInternalName() =>
             Name + string.Join(" ", Params.Select(x => x.Type.ToInputNotation())) + BlockSpecs.InputNum;
 
+        /// <summary>
+        /// Returns the name of the variable used to temporarily store return output.
+        /// </summary>
+        /// <returns>The name of the variable used to temporarily store return output.</returns>
+        public string GetReturnVariableName() => $"@return: {Name}({Params.Count})";
+
         #endregion
     }
 }
