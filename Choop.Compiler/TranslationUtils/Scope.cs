@@ -14,7 +14,12 @@ namespace Choop.Compiler.TranslationUtils
         /// <summary>
         /// The next scope ID to use.
         /// </summary>
-        protected static int NextID = 1;
+        private static int _nextScopeID = 1;
+
+        /// <summary>
+        /// The next stak value ID to use.
+        /// </summary>
+        private static int _nextStackID = 1;
 
         #endregion
 
@@ -65,7 +70,7 @@ namespace Choop.Compiler.TranslationUtils
         public Scope(IHasBody method, bool @unsafe = false)
         {
             // Increment ID
-            ID = NextID++;
+            ID = _nextScopeID++;
 
             // Create stack segment
             StackValues = new StackSegment(this);
@@ -83,7 +88,7 @@ namespace Choop.Compiler.TranslationUtils
         public Scope(Scope parent, bool @unsafe = false)
         {
             // Increment ID
-            ID = NextID++;
+            ID = _nextScopeID++;
 
             // Register as child of parent
             Parent = parent;
@@ -120,6 +125,13 @@ namespace Choop.Compiler.TranslationUtils
             // Parent exists and recursion enabled, so search
             return Parent.Search(name);
         }
+
+        /// <summary>
+        /// Creates a <see cref="StackValue"/> instance with a unique name, to be used for a compiler generated variable.
+        /// </summary>
+        /// <param name="stackSpace">The number of items the value should take up on the stack.</param>
+        /// <returns>The created <see cref="StackValue"/>.</returns>
+        public StackValue CreateStackValue(int stackSpace = 1) => new StackValue("@" + _nextStackID++, DataType.Object, stackSpace);
 
         /// <summary>
         /// Adds a child scope to the collection of scopes.

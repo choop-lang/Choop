@@ -85,7 +85,7 @@ namespace Choop.Compiler.ChoopModel
             // TODO: Inline foreach
 
             // Create counter variable
-            StackValue internalCounter = new StackValue("@counter", DataType.Number);
+            StackValue internalCounter = context.CurrentScope.CreateStackValue();
             innerScope.StackValues.Add(internalCounter);
             output.AddRange(internalCounter.CreateDeclaration(1));
 

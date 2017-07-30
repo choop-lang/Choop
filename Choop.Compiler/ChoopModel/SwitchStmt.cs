@@ -63,7 +63,7 @@ namespace Choop.Compiler.ChoopModel
         public Block[] Translate(TranslationContext context)
         {
             // Create variable holder
-            StackValue variable = new StackValue("@expression", DataType.Object);
+            StackValue variable = context.CurrentScope.CreateStackValue();
             context.CurrentScope.StackValues.Add(variable);
             Block[] declaration = variable.CreateDeclaration(Variable.Translate(context));
 
