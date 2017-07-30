@@ -340,7 +340,7 @@ namespace Choop.Compiler
             ITerminalNode[] inlineTags = context.InlineTag();
             ITerminalNode[] atomicTags = context.AtomicTag();
             ITerminalNode[] unsafeTags = context.UnsafeTag();
-            bool hasReturn = context.Void != null;
+            bool hasReturn = context.Void == null;
             DataType type = context.Type.ToDataType();
 
             // Validate modifiers
