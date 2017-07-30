@@ -79,7 +79,66 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public object Translate(TranslationContext context)
         {
-            throw new NotImplementedException();
+            // Find method
+            MethodDeclaration customMethod = context.CurrentSprite.GetMethod(MethodName, Parameters.Count);
+
+            if (customMethod != null)
+            {
+                // Custom method found
+
+                // Ensure it returns a value
+                if (!customMethod.HasReturn)
+                {
+                    context.ErrorList.Add(new CompilerError($"Method '{MethodName}' does not return a value",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
+                    return null;
+                }
+
+                // TODO: inline
+
+                // TODO: Optimise to not need additional stack value (except for repeat until)
+
+                List<object> translatedParams = new List<object> {customMethod.GetInternalName()};
+                translatedParams.AddRange(Parameters.Select(x => x.Translate(context)));
+                translatedParams.Add(new Block(BlockSpecs.GetParameter, Settings.StackRefParam));
+
+                context.Before.Add(new Block(BlockSpecs.CustomMethodCall, translatedParams.ToArray()));
+                StackValue returnValue = context.CurrentScope.CreateStackValue();
+                context.Before.Add(returnValue.CreateVariableAssignment(
+                    new LookupExpression(customMethod.GetReturnVariableName(), FileName, ErrorToken)));
+
+                return returnValue.CreateVariableLookup();
+            }
+
+            // Custom method doesn't exist, so search inbuilt methods
+            if (BlockSpecs.Inbuilt.TryGetValue(MethodName, out MethodSignature inbuiltMethod))
+            {
+                // Inbuilt method found
+
+                // Check method is a reporter
+                if (!inbuiltMethod.IsReporter)
+                {
+                    context.ErrorList.Add(new CompilerError($"The inbuilt method '{MethodName}' does not return a value", ErrorType.Unspecified,
+                        ErrorToken, FileName));
+                    return new Block[0];
+                }
+
+                // Check parameter count is valid
+                if (Parameters.Count == inbuiltMethod.Inputs.Length)
+                    return new[]
+                        {new Block(inbuiltMethod.Name, Parameters.Select(x => x.Translate(context)).ToArray())};
+
+                // Parameter count not valid
+                context.ErrorList.Add(new CompilerError(
+                    $"Expected inputs '{string.Join("', '", inbuiltMethod.Inputs)}'", ErrorType.InvalidArgument,
+                    ErrorToken, FileName));
+                return new Block[0];
+            }
+
+            // Error - nethod not found
+            context.ErrorList.Add(new CompilerError($"Method '{MethodName}' is not defined", ErrorType.NotDefined,
+                ErrorToken, FileName));
+            return new Block(null);
         }
 
         /// <summary>
@@ -112,15 +171,6 @@ namespace Choop.Compiler.ChoopModel
             {
                 // Inbuilt method found
 
-                // Check parameter count is valid
-                if (Parameters.Count != inbuiltMethod.Inputs.Length)
-                {
-                    context.ErrorList.Add(new CompilerError(
-                        $"Expected inputs '{string.Join("', '", inbuiltMethod.Inputs)}'", ErrorType.InvalidArgument,
-                        ErrorToken, FileName));
-                    return new Block[0];
-                }
-
                 // Check method is not a reporter
                 if (inbuiltMethod.IsReporter)
                 {
@@ -129,8 +179,16 @@ namespace Choop.Compiler.ChoopModel
                     return new Block[0];
                 }
 
-                // Create block
-                return new[] {new Block(inbuiltMethod.Name, Parameters.Select(x => x.Translate(context)).ToArray())};
+                // Check parameter count is valid
+                if (Parameters.Count == inbuiltMethod.Inputs.Length)
+                    return new[]
+                        {new Block(inbuiltMethod.Name, Parameters.Select(x => x.Translate(context)).ToArray())};
+
+                // Error: Invalid parameters
+                context.ErrorList.Add(new CompilerError(
+                    $"Expected inputs '{string.Join("', '", inbuiltMethod.Inputs)}'", ErrorType.InvalidArgument,
+                    ErrorToken, FileName));
+                return new Block[0];
             }
 
             // Error - nethod not found
