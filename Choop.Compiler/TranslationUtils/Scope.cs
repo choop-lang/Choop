@@ -131,7 +131,12 @@ namespace Choop.Compiler.TranslationUtils
         /// </summary>
         /// <param name="stackSpace">The number of items the value should take up on the stack.</param>
         /// <returns>The created <see cref="StackValue"/>.</returns>
-        public StackValue CreateStackValue(int stackSpace = 1) => new StackValue("@" + _nextStackID++, DataType.Object, stackSpace);
+        public StackValue CreateStackValue(int stackSpace = 1)
+        {
+            StackValue value = new StackValue("@" + _nextStackID++, DataType.Object, stackSpace);
+            StackValues.Add(value);
+            return value;
+        }
 
         /// <summary>
         /// Adds a child scope to the collection of scopes.
