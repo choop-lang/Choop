@@ -12,6 +12,11 @@ namespace Choop.Compiler.TranslationUtils
         #region Properties
 
         /// <summary>
+        /// Gets the current block.
+        /// </summary>
+        public Block CurrentBlock { get; }
+
+        /// <summary>
         /// Gets the current active scope.
         /// </summary>
         public Scope CurrentScope { get; }
@@ -51,6 +56,7 @@ namespace Choop.Compiler.TranslationUtils
         /// <param name="errorList">The collection of compiler errors.</param>
         public TranslationContext(Collection<CompilerError> errorList)
         {
+            CurrentBlock = null;
             CurrentScope = null;
             CurrentSprite = null;
             Project = null;
@@ -64,6 +70,7 @@ namespace Choop.Compiler.TranslationUtils
         /// <param name="oldContext">The previous translation context.</param>
         public TranslationContext(Project project, TranslationContext oldContext)
         {
+            CurrentBlock = null;
             CurrentScope = null;
             CurrentSprite = null;
             Project = project;
@@ -77,6 +84,7 @@ namespace Choop.Compiler.TranslationUtils
         /// <param name="oldContext">The previous translation context.</param>
         public TranslationContext(SpriteDeclaration sprite, TranslationContext oldContext)
         {
+            CurrentBlock = null;
             CurrentScope = null;
             CurrentSprite = sprite;
             Project = oldContext.Project;
@@ -90,7 +98,22 @@ namespace Choop.Compiler.TranslationUtils
         /// <param name="oldContext">The previous translation context.</param>
         public TranslationContext(Scope scope, TranslationContext oldContext)
         {
+            CurrentBlock = null;
             CurrentScope = scope;
+            CurrentSprite = oldContext.CurrentSprite;
+            Project = oldContext.Project;
+            ErrorList = oldContext.ErrorList;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="TranslationContext"/> class.
+        /// </summary>
+        /// <param name="block">The current block.</param>
+        /// <param name="oldContext">The previous translation context.</param>
+        public TranslationContext(Block block, TranslationContext oldContext)
+        {
+            CurrentBlock = block;
+            CurrentScope = oldContext.CurrentScope;
             CurrentSprite = oldContext.CurrentSprite;
             Project = oldContext.Project;
             ErrorList = oldContext.ErrorList;
