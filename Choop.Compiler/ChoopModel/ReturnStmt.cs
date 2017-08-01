@@ -54,6 +54,9 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
+            if (Value == null)
+                return new[] {new Block(BlockSpecs.Stop, "this script")};
+
             return new[]
             {
                 new Block(BlockSpecs.SetVariableTo, ((MethodDeclaration)context.CurrentScope.Method).GetReturnVariableName(), Value.Translate(context)),
