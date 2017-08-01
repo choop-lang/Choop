@@ -116,7 +116,7 @@ namespace Choop.Compiler.ChoopModel
         private IExpression BuildCondition(Collection<IExpression> conditions, IExpression variable, int index = 0) =>
             index == conditions.Count - 1
                 ? new CompoundExpression(CompoundOperator.Equal, variable, conditions[index], FileName, ErrorToken)
-                : new CompoundExpression(CompoundOperator.And,
+                : new CompoundExpression(CompoundOperator.Or,
                     new CompoundExpression(CompoundOperator.Equal, variable, conditions[index], FileName, ErrorToken),
                     BuildCondition(conditions, variable, index + 1), FileName, ErrorToken);
 
