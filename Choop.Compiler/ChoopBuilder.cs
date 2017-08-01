@@ -417,7 +417,7 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create parameter declaration
-                ParamDeclaration param = new ParamDeclaration(name, type, FileName, context.Name, expression);
+                ParamDeclaration param = new ParamDeclaration(name, type, FileName, context.Name, expression.Literal);
 
                 method.Params.Add(param);
             }
