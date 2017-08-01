@@ -121,19 +121,18 @@ namespace Choop.Compiler.ChoopModel
                 {
                     context.ErrorList.Add(new CompilerError($"The inbuilt method '{MethodName}' does not return a value", ErrorType.Unspecified,
                         ErrorToken, FileName));
-                    return new Block[0];
+                    return new Block(null);
                 }
 
                 // Check parameter count is valid
                 if (Parameters.Count == inbuiltMethod.Inputs.Length)
-                    return new[]
-                        {new Block(inbuiltMethod.Name, Parameters.Select(x => x.Translate(context)).ToArray())};
+                    return new Block(inbuiltMethod.Name, Parameters.Select(x => x.Translate(context)).ToArray());
 
                 // Parameter count not valid
                 context.ErrorList.Add(new CompilerError(
                     $"Expected inputs '{string.Join("', '", inbuiltMethod.Inputs)}'", ErrorType.InvalidArgument,
                     ErrorToken, FileName));
-                return new Block[0];
+                return new Block(null);
             }
 
             // Error - nethod not found
