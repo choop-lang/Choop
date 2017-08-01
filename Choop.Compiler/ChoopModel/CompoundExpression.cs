@@ -77,7 +77,7 @@ namespace Choop.Compiler.ChoopModel
                     // TODO: negative inputs
                     return new Block(BlockSpecs.ComputeFunction, "e ^",
                         new Block(BlockSpecs.Times,
-                            new MethodCall("ln", FileName, ErrorToken, First).Translate(context),
+                            ((ICompilable<object>)new MethodCall("ln", FileName, ErrorToken, First)).Translate(context),
                             Second.Translate(context)));
                 case CompoundOperator.Multiply:
                     return new Block(BlockSpecs.Times, First.Translate(context), Second.Translate(context));
