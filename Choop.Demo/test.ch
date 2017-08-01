@@ -115,6 +115,7 @@ sprite MySprite {
 	}
 
 	void Test3(param1, string param2 = "test1") {
+		var simple = Test4(1);
 	}
 
 	atomic function Test4(param1, num param2 = 3, num param3 = -4e2) {
