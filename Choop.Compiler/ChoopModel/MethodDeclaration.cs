@@ -148,8 +148,8 @@ namespace Choop.Compiler.ChoopModel
         /// Returns the internal name of the method.
         /// </summary>
         /// <returns>The internal name of the method.</returns>
-        public string GetInternalName() =>
-            Name + string.Join(" ", Params.Select(x => x.Type.ToInputNotation())) + BlockSpecs.InputNum;
+        public string GetInternalName() => string.Concat(
+            Name, " ", string.Join(" ", Params.Select(x => x.Type.ToInputNotation())), " ", BlockSpecs.InputNum);
 
         /// <summary>
         /// Returns the name of the variable used to temporarily store return output.
