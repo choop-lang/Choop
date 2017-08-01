@@ -124,7 +124,7 @@ namespace Choop.Compiler.ChoopModel
         public MethodDeclaration GetMethod(string name, int @params) => Methods.FirstOrDefault(
             method => method.Name.Equals(name, Settings.IdentifierComparisonMode) &&
                       (@params == method.Params.Count ||
-                       @params < method.Params.Count && method.Params[@params + 1].IsOptional));
+                       @params < method.Params.Count && method.Params[@params].IsOptional));
 
         /// <summary>
         /// Gets a declaration that isn't a method with the specified name.
