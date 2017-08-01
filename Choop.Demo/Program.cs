@@ -12,7 +12,7 @@ namespace Choop.Demo
         /// <param name="args">The arguments supplied to the program.</param>
         private static void Main(string[] args)
         {
-            const string inputFile = @"testsimple.ch";
+            const string inputFile = @"test.ch";
             const string outputFile = @"Output/project.json";
 
             // Open file
@@ -30,22 +30,18 @@ namespace Choop.Demo
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Could not compile file:");
+
                     Console.ForegroundColor = ConsoleColor.Gray;
                     foreach (CompilerError error in compiler.CompilerErrors)
-                    {
                         Console.WriteLine(string.IsNullOrEmpty(error.TokenText)
                             ? $"Line {error.Line}:{error.Col}  {error.Message} ({error.FileName})"
                             : $"Line {error.Line}:{error.Col}..{error.StopIndex - error.StartIndex + error.Col}\t{error.Message} ({error.FileName})");
-                    }
                 }
                 else
                 {
                     // Compilation finished
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Successfully compiled!\r\n");
-
-                    Console.ForegroundColor = ConsoleColor.Gray;
-                    Console.WriteLine(compiler.ProjectJson.ToString());
 
                     compiler.Save(outputFile);
 
