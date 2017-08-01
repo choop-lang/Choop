@@ -104,8 +104,7 @@ namespace Choop.Compiler.ChoopModel
 
                 context.Before.Add(new Block(BlockSpecs.CustomMethodCall, translatedParams.ToArray()));
                 StackValue returnValue = context.CurrentScope.CreateStackValue();
-                context.Before.Add(returnValue.CreateVariableAssignment(
-                    new LookupExpression(customMethod.GetReturnVariableName(), FileName, ErrorToken)));
+                context.Before.Add(returnValue.CreateVariableAssignment(new Block(BlockSpecs.GetVariable, customMethod.GetReturnVariableName())));
 
                 return returnValue.CreateVariableLookup();
             }
