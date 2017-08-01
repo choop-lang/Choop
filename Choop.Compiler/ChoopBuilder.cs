@@ -1079,7 +1079,9 @@ namespace Choop.Compiler
 
             MethodCall methodCall = new MethodCall(context.Method.Text, FileName, context.Method);
 
-            while (_currentExpressions.Count > 0)
+            int paramCount = context.expression().Length;
+
+            for (int i = 0; i < paramCount; i++)
                 methodCall.Parameters.Insert(0, _currentExpressions.Pop());
 
             _currentExpressions.Push(methodCall);
