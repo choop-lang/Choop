@@ -100,6 +100,8 @@ namespace Choop.Compiler.ChoopModel
 
                 List<object> translatedParams = new List<object> {customMethod.GetInternalName()};
                 translatedParams.AddRange(Parameters.Select(x => x.Translate(context)));
+                for (int i = Parameters.Count; i < customMethod.Params.Count; i++)
+                    translatedParams.Add(customMethod.Params[i].Default);
                 translatedParams.Add(new Block(BlockSpecs.GetParameter, Settings.StackRefParam));
 
                 context.Before.Add(new Block(BlockSpecs.CustomMethodCall, translatedParams.ToArray()));
@@ -159,6 +161,8 @@ namespace Choop.Compiler.ChoopModel
 
                 List<object> translatedParams = new List<object> { customMethod.GetInternalName() };
                 translatedParams.AddRange(Parameters.Select(x => x.Translate(context)));
+                for (int i = Parameters.Count; i < customMethod.Params.Count; i++)
+                    translatedParams.Add(customMethod.Params[i].Default);
                 translatedParams.Add(new Block(BlockSpecs.GetParameter, Settings.StackRefParam));
 
                 return new[]
