@@ -56,11 +56,12 @@ namespace Choop.Compiler.ChoopModel
         public Block[] Translate(TranslationContext context)
         {
             if (Value == null)
-                return new[] {new Block(BlockSpecs.Stop, "this script")};
+                return context.CurrentScope.CreateCleanUp().Concat(new[] {new Block(BlockSpecs.Stop, "this script")}).ToArray();
 
             return new BlockBuilder(BlockSpecs.SetVariableTo, context)
-                .AddParam(((MethodDeclaration) context.CurrentScope.Method).GetReturnVariableName()).AddParam(Value)
-                .Create().Concat(context.CurrentScope.CreateCleanUp()).Concat(new[] { new Block(BlockSpecs.Stop, "this script") }).ToArray();
+                .AddParam(((MethodDeclaration) context.CurrentScope.Method).GetReturnVariableName()).AddParam(Value).Create()
+                .Concat(context.CurrentScope.CreateCleanUp())
+                .Concat(new[] {new Block(BlockSpecs.Stop, "this script")}).ToArray();
         }
 
         #endregion
