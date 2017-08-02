@@ -60,7 +60,7 @@ namespace Choop.Compiler.ChoopModel
 
             return new BlockBuilder(BlockSpecs.SetVariableTo, context)
                 .AddParam(((MethodDeclaration) context.CurrentScope.Method).GetReturnVariableName()).AddParam(Value)
-                .Create().Concat(new[] {new Block(BlockSpecs.Stop, "this script")}).ToArray();
+                .Create().Concat(context.CurrentScope.CreateCleanUp()).Concat(new[] { new Block(BlockSpecs.Stop, "this script") }).ToArray();
         }
 
         #endregion
