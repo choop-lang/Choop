@@ -84,7 +84,7 @@ namespace Choop.Compiler.ChoopModel
         public ScriptTuple[] Translate(TranslationContext context)
         {
             // Create event scope
-            Scope newScope = new Scope(this);
+            Scope newScope = new Scope(this, Unsafe);
 
             string internalName = $"{newScope.ID}: {Name} %n"; // Internal name used for custom block
 
