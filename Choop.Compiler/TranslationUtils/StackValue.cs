@@ -129,7 +129,9 @@ namespace Choop.Compiler.TranslationUtils
         {
             return Scope.Unsafe
                 ? new Block(BlockSpecs.GetVariable, GetUnsafeName())
-                : new Block(BlockSpecs.GetItemOfList, StackStart, Settings.StackIdentifier);
+                : new Block(BlockSpecs.GetItemOfList,
+                    new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart),
+                    Settings.StackIdentifier);
         }
 
         /// <summary>
@@ -141,7 +143,9 @@ namespace Choop.Compiler.TranslationUtils
         {
             return Scope.Unsafe
                 ? new Block(BlockSpecs.GetItemOfList, index, GetUnsafeName())
-                : new Block(BlockSpecs.GetItemOfList, new Block(BlockSpecs.Add, StackStart, index),
+                : new Block(BlockSpecs.GetItemOfList,
+                    new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier,
+                        new Block(BlockSpecs.Add, StackStart, index)),
                     Settings.StackIdentifier);
         }
 
@@ -154,7 +158,9 @@ namespace Choop.Compiler.TranslationUtils
         {
             return Scope.Unsafe
                 ? new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), value)
-                : new Block(BlockSpecs.ReplaceItemOfList, StackStart, Settings.StackIdentifier, value);
+                : new Block(BlockSpecs.ReplaceItemOfList,
+                    new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart), Settings.StackIdentifier,
+                    value);
         }
 
         /// <summary>
@@ -167,7 +173,8 @@ namespace Choop.Compiler.TranslationUtils
             // TODO: Optimise for when value is negative
             return Scope.Unsafe
                 ? new Block(BlockSpecs.ChangeVarBy, GetUnsafeName(), value)
-                : new Block(BlockSpecs.ReplaceItemOfList, StackStart, Settings.StackIdentifier,
+                : new Block(BlockSpecs.ReplaceItemOfList,
+                    new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart), Settings.StackIdentifier,
                     new Block(BlockSpecs.Add, CreateVariableLookup(), value));
         }
 
@@ -181,7 +188,8 @@ namespace Choop.Compiler.TranslationUtils
         {
             return Scope.Unsafe
                 ? new Block(BlockSpecs.ReplaceItemOfList, index, GetUnsafeName(), value)
-                : new Block(BlockSpecs.ReplaceItemOfList, new Block(BlockSpecs.Add, StackStart, index),
+                : new Block(BlockSpecs.ReplaceItemOfList,
+                    new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, new Block(BlockSpecs.Add, StackStart, index)),
                     Settings.StackIdentifier, value);
         }
 

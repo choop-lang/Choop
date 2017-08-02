@@ -47,7 +47,7 @@ namespace Choop.Compiler.TranslationUtils
         /// <summary>
         /// The identifier to reference the stack offset.
         /// </summary>
-        public static readonly Block StackOffsetIdentifier = new Block(BlockSpecs.GetParameter, StackRefParam);
+        public static readonly Block StackOffsetIdentifier = new Block(BlockSpecs.GetParameter, StackOffsetParam);
 
         #endregion
     }
