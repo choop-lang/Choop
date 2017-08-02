@@ -95,6 +95,7 @@ namespace Choop.Compiler.ChoopModel
                 for (int i = Parameters.Count; i < customMethod.Params.Count; i++)
                     translatedParams.Add(customMethod.Params[i].Default);
                 translatedParams.Add(new Block(BlockSpecs.GetParameter, Settings.StackRefParam));
+                translatedParams.Add(new Block(BlockSpecs.LengthOfList, Settings.StackIdentifier));
 
                 return new[]
                     {new Block(BlockSpecs.CustomMethodCall, translatedParams.ToArray())};
@@ -161,6 +162,7 @@ namespace Choop.Compiler.ChoopModel
                 for (int i = Parameters.Count; i < customMethod.Params.Count; i++)
                     translatedParams.Add(customMethod.Params[i].Default);
                 translatedParams.Add(new Block(BlockSpecs.GetParameter, Settings.StackRefParam));
+                translatedParams.Add(new Block(BlockSpecs.LengthOfList, Settings.StackIdentifier));
 
                 context.Before.Add(new Block(BlockSpecs.CustomMethodCall, translatedParams.ToArray()));
                 StackValue returnValue = context.CurrentScope.CreateStackValue();

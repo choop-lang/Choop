@@ -86,7 +86,7 @@ namespace Choop.Compiler.ChoopModel
             // Create event scope
             Scope newScope = new Scope(this, Unsafe);
 
-            string internalName = $"{newScope.ID}: {Name} %n"; // Internal name used for custom block
+            string internalName = $"{newScope.ID}: {Name} %n %n"; // Internal name used for custom block
 
             ScriptTuple eventHandler = new ScriptTuple();
 
@@ -134,7 +134,7 @@ namespace Choop.Compiler.ChoopModel
                 new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar)));
             // Call internal method
             eventHandler.Blocks.Add(new Block(BlockSpecs.CustomMethodCall, internalName,
-                new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar)));
+                new Block(BlockSpecs.GetVariable, Settings.CurrentStackVar), 0));
             // Decrement CurrentStack
             eventHandler.Blocks.Add(new Block(BlockSpecs.ChangeVarBy, Settings.CurrentStackVar, -1));
 
@@ -147,6 +147,8 @@ namespace Choop.Compiler.ChoopModel
                 Atomic = Atomic
             };
             definition.InputNames.Add(Settings.StackRefParam);
+            definition.DefaultValues.Add(DataType.Number.GetDefault());
+            definition.InputNames.Add(Settings.StackOffsetParam);
             definition.DefaultValues.Add(DataType.Number.GetDefault());
 
             internalMethod.Blocks.Add(definition);

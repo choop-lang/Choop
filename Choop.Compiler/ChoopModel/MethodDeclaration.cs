@@ -114,8 +114,10 @@ namespace Choop.Compiler.ChoopModel
                 definition.DefaultValues.Add(paramDeclaration.Type.GetDefault());
             }
 
-            // Add hidden scope parameter
+            // Add hidden stack parameters
             definition.InputNames.Add(Settings.StackRefParam);
+            definition.DefaultValues.Add(0);
+            definition.InputNames.Add(Settings.StackOffsetParam);
             definition.DefaultValues.Add(0);
 
             // Create script tuple
@@ -149,7 +151,7 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <returns>The internal name of the method.</returns>
         public string GetInternalName() => string.Concat(
-            Name, " ", string.Join(" ", Params.Select(x => x.Type.ToInputNotation())), " ", BlockSpecs.InputNum);
+            Name, " ", string.Join(" ", Params.Select(x => x.Type.ToInputNotation())), " ", BlockSpecs.InputNum, " ", BlockSpecs.InputNum);
 
         /// <summary>
         /// Returns the name of the variable used to temporarily store return output.

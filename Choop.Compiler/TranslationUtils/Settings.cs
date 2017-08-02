@@ -26,6 +26,11 @@ namespace Choop.Compiler.TranslationUtils
         public const string StackRefParam = "@stackRef";
 
         /// <summary>
+        /// Gets the name of the stack offset parameter.
+        /// </summary>
+        public const string StackOffsetParam = "@stackOffset";
+
+        /// <summary>
         /// Gets the name of the current stack variable.
         /// </summary>
         public const string CurrentStackVar = "@CurrentStack";
@@ -38,6 +43,11 @@ namespace Choop.Compiler.TranslationUtils
         /// The identifier to reference the scope stack.
         /// </summary>
         public static readonly Block StackIdentifier = new Block(BlockSpecs.GetParameter, StackRefParam);
+
+        /// <summary>
+        /// The identifier to reference the stack offset.
+        /// </summary>
+        public static readonly Block StackOffsetIdentifier = new Block(BlockSpecs.GetParameter, StackRefParam);
 
         #endregion
     }
