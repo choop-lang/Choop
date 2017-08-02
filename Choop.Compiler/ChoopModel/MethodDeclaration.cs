@@ -133,6 +133,12 @@ namespace Choop.Compiler.ChoopModel
                 foreach (Block block in statement.Translate(newContext))
                     script.Blocks.Add(block);
 
+            // Clean up scope (if necessary)
+            IStatement lastStatement = Statements.LastOrDefault();
+            if (!(lastStatement is ReturnStmt || lastStatement is ForeverLoop))
+                foreach (Block block in scope.CreateCleanUp())
+                    script.Blocks.Add(block);
+
             return script;
         }
 

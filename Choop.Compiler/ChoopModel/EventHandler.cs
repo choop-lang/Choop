@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
@@ -157,6 +158,12 @@ namespace Choop.Compiler.ChoopModel
             TranslationContext newContext = new TranslationContext(newScope, context);
             foreach (IStatement statement in Statements)
                 foreach (Block block in statement.Translate(newContext))
+                    internalMethod.Blocks.Add(block);
+
+            // Clean up scope (if necessary)
+            IStatement lastStatement = Statements.LastOrDefault();
+            if (!(lastStatement is ReturnStmt || lastStatement is ForeverLoop))
+                foreach (Block block in newScope.CreateCleanUp())
                     internalMethod.Blocks.Add(block);
 
             // Return results
