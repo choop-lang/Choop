@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 
@@ -145,8 +146,7 @@ namespace Choop.Compiler.TranslationUtils
         /// <returns>The code to clean up the stack at the end of a scope.</returns>
         public IEnumerable<Block> CreateCleanUp()
         {
-            for (int i = 0; i < StackValues.Count; i++)
-                yield return new Block(BlockSpecs.DeleteItemOfList, "last", Settings.StackIdentifier);
+            return StackValues.SelectMany(stackValue => stackValue.CreateDestruction());
         }
 
         /// <summary>
