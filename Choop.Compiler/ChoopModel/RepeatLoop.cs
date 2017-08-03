@@ -81,7 +81,7 @@ namespace Choop.Compiler.ChoopModel
             };
 
             // Inline loop (assume already validated)
-            int repetitions = int.Parse((string)Iterations.Translate(context));
+            int repetitions = (int)Iterations.Translate(context);
 
             List<Block> inlinedLoopContents = new List<Block>();
 

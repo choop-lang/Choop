@@ -94,12 +94,12 @@ namespace Choop.Compiler.ChoopModel
                 case CompoundOperator.LShift:
                     return new Block(BlockSpecs.Times, First.Translate(context),
                         new CompoundExpression(CompoundOperator.Pow,
-                            new TerminalExpression("2", DataType.Number, FileName, ErrorToken),
+                            new TerminalExpression("2", TerminalType.Int, FileName, ErrorToken),
                             Second, FileName, ErrorToken).Translate(context));
                 case CompoundOperator.RShift:
                     return new Block(BlockSpecs.Divide, First.Translate(context),
                         new CompoundExpression(CompoundOperator.Pow,
-                            new TerminalExpression("2", DataType.Number, FileName, ErrorToken),
+                            new TerminalExpression("2", TerminalType.Int, FileName, ErrorToken),
                             Second, FileName, ErrorToken).Translate(context));
                 case CompoundOperator.LessThan:
                     return new Block(BlockSpecs.LessThan, First.Translate(context), Second.Translate(context));

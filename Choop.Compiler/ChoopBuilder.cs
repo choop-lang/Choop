@@ -264,7 +264,7 @@ namespace Choop.Compiler
                 {
                     for (int i = 0; i < bounds; i++)
                         arrayDeclaration.Value.Add(
-                            new TerminalExpression("", DataType.String, FileName, context.Name));
+                            new TerminalExpression("\"\"", TerminalType.String, FileName, context.Name));
                 }
             }
             else
@@ -313,7 +313,7 @@ namespace Choop.Compiler
                 {
                     for (int i = 0; i < bounds; i++)
                         listDeclaration.Value.Add(
-                            new TerminalExpression("", DataType.String, FileName, context.Name));
+                            new TerminalExpression("\"\"", TerminalType.String, FileName, context.Name));
                 }
             }
             else
@@ -572,7 +572,7 @@ namespace Choop.Compiler
                 {
                     for (int i = 0; i < bounds; i++)
                         arrayDeclaration.Value.Add(
-                            new TerminalExpression("", DataType.String, FileName, context.Name));
+                            new TerminalExpression("\"\"", TerminalType.String, FileName, context.Name));
                 }
             }
             else
@@ -835,7 +835,8 @@ namespace Choop.Compiler
                 // Step value was specified
                 step = _currentExpressions.Pop() as TerminalExpression;
                 if (step == null) throw new InvalidOperationException();
-                if (step.LiteralType != DataType.Number)
+                if (!(step.LiteralType == TerminalType.Int || step.LiteralType == TerminalType.Decimal ||
+                      step.LiteralType == TerminalType.Hex || step.LiteralType == TerminalType.Scientific))
                     _compilerErrors.Add(new CompilerError("Step value must be a number", ErrorType.InvalidArgument,
                         context.Step.start, FileName));
             }
@@ -949,7 +950,7 @@ namespace Choop.Compiler
         {
             base.EnterUConstantTrue(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean, FileName,
+            _currentExpressions.Push(new TerminalExpression(context.GetText(), TerminalType.Bool, FileName,
                 context.Start));
         }
 
@@ -957,7 +958,7 @@ namespace Choop.Compiler
         {
             base.EnterUConstantFalse(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean, FileName,
+            _currentExpressions.Push(new TerminalExpression(context.GetText(), TerminalType.Bool, FileName,
                 context.Start));
         }
 
@@ -966,7 +967,7 @@ namespace Choop.Compiler
             base.EnterUConstantString(context);
 
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.String, FileName, context.Start));
+                new TerminalExpression(context.GetText(), TerminalType.String, FileName, context.Start));
         }
 
         public override void EnterUConstantInt(ChoopParser.UConstantIntContext context)
@@ -974,7 +975,7 @@ namespace Choop.Compiler
             base.EnterUConstantInt(context);
 
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
+                new TerminalExpression(context.GetText(), TerminalType.Int, FileName, context.Start));
         }
 
         public override void EnterUConstantDec(ChoopParser.UConstantDecContext context)
@@ -982,7 +983,7 @@ namespace Choop.Compiler
             base.EnterUConstantDec(context);
 
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
+                new TerminalExpression(context.GetText(), TerminalType.Decimal, FileName, context.Start));
         }
 
         public override void EnterUConstantHex(ChoopParser.UConstantHexContext context)
@@ -990,7 +991,7 @@ namespace Choop.Compiler
             base.EnterUConstantHex(context);
 
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
+                new TerminalExpression(context.GetText(), TerminalType.Hex, FileName, context.Start));
         }
 
         public override void EnterUConstantSci(ChoopParser.UConstantSciContext context)
@@ -998,7 +999,7 @@ namespace Choop.Compiler
             base.EnterUConstantSci(context);
 
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
+                new TerminalExpression(context.GetText(), TerminalType.Scientific, FileName, context.Start));
         }
 
         #endregion
@@ -1009,7 +1010,7 @@ namespace Choop.Compiler
         {
             base.EnterConstantTrue(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean, FileName,
+            _currentExpressions.Push(new TerminalExpression(context.GetText(), TerminalType.Bool, FileName,
                 context.Start));
         }
 
@@ -1017,7 +1018,7 @@ namespace Choop.Compiler
         {
             base.EnterConstantFalse(context);
 
-            _currentExpressions.Push(new TerminalExpression(context.GetText(), DataType.Boolean, FileName,
+            _currentExpressions.Push(new TerminalExpression(context.GetText(), TerminalType.Bool, FileName,
                 context.Start));
         }
 
@@ -1025,11 +1026,8 @@ namespace Choop.Compiler
         {
             base.EnterConstantString(context);
 
-            string rawString = context.GetText();
-
-            _currentExpressions.Push(
-                new TerminalExpression(rawString.Substring(1, rawString.Length - 2), DataType.String, FileName,
-                    context.Start));
+            _currentExpressions.Push(new TerminalExpression(context.GetText(), TerminalType.String, FileName,
+                context.Start));
         }
 
         public override void EnterConstantInt(ChoopParser.ConstantIntContext context)
@@ -1037,7 +1035,7 @@ namespace Choop.Compiler
             base.EnterConstantInt(context);
 
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
+                new TerminalExpression(context.GetText(), TerminalType.Int, FileName, context.Start));
         }
 
         public override void EnterConstantDec(ChoopParser.ConstantDecContext context)
@@ -1045,7 +1043,7 @@ namespace Choop.Compiler
             base.EnterConstantDec(context);
 
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
+                new TerminalExpression(context.GetText(), TerminalType.Decimal, FileName, context.Start));
         }
 
         public override void EnterConstantHex(ChoopParser.ConstantHexContext context)
@@ -1053,7 +1051,7 @@ namespace Choop.Compiler
             base.EnterConstantHex(context);
 
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
+                new TerminalExpression(context.GetText(), TerminalType.Hex, FileName, context.Start));
         }
 
         public override void EnterConstantSci(ChoopParser.ConstantSciContext context)
@@ -1061,7 +1059,7 @@ namespace Choop.Compiler
             base.EnterConstantSci(context);
 
             _currentExpressions.Push(
-                new TerminalExpression(context.GetText(), DataType.Number, FileName, context.Start));
+                new TerminalExpression(context.GetText(), TerminalType.Scientific, FileName, context.Start));
         }
 
         #endregion

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Antlr4.Runtime;
 using Choop.Compiler.TranslationUtils;
 using Newtonsoft.Json.Linq;
@@ -20,7 +21,7 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the data type of the literal.
         /// </summary>
-        public DataType LiteralType { get; }
+        public TerminalType LiteralType { get; }
 
         /// <summary>
         /// Gets the token to report any compiler errors to.
@@ -43,7 +44,7 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="literalType">The data type of the literal value.</param>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="errorToken">The token to report any compiler errors to.</param>
-        public TerminalExpression(string literal, DataType literalType, string fileName, IToken errorToken)
+        public TerminalExpression(string literal, TerminalType literalType, string fileName, IToken errorToken)
         {
             Literal = literal;
             LiteralType = literalType;
@@ -63,13 +64,25 @@ namespace Choop.Compiler.ChoopModel
         {
             switch (LiteralType)
             {
-                case DataType.Boolean:
+                case TerminalType.Bool:
                     return bool.Parse(Literal);
-                case DataType.String:
+
+                case TerminalType.String:
                     return JToken.Parse(Literal).ToString();
-                case DataType.Number:
-                    // Todo
-                    return Literal;
+
+                case TerminalType.Int:
+                    return int.Parse(Literal);
+
+                case TerminalType.Decimal:
+                    return decimal.Parse(Literal);
+
+                case TerminalType.Hex:
+                    return int.Parse(Literal.Substring(2), NumberStyles.AllowHexSpecifier);
+
+                case TerminalType.Scientific:
+                    return decimal.Parse(Literal,
+                        NumberStyles.AllowLeadingSign | NumberStyles.AllowDecimalPoint | NumberStyles.AllowExponent);
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }

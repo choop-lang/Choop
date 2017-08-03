@@ -102,12 +102,12 @@ namespace Choop.Compiler.ChoopModel
                 case AssignOperator.PlusPlus:
                     value = new CompoundExpression(CompoundOperator.Plus,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
-                        new TerminalExpression("1", DataType.Number, FileName, ErrorToken), FileName, ErrorToken);
+                        new TerminalExpression("1", TerminalType.Int, FileName, ErrorToken), FileName, ErrorToken);
                     break;
                 case AssignOperator.MinusMinus:
                     value = new CompoundExpression(CompoundOperator.Minus,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
-                        new TerminalExpression("1", DataType.Number, FileName, ErrorToken), FileName, ErrorToken);
+                        new TerminalExpression("1", TerminalType.Int, FileName, ErrorToken), FileName, ErrorToken);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
