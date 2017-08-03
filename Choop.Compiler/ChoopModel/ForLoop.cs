@@ -121,7 +121,7 @@ namespace Choop.Compiler.ChoopModel
                     FileName,
                     ErrorToken
                 ).Translate(newContext), loopContents.ToArray()));
-            output.AddRange(counter.CreateDestruction());
+            output.AddRange(newScope.CreateCleanUp());
 
             return output.ToArray();
         }
