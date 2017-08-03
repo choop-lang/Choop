@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
@@ -75,13 +74,25 @@ namespace Choop.Compiler.ChoopModel
             foreach (IStatement statement in Statements)
                 loopContents.AddRange(statement.Translate(newContext));
 
-            if (!Inline) return new[]
-            {
-                new Block(BlockSpecs.Repeat, Iterations.Translate(context), loopContents.ToArray())
-            };
+            if (!Inline)
+                return new[]
+                {
+                    new Block(BlockSpecs.Repeat, Iterations.Translate(context), loopContents.ToArray())
+                };
 
-            // Inline loop (assume already validated)
-            int repetitions = (int)Iterations.Translate(context);
+            TerminalExpression tIterations = Iterations as TerminalExpression;
+            if (tIterations == null || !(tIterations.LiteralType == TerminalType.Int ||
+                                         tIterations.LiteralType == TerminalType.Decimal ||
+                                         tIterations.LiteralType == TerminalType.Hex ||
+                                         tIterations.LiteralType == TerminalType.Scientific))
+            {
+                context.ErrorList.Add(new CompilerError("Loop cannot be inlined", ErrorType.InvalidArgument, ErrorToken,
+                    FileName));
+                return new Block[0];
+            }
+
+            // Inline loop
+            int repetitions = (int) tIterations.Translate(context);
 
             List<Block> inlinedLoopContents = new List<Block>();
 
