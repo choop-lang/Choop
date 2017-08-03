@@ -803,14 +803,6 @@ namespace Choop.Compiler
 
             IExpression expression = _currentExpressions.Pop();
 
-            if (context.Inline != null && !(expression is TerminalExpression))
-            {
-                // Loop cannot be inlined
-                _compilerErrors.Add(new CompilerError("Loop cannot be inlined",
-                    ErrorType.InvalidArgument, context.Inline, FileName));
-                return;
-            }
-
             RepeatLoop loop = new RepeatLoop(context.Inline != null, expression, FileName, context.Start);
             _currentBlocks.Peek().Statements.Add(loop);
             _currentBlocks.Push(loop);
