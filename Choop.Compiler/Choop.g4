@@ -131,8 +131,7 @@ constant
     : ConstTrue     #constantTrue
     | ConstFalse    #constantFalse
     | StringLiteral #constantString
-    | OpMinus?
-      HexNumber     #constantHex
+    | HexNumber     #constantHex
     | OpMinus?
       USciNumber    #constantSci
     | OpMinus?
