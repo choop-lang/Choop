@@ -965,11 +965,8 @@ namespace Choop.Compiler
         {
             base.EnterUConstantString(context);
 
-            string rawString = context.GetText();
-
             _currentExpressions.Push(
-                new TerminalExpression(rawString.Substring(1, rawString.Length - 2), DataType.String, FileName,
-                    context.Start));
+                new TerminalExpression(context.GetText(), DataType.String, FileName, context.Start));
         }
 
         public override void EnterUConstantInt(ChoopParser.UConstantIntContext context)

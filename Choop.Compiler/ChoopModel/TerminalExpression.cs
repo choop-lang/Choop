@@ -1,5 +1,7 @@
-﻿using Antlr4.Runtime;
+﻿using System;
+using Antlr4.Runtime;
 using Choop.Compiler.TranslationUtils;
+using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -54,13 +56,30 @@ namespace Choop.Compiler.ChoopModel
         #region Methods
 
         /// <summary>
+        /// Parses the literal into an object.
+        /// </summary>
+        /// <returns>The internal representation of the literal.</returns>
+        public object Parse()
+        {
+            switch (LiteralType)
+            {
+                case DataType.Boolean:
+                    return bool.Parse(Literal);
+                case DataType.String:
+                    return JToken.Parse(Literal).ToString();
+                case DataType.Number:
+                    // Todo
+                    return Literal;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public object Translate(TranslationContext context)
-        {
-            return Literal;
-        }
+        public object Translate(TranslationContext context) => Parse();
 
         #endregion
     }
