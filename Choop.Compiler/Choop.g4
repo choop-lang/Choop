@@ -204,10 +204,16 @@ scopeBody
     : BraceOpen
       statement*
       BraceClose
+	| stmtNoScope
     ;
 
 statement
-    : stmtNoTerminator
+    : stmtNoScope		  #stmtNoScopeDecl
+    | scopeBody           #stmtScope
+    ;
+
+stmtNoScope
+	: stmtNoTerminator
       Terminator          #stmtDefault
     | ifStmt              #stmtIf
     | switchStmt          #stmtSwitch
@@ -216,8 +222,7 @@ statement
     | foreachLoop         #stmtForEach
     | foreverLoop         #stmtForever
     | whileLoop           #stmtWhile
-    | scopeBody           #stmtScope
-    ;
+	;
 
 stmtNoTerminator
     : varDeclaration      #stmtVarDecl
