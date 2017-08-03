@@ -54,10 +54,13 @@ namespace Choop.Compiler.ChoopModel
         public Block[] Translate(TranslationContext context)
         {
             List<Block> blocks = new List<Block>();
-            TranslationContext newContext = new TranslationContext(new Scope(context.CurrentScope), context);
+            Scope newScope = new Scope(context.CurrentScope);
+            TranslationContext newContext = new TranslationContext(newScope, context);
 
             foreach (IStatement statement in Statements)
                 blocks.AddRange(statement.Translate(newContext));
+
+            blocks.AddRange(newScope.CreateCleanUp());
 
             return new[] {new Block(BlockSpecs.Forever, new object[] {blocks.ToArray()})};
         }
