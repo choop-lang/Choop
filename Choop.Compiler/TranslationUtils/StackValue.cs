@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 
@@ -91,6 +92,38 @@ namespace Choop.Compiler.TranslationUtils
         /// <summary>
         /// Creates the declaration for the <see cref="StackValue"/>.
         /// </summary>
+        /// <param name="context">The context for translating the expressions.</param>
+        /// <param name="initalValues">The initial value(s) for the <see cref="StackValue"/></param>
+        /// <returns>The declaration for the <see cref="StackValue"/>.</returns>
+        public Block[] CreateDeclaration(TranslationContext context, params IExpression[] initalValues)
+        {
+            // Validate inital values
+            if (initalValues.Length != StackSpace)
+                throw new ArgumentException("Length of initial values does not match length of datum");
+
+            // Use stack
+            if (!Scope.Unsafe)
+                return initalValues.SelectMany(x => new BlockBuilder(BlockSpecs.AddToList, context)
+                    .AddParam(initalValues).AddParam(Settings.StackIdentifier).Create()).ToArray();
+
+            // Unsafe variable
+            if (StackSpace == 1)
+            {
+                // TODO: include var def in json
+                //context.CurrentSprite.Variables.Add(new GlobalVarDeclaration(GetUnsafeName(), Type, "", null, null));
+                return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(GetUnsafeName()).AddParam(initalValues[0]).Create().ToArray();
+            }
+
+            // Unsafe list
+            // TODO: include list def in json
+            //context.CurrentSprite.Lists.Add(new GlobalListDeclaration(GetUnsafeName(), Type, true, null, null));
+            return initalValues.SelectMany((x, i) => new BlockBuilder(BlockSpecs.ReplaceItemOfList, context).AddParam(i)
+                .AddParam(GetUnsafeName()).AddParam(x).Create()).ToArray();
+        }
+
+        /// <summary>
+        /// Creates the declaration for the <see cref="StackValue"/>.
+        /// </summary>
         /// <param name="initalValues">The initial value(s) for the <see cref="StackValue"/></param>
         /// <returns>The declaration for the <see cref="StackValue"/>.</returns>
         public Block[] CreateDeclaration(params object[] initalValues)
@@ -102,7 +135,7 @@ namespace Choop.Compiler.TranslationUtils
             {
                 // Variable
                 if (StackSpace == 1)
-                    return new[] {new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), initalValues[0])};
+                    return new[] { new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), initalValues[0]) };
 
                 // List
                 Block[] blocks = new Block[StackSpace + 1];
