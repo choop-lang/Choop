@@ -64,7 +64,7 @@ namespace Choop.Compiler.ChoopModel
         {
             // Create variable holder
             StackValue variable = context.CurrentScope.CreateStackValue();
-            Block[] declaration = variable.CreateDeclaration(Variable.Translate(context));
+            Block[] declaration = variable.CreateDeclaration(context, Variable);
 
             // Translate main switch
             return declaration.Concat(BuildIfElse(context, new LookupExpression(variable, FileName, ErrorToken), 0)).ToArray();
