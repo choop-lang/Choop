@@ -57,7 +57,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="testsimple.ch">
+    <None Include="test-fibonacci.ch">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="test.ch">
