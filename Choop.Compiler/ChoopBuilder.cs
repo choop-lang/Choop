@@ -916,7 +916,7 @@ namespace Choop.Compiler
         {
             base.EnterStmtScope(context);
 
-            ScopeDeclaration scope = new ScopeDeclaration(FileName, context.Start);
+            ScopeDeclaration scope = new ScopeDeclaration(context.Unsafe != null, FileName, context.Start);
             _currentBlocks.Peek().Statements.Add(scope);
             _currentBlocks.Push(scope);
         }

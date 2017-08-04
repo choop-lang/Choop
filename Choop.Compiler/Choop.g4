@@ -207,8 +207,8 @@ scopeBody
     ;
 
 statement
-    : stmtNoScope		  #stmtNoScopeDecl
-    | scopeBody           #stmtScope
+    : stmtNoScope
+    | stmtScope
     ;
 
 stmtNoScope
@@ -455,6 +455,11 @@ whileHead
       BracketOpen
       expression
       BracketClose
+	;
+
+stmtScope
+	: Unsafe = UnsafeTag?
+	  scopeBody
 	;
 
 uconstant
