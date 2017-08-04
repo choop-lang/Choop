@@ -96,7 +96,7 @@ namespace Choop.Compiler
         /// <param name="token">The token that caused the compiler error.</param>
         /// <param name="fileName">The name of the file currently being compiled.</param>
         internal CompilerError(string message, ErrorType type, IToken token, string fileName)
-            : this(message, type, token.Column, token.Line, token.StartIndex, token.StopIndex, token.Text, fileName)
+            : this(message, type, token.Line, token.Column, token.StartIndex, token.StopIndex, token.Text, fileName)
         {
         }
 
