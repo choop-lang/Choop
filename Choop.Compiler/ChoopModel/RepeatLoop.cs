@@ -3,6 +3,7 @@ using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -75,10 +76,7 @@ namespace Choop.Compiler.ChoopModel
                 loopContents.AddRange(statement.Translate(newContext));
 
             if (!Inline)
-                return new[]
-                {
-                    new Block(BlockSpecs.Repeat, Iterations.Translate(context), loopContents.ToArray())
-                };
+                return new BlockBuilder(BlockSpecs.Repeat, context).AddParam(Iterations).AddParam(loopContents.ToArray()).Create().ToArray();
 
             TerminalExpression tIterations = Iterations as TerminalExpression;
             if (tIterations == null || !(tIterations.LiteralType == TerminalType.Int ||
