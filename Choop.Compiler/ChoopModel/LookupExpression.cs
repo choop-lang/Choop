@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;

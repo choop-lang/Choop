@@ -167,7 +167,7 @@ namespace Choop.Compiler.TranslationUtils
         /// <summary>
         /// Represents the mapping from Choop methods to inbuilt common Scratch blocks.
         /// </summary>
-        public static readonly Dictionary<string, MethodSignature> Inbuilt = new Dictionary<string, MethodSignature>()
+        public static readonly Dictionary<string, MethodSignature> Inbuilt = new Dictionary<string, MethodSignature>
         {
             // Events
             {"Broadcast", new MethodSignature(Broadcast, false, "message")},
