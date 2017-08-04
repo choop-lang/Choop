@@ -85,7 +85,7 @@ namespace Choop.Compiler.ChoopModel
             List result = new List(Name);
 
             foreach (TerminalExpression expression in Value)
-                result.Contents.Add(expression.Literal);
+                result.Contents.Add(expression.Parse());
 
             return result;
         }
