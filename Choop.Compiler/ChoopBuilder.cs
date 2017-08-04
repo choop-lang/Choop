@@ -264,7 +264,7 @@ namespace Choop.Compiler
                 {
                     for (int i = 0; i < bounds; i++)
                         arrayDeclaration.Value.Add(
-                            new TerminalExpression("\"\"", TerminalType.String, FileName, context.Name));
+                            new TerminalExpression("\"\"", TerminalType.String));
                 }
             }
             else
@@ -313,7 +313,7 @@ namespace Choop.Compiler
                 {
                     for (int i = 0; i < bounds; i++)
                         listDeclaration.Value.Add(
-                            new TerminalExpression("\"\"", TerminalType.String, FileName, context.Name));
+                            new TerminalExpression("\"\"", TerminalType.String));
                 }
             }
             else
@@ -572,7 +572,7 @@ namespace Choop.Compiler
                 {
                     for (int i = 0; i < bounds; i++)
                         arrayDeclaration.Value.Add(
-                            new TerminalExpression("\"\"", TerminalType.String, FileName, context.Name));
+                            new TerminalExpression("\"\"", TerminalType.String));
                 }
             }
             else

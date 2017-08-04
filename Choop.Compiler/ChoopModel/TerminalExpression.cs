@@ -44,7 +44,7 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="literalType">The data type of the literal value.</param>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="errorToken">The token to report any compiler errors to.</param>
-        public TerminalExpression(string literal, TerminalType literalType, string fileName, IToken errorToken)
+        public TerminalExpression(string literal, TerminalType literalType, string fileName = null, IToken errorToken = null)
         {
             Literal = literal;
             LiteralType = literalType;
