@@ -204,8 +204,8 @@ namespace Choop.Compiler
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
-                GlobalVarDeclaration varDeclaration = new GlobalVarDeclaration(name, type,
-                    expression != null ? expression.Parse() : type.GetDefault(), FileName, context.Name);
+                GlobalVarDeclaration varDeclaration =
+                    new GlobalVarDeclaration(name, type, expression, FileName, context.Name);
 
                 _currentSprite.Variables.Add(varDeclaration);
             }

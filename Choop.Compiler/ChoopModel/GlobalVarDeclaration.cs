@@ -7,7 +7,7 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents a global variable declaration.
     /// </summary>
-    public class GlobalVarDeclaration : IVarDeclaration<object>, ICompilable<Variable>
+    public class GlobalVarDeclaration : IVarDeclaration<TerminalExpression>, ICompilable<Variable>
     {
         #region Properties
 
@@ -24,7 +24,7 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the initial value stored in the variable.
         /// </summary>
-        public object Value { get; }
+        public TerminalExpression Value { get; }
 
         /// <summary>
         /// Gets the token to report any compiler errors to.
@@ -45,10 +45,10 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="name">The name of the variable.</param>
         /// <param name="type">The data type of the variable.</param>
-        /// <param name="value">The initial translated value of the variable.</param>
+        /// <param name="value">The initial value of the variable.</param>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="errorToken">The token to report any compiler errors to.</param>
-        public GlobalVarDeclaration(string name, DataType type, object value, string fileName,
+        public GlobalVarDeclaration(string name, DataType type, TerminalExpression value, string fileName,
             IToken errorToken)
         {
             Name = name;
@@ -66,7 +66,10 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Variable Translate(TranslationContext context) => new Variable(Name, Value);
+        public Variable Translate(TranslationContext context)
+        {
+            return new Variable(Name, Value?.Literal ?? Type.GetDefault());
+        }
 
         #endregion
     }
