@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
@@ -70,6 +71,21 @@ namespace Choop.Compiler.ChoopModel
             IsArray = isArray;
             FileName = fileName;
             ErrorToken = errorToken;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="GlobalListDeclaration"/> class.
+        /// </summary>
+        /// <param name="name">The name of the list.</param>
+        /// <param name="type">The data type of items in the list.</param>
+        /// <param name="isArray">Whether the list acts as an array.</param>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        /// <param name="initialValues">The initial values in the lsit.</param>
+        public GlobalListDeclaration(string name, DataType type, bool isArray, string fileName, IToken errorToken,
+            params TerminalExpression[] initialValues) : this(name, type, isArray, fileName, errorToken)
+        {
+            Value = new Collection<TerminalExpression>(initialValues);
         }
 
         #endregion
