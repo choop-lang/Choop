@@ -1,4 +1,5 @@
-﻿using Antlr4.Runtime;
+﻿using System.Linq;
+using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
 
@@ -79,7 +80,7 @@ namespace Choop.Compiler.ChoopModel
             StackValue variable = new StackValue(Name, Type);
             context.CurrentScope.StackValues.Add(variable);
 
-            return variable.CreateDeclaration(Value?.Translate(context) ?? Type.GetDefault());
+            return variable.CreateDeclaration(context, Value);
         }
 
         #endregion

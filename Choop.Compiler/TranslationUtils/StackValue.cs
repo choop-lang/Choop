@@ -104,7 +104,7 @@ namespace Choop.Compiler.TranslationUtils
             // Use stack
             if (!Scope.Unsafe)
                 return initalValues.SelectMany(x => new BlockBuilder(BlockSpecs.AddToList, context)
-                    .AddParam(initalValues).AddParam(Settings.StackIdentifier).Create()).ToArray();
+                    .AddParam(x).AddParam(Settings.StackIdentifier).Create()).ToArray();
 
             // Unsafe variable
             if (StackSpace == 1)

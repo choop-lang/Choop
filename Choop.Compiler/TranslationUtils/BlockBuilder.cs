@@ -75,7 +75,7 @@ namespace Choop.Compiler.TranslationUtils
         /// <returns>The current instance, after the parameter has been added.</returns>
         public BlockBuilder AddParam(IExpression expressionParam)
         {
-            Args.Add(expressionParam.Translate(_context));
+            Args.Add(expressionParam != null ? expressionParam.Translate(_context) : "");
 
             return this;
         }
