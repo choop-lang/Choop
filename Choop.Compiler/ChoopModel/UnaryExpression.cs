@@ -61,14 +61,20 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public object Translate(TranslationContext context)
         {
-            // TODO optimise for constants
+            object translatedExpression = Expression.Translate(context);
 
             switch (Operator)
             {
                 case UnaryOperator.Minus:
-                    return new Block(BlockSpecs.Minus, 0, Expression.Translate(context));
+                    if (decimal.TryParse(translatedExpression.ToString(), out decimal translatedDecimal))
+                        return -translatedDecimal;
+
+                    return new Block(BlockSpecs.Minus, 0, translatedExpression);
                 case UnaryOperator.Not:
-                    return new Block(BlockSpecs.Not, Expression.Translate(context));
+                    if (bool.TryParse(translatedExpression.ToString(), out bool translatedBool))
+                        return !translatedBool;
+
+                    return new Block(BlockSpecs.Not, translatedExpression);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
