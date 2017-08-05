@@ -28,7 +28,7 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the collection of names of modules imported by the sprite.
         /// </summary>
-        public Collection<string> ImportedModules { get; } = new Collection<string>();
+        public Collection<UsingStmt> ImportedModules { get; } = new Collection<UsingStmt>();
 
         /// <summary>
         /// Gets the collection of constant declarations. (Not compiled)

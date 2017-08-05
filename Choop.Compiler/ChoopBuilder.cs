@@ -105,9 +105,11 @@ namespace Choop.Compiler
             {
                 string moduleName = usingStmtAst.Module.Text;
 
-                if (!sprite.ImportedModules.Contains(moduleName))
-                    sprite.ImportedModules.Add(moduleName);
+                if (sprite.ImportedModules.FirstOrDefault(x => x.Module == moduleName) == null)
+                    // Module not already imported
+                    sprite.ImportedModules.Add(new UsingStmt(moduleName, FileName, usingStmtAst.Module));
                 else
+                    // Module already imported (error)
                     _compilerErrors.Add(new CompilerError($"Module '{moduleName}' already imported",
                         ErrorType.ModuleAlreadyImported, usingStmtAst.Module, FileName));
             }

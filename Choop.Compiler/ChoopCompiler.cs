@@ -155,14 +155,14 @@ namespace Choop.Compiler
 
             // Resolve module imports
             foreach (SpriteDeclaration sprite in _builder.Project.Sprites)
-                foreach (string moduleName in sprite.ImportedModules)
+                foreach (UsingStmt usingStmt in sprite.ImportedModules)
                 {
-                    ModuleDeclaration module = _builder.Project.GetModule(moduleName);
+                    ModuleDeclaration module = _builder.Project.GetModule(usingStmt.Module);
                     if (module != null)
                         sprite.Import(module);
                     else
-                        CompilerErrors.Add(new CompilerError($"Module '{moduleName}' is not defined",
-                            ErrorType.NotDefined));
+                        CompilerErrors.Add(new CompilerError($"Module '{usingStmt.Module}' is not defined",
+                            ErrorType.NotDefined, usingStmt.ErrorToken, usingStmt.FileName));
                 }
 
             // Create translation context (Superglobal level)
