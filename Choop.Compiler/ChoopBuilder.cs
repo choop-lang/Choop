@@ -166,6 +166,7 @@ namespace Choop.Compiler
             TerminalExpression expression = _currentExpressions.Pop() as TerminalExpression;
             if (expression == null) throw new InvalidOperationException();
 
+            // TODO: move to after module imports
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
             {
@@ -200,6 +201,7 @@ namespace Choop.Compiler
                 if (expression == null) throw new InvalidOperationException();
             }
 
+            // TODO: move to after module imports
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
             {
@@ -225,6 +227,7 @@ namespace Choop.Compiler
             string name = context.Name.Text;
             DataType type = context.Type.ToDataType();
 
+            // TODO: move to after module imports
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
             {
@@ -283,6 +286,7 @@ namespace Choop.Compiler
             string name = context.Name.Text;
             DataType type = context.Type.ToDataType();
 
+            // TODO: move to after module imports
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
             {
@@ -348,9 +352,6 @@ namespace Choop.Compiler
             ValidateModifier(atomicTags, "atomic");
             ValidateModifier(unsafeTags, "unsafe");
 
-            // Check method signature doesn't already exist
-            // Todo
-
             // Create declaration
             MethodDeclaration method = new MethodDeclaration(
                 name,
@@ -380,8 +381,8 @@ namespace Choop.Compiler
             string name = context.Name.Text;
             DataType type = context.Type.ToDataType();
 
+            // TODO: move to after module imports
             // Check not already defined
-            // TODO
             if (Project.GetDeclaration(name) == null)
             {
                 // Create parameter declaration
@@ -412,8 +413,8 @@ namespace Choop.Compiler
             TerminalExpression expression = _currentExpressions.Pop() as TerminalExpression;
             if (expression == null) throw new InvalidOperationException();
 
+            // TODO: move to after module imports
             // Check not already defined
-            // TODO
             if (Project.GetDeclaration(name) == null)
             {
                 // Create parameter declaration
@@ -508,6 +509,7 @@ namespace Choop.Compiler
             if (_currentExpressions.Count > 0)
                 expression = _currentExpressions.Pop();
 
+            // TODO: move to after module imports
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
             {
@@ -533,6 +535,7 @@ namespace Choop.Compiler
             string name = context.Name.Text;
             DataType type = context.Type.ToDataType();
 
+            // TODO: move to after module imports
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
             {
