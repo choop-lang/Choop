@@ -154,16 +154,7 @@ namespace Choop.Compiler
             if (HasErrors) return;
 
             // Resolve module imports
-            foreach (SpriteDeclaration sprite in _builder.Project.Sprites)
-                foreach (UsingStmt usingStmt in sprite.ImportedModules)
-                {
-                    ModuleDeclaration module = _builder.Project.GetModule(usingStmt.Module);
-                    if (module != null)
-                        sprite.Import(module);
-                    else
-                        CompilerErrors.Add(new CompilerError($"Module '{usingStmt.Module}' is not defined",
-                            ErrorType.NotDefined, usingStmt.ErrorToken, usingStmt.FileName));
-                }
+            DoModuleImport();
 
             // Create translation context (Superglobal level)
             TranslationContext context = new TranslationContext(CompilerErrors);
@@ -191,6 +182,25 @@ namespace Choop.Compiler
             using (StreamWriter writer = new StreamWriter(filepath, false))
             {
                 writer.Write(ProjectJson.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Imports all the modules in the sprite.
+        /// </summary>
+        private void DoModuleImport()
+        {
+            foreach (SpriteDeclaration sprite in _builder.Project.Sprites)
+            {
+                foreach (UsingStmt usingStmt in sprite.ImportedModules)
+                {
+                    ModuleDeclaration module = _builder.Project.GetModule(usingStmt.Module);
+                    if (module != null)
+                        sprite.Import(module);
+                    else
+                        CompilerErrors.Add(new CompilerError($"Module '{usingStmt.Module}' is not defined",
+                            ErrorType.NotDefined, usingStmt.ErrorToken, usingStmt.FileName));
+                }
             }
         }
 
