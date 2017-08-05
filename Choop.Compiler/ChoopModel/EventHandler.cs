@@ -9,7 +9,7 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents an event handler.
     /// </summary>
-    public class EventHandler : IDeclaration, ICompilable<ScriptTuple[]>, IHasBody
+    public class EventHandler : IMethod, ICompilable<ScriptTuple[]>
     {
         #region Properties
 

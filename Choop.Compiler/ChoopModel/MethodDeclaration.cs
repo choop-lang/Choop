@@ -9,7 +9,7 @@ namespace Choop.Compiler.ChoopModel
     /// <summary>
     /// Represents a function or void declaration.
     /// </summary>
-    public class MethodDeclaration : ITypedDeclaration, ICompilable<ScriptTuple>, IHasBody
+    public class MethodDeclaration : IMethod, ITypedDeclaration, ICompilable<ScriptTuple>
     {
         #region Properties
 

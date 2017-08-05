@@ -53,7 +53,7 @@ namespace Choop.Compiler.TranslationUtils
         /// <summary>
         /// Gets the method that contains the scope.
         /// </summary>
-        public IHasBody Method { get; }
+        public IMethod Method { get; }
 
         /// <summary>
         /// Gets the collection of child scopes.
@@ -69,7 +69,7 @@ namespace Choop.Compiler.TranslationUtils
         /// </summary>
         /// <param name="method">Gets the method that contains the scope.</param>
         /// <param name="unsafe">Whether the scope contains unsafe variables.</param>
-        public Scope(IHasBody method, bool @unsafe = false)
+        public Scope(IMethod method, bool @unsafe = false)
         {
             // Increment ID
             ID = _nextScopeID++;
