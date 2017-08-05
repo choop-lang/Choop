@@ -1099,8 +1099,6 @@ namespace Choop.Compiler
 
         #region Unary Expressions
 
-        // TODO optimisations inline
-
         public override void ExitUnaryMinus(ChoopParser.UnaryMinusContext context)
         {
             base.ExitUnaryMinus(context);
