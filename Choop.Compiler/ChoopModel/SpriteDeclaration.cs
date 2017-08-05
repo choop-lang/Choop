@@ -179,8 +179,6 @@ namespace Choop.Compiler.ChoopModel
                 Name = Name
             };
 
-            // TODO: Import modules
-
             // Create translation context
             TranslationContext newContext = new TranslationContext(this, context);
 

@@ -153,6 +153,18 @@ namespace Choop.Compiler
             // Don't bother compiling if compile errors were previously detected
             if (HasErrors) return;
 
+            // Resolve module imports
+            foreach (SpriteDeclaration sprite in _builder.Project.Sprites)
+                foreach (string moduleName in sprite.ImportedModules)
+                {
+                    ModuleDeclaration module = _builder.Project.GetModule(moduleName);
+                    if (module != null)
+                        sprite.Import(module);
+                    else
+                        CompilerErrors.Add(new CompilerError($"Module '{moduleName}' is not defined",
+                            ErrorType.NotDefined));
+                }
+
             // Create translation context (Superglobal level)
             TranslationContext context = new TranslationContext(CompilerErrors);
 
