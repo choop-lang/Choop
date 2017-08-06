@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
@@ -16,7 +17,7 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the condition to use when deiciding whether to run the block.
         /// </summary>
-        public Collection<IExpression> Conditions { get; } = new Collection<IExpression>();
+        public Collection<Tuple<IExpression, CompoundOperator>> Conditions { get; } = new Collection<Tuple<IExpression, CompoundOperator>>();
 
         /// <summary>
         /// Gets whether the block is the default case. (No parameter)
