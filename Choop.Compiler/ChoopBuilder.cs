@@ -705,24 +705,86 @@ namespace Choop.Compiler
 
             // Current expressions should be empty
             if (_currentExpressions.Count > 0) throw new InvalidOperationException();
-        }
 
-        public override void ExitCaseHead(ChoopParser.CaseHeadContext context)
-        {
-            base.ExitCaseHead(context);
-
+            // Create block
             SwitchStmt stmt = _currentBlocks.Peek().Statements.Last() as SwitchStmt;
             if (stmt == null) throw new InvalidOperationException();
 
             // Create case block
             ConditionalBlock caseBlock = new ConditionalBlock(FileName, context.Start);
 
-            // Add all conditions
-            while (_currentExpressions.Count > 0)
-                caseBlock.Conditions.Add(_currentExpressions.Pop());
+            // Conditions are added later
 
             stmt.Blocks.Add(caseBlock);
             _currentBlocks.Push(caseBlock);
+        }
+
+        public override void EnterCaseExpression(ChoopParser.CaseExpressionContext context)
+        {
+            base.EnterCaseExpression(context);
+
+            // Current expressions should be empty
+            if (_currentExpressions.Count > 0) throw new InvalidOperationException();
+        }
+
+        public override void ExitCaseEqual(ChoopParser.CaseEqualContext context)
+        {
+            base.ExitCaseEqual(context);
+
+            ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
+            if (block == null) throw new InvalidOperationException();
+
+            block.Conditions.Add(_currentExpressions.Pop());
+        }
+
+        public override void ExitCaseGT(ChoopParser.CaseGTContext context)
+        {
+            base.ExitCaseGT(context);
+
+            ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
+            if (block == null) throw new InvalidOperationException();
+
+            block.Conditions.Add(_currentExpressions.Pop());
+        }
+
+        public override void ExitCaseLT(ChoopParser.CaseLTContext context)
+        {
+            base.ExitCaseLT(context);
+
+            ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
+            if (block == null) throw new InvalidOperationException();
+
+            block.Conditions.Add(_currentExpressions.Pop());
+        }
+
+        public override void ExitCaseGTE(ChoopParser.CaseGTEContext context)
+        {
+            base.ExitCaseGTE(context);
+
+            ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
+            if (block == null) throw new InvalidOperationException();
+
+            block.Conditions.Add(_currentExpressions.Pop());
+        }
+
+        public override void ExitCaseLTE(ChoopParser.CaseLTEContext context)
+        {
+            base.ExitCaseLTE(context);
+
+            ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
+            if (block == null) throw new InvalidOperationException();
+
+            block.Conditions.Add(_currentExpressions.Pop());
+        }
+
+        public override void ExitCaseNE(ChoopParser.CaseNEContext context)
+        {
+            base.ExitCaseNE(context);
+
+            ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
+            if (block == null) throw new InvalidOperationException();
+
+            block.Conditions.Add(_currentExpressions.Pop());
         }
 
         public override void ExitDefaultCaseHead(ChoopParser.DefaultCaseHeadContext context)
