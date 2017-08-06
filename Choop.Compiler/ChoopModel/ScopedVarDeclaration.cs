@@ -76,6 +76,14 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Block[] Translate(TranslationContext context)
         {
+            if (context.GetDeclaration(Name) != null)
+            {
+                // Declaration already exits
+                context.ErrorList.Add(new CompilerError($"Project already contains a definition for '{Name}'",
+                    ErrorType.DuplicateDeclaration, ErrorToken, FileName));
+                return new Block[0];
+            }
+
             StackValue variable = new StackValue(Name, Type);
             context.CurrentScope.StackValues.Add(variable);
 

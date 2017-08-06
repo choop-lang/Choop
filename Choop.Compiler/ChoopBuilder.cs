@@ -511,22 +511,11 @@ namespace Choop.Compiler
             if (_currentExpressions.Count > 0)
                 expression = _currentExpressions.Pop();
 
-            // TODO: move to after module imports
-            // Check anything with same name hasn't already been declared
-            if (Project.GetDeclaration(name) == null)
-            {
-                // Create declaration
-                ScopedVarDeclaration varDeclaration =
-                    new ScopedVarDeclaration(name, type, expression, FileName, context.Name);
+            // Create declaration
+            ScopedVarDeclaration varDeclaration =
+                new ScopedVarDeclaration(name, type, expression, FileName, context.Name);
 
-                _currentBlocks.Peek().Statements.Add(varDeclaration);
-            }
-            else
-            {
-                // Syntax error - definition already exists
-                _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.DuplicateDeclaration, context.Name, FileName));
-            }
+            _currentBlocks.Peek().Statements.Add(varDeclaration);
         }
 
         public override void ExitArrayDeclaration(ChoopParser.ArrayDeclarationContext context)
