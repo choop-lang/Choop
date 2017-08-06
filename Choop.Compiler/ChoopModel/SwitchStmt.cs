@@ -115,9 +115,9 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The expression for the condition combining all input conditions.</returns>
         private IExpression BuildCondition(Collection<Tuple<IExpression, CompoundOperator>> conditions, IExpression variable, int index = 0) =>
             index == conditions.Count - 1
-                ? new CompoundExpression(CompoundOperator.Equal, variable, conditions[index].Item1, FileName, ErrorToken)
+                ? new CompoundExpression(conditions[index].Item2, variable, conditions[index].Item1, FileName, ErrorToken)
                 : new CompoundExpression(CompoundOperator.Or,
-                    new CompoundExpression(CompoundOperator.Equal, variable, conditions[index].Item1, FileName, ErrorToken),
+                    new CompoundExpression(conditions[index].Item2, variable, conditions[index].Item1, FileName, ErrorToken),
                     BuildCondition(conditions, variable, index + 1), FileName, ErrorToken);
 
         #endregion
