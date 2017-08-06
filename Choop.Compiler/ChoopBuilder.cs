@@ -526,54 +526,43 @@ namespace Choop.Compiler
             string name = context.Name.Text;
             DataType type = context.Type.ToDataType();
 
-            // TODO: move to after module imports
-            // Check anything with same name hasn't already been declared
-            if (Project.GetDeclaration(name) == null)
+            // Create declaration
+            ScopedArrayDeclaration arrayDeclaration =
+                new ScopedArrayDeclaration(name, type, FileName, context.Name);
+            _currentBlocks.Peek().Statements.Add(arrayDeclaration);
+
+            // Get bounds
+
+            int bounds = int.Parse(context.Bounds.Text);
+
+            if (bounds == 0)
             {
-                // Create declaration
-                ScopedArrayDeclaration arrayDeclaration =
-                    new ScopedArrayDeclaration(name, type, FileName, context.Name);
-                _currentBlocks.Peek().Statements.Add(arrayDeclaration);
+                // Syntax error - bound should be greater than 0
+                _compilerErrors.Add(new CompilerError("Array length must be greater than 0",
+                    ErrorType.InvalidArgument, context.Bounds, FileName));
+                return;
+            }
 
-                // Get bounds
-
-                int bounds = int.Parse(context.Bounds.Text);
-
-                if (bounds == 0)
+            if (_currentExpressions.Count > 0)
+            {
+                // Check bounds match supplied values
+                if (bounds != _currentExpressions.Count)
                 {
-                    // Syntax error - bound should be greater than 0
-                    _compilerErrors.Add(new CompilerError("Array length must be greater than 0",
+                    // Syntax error - bounds should match
+                    _compilerErrors.Add(new CompilerError("Array bounds does not match length of supplied values",
                         ErrorType.InvalidArgument, context.Bounds, FileName));
                     return;
                 }
 
-                if (_currentExpressions.Count > 0)
-                {
-                    // Check bounds match supplied values
-                    if (bounds != _currentExpressions.Count)
-                    {
-                        // Syntax error - bounds should match
-                        _compilerErrors.Add(new CompilerError("Array bounds does not match length of supplied values",
-                            ErrorType.InvalidArgument, context.Bounds, FileName));
-                        return;
-                    }
-
-                    // Get the default values
-                    while (_currentExpressions.Count > 0)
-                        arrayDeclaration.Value.Insert(0, _currentExpressions.Pop());
-                }
-                else
-                {
-                    for (int i = 0; i < bounds; i++)
-                        arrayDeclaration.Value.Add(
-                            new TerminalExpression("\"\"", TerminalType.String));
-                }
+                // Get the default values
+                while (_currentExpressions.Count > 0)
+                    arrayDeclaration.Value.Insert(0, _currentExpressions.Pop());
             }
             else
             {
-                // Syntax error - definition already exists
-                _compilerErrors.Add(new CompilerError($"Project already contains a definition for '{name}'",
-                    ErrorType.DuplicateDeclaration, context.Name, FileName));
+                for (int i = 0; i < bounds; i++)
+                    arrayDeclaration.Value.Add(
+                        new TerminalExpression("\"\"", TerminalType.String));
             }
         }
 
