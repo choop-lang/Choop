@@ -67,7 +67,8 @@ namespace Choop.Compiler.ChoopModel
             Block[] declaration = variable.CreateDeclaration(context, Variable);
 
             // Translate main switch
-            return declaration.Concat(BuildIfElse(context, new LookupExpression(variable, FileName, ErrorToken), 0)).ToArray();
+            return declaration.Concat(BuildIfElse(context, new LookupExpression(variable, FileName, ErrorToken), 0))
+                .ToArray();
         }
 
         /// <summary>
@@ -83,27 +84,19 @@ namespace Choop.Compiler.ChoopModel
                 throw new IndexOutOfRangeException("Element is out of range");
 
             if (element + 1 != Blocks.Count)
-                return new[]
-                {
-                    new Block(
-                        BlockSpecs.IfThenElse,
-                        BuildCondition(Blocks[element].Conditions, variable).Translate(context),
-                        Blocks[element].Translate(context),
-                        BuildIfElse(context, variable, element + 1)
-                    )
-                };
+                return new BlockBuilder(BlockSpecs.IfThenElse, context)
+                    .AddParam(BuildCondition(Blocks[element].Conditions, variable))
+                    .AddParam(Blocks[element].Translate(context))
+                    .AddParam(BuildIfElse(context, variable, element + 1))
+                    .Create().ToArray();
 
             if (Blocks[element].IsDefault)
                 return Blocks[element].Translate(context);
 
-            return new[]
-            {
-                new Block(
-                    BlockSpecs.IfThen,
-                    BuildCondition(Blocks[element].Conditions, variable).Translate(context),
-                    Blocks[element].Translate(context)
-                )
-            };
+            return new BlockBuilder(BlockSpecs.IfThen, context)
+                .AddParam(BuildCondition(Blocks[element].Conditions, variable))
+                .AddParam(Blocks[element].Translate(context))
+                .Create().ToArray();
         }
 
         /// <summary>
@@ -113,11 +106,14 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="variable">The translated variable to compare to.</param>
         /// <param name="index">The current index.</param>
         /// <returns>The expression for the condition combining all input conditions.</returns>
-        private IExpression BuildCondition(Collection<Tuple<IExpression, CompoundOperator>> conditions, IExpression variable, int index = 0) =>
+        private IExpression BuildCondition(Collection<Tuple<IExpression, CompoundOperator>> conditions,
+            IExpression variable, int index = 0) =>
             index == conditions.Count - 1
-                ? new CompoundExpression(conditions[index].Item2, variable, conditions[index].Item1, FileName, ErrorToken)
+                ? new CompoundExpression(conditions[index].Item2, variable, conditions[index].Item1, FileName,
+                    ErrorToken)
                 : new CompoundExpression(CompoundOperator.Or,
-                    new CompoundExpression(conditions[index].Item2, variable, conditions[index].Item1, FileName, ErrorToken),
+                    new CompoundExpression(conditions[index].Item2, variable, conditions[index].Item1, FileName,
+                        ErrorToken),
                     BuildCondition(conditions, variable, index + 1), FileName, ErrorToken);
 
         #endregion
