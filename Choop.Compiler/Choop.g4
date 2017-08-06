@@ -372,9 +372,18 @@ switchHead
 
 caseHead
 	: ( CaseTag
-        constant
+        caseExpression
         Colon
       )+
+	;
+
+caseExpression
+	: constant       #caseEqual
+	| OpGT constant  #caseGT
+	| OpLT contant   #caseLT
+	| OpGTE constant #caseGTE
+	| OpLTE constant #caseLTE
+	| OpNE constant  #caseNE
 	;
 
 defaultCaseHead
