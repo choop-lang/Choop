@@ -12,7 +12,7 @@ namespace Choop.Demo
         /// <param name="args">The arguments supplied to the program.</param>
         private static void Main(string[] args)
         {
-            const string inputFile = @"test.ch";
+            const string inputFile = @"test-fibonacci.ch";
             const string outputFile = @"Output/project.json";
 
             // Open file

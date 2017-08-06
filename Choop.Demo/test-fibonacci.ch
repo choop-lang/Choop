@@ -4,6 +4,7 @@
  */
 
 sprite Fibonacci {
+	using FibCalculator;
 	
 	unsafe event GreenFlag() {
 		forever {
@@ -11,12 +12,7 @@ sprite Fibonacci {
 			string ordinal;
 			switch (GetLetter(StringLength(index), index)) {
 				case 0:
-				case 4:
-				case 5:
-				case 6:
-				case 7:
-				case 8:
-				case 9:
+				case >= 4:
 					ordinal = "th";
 					break;
 				case 1:
@@ -35,11 +31,13 @@ sprite Fibonacci {
 		}
 	}
 
+}
+
+module FibCalculator {
 	atomic num Fib(num n) {
 		if (n == 1) return 0;
 		if (n == 2) return 1;
 
 		return Fib(n - 2) + Fib(n - 1);
 	}
-
 }
