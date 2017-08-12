@@ -149,6 +149,14 @@ namespace Choop.Compiler.ChoopModel
                         throw new ArgumentOutOfRangeException();
                 }
 
+            // Try as any readonly type
+            if (variable is ParamDeclaration || variable is ConstDeclaration)
+            {
+                context.ErrorList.Add(new CompilerError($"Value '{VariableName}' is read-only", ErrorType.InvalidArgument,
+                    ErrorToken, FileName));
+                return new Block[0];
+            }
+
             // Fail
             context.ErrorList.Add(new CompilerError($"'{VariableName}' is not a variable", ErrorType.InvalidArgument,
                 ErrorToken, FileName));
