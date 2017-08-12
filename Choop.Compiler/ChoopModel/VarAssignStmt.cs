@@ -152,7 +152,7 @@ namespace Choop.Compiler.ChoopModel
             // Try as any readonly type
             if (variable is ParamDeclaration || variable is ConstDeclaration)
             {
-                context.ErrorList.Add(new CompilerError($"Value '{VariableName}' is read-only", ErrorType.InvalidArgument,
+                context.ErrorList.Add(new CompilerError($"Value '{VariableName}' is read-only", ErrorType.ValueIsReadonly,
                     ErrorToken, FileName));
                 return new Block[0];
             }

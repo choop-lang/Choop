@@ -50,6 +50,10 @@
         /// </summary>
         TypeMismatch,
         /// <summary>
+        /// Indicates that an assigment is targetting a read-only value.
+        /// </summary>
+        ValueIsReadonly,
+        /// <summary>
         /// Indicates that a name a declaration with a specified name could not be found.
         /// </summary>
         NotDefined
