@@ -183,6 +183,8 @@ namespace Choop.Compiler.TranslationUtils
             {"Touching", new MethodSignature(TouchingSprite, true, "sprite name or mouse or edge") },
             {"TouchingColor", new MethodSignature(TouchingColor, true, "color") },
             {"ColorTouchingColor", new MethodSignature(ColorIsTouchingColor, true, "color 1", "color 2")},
+            {"AskAndWait", new MethodSignature(AskAndWait, false, "message") },
+            {"Answer", new MethodSignature(Answer, true) },
             {"DistanceTo", new MethodSignature(DistanceTo, true, "sprite or mouse") },
             {"KeyPressed", new MethodSignature(KeyPressed, true, "key") },
             {"MouseDown", new MethodSignature(MouseDown, true) },
@@ -302,10 +304,9 @@ namespace Choop.Compiler.TranslationUtils
          * 
          * (Control blocks, hat blocks, etc.)
          * Stop ()
-         * Functions (sqrt, abs, etc.)
-         * Ask () and wait, Answer
+         * Mathematical Functions (Sqrt, Abs, etc.)
          * Custom blocks
-         * Get variable
+         * Get variable / parameter
          * Get list string contents
          */
 

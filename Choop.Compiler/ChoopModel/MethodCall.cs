@@ -241,21 +241,6 @@ namespace Choop.Compiler.ChoopModel
 
                     context.ErrorList.Add(new CompilerError($"Expected no parameters on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
-                //case "Ask":
-                //    if (!isFunctionCall)
-                //    {
-                //        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
-                //        return new Block(null);
-                //    }
-
-                //    if (Parameters.Count == 1)
-                //    {
-                //        context.Before.Add(new Block(BlockSpecs.AskAndWait, Parameters[0].Translate(context)));
-                //        return new Block(BlockSpecs.Answer);
-                //    }
-
-                //    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
-                //    return null;
                 case "Abs":
                     if (!isFunctionCall)
                     {
