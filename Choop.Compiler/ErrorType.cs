@@ -54,6 +54,10 @@
         /// </summary>
         ValueIsReadonly,
         /// <summary>
+        /// A declaration of method is being used in an invalid way.
+        /// </summary>
+        ImproperUsage,
+        /// <summary>
         /// Indicates that a name a declaration with a specified name could not be found.
         /// </summary>
         NotDefined

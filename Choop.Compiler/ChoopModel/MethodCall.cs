@@ -109,7 +109,7 @@ namespace Choop.Compiler.ChoopModel
                 // Check method is not a reporter
                 if (inbuiltMethod.IsReporter)
                 {
-                    context.ErrorList.Add(new CompilerError($"The inbuilt method '{MethodName}' can only be used as an input", ErrorType.Unspecified,
+                    context.ErrorList.Add(new CompilerError($"The inbuilt method '{MethodName}' can only be used as an input", ErrorType.ImproperUsage,
                         ErrorToken, FileName));
                     return new Block[0];
                 }
@@ -153,7 +153,7 @@ namespace Choop.Compiler.ChoopModel
                 if (!customMethod.HasReturn)
                 {
                     context.ErrorList.Add(new CompilerError($"Method '{MethodName}' does not return a value",
-                        ErrorType.InvalidArgument, ErrorToken, FileName));
+                        ErrorType.ImproperUsage, ErrorToken, FileName));
                     return null;
                 }
 
@@ -183,7 +183,7 @@ namespace Choop.Compiler.ChoopModel
                 // Check method is a reporter
                 if (!inbuiltMethod.IsReporter)
                 {
-                    context.ErrorList.Add(new CompilerError($"The inbuilt method '{MethodName}' does not return a value", ErrorType.Unspecified,
+                    context.ErrorList.Add(new CompilerError($"The inbuilt method '{MethodName}' does not return a value", ErrorType.ImproperUsage,
                         ErrorToken, FileName));
                     return new Block(null);
                 }
@@ -222,7 +222,7 @@ namespace Choop.Compiler.ChoopModel
                 case "StopAll":
                     if (isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' does not return a value", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' does not return a value", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -233,7 +233,7 @@ namespace Choop.Compiler.ChoopModel
                 case "StopOtherScriptsInSprite":
                     if (isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' does not return a value", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' does not return a value", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -244,7 +244,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Abs":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -255,7 +255,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Floor":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -266,7 +266,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Ceiling":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -277,7 +277,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Sqrt":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -288,7 +288,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Sin":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -299,7 +299,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Cos":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -310,7 +310,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Tan":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -321,7 +321,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Asin":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -332,7 +332,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Acos":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -343,7 +343,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Atan":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -354,7 +354,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Ln":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -365,7 +365,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Log":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -376,7 +376,7 @@ namespace Choop.Compiler.ChoopModel
                 case "PowE":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
@@ -387,7 +387,7 @@ namespace Choop.Compiler.ChoopModel
                 case "Pow10":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.InvalidArgument, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 

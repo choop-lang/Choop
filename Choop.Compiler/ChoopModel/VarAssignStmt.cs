@@ -158,7 +158,7 @@ namespace Choop.Compiler.ChoopModel
             }
 
             // Fail
-            context.ErrorList.Add(new CompilerError($"'{VariableName}' is not a variable", ErrorType.InvalidArgument,
+            context.ErrorList.Add(new CompilerError($"'{VariableName}' is not a variable", ErrorType.ImproperUsage,
                 ErrorToken, FileName));
             return new Block[0];
         }
