@@ -1,5 +1,5 @@
 # Choop
-*A C# influenced language that compiles down to SB2.*
+*A text-based programming language that compiles down to Scratch SB2*
 
 Inspired by [ApuC](https://github.com/MegaApuTurkUltra/Scratch-ApuC)
 by [@MegaApuTurkUltra](https://scratch.mit.edu/users/MegaApuTurkUltra/).
