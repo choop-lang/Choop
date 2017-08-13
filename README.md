@@ -13,18 +13,20 @@ by [@MegaApuTurkUltra](https://scratch.mit.edu/users/MegaApuTurkUltra/).
 - Inline voids and repeat loops
 - Optional parameters
 - Constants
-- Include new lines within strings
+- Unicode escaping within strings
 
 ## IDE
-Eventually, Choop will come with a Visual Studio extension,
-so you can still use an official IDE to program in Choop.
+Once the Choop compiler has been completed, an editor will
+be made for Choop.
 
 ## Syntax
 You can see the documentation for the syntax of
 Choop at [Syntax.md](Syntax.md).
-Alternatively, you can view the
-[test script](Choop.Demo/test.ch) or the
-[Antlr grammar file](Choop.Compiler/Choop.g4).
+To get a feel for the language structure, check out the
+example [Fibonacci project](Choop.Demo/test-fibonacci.ch)
+You can also view the Antlr grammar file for Choop
+[here](Choop.Compiler/Choop.g4).
+Eventually, a table of inbuilt functions will be produced.
 
 ## Under development
 Currently, significant functionality is missing from
