@@ -17,7 +17,7 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Whether the compund expression has been balanced.
         /// </summary>
-        private bool _Balanced = false;
+        private readonly bool _balanced;
 
         /// <summary>
         /// Gets the collection of operators that can be balanced.
@@ -97,7 +97,7 @@ namespace Choop.Compiler.ChoopModel
             Operator = @operator;
             First = first;
             Second = second;
-            _Balanced = balanced;
+            _balanced = balanced;
         }
 
         #endregion
@@ -107,7 +107,7 @@ namespace Choop.Compiler.ChoopModel
         /// <inheritdoc />
         public IExpression Balance()
         {
-            if (_Balanced) return this;
+            if (_balanced) return this;
 
             if (!BalanceOps.TryGetValue(Operator, out CompoundOperator inverseOp))
                 return new CompoundExpression(Operator, First.Balance(), Second.Balance(), true);
