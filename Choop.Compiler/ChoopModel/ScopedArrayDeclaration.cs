@@ -93,12 +93,11 @@ namespace Choop.Compiler.ChoopModel
             }
 
             // Add to stack
-            context.CurrentScope.StackValues.Add(GetStackRef());
+            StackValue stackValue = GetStackRef();
+            context.CurrentScope.StackValues.Add(stackValue);
 
             // Create blocks
-            return Value.Select(
-                expression => new Block(BlockSpecs.AddToList, expression.Translate(context), Settings.StackIdentifier)
-            ).ToArray();
+            return stackValue.CreateDeclaration(context, Value.ToArray());
         }
 
         #endregion
