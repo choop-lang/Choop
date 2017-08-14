@@ -19,6 +19,21 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         private bool _Balanced = false;
 
+        /// <summary>
+        /// Gets the collection of operators that can be balanced.
+        /// </summary>
+        private static readonly Dictionary<CompoundOperator, CompoundOperator> BalanceOps =
+            new Dictionary<CompoundOperator, CompoundOperator>
+            {
+                {CompoundOperator.Plus, CompoundOperator.Plus},
+                {CompoundOperator.Minus, CompoundOperator.Plus },
+                {CompoundOperator.Multiply, CompoundOperator.Multiply },
+                {CompoundOperator.Divide, CompoundOperator.Multiply },
+                {CompoundOperator.Concat, CompoundOperator.Concat },
+                {CompoundOperator.And, CompoundOperator.And },
+                {CompoundOperator.Or, CompoundOperator.Or }
+            };
+
         #endregion
 
         #region Properties
@@ -94,12 +109,13 @@ namespace Choop.Compiler.ChoopModel
         {
             if (_Balanced) return this;
 
-            // TODO: Check operator is valid
+            if (!BalanceOps.TryGetValue(Operator, out CompoundOperator inverseOp))
+                return new CompoundExpression(Operator, First.Balance(), Second.Balance(), true);
 
             List<IExpression> chain = new List<IExpression>();
             GetChainedValues(this, chain);
 
-            return Rebuild(chain, Operator);
+            return Rebuild(chain, Operator, inverseOp);
         }
 
         /// <summary>
@@ -127,9 +143,10 @@ namespace Choop.Compiler.ChoopModel
         /// Generates a balanced binary tree from a collection of values.
         /// </summary>
         /// <param name="chain">The list of values.</param>
-        /// <param name="operation">The operation to be used between adjacent values.</param>
+        /// <param name="primaryOp">The operation to be used between adjacent values.</param>
+        /// <param name="secondaryOp">The operation used on the RHS of rebalanced trees.</param>
         /// <returns>A compound expression combining all the values in the chain which is balanced.</returns>
-        private static CompoundExpression Rebuild(List<IExpression> chain, CompoundOperator operation)
+        private static CompoundExpression Rebuild(List<IExpression> chain, CompoundOperator primaryOp, CompoundOperator secondaryOp)
         {
             // Get point to split chain at
             int midPos = (int) Math.Floor(chain.Count / 2d);
@@ -137,15 +154,15 @@ namespace Choop.Compiler.ChoopModel
             // First
             IExpression first = midPos == 1
                 ? chain[0]
-                : Rebuild(chain.GetRange(0, midPos), operation);
+                : Rebuild(chain.GetRange(0, midPos), primaryOp, secondaryOp);
 
             // Second
             IExpression second = chain.Count == 2
                 ? chain[1]
-                : Rebuild(chain.GetRange(midPos, chain.Count - midPos), operation);
+                : Rebuild(chain.GetRange(midPos, chain.Count - midPos), secondaryOp, secondaryOp);
 
             // Combine
-            return new CompoundExpression(operation, first, second, true);
+            return new CompoundExpression(primaryOp, first, second, true);
         }
 
         /// <summary>
