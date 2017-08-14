@@ -26,12 +26,12 @@ namespace Choop.Compiler.ChoopModel
             new Dictionary<CompoundOperator, CompoundOperator>
             {
                 {CompoundOperator.Plus, CompoundOperator.Plus},
-                {CompoundOperator.Minus, CompoundOperator.Plus },
-                {CompoundOperator.Multiply, CompoundOperator.Multiply },
-                {CompoundOperator.Divide, CompoundOperator.Multiply },
-                {CompoundOperator.Concat, CompoundOperator.Concat },
-                {CompoundOperator.And, CompoundOperator.And },
-                {CompoundOperator.Or, CompoundOperator.Or }
+                {CompoundOperator.Minus, CompoundOperator.Plus},
+                {CompoundOperator.Multiply, CompoundOperator.Multiply},
+                {CompoundOperator.Divide, CompoundOperator.Multiply},
+                {CompoundOperator.Concat, CompoundOperator.Concat},
+                {CompoundOperator.And, CompoundOperator.And},
+                {CompoundOperator.Or, CompoundOperator.Or}
             };
 
         #endregion
@@ -146,7 +146,8 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="primaryOp">The operation to be used between adjacent values.</param>
         /// <param name="secondaryOp">The operation used on the RHS of rebalanced trees.</param>
         /// <returns>A compound expression combining all the values in the chain which is balanced.</returns>
-        private static CompoundExpression Rebuild(List<IExpression> chain, CompoundOperator primaryOp, CompoundOperator secondaryOp)
+        private static CompoundExpression Rebuild(List<IExpression> chain, CompoundOperator primaryOp,
+            CompoundOperator secondaryOp)
         {
             // Get point to split chain at
             int midPos = (int) Math.Floor(chain.Count / 2d);
@@ -176,12 +177,12 @@ namespace Choop.Compiler.ChoopModel
             switch (Operator)
             {
                 case CompoundOperator.Pow:
-                    // TODO: negative inputs
-                    return new Block(BlockSpecs.ComputeFunction, "e ^",
-                        new Block(BlockSpecs.Times,
-                            ((ICompilable<object>) new MethodCall("ln", FileName, ErrorToken, First))
-                            .Translate(context),
-                            Second.Translate(context)));
+                    // Note: does not support negative x values; see https://github.com/chooper100/Choop/issues/3
+                    return new MethodCall("PowE", FileName, ErrorToken,
+                            new CompoundExpression(CompoundOperator.Multiply,
+                                new MethodCall("Ln", FileName, ErrorToken, First), Second, FileName, ErrorToken))
+                        .Balance()
+                        .Translate(context);
                 case CompoundOperator.Multiply:
                     return new Block(BlockSpecs.Times, First.Translate(context), Second.Translate(context));
                 case CompoundOperator.Divide:
