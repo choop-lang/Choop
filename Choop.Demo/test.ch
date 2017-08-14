@@ -185,7 +185,7 @@ sprite MySprite {
 	}
 }
 
-module Module1 {
+module MyModule {
 	const e = 2.718;
 
 	num Diff(input1, input2) {
