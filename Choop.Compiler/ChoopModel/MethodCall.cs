@@ -401,7 +401,7 @@ namespace Choop.Compiler.ChoopModel
                     }
 
                     if (Parameters.Count == 1)
-                        return new Block(BlockSpecs.ComputeFunction, "Ln", Parameters[0].Translate(context));
+                        return new Block(BlockSpecs.ComputeFunction, "ln", Parameters[0].Translate(context));
 
                     context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
                         ErrorType.InvalidArgument, ErrorToken, FileName));
@@ -415,7 +415,7 @@ namespace Choop.Compiler.ChoopModel
                     }
 
                     if (Parameters.Count == 1)
-                        return new Block(BlockSpecs.ComputeFunction, "Log", Parameters[0].Translate(context));
+                        return new Block(BlockSpecs.ComputeFunction, "log", Parameters[0].Translate(context));
 
                     context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
                         ErrorType.InvalidArgument, ErrorToken, FileName));
