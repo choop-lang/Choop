@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
@@ -10,6 +12,15 @@ namespace Choop.Compiler.ChoopModel
     /// </summary>
     public class CompoundExpression : IExpression
     {
+        #region Fields
+
+        /// <summary>
+        /// Whether the compund expression has been balanced.
+        /// </summary>
+        private bool _Balanced = false;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -63,6 +74,65 @@ namespace Choop.Compiler.ChoopModel
 
         #region Methods
 
+        /// <inheritdoc />
+        public IExpression Balance()
+        {
+            if (_Balanced) return this;
+
+            // TODO: Check operator is valid
+
+            List<IExpression> chain = new List<IExpression>();
+            GetChainedValues(this, chain);
+
+            return Rebuild(chain, Operator);
+        }
+
+        /// <summary>
+        /// Recursively gets all the values within a chain of the same operator.
+        /// </summary>
+        /// <param name="currentExpression">The current expression to inspect.</param>
+        /// <param name="currentValues">The collection of values within the chain to add to.</param>
+        private static void GetChainedValues(CompoundExpression currentExpression,
+            ICollection<IExpression> currentValues)
+        {
+            // Left side, can be recursive
+            CompoundExpression firstCompound = currentExpression.First as CompoundExpression;
+            if (firstCompound == null || firstCompound.Operator != currentExpression.Operator)
+                // Not explicitally part of this chain
+                currentValues.Add(currentExpression.First.Balance());
+            else
+                // Part of chain, enter new expression
+                GetChainedValues(firstCompound, currentValues);
+
+            // Right side, not recursive
+            currentValues.Add(currentExpression.Second.Balance());
+        }
+
+        /// <summary>
+        /// Generates a balanced binary tree from a collection of values.
+        /// </summary>
+        /// <param name="chain">The list of values.</param>
+        /// <param name="operation">The operation to be used between adjacent values.</param>
+        /// <returns>A compound expression combining all the values in the chain which is balanced.</returns>
+        private static CompoundExpression Rebuild(List<IExpression> chain, CompoundOperator operation)
+        {
+            // Get point to split chain at
+            int midPos = (int) Math.Floor(chain.Count / 2d);
+
+            // First
+            IExpression first = midPos == 1
+                ? chain[0]
+                : Rebuild(chain.GetRange(0, midPos), operation);
+
+            // Second
+            IExpression second = chain.Count == 2
+                ? chain[1]
+                : Rebuild(chain.GetRange(midPos, chain.Count - midPos), operation);
+
+            // Combine
+            return new CompoundExpression(operation, first, second, "", null);
+        }
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
@@ -77,7 +147,8 @@ namespace Choop.Compiler.ChoopModel
                     // TODO: negative inputs
                     return new Block(BlockSpecs.ComputeFunction, "e ^",
                         new Block(BlockSpecs.Times,
-                            ((ICompilable<object>)new MethodCall("ln", FileName, ErrorToken, First)).Translate(context),
+                            ((ICompilable<object>) new MethodCall("ln", FileName, ErrorToken, First))
+                            .Translate(context),
                             Second.Translate(context)));
                 case CompoundOperator.Multiply:
                     return new Block(BlockSpecs.Times, First.Translate(context), Second.Translate(context));

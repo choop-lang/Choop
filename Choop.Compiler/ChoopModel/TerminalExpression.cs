@@ -56,6 +56,9 @@ namespace Choop.Compiler.ChoopModel
 
         #region Methods
 
+        /// <inheritdoc />
+        public IExpression Balance() => this;
+
         /// <summary>
         /// Parses the literal into an object.
         /// </summary>

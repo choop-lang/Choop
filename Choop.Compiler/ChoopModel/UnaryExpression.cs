@@ -55,6 +55,9 @@ namespace Choop.Compiler.ChoopModel
 
         #region Methods
 
+        /// <inheritdoc />
+        public IExpression Balance() => new UnaryExpression(Expression.Balance(), Operator, FileName, ErrorToken);
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>

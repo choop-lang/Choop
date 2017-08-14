@@ -67,6 +67,9 @@ namespace Choop.Compiler.ChoopModel
 
         #region Methods
 
+        /// <inheritdoc />
+        public virtual IExpression Balance() => this;
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
