@@ -113,9 +113,10 @@ namespace Choop.Compiler.ChoopModel
                     throw new ArgumentOutOfRangeException();
             }
 
+            // TODO stack arrays
             return new[]
             {
-                new Block(BlockSpecs.ReplaceItemOfList, Index.Translate(context), ArrayName, value.Translate(context))
+                new Block(BlockSpecs.ReplaceItemOfList, Index.Balance().Translate(context), ArrayName, value.Balance().Translate(context))
             };
         }
 

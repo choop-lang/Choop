@@ -66,7 +66,7 @@ namespace Choop.Compiler.ChoopModel
             foreach (IStatement statement in Statements)
                 blocks.AddRange(statement.Translate(newContext));
 
-            return new[] { new Block(BlockSpecs.While, Condition.Translate(newContext), blocks.ToArray()) };
+            return new[] { new Block(BlockSpecs.While, Condition.Balance().Translate(newContext), blocks.ToArray()) };
         }
 
         #endregion

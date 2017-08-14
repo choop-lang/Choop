@@ -106,7 +106,7 @@ namespace Choop.Compiler.ChoopModel
             loopContents.Add(counter.CreateVariableIncrement(Step.Translate(newContext)));
 
             // Create output
-            object startTranslated = Start.Translate(context);
+            object startTranslated = Start.Balance().Translate(context);
 
             List<Block> output = new List<Block>();
             output.AddRange(counter.CreateDeclaration(startTranslated));

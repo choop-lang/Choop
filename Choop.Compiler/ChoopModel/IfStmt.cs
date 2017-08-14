@@ -73,7 +73,7 @@ namespace Choop.Compiler.ChoopModel
                 {
                     new Block(
                         BlockSpecs.IfThenElse,
-                        Blocks[element].Conditions[0].Item1.Translate(context),
+                        Blocks[element].Conditions[0].Item1.Balance().Translate(context),
                         Blocks[element].Translate(context),
                         BuildIfElse(context, element + 1)
                     )
@@ -86,7 +86,7 @@ namespace Choop.Compiler.ChoopModel
             {
                 new Block(
                     BlockSpecs.IfThen,
-                    Blocks[element].Conditions[0].Item1.Translate(context),
+                    Blocks[element].Conditions[0].Item1.Balance().Translate(context),
                     Blocks[element].Translate(context)
                 )
             };

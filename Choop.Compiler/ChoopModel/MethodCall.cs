@@ -73,6 +73,10 @@ namespace Choop.Compiler.ChoopModel
 
         #region Methods
 
+        /// <inheritdoc />
+        public IExpression Balance() => new MethodCall(MethodName, FileName, ErrorToken,
+            Parameters.Select(x => x.Balance()).ToArray());
+
         /// <summary>
         /// Gets the translated code for the grammar structure.
         /// </summary>
@@ -90,8 +94,8 @@ namespace Choop.Compiler.ChoopModel
 
                 // TODO: inline
 
-                List<object> translatedParams = new List<object> { customMethod.GetInternalName() };
-                translatedParams.AddRange(Parameters.Select(x => x.Translate(context)));
+                List<object> translatedParams = new List<object> {customMethod.GetInternalName()};
+                translatedParams.AddRange(Parameters.Select(x => x.Balance().Translate(context)));
                 for (int i = Parameters.Count; i < customMethod.Params.Count; i++)
                     translatedParams.Add(customMethod.Params[i].Default);
                 translatedParams.Add(new Block(BlockSpecs.GetParameter, Settings.StackRefParam));
@@ -109,7 +113,8 @@ namespace Choop.Compiler.ChoopModel
                 // Check method is not a reporter
                 if (inbuiltMethod.IsReporter)
                 {
-                    context.ErrorList.Add(new CompilerError($"The inbuilt method '{MethodName}' can only be used as an input", ErrorType.ImproperUsage,
+                    context.ErrorList.Add(new CompilerError(
+                        $"The inbuilt method '{MethodName}' can only be used as an input", ErrorType.ImproperUsage,
                         ErrorToken, FileName));
                     return new Block[0];
                 }
@@ -117,7 +122,7 @@ namespace Choop.Compiler.ChoopModel
                 // Check parameter count is valid
                 if (Parameters.Count == inbuiltMethod.Inputs.Length)
                     return new[]
-                        {new Block(inbuiltMethod.Name, Parameters.Select(x => x.Translate(context)).ToArray())};
+                        {new Block(inbuiltMethod.Name, Parameters.Select(x => x.Balance().Translate(context)).ToArray())};
 
                 // Error: Invalid parameters
                 context.ErrorList.Add(new CompilerError(
@@ -128,7 +133,7 @@ namespace Choop.Compiler.ChoopModel
 
             // Try non standard blocks
             Block nonStandardBlock = GetNonStandardBlock(context, false);
-            if (nonStandardBlock != null) return new [] { nonStandardBlock };
+            if (nonStandardBlock != null) return new[] {nonStandardBlock};
 
             // Error - nethod not found
             context.ErrorList.Add(new CompilerError($"Method '{MethodName}' is not defined", ErrorType.NotDefined,
@@ -170,7 +175,8 @@ namespace Choop.Compiler.ChoopModel
 
                 context.Before.Add(new Block(BlockSpecs.CustomMethodCall, translatedParams.ToArray()));
                 StackValue returnValue = context.CurrentScope.CreateStackValue();
-                context.Before.Add(returnValue.CreateDeclaration(new Block(BlockSpecs.GetVariable, customMethod.GetReturnVariableName()))[0]);
+                context.Before.Add(returnValue.CreateDeclaration(new Block(BlockSpecs.GetVariable,
+                    customMethod.GetReturnVariableName()))[0]);
 
                 return returnValue.CreateVariableLookup();
             }
@@ -183,7 +189,8 @@ namespace Choop.Compiler.ChoopModel
                 // Check method is a reporter
                 if (!inbuiltMethod.IsReporter)
                 {
-                    context.ErrorList.Add(new CompilerError($"The inbuilt method '{MethodName}' does not return a value", ErrorType.ImproperUsage,
+                    context.ErrorList.Add(new CompilerError(
+                        $"The inbuilt method '{MethodName}' does not return a value", ErrorType.ImproperUsage,
                         ErrorToken, FileName));
                     return new Block(null);
                 }
@@ -222,178 +229,224 @@ namespace Choop.Compiler.ChoopModel
                 case "StopAll":
                     if (isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' does not return a value", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' does not return a value",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
                     if (Parameters.Count == 0) return new Block(BlockSpecs.Stop, "all");
 
-                    context.ErrorList.Add(new CompilerError($"Expected no parameters on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected no parameters on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "StopOtherScriptsInSprite":
                     if (isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' does not return a value", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' does not return a value",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
                     if (Parameters.Count == 0) return new Block(BlockSpecs.Stop, "other scripts in sprite");
 
-                    context.ErrorList.Add(new CompilerError($"Expected no parameters on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected no parameters on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Abs":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "abs", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "abs", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Floor":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "floor", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "floor", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Ceiling":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "ceiling", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "ceiling", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Sqrt":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "sqrt", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "sqrt", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Sin":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "sin", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "sin", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Cos":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "cos", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "cos", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Tan":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "tan", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "tan", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Asin":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "asin", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "asin", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Acos":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "acos", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "acos", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Atan":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "atan", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "atan", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Ln":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "Ln", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "Ln", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Log":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "Log", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "Log", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "PowE":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "e ^", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "e ^", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 case "Pow10":
                     if (!isFunctionCall)
                     {
-                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement", ErrorType.ImproperUsage, ErrorToken, FileName));
+                        context.ErrorList.Add(new CompilerError($"'{MethodName}' cannot be used as a statement",
+                            ErrorType.ImproperUsage, ErrorToken, FileName));
                         return new Block(null);
                     }
 
-                    if (Parameters.Count == 1) return new Block(BlockSpecs.ComputeFunction, "10 ^", Parameters[0].Translate(context));
+                    if (Parameters.Count == 1)
+                        return new Block(BlockSpecs.ComputeFunction, "10 ^", Parameters[0].Translate(context));
 
-                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'", ErrorType.InvalidArgument, ErrorToken, FileName));
+                    context.ErrorList.Add(new CompilerError($"Expected 1 parameter on method '{MethodName}'",
+                        ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
                 default:
                     return null;

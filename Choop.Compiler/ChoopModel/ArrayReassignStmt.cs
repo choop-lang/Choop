@@ -66,7 +66,7 @@ namespace Choop.Compiler.ChoopModel
             Block[] blocks = new Block[1 + Items.Count];
             blocks[0] = new Block(BlockSpecs.DeleteItemOfList, "all", ArrayName);
             for (int i = 0; i < Items.Count; i++)
-                blocks[i + 1] = new Block(BlockSpecs.AddToList, Items[i].Translate(context), ArrayName);
+                blocks[i + 1] = new Block(BlockSpecs.AddToList, Items[i].Balance().Translate(context), ArrayName);
 
             return blocks;
         }

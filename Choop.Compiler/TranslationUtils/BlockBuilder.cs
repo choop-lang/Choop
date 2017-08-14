@@ -71,11 +71,11 @@ namespace Choop.Compiler.TranslationUtils
         /// <summary>
         /// Adds a parameter value to the block.
         /// </summary>
-        /// <param name="expressionParam">The parameter to add, which has not already been translated.</param>
+        /// <param name="expressionParam">The parameter to add, which has neither been balanced or translated.</param>
         /// <returns>The current instance, after the parameter has been added.</returns>
         public BlockBuilder AddParam(IExpression expressionParam)
         {
-            Args.Add(expressionParam != null ? expressionParam.Translate(_context) : "");
+            Args.Add(expressionParam != null ? expressionParam.Balance().Translate(_context) : "");
 
             return this;
         }
@@ -96,12 +96,12 @@ namespace Choop.Compiler.TranslationUtils
         /// <summary>
         /// Adds a collection parameter values to the block.
         /// </summary>
-        /// <param name="expressionParams">The parameters to add, which have not already been translated.</param>
+        /// <param name="expressionParams">The parameters to add, which have neither been balanced or translated.</param>
         /// <returns>The current instance, after the parameters have been added.</returns>
         public BlockBuilder AddParams(IEnumerable<IExpression> expressionParams)
         {
             foreach (IExpression expressionParam in expressionParams)
-                Args.Add(expressionParam.Translate(_context));
+                Args.Add(expressionParam.Balance().Translate(_context));
 
             return this;
         }

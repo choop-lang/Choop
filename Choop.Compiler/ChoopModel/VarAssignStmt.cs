@@ -89,21 +89,21 @@ namespace Choop.Compiler.ChoopModel
                 switch (Operator)
                 {
                     case AssignOperator.Equals:
-                        return new[] {stackValue.CreateVariableAssignment(Value.Translate(context))};
+                        return new[] {stackValue.CreateVariableAssignment(Value.Balance().Translate(context))};
                     case AssignOperator.AddEquals:
-                        return new[] {stackValue.CreateVariableIncrement(Value.Translate(context))};
+                        return new[] {stackValue.CreateVariableIncrement(Value.Balance().Translate(context))};
                     case AssignOperator.MinusEquals:
                         return new[]
                         {
                             stackValue.CreateVariableIncrement(new UnaryExpression(Value, UnaryOperator.Minus, FileName,
-                                ErrorToken).Translate(context))
+                                ErrorToken).Balance().Translate(context))
                         };
                     case AssignOperator.DotEquals:
                         return new[]
                         {
                             stackValue.CreateVariableAssignment(new CompoundExpression(CompoundOperator.Concat,
                                     new LookupExpression(stackValue, FileName, ErrorToken), Value, FileName, ErrorToken)
-                                .Translate(context))
+                                .Balance().Translate(context))
                         };
                     case AssignOperator.PlusPlus:
                         return new[] {stackValue.CreateVariableIncrement(1)};
