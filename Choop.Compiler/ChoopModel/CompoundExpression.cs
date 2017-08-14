@@ -70,6 +70,21 @@ namespace Choop.Compiler.ChoopModel
             ErrorToken = errorToken;
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="CompoundExpression"/> class.
+        /// </summary>
+        /// <param name="operator">The operator use in the expression.</param>
+        /// <param name="first">The first input to the operator.</param>
+        /// <param name="second">The second input to the operator.</param>
+        /// <param name="balanced">Whether the expression has been balanced.</param>
+        private CompoundExpression(CompoundOperator @operator, IExpression first, IExpression second, bool balanced)
+        {
+            Operator = @operator;
+            First = first;
+            Second = second;
+            _Balanced = balanced;
+        }
+
         #endregion
 
         #region Methods
@@ -130,7 +145,7 @@ namespace Choop.Compiler.ChoopModel
                 : Rebuild(chain.GetRange(midPos, chain.Count - midPos), operation);
 
             // Combine
-            return new CompoundExpression(operation, first, second, "", null);
+            return new CompoundExpression(operation, first, second, true);
         }
 
         /// <summary>
