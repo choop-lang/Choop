@@ -172,59 +172,91 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public object Translate(TranslationContext context)
         {
-            // TODO: Optimise arithematic on constants
+            // Translate expresion, assume already balanced
+            object firstTranslated = First.Translate(context);
+            object secondTranslated = Second.Translate(context);
+
+            // Try and predetermine values to optimise with
+            decimal secondValue = default(decimal);
+            bool optimise = decimal.TryParse(firstTranslated.ToString(), out decimal firstValue) &&
+                            decimal.TryParse(secondTranslated.ToString(), out secondValue);
 
             switch (Operator)
             {
                 case CompoundOperator.Pow:
                     // Note: does not support negative x values; see https://github.com/chooper100/Choop/issues/3
-                    return new MethodCall("PowE", FileName, ErrorToken,
+                    return ((IExpression)new MethodCall("PowE", FileName, ErrorToken,
                             new CompoundExpression(CompoundOperator.Multiply,
                                 new MethodCall("Ln", FileName, ErrorToken, First), Second, FileName, ErrorToken))
-                        .Balance()
-                        .Translate(context);
+                        ).Translate(context);
                 case CompoundOperator.Multiply:
-                    return new Block(BlockSpecs.Times, First.Translate(context), Second.Translate(context));
+                    return optimise
+                        ? (object) (firstValue * secondValue)
+                        : new Block(BlockSpecs.Times, firstTranslated, secondTranslated);
                 case CompoundOperator.Divide:
-                    return new Block(BlockSpecs.Divide, First.Translate(context), Second.Translate(context));
+                    return optimise
+                        ? (object)(firstValue / secondValue)
+                        : new Block(BlockSpecs.Divide, firstTranslated, secondTranslated);
                 case CompoundOperator.Mod:
-                    return new Block(BlockSpecs.Mod, First.Translate(context), Second.Translate(context));
+                    return optimise
+                        ? (object)(firstValue % secondValue)
+                        : new Block(BlockSpecs.Mod, firstTranslated, secondTranslated);
                 case CompoundOperator.Concat:
-                    return new Block(BlockSpecs.Join, First.Translate(context), Second.Translate(context));
+                    string firstString = firstTranslated as string;
+                    string secondString = secondTranslated as string;
+                    return firstString != null && secondString != null
+                        ? (object)(firstString + secondString)
+                        : new Block(BlockSpecs.Join, firstTranslated, secondTranslated);
                 case CompoundOperator.Plus:
-                    return new Block(BlockSpecs.Add, First.Translate(context), Second.Translate(context));
+                    return optimise
+                        ? (object)(firstValue + secondValue)
+                        : new Block(BlockSpecs.Add, firstTranslated, secondTranslated);
                 case CompoundOperator.Minus:
-                    return new Block(BlockSpecs.Minus, First.Translate(context), Second.Translate(context));
+                    return optimise
+                        ? (object)(firstValue - secondValue)
+                        : new Block(BlockSpecs.Minus, firstTranslated, secondTranslated);
                 case CompoundOperator.LShift:
-                    return new Block(BlockSpecs.Times, First.Translate(context),
+                    return new CompoundExpression(CompoundOperator.Multiply, First,
                         new CompoundExpression(CompoundOperator.Pow,
                             new TerminalExpression("2", TerminalType.Int),
-                            Second, FileName, ErrorToken).Translate(context));
+                            Second, FileName, ErrorToken), FileName, ErrorToken).Translate(context);
                 case CompoundOperator.RShift:
-                    return new Block(BlockSpecs.Divide, First.Translate(context),
+                    return new CompoundExpression(CompoundOperator.Divide, First,
                         new CompoundExpression(CompoundOperator.Pow,
                             new TerminalExpression("2", TerminalType.Int),
-                            Second, FileName, ErrorToken).Translate(context));
+                            Second, FileName, ErrorToken), FileName, ErrorToken).Translate(context);
                 case CompoundOperator.LessThan:
-                    return new Block(BlockSpecs.LessThan, First.Translate(context), Second.Translate(context));
+                    return optimise
+                        ? (object)(firstValue < secondValue)
+                        : new Block(BlockSpecs.LessThan, firstTranslated, secondTranslated);
                 case CompoundOperator.GreaterThan:
-                    return new Block(BlockSpecs.GreaterThan, First.Translate(context), Second.Translate(context));
+                    return optimise
+                        ? (object)(firstValue > secondValue)
+                        : new Block(BlockSpecs.GreaterThan, firstTranslated, secondTranslated);
                 case CompoundOperator.LessThanEq:
-                    return new Block(BlockSpecs.Not,
-                        new Block(BlockSpecs.GreaterThan, First.Translate(context), Second.Translate(context)));
+                    return optimise
+                        ? (object)(firstValue <= secondValue)
+                        : new Block(BlockSpecs.Not,
+                              new Block(BlockSpecs.GreaterThan, firstTranslated, secondTranslated));
                 case CompoundOperator.GreaterThanEq:
-                    return new Block(BlockSpecs.Not,
-                        new Block(BlockSpecs.LessThan, First.Translate(context), Second.Translate(context)));
+                    return optimise
+                        ? (object)(firstValue >= secondValue)
+                        : new Block(BlockSpecs.Not,
+                            new Block(BlockSpecs.LessThan, firstTranslated, secondTranslated));
                 case CompoundOperator.Equal:
-                    return new Block(BlockSpecs.Equal, First.Translate(context), Second.Translate(context));
+                    return optimise
+                        ? (object)(firstValue == secondValue)
+                        : new Block(BlockSpecs.Equal, firstTranslated, secondTranslated);
                 case CompoundOperator.NotEqual:
-                    return new Block(BlockSpecs.Not,
-                        new Block(BlockSpecs.Equal, First.Translate(context), Second.Translate(context)));
+                    return optimise
+                        ? (object)(firstValue != secondValue)
+                        : new Block(BlockSpecs.Not,
+                              new Block(BlockSpecs.Equal, firstTranslated, secondTranslated));
                 case CompoundOperator.And:
-                    // TODO: Extra optimisation here for when one input is known
-                    return new Block(BlockSpecs.And, First.Translate(context), Second.Translate(context));
+                    // TODO: Optimse boolean operators, including for when 1 value is known
+                    return new Block(BlockSpecs.And, firstTranslated, secondTranslated);
                 case CompoundOperator.Or:
-                    return new Block(BlockSpecs.Or, First.Translate(context), Second.Translate(context));
+                    return new Block(BlockSpecs.Or, firstTranslated, secondTranslated);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
