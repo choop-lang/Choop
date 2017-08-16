@@ -68,7 +68,7 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Variable Translate(TranslationContext context)
         {
-            return new Variable(Name, Value?.Literal ?? Type.GetDefault());
+            return new Variable(Name, Value?.Parse() ?? Type.GetDefault());
         }
 
         #endregion
