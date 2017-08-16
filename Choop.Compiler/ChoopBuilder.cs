@@ -300,7 +300,7 @@ namespace Choop.Compiler
 
                 // Get the default values
                 while (_currentExpressions.Count > 0)
-                    listDeclaration.Value.Add(_currentExpressions.Pop() as TerminalExpression);
+                    listDeclaration.Value.Insert(0, _currentExpressions.Pop() as TerminalExpression);
 
                 // Get bounds
                 if (context.Bounds == null)
