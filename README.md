@@ -25,7 +25,7 @@ Choop at [Syntax.md](Syntax.md).
 To get a feel for the language, check out the
 [sample projects](Choop.Demo/Samples/)
 You can also view the Antlr grammar file for Choop
-[here](Choop.Compiler/Choop.g4).
+[here](Choop.Compiler/Antlr/Choop.g4).
 Eventually, a table of inbuilt functions will be produced.
 
 ## Using Choop
