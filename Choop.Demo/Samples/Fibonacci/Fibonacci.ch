@@ -7,7 +7,7 @@ sprite Fibonacci {
 	using FibCalculator;
 	
 	unsafe event GreenFlag() {
-		forever {var test = 5 << 2;
+		forever {
 			num index = Random(1, 10);
 			string ordinal;
 			switch (GetLetter(StringLength(index), index)) {
