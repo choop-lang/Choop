@@ -185,78 +185,121 @@ namespace Choop.Compiler.ChoopModel
             {
                 case CompoundOperator.Pow:
                     // Note: does not support negative x values; see https://github.com/chooper100/Choop/issues/3
-                    return ((IExpression)new MethodCall("PowE", FileName, ErrorToken,
-                            new CompoundExpression(CompoundOperator.Multiply,
-                                new MethodCall("Ln", FileName, ErrorToken, First), Second, FileName, ErrorToken))
-                        ).Translate(context);
+                    return ((IExpression) new MethodCall("PowE", FileName, ErrorToken,
+                        new CompoundExpression(CompoundOperator.Multiply,
+                            new MethodCall("Ln", FileName, ErrorToken, First), Second, FileName, ErrorToken))
+                    ).Translate(context);
+
                 case CompoundOperator.Multiply:
                     return optimise
                         ? (object) (firstValue * secondValue)
                         : new Block(BlockSpecs.Times, firstTranslated, secondTranslated);
+
                 case CompoundOperator.Divide:
                     return optimise
-                        ? (object)(firstValue / secondValue)
+                        ? (object) (firstValue / secondValue)
                         : new Block(BlockSpecs.Divide, firstTranslated, secondTranslated);
+
                 case CompoundOperator.Mod:
                     return optimise
-                        ? (object)(firstValue % secondValue)
+                        ? (object) (firstValue % secondValue)
                         : new Block(BlockSpecs.Mod, firstTranslated, secondTranslated);
+
                 case CompoundOperator.Concat:
                     string firstString = firstTranslated as string;
                     string secondString = secondTranslated as string;
+
                     return firstString != null && secondString != null
-                        ? (object)(firstString + secondString)
+                        ? (object) (firstString + secondString)
                         : new Block(BlockSpecs.Join, firstTranslated, secondTranslated);
+
                 case CompoundOperator.Plus:
                     return optimise
-                        ? (object)(firstValue + secondValue)
+                        ? (object) (firstValue + secondValue)
                         : new Block(BlockSpecs.Add, firstTranslated, secondTranslated);
+
                 case CompoundOperator.Minus:
                     return optimise
-                        ? (object)(firstValue - secondValue)
+                        ? (object) (firstValue - secondValue)
                         : new Block(BlockSpecs.Minus, firstTranslated, secondTranslated);
+
                 case CompoundOperator.LShift:
                     return new CompoundExpression(CompoundOperator.Multiply, First,
                         new CompoundExpression(CompoundOperator.Pow,
                             new TerminalExpression("2", TerminalType.Int),
                             Second, FileName, ErrorToken), FileName, ErrorToken).Translate(context);
+
                 case CompoundOperator.RShift:
                     return new CompoundExpression(CompoundOperator.Divide, First,
                         new CompoundExpression(CompoundOperator.Pow,
                             new TerminalExpression("2", TerminalType.Int),
                             Second, FileName, ErrorToken), FileName, ErrorToken).Translate(context);
+
                 case CompoundOperator.LessThan:
                     return optimise
-                        ? (object)(firstValue < secondValue)
+                        ? (object) (firstValue < secondValue)
                         : new Block(BlockSpecs.LessThan, firstTranslated, secondTranslated);
+
                 case CompoundOperator.GreaterThan:
                     return optimise
-                        ? (object)(firstValue > secondValue)
+                        ? (object) (firstValue > secondValue)
                         : new Block(BlockSpecs.GreaterThan, firstTranslated, secondTranslated);
+
                 case CompoundOperator.LessThanEq:
                     return optimise
-                        ? (object)(firstValue <= secondValue)
+                        ? (object) (firstValue <= secondValue)
                         : new Block(BlockSpecs.Not,
-                              new Block(BlockSpecs.GreaterThan, firstTranslated, secondTranslated));
+                            new Block(BlockSpecs.GreaterThan, firstTranslated, secondTranslated));
+
                 case CompoundOperator.GreaterThanEq:
                     return optimise
-                        ? (object)(firstValue >= secondValue)
+                        ? (object) (firstValue >= secondValue)
                         : new Block(BlockSpecs.Not,
                             new Block(BlockSpecs.LessThan, firstTranslated, secondTranslated));
+
                 case CompoundOperator.Equal:
                     return optimise
-                        ? (object)(firstValue == secondValue)
+                        ? (object) (firstValue == secondValue)
                         : new Block(BlockSpecs.Equal, firstTranslated, secondTranslated);
+
                 case CompoundOperator.NotEqual:
                     return optimise
-                        ? (object)(firstValue != secondValue)
+                        ? (object) (firstValue != secondValue)
                         : new Block(BlockSpecs.Not,
-                              new Block(BlockSpecs.Equal, firstTranslated, secondTranslated));
+                            new Block(BlockSpecs.Equal, firstTranslated, secondTranslated));
+
                 case CompoundOperator.And:
-                    // TODO: Optimse boolean operators, including for when 1 value is known
+                {
+                    bool firstConverted = bool.TryParse(firstTranslated.ToString(), out bool firstBool);
+                    bool secondConverted = bool.TryParse(secondTranslated.ToString(), out bool secondBool);
+
+                    if (firstConverted && secondConverted)
+                        return firstBool && secondBool;
+
+                    if (firstConverted) return firstBool;
+
+                    if (secondConverted) return secondBool;
+
                     return new Block(BlockSpecs.And, firstTranslated, secondTranslated);
+                }
+
                 case CompoundOperator.Or:
+                {
+                    bool firstConverted = bool.TryParse(firstTranslated.ToString(), out bool firstBool);
+                    bool secondConverted = bool.TryParse(secondTranslated.ToString(), out bool secondBool);
+
+                    if (firstConverted && secondConverted)
+                        return firstBool || secondBool;
+
+                    if (firstConverted)
+                        return firstBool ? true : secondTranslated;
+
+                    if (secondConverted)
+                        return secondBool ? true : firstTranslated;
+
                     return new Block(BlockSpecs.Or, firstTranslated, secondTranslated);
+                }
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
