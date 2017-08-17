@@ -12,8 +12,8 @@ namespace Choop.Demo
         /// <param name="args">The arguments supplied to the program.</param>
         private static void Main(string[] args)
         {
-            const string inputFile = @"test-fibonacci.ch";
-            const string outputFile = @"Output/project.json";
+            const string inputFile = @"Samples\Fibonacci\Fibonacci.ch";
+            const string outputFile = @"Output\project.json";
 
             // Open file
             using (StreamReader reader = new StreamReader(inputFile))

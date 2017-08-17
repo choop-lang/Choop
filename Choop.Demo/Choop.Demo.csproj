@@ -57,13 +57,10 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="test-fibonacci.ch">
+    <None Include="Samples\Fibonacci\Fibonacci.ch">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="test.ch">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="testerror.ch">
+    <None Include="Samples\SyntaxDemo\MySprite.ch">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
