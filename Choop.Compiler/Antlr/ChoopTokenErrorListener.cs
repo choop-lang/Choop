@@ -2,10 +2,10 @@
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 
-namespace Choop.Compiler
+namespace Choop.Compiler.Antlr
 {
     /// <summary>
-    /// Handles lexer errors in the <see cref="ChoopParser"/>. 
+    /// Handles lexer errors in the <see cref="ChoopParser"/>.
     /// </summary>
     internal class ChoopTokenErrorListener : IAntlrErrorListener<int>
     {

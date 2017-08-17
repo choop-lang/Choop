@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using Choop.Compiler.Antlr;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 using Choop.Compiler.TranslationUtils;

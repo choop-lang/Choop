@@ -7,7 +7,7 @@ using Choop.Compiler.ChoopModel;
 using Choop.Compiler.TranslationUtils;
 using EventHandler = Choop.Compiler.ChoopModel.EventHandler;
 
-namespace Choop.Compiler
+namespace Choop.Compiler.Antlr
 {
     /// <summary>
     /// Used for converting a raw Choop AST into a structured memory form.

@@ -3,10 +3,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Antlr4.Runtime;
 
-namespace Choop.Compiler
+namespace Choop.Compiler.Antlr
 {
     /// <summary>
-    /// Handles parsing errors in the <see cref="ChoopParser"/>. 
+    /// Handles parsing errors in the <see cref="ChoopParser"/>.
     /// </summary>
     internal class ChoopParserErrorListener : BaseErrorListener
     {

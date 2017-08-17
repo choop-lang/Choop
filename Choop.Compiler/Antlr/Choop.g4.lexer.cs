@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 
-namespace Choop.Compiler
+namespace Choop.Compiler.Antlr
 {
     sealed partial class ChoopLexer
     {

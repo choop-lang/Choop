@@ -85,13 +85,13 @@
     <Compile Include="BlockModel\StageMonitor.cs" />
     <Compile Include="BlockModel\List.cs" />
     <Compile Include="BlockModel\Variable.cs" />
-    <Compile Include="Choop.g4.lexer.cs">
+    <Compile Include="Antlr\Choop.g4.lexer.cs">
       <DependentUpon>Choop.g4</DependentUpon>
     </Compile>
-    <Compile Include="Choop.g4.parser.cs">
+    <Compile Include="Antlr\Choop.g4.parser.cs">
       <DependentUpon>Choop.g4</DependentUpon>
     </Compile>
-    <Compile Include="ChoopBuilder.cs" />
+    <Compile Include="Antlr\ChoopBuilder.cs" />
     <Compile Include="ChoopCompiler.cs" />
     <Compile Include="ChoopModel\ForeverLoop.cs" />
     <Compile Include="ChoopModel\ForLoop.cs" />
@@ -142,8 +142,8 @@
     <Compile Include="ChoopModel\GlobalVarDeclaration.cs" />
     <Compile Include="ChoopModel\ModuleDeclaration.cs" />
     <Compile Include="ChoopModel\SpriteDeclaration.cs" />
-    <Compile Include="ChoopParserErrorListener.cs" />
-    <Compile Include="ChoopTokenErrorListener.cs" />
+    <Compile Include="Antlr\ChoopParserErrorListener.cs" />
+    <Compile Include="Antlr\ChoopTokenErrorListener.cs" />
     <Compile Include="CompilerError.cs" />
     <Compile Include="ErrorType.cs" />
     <Compile Include="TranslationUtils\ExtensionMethods.cs" />
@@ -153,9 +153,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Antlr4 Include="Choop.g4">
+    <Antlr4 Include="Antlr\Choop.g4">
       <Generator>MSBuild:Compile</Generator>
-      <CustomToolNamespace>Choop.Compiler</CustomToolNamespace>
+      <CustomToolNamespace>Choop.Compiler.Antlr</CustomToolNamespace>
     </Antlr4>
     <None Include="packages.config" />
   </ItemGroup>
