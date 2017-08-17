@@ -712,7 +712,7 @@ namespace Choop.Compiler
             ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
             if (block == null) throw new InvalidOperationException();
 
-            block.Conditions.Add(new Tuple<IExpression, CompoundOperator>(_currentExpressions.Pop(), CompoundOperator.Equal));
+            block.Conditions.Add(new Condition(_currentExpressions.Pop()));
         }
 
         public override void ExitCaseGT(ChoopParser.CaseGTContext context)
@@ -722,7 +722,7 @@ namespace Choop.Compiler
             ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
             if (block == null) throw new InvalidOperationException();
 
-            block.Conditions.Add(new Tuple<IExpression, CompoundOperator>(_currentExpressions.Pop(), CompoundOperator.GreaterThan));
+            block.Conditions.Add(new Condition(_currentExpressions.Pop(), CompoundOperator.GreaterThan));
         }
 
         public override void ExitCaseLT(ChoopParser.CaseLTContext context)
@@ -732,7 +732,7 @@ namespace Choop.Compiler
             ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
             if (block == null) throw new InvalidOperationException();
 
-            block.Conditions.Add(new Tuple<IExpression, CompoundOperator>(_currentExpressions.Pop(), CompoundOperator.LessThan));
+            block.Conditions.Add(new Condition(_currentExpressions.Pop(), CompoundOperator.LessThan));
         }
 
         public override void ExitCaseGTE(ChoopParser.CaseGTEContext context)
@@ -742,7 +742,7 @@ namespace Choop.Compiler
             ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
             if (block == null) throw new InvalidOperationException();
 
-            block.Conditions.Add(new Tuple<IExpression, CompoundOperator>(_currentExpressions.Pop(), CompoundOperator.GreaterThanEq));
+            block.Conditions.Add(new Condition(_currentExpressions.Pop(), CompoundOperator.GreaterThanEq));
         }
 
         public override void ExitCaseLTE(ChoopParser.CaseLTEContext context)
@@ -752,7 +752,7 @@ namespace Choop.Compiler
             ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
             if (block == null) throw new InvalidOperationException();
 
-            block.Conditions.Add(new Tuple<IExpression, CompoundOperator>(_currentExpressions.Pop(), CompoundOperator.LessThanEq));
+            block.Conditions.Add(new Condition(_currentExpressions.Pop(), CompoundOperator.LessThanEq));
         }
 
         public override void ExitCaseNE(ChoopParser.CaseNEContext context)
@@ -762,7 +762,7 @@ namespace Choop.Compiler
             ConditionalBlock block = _currentBlocks.Peek() as ConditionalBlock;
             if (block == null) throw new InvalidOperationException();
 
-            block.Conditions.Add(new Tuple<IExpression, CompoundOperator>(_currentExpressions.Pop(), CompoundOperator.NotEqual));
+            block.Conditions.Add(new Condition(_currentExpressions.Pop(), CompoundOperator.NotEqual));
         }
 
         public override void ExitDefaultCaseHead(ChoopParser.DefaultCaseHeadContext context)
@@ -799,7 +799,7 @@ namespace Choop.Compiler
             IfStmt stmt = new IfStmt(FileName, context.Start);
 
             ConditionalBlock mainBlock = new ConditionalBlock(FileName, context.Start);
-            mainBlock.Conditions.Add(new Tuple<IExpression, CompoundOperator>(_currentExpressions.Pop(), 0));
+            mainBlock.Conditions.Add(new Condition(_currentExpressions.Pop()));
 
             stmt.Blocks.Add(mainBlock);
 
@@ -815,7 +815,7 @@ namespace Choop.Compiler
             if (ifStmt == null) throw new InvalidOperationException();
 
             ConditionalBlock elseBlock = new ConditionalBlock(FileName, context.Start);
-            elseBlock.Conditions.Add(new Tuple<IExpression, CompoundOperator>(_currentExpressions.Pop(), 0));
+            elseBlock.Conditions.Add(new Condition(_currentExpressions.Pop()));
 
             ifStmt.Blocks.Add(elseBlock);
             _currentBlocks.Push(elseBlock);

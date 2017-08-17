@@ -106,14 +106,14 @@ namespace Choop.Compiler.ChoopModel
         /// <param name="variable">The translated variable to compare to.</param>
         /// <param name="index">The current index.</param>
         /// <returns>The expression for the condition combining all input conditions.</returns>
-        private IExpression BuildCondition(Collection<Tuple<IExpression, CompoundOperator>> conditions,
+        private IExpression BuildCondition(Collection<Condition> conditions,
             IExpression variable, int index = 0) =>
             index == conditions.Count - 1
-                ? new CompoundExpression(conditions[index].Item2, variable, conditions[index].Item1, FileName,
-                    ErrorToken)
+                ? new CompoundExpression(conditions[index].ComparisonOperator, variable, conditions[index].Expression,
+                    FileName, ErrorToken)
                 : new CompoundExpression(CompoundOperator.Or,
-                    new CompoundExpression(conditions[index].Item2, variable, conditions[index].Item1, FileName,
-                        ErrorToken),
+                    new CompoundExpression(conditions[index].ComparisonOperator, variable, conditions[index].Expression,
+                        FileName, ErrorToken),
                     BuildCondition(conditions, variable, index + 1), FileName, ErrorToken);
 
         #endregion

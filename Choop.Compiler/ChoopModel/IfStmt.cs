@@ -71,7 +71,7 @@ namespace Choop.Compiler.ChoopModel
 
             if (element + 1 != Blocks.Count)
                 return new BlockBuilder(BlockSpecs.IfThenElse, context)
-                    .AddParam(Blocks[element].Conditions[0].Item1)
+                    .AddParam(Blocks[element].Conditions[0].Expression)
                     .AddParam(Blocks[element].Translate(context))
                     .AddParam(BuildIfElse(context, element + 1))
                     .Create().ToArray();
@@ -80,7 +80,7 @@ namespace Choop.Compiler.ChoopModel
                 return Blocks[element].Translate(context);
 
             return new BlockBuilder(BlockSpecs.IfThen, context)
-                .AddParam(Blocks[element].Conditions[0].Item1)
+                .AddParam(Blocks[element].Conditions[0].Expression)
                 .AddParam(Blocks[element].Translate(context))
                 .Create().ToArray();
         }

@@ -17,7 +17,7 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the condition to use when deiciding whether to run the block.
         /// </summary>
-        public Collection<Tuple<IExpression, CompoundOperator>> Conditions { get; } = new Collection<Tuple<IExpression, CompoundOperator>>();
+        public Collection<Condition> Conditions { get; } = new Collection<Condition>();
 
         /// <summary>
         /// Gets whether the block is the default case. (No parameter)
