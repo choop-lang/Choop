@@ -59,7 +59,7 @@ sprite MySprite {
 
 		if (true || false) {
 			bool testing = true;
-		} else if (false) {
+		} else if (IsGreaterThan(5, 2)) {
 			return;
 		} else {
 			test = 20;
