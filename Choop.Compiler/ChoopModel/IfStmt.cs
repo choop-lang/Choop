@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.TranslationUtils;
@@ -69,27 +70,19 @@ namespace Choop.Compiler.ChoopModel
                 throw new IndexOutOfRangeException("Element is out of range");
 
             if (element + 1 != Blocks.Count)
-                return new[]
-                {
-                    new Block(
-                        BlockSpecs.IfThenElse,
-                        Blocks[element].Conditions[0].Item1.Balance().Translate(context),
-                        Blocks[element].Translate(context),
-                        BuildIfElse(context, element + 1)
-                    )
-                };
+                return new BlockBuilder(BlockSpecs.IfThenElse, context)
+                    .AddParam(Blocks[element].Conditions[0].Item1)
+                    .AddParam(Blocks[element].Translate(context))
+                    .AddParam(BuildIfElse(context, element + 1))
+                    .Create().ToArray();
 
             if (Blocks[element].IsDefault)
                 return Blocks[element].Translate(context);
 
-            return new[]
-            {
-                new Block(
-                    BlockSpecs.IfThen,
-                    Blocks[element].Conditions[0].Item1.Balance().Translate(context),
-                    Blocks[element].Translate(context)
-                )
-            };
+            return new BlockBuilder(BlockSpecs.IfThen, context)
+                .AddParam(Blocks[element].Conditions[0].Item1)
+                .AddParam(Blocks[element].Translate(context))
+                .Create().ToArray();
         }
 
         #endregion
