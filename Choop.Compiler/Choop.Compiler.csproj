@@ -59,6 +59,8 @@
     <Compile Include="ChoopModel\ProjectSettings.cs" />
     <Compile Include="ChoopModel\UsingStmt.cs" />
     <Compile Include="ChoopModel\TerminalType.cs" />
+    <Compile Include="Interfaces\FileProvider.cs" />
+    <Compile Include="Interfaces\IFileProvider.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
