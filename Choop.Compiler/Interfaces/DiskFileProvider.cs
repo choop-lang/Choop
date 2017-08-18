@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Choop.Compiler.Interfaces
 {
@@ -14,7 +15,13 @@ namespace Choop.Compiler.Interfaces
         /// </summary>
         /// <param name="path">The path of the file being read, relative to the project base path.</param>
         /// <returns>The stream to read the file from.</returns>
-        public override StreamReader GetFileReadStream(string path) => new StreamReader(ProjectPath + path);
+        public override StreamReader GetFileReadStream(string path)
+        {
+            if (!ProjectOpen)
+                throw new InvalidOperationException("No project open");
+
+            return new StreamReader(ProjectPath + path);
+        }
 
         #endregion
     }
