@@ -18,7 +18,8 @@ namespace Choop.Compiler.Interfaces
         {
             base.OpenProject(path);
 
-            if (!Directory.Exists(path)) throw new DirectoryNotFoundException($"The project directory, '{path}', could not be found.");
+            if (!Directory.Exists(path))
+                throw new DirectoryNotFoundException($"The project directory, '{path}', could not be found.");
         }
 
         /// <summary>
