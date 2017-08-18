@@ -11,6 +11,17 @@ namespace Choop.Compiler.Interfaces
         #region Methods
 
         /// <summary>
+        /// Opens the project at the specified path.
+        /// </summary>
+        /// <param name="path">The path of the project being opened.</param>
+        public override void OpenProject(string path)
+        {
+            base.OpenProject(path);
+
+            if (!Directory.Exists(path)) throw new DirectoryNotFoundException($"The project directory, '{path}', could not be found.");
+        }
+
+        /// <summary>
         /// Returns the stream to read the file at the specified path, relative to the project base path.
         /// </summary>
         /// <param name="path">The path of the file being read, relative to the project base path.</param>
