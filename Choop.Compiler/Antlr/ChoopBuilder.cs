@@ -57,12 +57,11 @@ namespace Choop.Compiler.Antlr
         /// <summary>
         /// Creates a new instance of the <see cref="ChoopBuilder"/> class.
         /// </summary>
-        /// <param name="projectName">The name of the Choop project to create.</param>
         /// <param name="compilerErrors">The collection of compiler errors to add to.</param>
-        public ChoopBuilder(string projectName, Collection<CompilerError> compilerErrors)
+        public ChoopBuilder(Collection<CompilerError> compilerErrors)
         {
             _compilerErrors = compilerErrors;
-            Project = new Project(projectName);
+            Project = new Project();
 
             _currentSprite = Project;
             _currentExpressions = new Stack<IExpression>();

@@ -86,19 +86,6 @@ namespace Choop.Compiler.ChoopModel
 
         #endregion
 
-        #region Constructor
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="Project"/> class.
-        /// </summary>
-        /// <param name="name">The name of the project.</param>
-        public Project(string name)
-        {
-            Name = name;
-        }
-
-        #endregion
-
         #region Methods
 
         /// <summary>

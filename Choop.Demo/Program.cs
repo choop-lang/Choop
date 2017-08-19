@@ -12,14 +12,14 @@ namespace Choop.Demo
         /// <param name="args">The arguments supplied to the program.</param>
         private static void Main(string[] args)
         {
-            const string inputFile = @"Samples\Fibonacci\Fibonacci.ch";
+            const string inputFile = @"Samples\Fibonacci\Fibonacci.chs";
             const string outputFile = @"Output\project.json";
 
             // Open file
             using (StreamReader reader = new StreamReader(inputFile))
             {
                 // Create compiler instance
-                ChoopCompiler compiler = new ChoopCompiler("Test");
+                ChoopCompiler compiler = new ChoopCompiler();
 
                 // Compile code
                 compiler.InjectCode(reader.BaseStream, inputFile);

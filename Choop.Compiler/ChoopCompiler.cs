@@ -92,10 +92,9 @@ namespace Choop.Compiler
         /// <summary>
         /// Creates an instance of the <see cref="ChoopCompiler"/> class.
         /// </summary>
-        /// <param name="name">The name of the Choop project.</param>
-        public ChoopCompiler(string name)
+        public ChoopCompiler()
         {
-            _builder = new ChoopBuilder(name, CompilerErrors);
+            _builder = new ChoopBuilder(CompilerErrors);
         }
 
         #endregion
