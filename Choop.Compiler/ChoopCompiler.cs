@@ -150,6 +150,24 @@ namespace Choop.Compiler
         }
 
         /// <summary>
+        /// Injects the specified sprite into the Choop project.
+        /// </summary>
+        /// <param name="sprite">The sprite to inject.</param>
+        private void InjectSprite(SpriteDeclaration sprite)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Injects the specified module into the Choop project.
+        /// </summary>
+        /// <param name="sprite">The module to inject.</param>
+        private void InjectModule(ModuleDeclaration sprite)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Takes all the inputted files and compiles them into an sb2 file.
         /// </summary>
         public void Compile()
