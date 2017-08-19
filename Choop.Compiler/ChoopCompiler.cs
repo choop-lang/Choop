@@ -35,6 +35,11 @@ namespace Choop.Compiler
         /// </summary>
         public const string ChoopDefinitionFileExt = ".chd";
 
+        /// <summary>
+        /// The path of the project settings file.
+        /// </summary>
+        public const string ProjectSettingsFile = "project.chp";
+
         #endregion
 
         #region Fields
@@ -120,7 +125,7 @@ namespace Choop.Compiler
             _fileProvider.OpenProject(projectPath);
 
             // Get project.chp file
-            using (StreamReader projectReader = _fileProvider.GetFileReadStream("project.chp"))
+            using (StreamReader projectReader = _fileProvider.GetFileReadStream(ProjectSettingsFile))
             {
                 // Deserialise file
                 ChoopProject.Settings = JsonConvert.DeserializeObject<ProjectSettings>(projectReader.ReadToEnd());
