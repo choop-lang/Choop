@@ -22,6 +22,16 @@ namespace Choop.Compiler.ChoopModel
         public string Author { get; set; }
 
         /// <summary>
+        /// Gets or sets the description for the Choop project.
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the instructions for the Choop project.
+        /// </summary>
+        public string Instructions { get; set; }
+
+        /// <summary>
         /// Gets or sets the date of when the project was first created.
         /// </summary>
         public DateTime Created { get; set; }
