@@ -8,6 +8,7 @@ using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 using Choop.Compiler.Interfaces;
 using Choop.Compiler.TranslationUtils;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler
@@ -115,7 +116,15 @@ namespace Choop.Compiler
         /// <param name="projectPath">The path of the project to load.</param>
         public void LoadProject(string projectPath)
         {
-            throw new NotImplementedException();
+            // Init file provider
+            _fileProvider.OpenProject(projectPath);
+
+            // Get project.chp file
+            using (StreamReader projectReader = _fileProvider.GetFileReadStream("project.chp"))
+            {
+                // Deserialise file
+                ChoopProject.Settings = JsonConvert.DeserializeObject<ProjectSettings>(projectReader.ReadToEnd());
+            }
         }
 
         /// <summary>
