@@ -472,34 +472,38 @@ stmtScope
 	;
 
 uconstant
-    : ConstTrue     #uConstantTrue
-    | ConstFalse    #uConstantFalse
-    | StringLiteral #uConstantString
-    | HexNumber     #uConstantHex
-    | USciNumber    #uConstantSci
-    | UDecimal      #uConstantDec
-    | UInteger      #uConstantInt
+    : ConstTrue         #uConstantTrue
+    | ConstFalse        #uConstantFalse
+    | StringLiteral     #uConstantString
+    | HexNumber         #uConstantHex
+    | USciNumber        #uConstantSci
+    | UDecimal          #uConstantDec
+    | UInteger          #uConstantInt
     ;
 
 primaryExpression
-    : uconstant     #primaryConstant
-    | methodCall    #primaryMethodCall
-    | Identifier    #primaryVarLookup
+    : uconstant         #primaryConstant
+    | methodCall        #primaryMethodCall
+    | Identifier        #primaryVarLookup
     | Identifier
       SquareOpen
       expression
-      SquareClose   #primaryArrayLookup
+      SquareClose       #primaryArrayLookup
     | BracketOpen
       expression
-      BracketClose  #primaryBracket
+      BracketClose      #primaryBracket
+    | NameOfTag
+	  BracketOpen
+	  Name = Identifier
+	  BracketClose      #primaryNameOf
     ;
 
 unaryExpression
     : OpNot
-      primaryExpression #unaryNot
+      primaryExpression  #unaryNot
     | OpMinus
-      primaryExpression #unaryMinus
-    | primaryExpression #unaryDefault
+      primaryExpression  #unaryMinus
+    | primaryExpression  #unaryDefault
     ;
 
 expression
@@ -582,6 +586,7 @@ ModuleTag      : 'module';
 AttrMeta       : 'MetaFile';
 
 UsingTag       : 'using';
+NameOfTag      : 'nameof';
 
 VoidTag        : 'void';
 FunctionTag    : 'function';

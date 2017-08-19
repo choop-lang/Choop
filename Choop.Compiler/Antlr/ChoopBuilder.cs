@@ -1139,6 +1139,14 @@ namespace Choop.Compiler.Antlr
             _currentExpressions.Push(lookup);
         }
 
+        public override void EnterPrimaryNameOf(ChoopParser.PrimaryNameOfContext context)
+        {
+            base.EnterPrimaryNameOf(context);
+
+            _currentExpressions.Push(new TerminalExpression($"\"{context.Name.Text}\"",
+                TerminalType.String, FileName, context.Name));
+        }
+
         #endregion
 
         #region Unary Expressions
