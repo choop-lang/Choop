@@ -80,6 +80,15 @@ namespace Choop.Compiler
         #region Methods
 
         /// <summary>
+        /// Loads the Choop project at the specified path.
+        /// </summary>
+        /// <param name="projectPath">The path of the project to load.</param>
+        public void LoadProject(string projectPath)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Adds the code from the specified stream to the source code to compile.
         /// </summary>
         /// <param name="input">The input stream containing the code to compile.</param>
