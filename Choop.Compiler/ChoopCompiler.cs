@@ -6,6 +6,7 @@ using Antlr4.Runtime.Tree;
 using Choop.Compiler.Antlr;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
+using Choop.Compiler.Interfaces;
 using Choop.Compiler.TranslationUtils;
 using Newtonsoft.Json.Linq;
 
@@ -41,6 +42,11 @@ namespace Choop.Compiler
         /// The builder used for creating the internal Choop representation.
         /// </summary>
         private readonly ChoopBuilder _builder;
+
+        /// <summary>
+        /// The file provider.
+        /// </summary>
+        private readonly IFileProvider _fileProvider;
 
         #endregion
 
@@ -92,9 +98,11 @@ namespace Choop.Compiler
         /// <summary>
         /// Creates an instance of the <see cref="ChoopCompiler"/> class.
         /// </summary>
-        public ChoopCompiler()
+        /// <param name="fileProvider">The provider for files.</param>
+        public ChoopCompiler(IFileProvider fileProvider)
         {
             _builder = new ChoopBuilder(CompilerErrors);
+            _fileProvider = fileProvider;
         }
 
         #endregion

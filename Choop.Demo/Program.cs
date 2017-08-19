@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Choop.Compiler;
+using Choop.Compiler.Interfaces;
 
 namespace Choop.Demo
 {
@@ -19,7 +20,7 @@ namespace Choop.Demo
             using (StreamReader reader = new StreamReader(inputFile))
             {
                 // Create compiler instance
-                ChoopCompiler compiler = new ChoopCompiler();
+                ChoopCompiler compiler = new ChoopCompiler(new DiskFileProvider());
 
                 // Compile code
                 compiler.InjectCode(reader.BaseStream, inputFile);
