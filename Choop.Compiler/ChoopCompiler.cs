@@ -16,7 +16,7 @@ namespace Choop.Compiler
     /// <summary>
     /// Compiles Choop code.
     /// </summary>
-    public class ChoopCompiler
+    public class ChoopCompiler : IDisposable
     {
         #region Constants
 
@@ -317,6 +317,14 @@ namespace Choop.Compiler
                     CompilerErrors.Add(new CompilerError($"Module '{usingStmt.Module}' is not defined",
                         ErrorType.NotDefined, usingStmt.ErrorToken, usingStmt.FileName));
             }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            _fileProvider?.Dispose();
         }
 
         #endregion
