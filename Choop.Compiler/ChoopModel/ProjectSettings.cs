@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using Choop.Compiler.BlockModel;
+using Newtonsoft.Json;
 
 namespace Choop.Compiler.ChoopModel
 {
     /// <summary>
     /// Represents a Choop project settings file.
     /// </summary>
+    [JsonObject(MemberSerialization.OptOut)]
     public class ProjectSettings
     {
         #region Properties
@@ -14,61 +16,73 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets the display name of the Choop project.
         /// </summary>
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets the author of the Choop project.
         /// </summary>
+        [JsonProperty("author")]
         public string Author { get; set; }
 
         /// <summary>
         /// Gets or sets the description for the Choop project.
         /// </summary>
+        [JsonProperty("description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the instructions for the Choop project.
         /// </summary>
+        [JsonProperty("instructions")]
         public string Instructions { get; set; }
 
         /// <summary>
         /// Gets or sets the date of when the project was first created.
         /// </summary>
+        [JsonProperty("created")]
         public DateTime Created { get; set; }
 
         /// <summary>
         /// Gets or sets the project tempo in BPM.
         /// </summary>
+        [JsonProperty("tempoBpm")]
         public double TempoBpm { get; set; } = 60;
 
         /// <summary>
         /// Gets the transparency (0 - 1) of the webcam feed.
         /// </summary>
+        [JsonProperty("videoChannelAlpha")]
         public double VideoChannelAlpha { get; set; } = 0.5;
 
         /// <summary>
         /// Gets or sets whether the webcam feed is on.
         /// </summary>
+        [JsonProperty("videoOn")]
         public bool VideoOn { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the file path to the base pen layer.
         /// </summary>
+        [JsonProperty("penLayerFile")]
         public string PenLayerFile { get; set; }
 
         /// <summary>
         /// Gets the collection of files to use as backdrops.
         /// </summary>
+        [JsonProperty("backdrops")]
         public Collection<string> Backdrops { get; } = new Collection<string>();
 
         /// <summary>
         /// Gets the collection of files in the Choop project.
         /// </summary>
+        [JsonProperty("files")]
         public Collection<ChoopFile> Files { get; } = new Collection<ChoopFile>();
 
         /// <summary>
         /// Gets the collection of global watchers.
         /// </summary>
+        [JsonProperty("watchers")]
         public Collection<StageMonitor> Watchers { get; } = new Collection<StageMonitor>();
 
         #endregion
