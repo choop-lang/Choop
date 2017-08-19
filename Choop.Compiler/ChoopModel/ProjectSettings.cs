@@ -37,11 +37,6 @@ namespace Choop.Compiler.ChoopModel
         public DateTime Created { get; set; }
 
         /// <summary>
-        /// Gets or sets the date of when the project was last modified.
-        /// </summary>
-        public DateTime Modified { get; set; }
-
-        /// <summary>
         /// Gets or sets the project tempo in BPM.
         /// </summary>
         public double TempoBpm { get; set; }
