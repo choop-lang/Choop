@@ -48,7 +48,7 @@ namespace Choop.Compiler.Antlr
         /// <summary>
         /// Gets or sets the current file name.
         /// </summary>
-        public string FileName { get; set; }
+        public string FileName { private get; set; }
 
         #endregion
 
