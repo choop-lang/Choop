@@ -130,6 +130,28 @@ namespace Choop.Compiler
                 // Deserialise file
                 ChoopProject.Settings = JsonConvert.DeserializeObject<ProjectSettings>(projectReader.ReadToEnd());
             }
+
+            foreach (ChoopFile file in ChoopProject.Settings.Files)
+                switch (file.BuildAction)
+                {
+                    case BuildAction.Ignore:
+                        // No action
+                        break;
+                    case BuildAction.SourceCode:
+                        InjectCode(new AntlrInputStream(_fileProvider.GetFileReadStream(file.Path)), file.Path);
+                        break;
+                    case BuildAction.BitmapAsset:
+                        // TODO: bitmap asset loading
+                        break;
+                    case BuildAction.VectorAsset:
+                        // TODO: vector asset loading
+                        break;
+                    case BuildAction.SoundAsset:
+                        // TODO: sound asset loading
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
         }
 
         /// <summary>
