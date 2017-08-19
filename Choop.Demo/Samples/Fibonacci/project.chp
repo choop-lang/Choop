@@ -1,0 +1,20 @@
+﻿{
+	"name": "Fibonacci Test",
+	"author": "chooper100",
+	"description": "",
+	"instructions": "",
+	"created": "2017-08-04",
+	"tempoBpm": 60,
+	"videoChannelAlpha": 0.5,
+	"videoOn": false,
+	"penLayerFile": "",
+	"backdrops": [],
+	"files": [
+		{
+			"path": "Fibonacci.chs",
+			"buildAction": 1,
+			"attribution": ""
+		}
+	],
+	"watchers": []
+}

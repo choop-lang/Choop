@@ -1,0 +1,20 @@
+﻿{
+	"name": "Syntax Demo",
+	"author": "chooper100",
+	"description": "",
+	"instructions": "",
+	"created": "2017-04-17",
+	"tempoBpm": 60,
+	"videoChannelAlpha": 0.5,
+	"videoOn": false,
+	"penLayerFile": "",
+	"backdrops": [],
+	"files": [
+		{
+			"path": "MySprite.chs",
+			"buildAction": 1,
+			"attribution": ""
+		}
+	],
+	"watchers": []
+}
