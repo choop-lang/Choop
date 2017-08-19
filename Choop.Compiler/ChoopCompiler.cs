@@ -168,6 +168,26 @@ namespace Choop.Compiler
         }
 
         /// <summary>
+        /// Injects the specified image asset and return the internal file name of the asset.
+        /// </summary>
+        /// <param name="source">The source stream for the asset.</param>
+        /// <returns>The internal file name of the asset.</returns>
+        public string InjectCostume(Stream source)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Injects the specified sound asset and return the internal file name of the asset.
+        /// </summary>
+        /// <param name="source">The source stream for the asset.</param>
+        /// <returns>The internal file name of the asset.</returns>
+        public string InjectSound(Stream source)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// Takes all the inputted files and compiles them into an sb2 file.
         /// </summary>
         public void Compile()
