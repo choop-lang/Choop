@@ -21,7 +21,7 @@ namespace Choop.Compiler
         /// <summary>
         /// The builder used for creating the internal Choop representation.
         /// </summary>
-        private ChoopBuilder _builder;
+        private readonly ChoopBuilder _builder;
 
         #endregion
 
