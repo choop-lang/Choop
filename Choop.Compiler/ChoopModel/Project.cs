@@ -19,9 +19,9 @@ namespace Choop.Compiler.ChoopModel
         #region Properties
 
         /// <summary>
-        /// Gets the name of the project.
+        /// Gets or sets the name of the project.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets the collection of superglobal constant declarations. (Not compiled)

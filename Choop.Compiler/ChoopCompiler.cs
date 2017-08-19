@@ -49,7 +49,11 @@ namespace Choop.Compiler
         /// <summary>
         /// Gets the name of the Choop project.
         /// </summary>
-        public string ProjectName => _builder.Project.Name;
+        public string ProjectName
+        {
+            get => _builder.Project.Name;
+            set => _builder.Project.Name = value;
+        }
 
         /// <summary>
         /// Gets the collection of compiler errors that occured whilst compiling the file. 
