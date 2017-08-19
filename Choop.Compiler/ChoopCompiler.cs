@@ -84,9 +84,9 @@ namespace Choop.Compiler
         /// </summary>
         /// <param name="input">The input stream containing the code to compile.</param>
         /// <param name="fileName">The name of the file the source code came from. Optional.</param>
-        public void AddCode(Stream input, string fileName = "")
+        public void InjectCode(Stream input, string fileName = "")
         {
-            AddCode(new AntlrInputStream(input), fileName);
+            InjectCode(new AntlrInputStream(input), fileName);
         }
 
         /// <summary>
@@ -94,9 +94,9 @@ namespace Choop.Compiler
         /// </summary>
         /// <param name="input">The code to compile.</param>
         /// <param name="fileName">The name of the file the source code came from. Optional.</param>
-        public void AddCode(string input, string fileName = "")
+        public void InjectCode(string input, string fileName = "")
         {
-            AddCode(new AntlrInputStream(input), fileName);
+            InjectCode(new AntlrInputStream(input), fileName);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Choop.Compiler
         /// </summary>
         /// <param name="input">The input stream to compile the code from.</param>
         /// <param name="fileName">The file name of the source code.</param>
-        private void AddCode(ICharStream input, string fileName)
+        private void InjectCode(ICharStream input, string fileName)
         {
             // Check if already compiled
             if (Compiled) throw new InvalidOperationException();

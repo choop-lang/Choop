@@ -22,7 +22,7 @@ namespace Choop.Demo
                 ChoopCompiler compiler = new ChoopCompiler("Test");
 
                 // Compile code
-                compiler.AddCode(reader.BaseStream, inputFile);
+                compiler.InjectCode(reader.BaseStream, inputFile);
                 compiler.Compile();
 
                 // Check if compilation was successful
