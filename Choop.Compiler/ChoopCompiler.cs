@@ -153,7 +153,7 @@ namespace Choop.Compiler
         /// Injects the specified sprite into the Choop project.
         /// </summary>
         /// <param name="sprite">The sprite to inject.</param>
-        private void InjectSprite(SpriteDeclaration sprite)
+        public void InjectSprite(SpriteDeclaration sprite)
         {
             throw new NotImplementedException();
         }
@@ -162,7 +162,7 @@ namespace Choop.Compiler
         /// Injects the specified module into the Choop project.
         /// </summary>
         /// <param name="sprite">The module to inject.</param>
-        private void InjectModule(ModuleDeclaration sprite)
+        public void InjectModule(ModuleDeclaration sprite)
         {
             throw new NotImplementedException();
         }
