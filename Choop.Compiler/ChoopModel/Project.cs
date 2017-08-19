@@ -49,6 +49,11 @@ namespace Choop.Compiler.ChoopModel
         public Collection<ModuleDeclaration> Modules { get; } = new Collection<ModuleDeclaration>();
 
         /// <summary>
+        /// Gets or sets the settings of the project.
+        /// </summary>
+        public ProjectSettings Settings { get; set; }
+
+        /// <summary>
         /// Unused. Gets the collection of event handlers.
         /// </summary>
         /// <exception cref="NotSupportedException"></exception>
