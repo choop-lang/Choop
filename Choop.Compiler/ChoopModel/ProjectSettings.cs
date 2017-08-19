@@ -39,17 +39,17 @@ namespace Choop.Compiler.ChoopModel
         /// <summary>
         /// Gets or sets the project tempo in BPM.
         /// </summary>
-        public double TempoBpm { get; set; }
+        public double TempoBpm { get; set; } = 60;
 
         /// <summary>
         /// Gets the transparency (0 - 1) of the webcam feed.
         /// </summary>
-        public double VideoChannelAlpha { get; set; }
+        public double VideoChannelAlpha { get; set; } = 0.5;
 
         /// <summary>
         /// Gets or sets whether the webcam feed is on.
         /// </summary>
-        public bool VideoOn { get; set; }
+        public bool VideoOn { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the file path to the base pen layer.
