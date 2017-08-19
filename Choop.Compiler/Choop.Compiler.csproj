@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="BlockModel\BlockDef.cs" />
     <Compile Include="BlockModel\ScriptTuple.cs" />
+    <Compile Include="ChoopModel\ChoopFile.cs" />
     <Compile Include="ChoopModel\Condition.cs" />
     <Compile Include="ChoopModel\IMethod.cs" />
     <Compile Include="ChoopModel\ProjectSettings.cs" />

@@ -67,6 +67,11 @@ namespace Choop.Compiler.ChoopModel
         public Collection<string> Backdrops { get; } = new Collection<string>();
 
         /// <summary>
+        /// Gets the collection of files in the Choop project.
+        /// </summary>
+        public Collection<ChoopFile> Files { get; } = new Collection<ChoopFile>();
+
+        /// <summary>
         /// Gets the collection of global watchers.
         /// </summary>
         public Collection<StageMonitor> Watchers { get; } = new Collection<StageMonitor>();
