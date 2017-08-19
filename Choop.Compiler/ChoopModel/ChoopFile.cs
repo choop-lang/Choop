@@ -8,6 +8,11 @@
         #region Properties
 
         /// <summary>
+        /// Gets or sets the attribution for the file.
+        /// </summary>
+        public string Attribution { get; set; }
+
+        /// <summary>
         /// Gets or sets the build action for the file.
         /// </summary>
         public BuildAction BuildAction { get; set; }
