@@ -104,11 +104,14 @@ namespace Choop.Compiler
         /// <summary>
         /// Creates an instance of the <see cref="ChoopCompiler"/> class.
         /// </summary>
+        /// <param name="projectPath">The path of the project to load.</param>
         /// <param name="fileProvider">The provider for files.</param>
-        public ChoopCompiler(IFileProvider fileProvider)
+        public ChoopCompiler(string projectPath, IFileProvider fileProvider)
         {
             _builder = new ChoopBuilder(CompilerErrors);
             _fileProvider = fileProvider;
+
+            LoadProject(projectPath);
         }
 
         #endregion
@@ -119,7 +122,7 @@ namespace Choop.Compiler
         /// Loads the Choop project at the specified path.
         /// </summary>
         /// <param name="projectPath">The path of the project to load.</param>
-        public void LoadProject(string projectPath)
+        private void LoadProject(string projectPath)
         {
             // Init file provider
             _fileProvider.OpenProject(projectPath);

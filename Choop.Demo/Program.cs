@@ -16,10 +16,9 @@ namespace Choop.Demo
             const string outputFile = @"Output\project.json";
 
             // Create compiler instance
-            using (ChoopCompiler compiler = new ChoopCompiler(new DiskFileProvider()))
+            using (ChoopCompiler compiler = new ChoopCompiler(inputProject, new DiskFileProvider()))
             {
                 // Compile code
-                compiler.LoadProject(inputProject);
                 compiler.Compile();
 
                 // Check if compilation was successful
