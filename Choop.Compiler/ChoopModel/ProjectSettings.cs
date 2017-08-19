@@ -62,12 +62,6 @@ namespace Choop.Compiler.ChoopModel
         public bool VideoOn { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets the file path to the base pen layer.
-        /// </summary>
-        [JsonProperty("penLayerFile")]
-        public string PenLayerFile { get; set; }
-
-        /// <summary>
         /// Gets the collection of files to use as backdrops.
         /// </summary>
         [JsonProperty("backdrops")]
