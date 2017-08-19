@@ -89,20 +89,20 @@ namespace Choop.Compiler
         }
 
         /// <summary>
-        /// Adds the code from the specified stream to the source code to compile.
+        /// Injects the raw Choop code from the specified stream into the Choop project.
         /// </summary>
-        /// <param name="input">The input stream containing the code to compile.</param>
-        /// <param name="fileName">The name of the file the source code came from. Optional.</param>
+        /// <param name="input">The input stream containing the raw Choop code to compile.</param>
+        /// <param name="fileName">The name of the file the source code came from, used for error messages. Optional.</param>
         public void InjectCode(Stream input, string fileName = "")
         {
             InjectCode(new AntlrInputStream(input), fileName);
         }
 
         /// <summary>
-        /// Adds the code from the specified stream to the source code to compile.
+        /// Injects the raw Choop code from the specified string into the Choop project.
         /// </summary>
-        /// <param name="input">The code to compile.</param>
-        /// <param name="fileName">The name of the file the source code came from. Optional.</param>
+        /// <param name="input">The raw Choop code to compile.</param>
+        /// <param name="fileName">The name of the file the source code came from, used for error messages. Optional.</param>
         public void InjectCode(string input, string fileName = "")
         {
             InjectCode(new AntlrInputStream(input), fileName);
