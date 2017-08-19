@@ -152,6 +152,9 @@ namespace Choop.Compiler
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+
+            // Close file provider
+            _fileProvider.CloseProject();
         }
 
         /// <summary>
