@@ -1,0 +1,10 @@
+﻿{
+  "costumeIndex": 0,
+  "location": "0, 0",
+  "scale": 1,
+  "direction": 90,
+  "rotationStyle": 0,
+  "draggable": false,
+  "visible": true,
+  "costumes": []
+}
