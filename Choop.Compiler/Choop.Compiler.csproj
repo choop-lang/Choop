@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="BlockModel\BlockDef.cs" />
     <Compile Include="BlockModel\ScriptTuple.cs" />
+    <Compile Include="Helpers\AssetCollection.cs" />
     <Compile Include="ProjectModel\BuildAction.cs" />
     <Compile Include="ProjectModel\ChoopFile.cs" />
     <Compile Include="ChoopModel\Condition.cs" />

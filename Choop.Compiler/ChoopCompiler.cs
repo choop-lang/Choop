@@ -36,19 +36,9 @@ namespace Choop.Compiler
         private readonly IFileProvider _fileProvider;
 
         /// <summary>
-        /// The collection of costume files, with their path and file contents.
+        /// The collection of loaded assets.
         /// </summary>
-        private readonly Dictionary<string, byte[]> _costumeFiles = new Dictionary<string, byte[]>();
-
-        /// <summary>
-        /// The collection of sound files, with their path and file contents.
-        /// </summary>
-        private readonly Dictionary<string, byte[]> _soundFiles = new Dictionary<string, byte[]>();
-
-        /// <summary>
-        /// The collection of sprite definition files, with their path and their deserialized file contents.
-        /// </summary>
-        private readonly Dictionary<string, SpriteSettings> _spriteDefinitionFiles = new Dictionary<string, SpriteSettings>();
+        private readonly AssetCollection _assets = new AssetCollection();
 
         #endregion
 
@@ -143,7 +133,7 @@ namespace Choop.Compiler
 
                     case BuildAction.SpriteDefinition:
                         using (StreamReader reader = new StreamReader(_fileProvider.GetFileReadStream(file.Path)))
-                            _spriteDefinitionFiles.Add(file.Path,
+                            _assets.SpriteDefinitionFiles.Add(file.Path,
                                 JsonConvert.DeserializeObject<SpriteSettings>(reader.ReadToEnd()));
                         break;
 
@@ -152,7 +142,7 @@ namespace Choop.Compiler
                         using (MemoryStream ms = new MemoryStream())
                         {
                             stream.CopyTo(ms);
-                            _costumeFiles.Add(file.Path, ms.ToArray());
+                            _assets.CostumeFiles.Add(file.Path, ms.ToArray());
                         }
                         break;
 
@@ -161,7 +151,7 @@ namespace Choop.Compiler
                         using (MemoryStream ms = new MemoryStream())
                         {
                             stream.CopyTo(ms);
-                            _soundFiles.Add(file.Path, ms.ToArray());
+                            _assets.SoundFiles.Add(file.Path, ms.ToArray());
                         }
                         break;
 
