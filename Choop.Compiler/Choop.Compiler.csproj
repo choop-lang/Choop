@@ -59,7 +59,7 @@
     <Compile Include="ProjectModel\ChoopFile.cs" />
     <Compile Include="ChoopModel\Condition.cs" />
     <Compile Include="ChoopModel\IMethod.cs" />
-    <Compile Include="ProjectModel\CostumeAsset.cs" />
+    <Compile Include="ProjectModel\Asset.cs" />
     <Compile Include="ProjectModel\ProjectSettings.cs" />
     <Compile Include="ProjectModel\SpriteSettings.cs" />
     <Compile Include="ChoopModel\UsingStmt.cs" />

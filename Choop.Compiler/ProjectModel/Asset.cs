@@ -3,21 +3,21 @@
 namespace Choop.Compiler.ProjectModel
 {
     /// <summary>
-    /// Represents a costume in a sprite.
+    /// Represents an asset.
     /// </summary>
     [JsonObject(MemberSerialization.OptOut)]
-    public class CostumeAsset
+    public class Asset
     {
         #region Properties
 
         /// <summary>
-        /// Gets or sets the path to the image referenced.
+        /// Gets or sets the path to the file referenced.
         /// </summary>
         [JsonProperty("path")]
         public string Path { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the costume.
+        /// Gets or sets the name of the file.
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
