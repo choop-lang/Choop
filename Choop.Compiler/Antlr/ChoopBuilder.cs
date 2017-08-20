@@ -80,7 +80,7 @@ namespace Choop.Compiler.Antlr
 
             // Get basic info
             string name = context.Name.Text;
-            string metaFile = name + ".sm";
+            string metaFile = name + Settings.ChoopDefinitionFileExt;
 
             if (context.MetaAttr != null)
                 metaFile = context.MetaAttr.FileName.Text;
