@@ -38,7 +38,7 @@ namespace Choop.Compiler
         /// <summary>
         /// The path of the project settings file.
         /// </summary>
-        public const string ProjectSettingsFile = "project.chp";
+        public const string ProjectSettingsFile = "project" + ChoopProjFileExt;
 
         #endregion
 
