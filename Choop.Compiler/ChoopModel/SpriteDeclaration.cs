@@ -175,10 +175,7 @@ namespace Choop.Compiler.ChoopModel
         public Sprite Translate(TranslationContext context)
         {
             // Find definition file
-            SpriteSettings definitionFile =
-                context.ProjectAssets.SpriteDefinitionFiles.FirstOrDefault(x => x.Key == MetaFile).Value;
-
-            if (definitionFile == null)
+            if (!context.ProjectAssets.SpriteDefinitionFiles.TryGetValue(MetaFile, out SpriteSettings definitionFile))
             {
                 context.ErrorList.Add(new CompilerError($"Definition file '{MetaFile}' could not be found",
                     ErrorType.FileNotFound, ErrorToken, FileName));
@@ -226,10 +223,7 @@ namespace Choop.Compiler.ChoopModel
             foreach (Asset costume in definitionFile.Costumes)
             {
                 // Find costume file
-                byte[] costumeData = context.ProjectAssets.CostumeFiles.FirstOrDefault(x => x.Key == costume.Path)
-                    .Value;
-
-                if (costumeData == null)
+                if (!context.ProjectAssets.CostumeFiles.TryGetValue(costume.Path, out byte[] costumeData))
                 {
                     context.ErrorList.Add(new CompilerError($"Costume '{costume.Path}' could not be found",
                         ErrorType.FileNotFound, null, MetaFile));
