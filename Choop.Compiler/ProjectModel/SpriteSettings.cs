@@ -61,6 +61,12 @@ namespace Choop.Compiler.ProjectModel
         [JsonProperty("costumes")]
         public Collection<Asset> Costumes { get; set; } = new Collection<Asset>();
 
+        /// <summary>
+        /// Gets the collection of sounds in the sprite.
+        /// </summary>
+        [JsonProperty("sounds")]
+        public Collection<Asset> Sounds { get; set; } = new Collection<Asset>();
+
         #endregion
     }
 }
