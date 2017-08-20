@@ -17,11 +17,11 @@ namespace Choop.Compiler.Interfaces
         void OpenProject(string path);
 
         /// <summary>
-        /// Returns the stream to read the file at the specified path, relative to the project base path.
+        /// Returns the underlying stream of the file at the specified path, relative to the project base path.
         /// </summary>
         /// <param name="path">The path of the file being read, relative to the project base path.</param>
         /// <returns>The stream to read the file from.</returns>
-        StreamReader GetFileReadStream(string path);
+        Stream GetFileReadStream(string path);
 
         /// <summary>
         /// Closes the current open project.

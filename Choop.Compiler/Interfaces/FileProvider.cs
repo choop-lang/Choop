@@ -38,7 +38,7 @@ namespace Choop.Compiler.Interfaces
         /// </summary>
         /// <param name="path">The path of the file being read, relative to the project base path.</param>
         /// <returns>The stream to read the file from.</returns>
-        public abstract StreamReader GetFileReadStream(string path);
+        public abstract Stream GetFileReadStream(string path);
 
         /// <summary>
         /// Closes the current open project.
