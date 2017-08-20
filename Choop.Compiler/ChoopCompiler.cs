@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing.Imaging;
 using System.IO;
@@ -33,6 +34,21 @@ namespace Choop.Compiler
         /// The file provider.
         /// </summary>
         private readonly IFileProvider _fileProvider;
+
+        /// <summary>
+        /// The collection of costume files, with their path and file contents.
+        /// </summary>
+        private readonly Dictionary<string, byte[]> _costumeFiles = new Dictionary<string, byte[]>();
+
+        /// <summary>
+        /// The collection of sound files, with their path and file contents.
+        /// </summary>
+        private readonly Dictionary<string, byte[]> _soundFiles = new Dictionary<string, byte[]>();
+
+        /// <summary>
+        /// The collection of sprite definition files, with their path and their deserialized file contents.
+        /// </summary>
+        private readonly Dictionary<string, SpriteSettings> _spriteDefinitionFiles = new Dictionary<string, SpriteSettings>();
 
         #endregion
 
@@ -108,7 +124,7 @@ namespace Choop.Compiler
             _fileProvider.OpenProject(projectPath);
 
             // Get project.chp file
-            using (StreamReader projectReader = _fileProvider.GetFileReadStream(Settings.ProjectSettingsFile))
+            using (StreamReader projectReader = new StreamReader(_fileProvider.GetFileReadStream(Settings.ProjectSettingsFile)))
             {
                 // Deserialise file
                 ChoopProject.Settings = JsonConvert.DeserializeObject<ProjectSettings>(projectReader.ReadToEnd());
@@ -120,18 +136,35 @@ namespace Choop.Compiler
                     case BuildAction.Ignore:
                         // No action
                         break;
+
                     case BuildAction.SourceCode:
                         InjectCode(new AntlrInputStream(_fileProvider.GetFileReadStream(file.Path)), file.Path);
                         break;
+
                     case BuildAction.SpriteDefinition:
-                        // TODO: sprite definitions
+                        using (StreamReader reader = new StreamReader(_fileProvider.GetFileReadStream(file.Path)))
+                            _spriteDefinitionFiles.Add(file.Path,
+                                JsonConvert.DeserializeObject<SpriteSettings>(reader.ReadToEnd()));
                         break;
+
                     case BuildAction.CostumeAsset:
-                        // TODO: costume asset loading
+                        using (Stream stream = _fileProvider.GetFileReadStream(file.Path))
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            stream.CopyTo(ms);
+                            _costumeFiles.Add(file.Path, ms.ToArray());
+                        }
                         break;
+
                     case BuildAction.SoundAsset:
-                        // TODO: sound asset loading
+                        using (Stream stream = _fileProvider.GetFileReadStream(file.Path))
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            stream.CopyTo(ms);
+                            _soundFiles.Add(file.Path, ms.ToArray());
+                        }
                         break;
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
