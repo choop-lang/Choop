@@ -66,6 +66,12 @@
     <None Include="Samples\Fibonacci\project.chp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Samples\SyntaxDemo\Global.chs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Samples\SyntaxDemo\MyModule.chs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Samples\SyntaxDemo\MySprite.chd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
