@@ -5,6 +5,7 @@ using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.Helpers;
+using Choop.Compiler.ProjectModel;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -172,11 +173,29 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The translated code for the grammar structure.</returns>
         public Sprite Translate(TranslationContext context)
         {
+            // Find definition file
+            SpriteSettings definitionFile =
+                context.ProjectAssets.SpriteDefinitionFiles.FirstOrDefault(x => x.Key == MetaFile).Value;
+
+            if (definitionFile == null)
+            {
+                context.ErrorList.Add(new CompilerError($"Definition file '{MetaFile}' could not be found",
+                    ErrorType.FileNotFound, ErrorToken, FileName));
+                return null;
+            }
+
             // Create new sprite instance
-            // TODO use metafile
             Sprite sprite = new Sprite
             {
-                Name = Name
+                Name = Name,
+                CurrentCostume = definitionFile.CostumeIndex,
+                Direction = definitionFile.Direction,
+                Draggable = definitionFile.Draggable,
+                LibraryIndex = context.Project.Sprites.Count,
+                Location = definitionFile.Location,
+                RotationStyle = definitionFile.RotationStyle,
+                Scale = definitionFile.Scale,
+                Visible = definitionFile.Visible
             };
 
             // Create translation context
