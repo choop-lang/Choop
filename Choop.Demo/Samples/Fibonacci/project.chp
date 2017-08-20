@@ -7,7 +7,12 @@
 	"tempoBpm": 60,
 	"videoChannelAlpha": 0.5,
 	"videoOn": false,
-	"backdrops": [],
+  "backdrops": [
+    {
+      "path": "stage.png",
+      "name": "Stage" 
+    }
+  ],
 	"files": [
 		{
 			"path": "Fibonacci.chs",

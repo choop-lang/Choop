@@ -88,6 +88,10 @@
       <Name>Choop.Compiler</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Samples\Fibonacci\stage.png" />
+    <Content Include="Samples\SyntaxDemo\stage.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
