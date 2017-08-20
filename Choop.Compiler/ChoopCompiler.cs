@@ -310,7 +310,7 @@ namespace Choop.Compiler
                     writer.Write(ProjectJson.ToString());
 
                 // Save pen layer
-                using (Stream penLayerStream = archive.CreateEntry("0.png", CompressionLevel.Fastest).Open())
+                using (Stream penLayerStream = archive.CreateEntry(ScratchProject.PenLayer + ".png", CompressionLevel.Fastest).Open())
                     ChoopProject.Settings.PenLayerImage.Save(penLayerStream, ImageFormat.Png);
             }
         }
