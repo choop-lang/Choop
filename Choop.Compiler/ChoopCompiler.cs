@@ -282,12 +282,12 @@ namespace Choop.Compiler
             using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Create, true))
             {
                 // Save project.json
-                using (Stream jsonStream = archive.CreateEntry("project.json", CompressionLevel.Optimal).Open())
+                using (Stream jsonStream = archive.CreateEntry(Settings.ScratchJsonFile, CompressionLevel.Optimal).Open())
                 using (StreamWriter writer = new StreamWriter(jsonStream))
                     writer.Write(ProjectJson.ToString());
 
                 // Save pen layer
-                using (Stream penLayerStream = archive.CreateEntry(ScratchProject.PenLayer + ".png", CompressionLevel.Fastest).Open())
+                using (Stream penLayerStream = archive.CreateEntry(ScratchProject.PenLayer + Settings.PngExtension, CompressionLevel.Fastest).Open())
                     ChoopProject.Settings.PenLayerImage.Save(penLayerStream, ImageFormat.Png);
             }
         }

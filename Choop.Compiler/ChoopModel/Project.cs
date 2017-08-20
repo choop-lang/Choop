@@ -190,7 +190,7 @@ namespace Choop.Compiler.ChoopModel
             using (MemoryStream ms = new MemoryStream())
             {
                 Settings.PenLayerImage.Save(ms, ImageFormat.Png);
-                stage.PenLayerMd5 = ms.ToArray().GetMd5Checksum() + ".png";
+                stage.PenLayerMd5 = ms.ToArray().GetMd5Checksum() + Helpers.Settings.PngExtension;
             }
 
             // Insert default backdrop

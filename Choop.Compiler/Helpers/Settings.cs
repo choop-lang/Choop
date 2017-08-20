@@ -55,6 +55,26 @@ namespace Choop.Compiler.Helpers
         /// </summary>
         public const string ProjectSettingsFile = "project" + ChoopProjFileExt;
 
+        /// <summary>
+        /// The name of the json file in an SB2 archive.
+        /// </summary>
+        public const string ScratchJsonFile = "project.json";
+
+        /// <summary>
+        /// The file extension for PNG files.
+        /// </summary>
+        public const string PngExtension = ".png";
+
+        /// <summary>
+        /// The file extension for SVG files.
+        /// </summary>
+        public const string SvgExtension = ".svg";
+
+        /// <summary>
+        /// The file extension for WAV files.
+        /// </summary>
+        public const string WavExtension = ".wav";
+
         #endregion
 
         #region Fields
