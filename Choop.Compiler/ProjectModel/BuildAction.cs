@@ -16,6 +16,11 @@
         SourceCode,
 
         /// <summary>
+        /// Indicates that the compiler should treat this file as a Choop sprite definition.
+        /// </summary>
+        SpriteDefinition,
+
+        /// <summary>
         /// Indiciates that the compiler should treat this file as a bitmap asset.
         /// </summary>
         BitmapAsset,

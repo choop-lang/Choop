@@ -123,6 +123,9 @@ namespace Choop.Compiler
                     case BuildAction.SourceCode:
                         InjectCode(new AntlrInputStream(_fileProvider.GetFileReadStream(file.Path)), file.Path);
                         break;
+                    case BuildAction.SpriteDefinition:
+                        // TODO: sprite definitions
+                        break;
                     case BuildAction.BitmapAsset:
                         // TODO: bitmap asset loading
                         break;
