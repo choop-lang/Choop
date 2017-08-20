@@ -89,7 +89,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Samples\Fibonacci\circle.svg" />
     <Content Include="Samples\Fibonacci\stage.png" />
+    <Content Include="Samples\SyntaxDemo\circle.svg" />
     <Content Include="Samples\SyntaxDemo\stage.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

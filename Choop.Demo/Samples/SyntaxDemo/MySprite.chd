@@ -6,6 +6,11 @@
   "rotationStyle": 0,
   "draggable": false,
   "visible": true,
-  "costumes": [],
+  "costumes": [
+    {
+      "path": "circle.svg",
+      "name": "Circle" 
+    }
+  ],
   "sounds": []
 }

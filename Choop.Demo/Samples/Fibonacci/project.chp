@@ -28,6 +28,11 @@
       "path": "stage.png",
       "buildAction": 3,
       "attribution": ""
+    },
+    {
+      "path": "circle.svg",
+      "buildAction": 4,
+      "attribution": ""
     }
   ],
 	"watchers": []
