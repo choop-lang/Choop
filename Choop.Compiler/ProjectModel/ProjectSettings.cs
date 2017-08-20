@@ -66,7 +66,7 @@ namespace Choop.Compiler.ProjectModel
         /// Gets the collection of files to use as backdrops.
         /// </summary>
         [JsonProperty("backdrops")]
-        public Collection<string> Backdrops { get; } = new Collection<string>();
+        public Collection<CostumeAsset> Backdrops { get; } = new Collection<CostumeAsset>();
 
         /// <summary>
         /// Gets the collection of files in the Choop project.

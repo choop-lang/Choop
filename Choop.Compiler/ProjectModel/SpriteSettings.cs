@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.ObjectModel;
+using System.Drawing;
 using Choop.Compiler.BlockModel;
 
 namespace Choop.Compiler.ProjectModel
@@ -44,6 +45,11 @@ namespace Choop.Compiler.ProjectModel
         /// Gets or sets whether the sprite is visible. (Default is true)
         /// </summary>
         public bool Visible { get; set; } = true;
+
+        /// <summary>
+        /// Gets the collection of costumes in the sprite.
+        /// </summary>
+        public Collection<CostumeAsset> Costumes { get; set; } = new Collection<CostumeAsset>();
 
         #endregion
     }
