@@ -21,14 +21,9 @@
         SpriteDefinition,
 
         /// <summary>
-        /// Indiciates that the compiler should treat this file as a bitmap asset.
+        /// Indiciates that the compiler should treat this file as a costume asset.
         /// </summary>
-        BitmapAsset,
-
-        /// <summary>
-        /// Indiciates that the compiler should treat this file as a vector asset.
-        /// </summary>
-        VectorAsset,
+        CostumeAsset,
 
         /// <summary>
         /// Indicates that the compiler should treat this file as a sound asset.

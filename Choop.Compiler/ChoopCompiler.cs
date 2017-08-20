@@ -126,11 +126,8 @@ namespace Choop.Compiler
                     case BuildAction.SpriteDefinition:
                         // TODO: sprite definitions
                         break;
-                    case BuildAction.BitmapAsset:
-                        // TODO: bitmap asset loading
-                        break;
-                    case BuildAction.VectorAsset:
-                        // TODO: vector asset loading
+                    case BuildAction.CostumeAsset:
+                        // TODO: costume asset loading
                         break;
                     case BuildAction.SoundAsset:
                         // TODO: sound asset loading
