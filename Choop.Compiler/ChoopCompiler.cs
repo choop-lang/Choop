@@ -280,7 +280,7 @@ namespace Choop.Compiler
             DoModuleImport();
 
             // Create translation context (Superglobal level)
-            TranslationContext context = new TranslationContext(CompilerErrors);
+            TranslationContext context = new TranslationContext(CompilerErrors, _assets);
 
             // Translate project into BlockModel representation
             ScratchProject = ChoopProject.Translate(context);

@@ -37,6 +37,11 @@ namespace Choop.Compiler.Helpers
         public Collection<CompilerError> ErrorList { get; }
 
         /// <summary>
+        /// Gets the collection of project assets, only available at the sprite level and above.
+        /// </summary>
+        public AssetCollection ProjectAssets { get; }
+
+        /// <summary>
         /// Gets the collection of blocks to include before the current context.
         /// </summary>
         public Collection<Block> Before { get; } = new Collection<Block>();
@@ -54,13 +59,15 @@ namespace Choop.Compiler.Helpers
         /// Creates a new instance of the <see cref="TranslationContext"/> class.
         /// </summary>
         /// <param name="errorList">The collection of compiler errors.</param>
-        public TranslationContext(Collection<CompilerError> errorList)
+        /// <param name="projectAssets">The collection of assets.</param>
+        public TranslationContext(Collection<CompilerError> errorList, AssetCollection projectAssets)
         {
             CurrentBlock = null;
             CurrentScope = null;
             CurrentSprite = null;
             Project = null;
             ErrorList = errorList;
+            ProjectAssets = projectAssets;
         }
 
         /// <summary>
@@ -75,6 +82,7 @@ namespace Choop.Compiler.Helpers
             CurrentSprite = null;
             Project = project;
             ErrorList = oldContext.ErrorList;
+            ProjectAssets = oldContext.ProjectAssets;
         }
 
         /// <summary>
