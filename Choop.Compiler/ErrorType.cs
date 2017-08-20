@@ -60,6 +60,10 @@
         /// <summary>
         /// Indicates that a name a declaration with a specified name could not be found.
         /// </summary>
-        NotDefined
+        NotDefined,
+        /// <summary>
+        /// Indicates that a file referenced was not found.
+        /// </summary>
+        FileNotFound
     }
 }
