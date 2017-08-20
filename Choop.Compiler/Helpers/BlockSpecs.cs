@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Choop.Compiler.TranslationUtils
+namespace Choop.Compiler.Helpers
 {
     /// <summary>
     /// Contains the block spec for every Scratch block.

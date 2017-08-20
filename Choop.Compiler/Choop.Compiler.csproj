@@ -71,8 +71,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="TranslationUtils\BlockBuilder.cs" />
-    <Compile Include="TranslationUtils\BlockSpecs.cs" />
+    <Compile Include="Helpers\BlockBuilder.cs" />
+    <Compile Include="Helpers\BlockSpecs.cs" />
     <Compile Include="BlockModel\Comment.cs" />
     <Compile Include="BlockModel\IJsonConvertable.cs" />
     <Compile Include="BlockModel\Sound.cs" />
@@ -106,9 +106,9 @@
     <Compile Include="ChoopModel\EventHandler.cs" />
     <Compile Include="ChoopModel\IRule.cs" />
     <Compile Include="ChoopModel\Project.cs" />
-    <Compile Include="TranslationUtils\MethodSignature.cs" />
-    <Compile Include="TranslationUtils\Settings.cs" />
-    <Compile Include="TranslationUtils\TranslationContext.cs" />
+    <Compile Include="Helpers\MethodSignature.cs" />
+    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Helpers\TranslationContext.cs" />
     <Compile Include="ChoopModel\WhileLoop.cs" />
     <Compile Include="ChoopModel\RepeatLoop.cs" />
     <Compile Include="ChoopModel\SwitchStmt.cs" />
@@ -153,10 +153,10 @@
     <Compile Include="Antlr\ChoopTokenErrorListener.cs" />
     <Compile Include="CompilerError.cs" />
     <Compile Include="ErrorType.cs" />
-    <Compile Include="TranslationUtils\ExtensionMethods.cs" />
-    <Compile Include="TranslationUtils\Scope.cs" />
-    <Compile Include="TranslationUtils\StackSegment.cs" />
-    <Compile Include="TranslationUtils\StackValue.cs" />
+    <Compile Include="Helpers\ExtensionMethods.cs" />
+    <Compile Include="Helpers\Scope.cs" />
+    <Compile Include="Helpers\StackSegment.cs" />
+    <Compile Include="Helpers\StackValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

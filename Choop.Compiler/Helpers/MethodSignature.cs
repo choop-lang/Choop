@@ -1,4 +1,4 @@
-﻿namespace Choop.Compiler.TranslationUtils
+﻿namespace Choop.Compiler.Helpers
 {
     /// <summary>
     /// Represents the signature for an inbuilt common Scratch block.

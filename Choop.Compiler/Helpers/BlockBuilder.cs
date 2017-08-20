@@ -4,7 +4,7 @@ using System.Linq;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 
-namespace Choop.Compiler.TranslationUtils
+namespace Choop.Compiler.Helpers
 {
     /// <summary>
     /// Simplifies the translation from statements to blocks.

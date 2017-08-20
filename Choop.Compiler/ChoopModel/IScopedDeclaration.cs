@@ -1,4 +1,4 @@
-﻿using Choop.Compiler.TranslationUtils;
+﻿using Choop.Compiler.Helpers;
 
 namespace Choop.Compiler.ChoopModel
 {

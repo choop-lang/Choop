@@ -2,7 +2,7 @@
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 
-namespace Choop.Compiler.TranslationUtils
+namespace Choop.Compiler.Helpers
 {
     /// <summary>
     /// Provides properties and methods to use whilst translating ChoopModel code.

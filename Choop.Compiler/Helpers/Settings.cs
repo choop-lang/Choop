@@ -1,7 +1,7 @@
 ﻿using System;
 using Choop.Compiler.BlockModel;
 
-namespace Choop.Compiler.TranslationUtils
+namespace Choop.Compiler.Helpers
 {
     /// <summary>
     /// Specifies constants for use in the Choop model.

@@ -8,9 +8,9 @@ using System.IO;
 using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.Helpers;
 using Choop.Compiler.ProjectModel;
 using Choop.Compiler.Properties;
-using Choop.Compiler.TranslationUtils;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -150,7 +150,7 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The declaration of the item with the specified name; null if not found.</returns>
         private static T GetItem<T>(string name, IEnumerable<T> locals)
             where T : class, IDeclaration => locals.FirstOrDefault(
-            item => item.Name.Equals(name, TranslationUtils.Settings.IdentifierComparisonMode));
+            item => item.Name.Equals(name, Helpers.Settings.IdentifierComparisonMode));
 
         /// <summary>
         /// Gets the translated code for the grammar structure.

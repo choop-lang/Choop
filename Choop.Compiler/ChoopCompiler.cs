@@ -8,9 +8,9 @@ using Antlr4.Runtime.Tree;
 using Choop.Compiler.Antlr;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
+using Choop.Compiler.Helpers;
 using Choop.Compiler.Interfaces;
 using Choop.Compiler.ProjectModel;
-using Choop.Compiler.TranslationUtils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 

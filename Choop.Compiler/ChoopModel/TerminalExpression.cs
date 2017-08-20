@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using Antlr4.Runtime;
-using Choop.Compiler.TranslationUtils;
+using Choop.Compiler.Helpers;
 using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.ChoopModel
