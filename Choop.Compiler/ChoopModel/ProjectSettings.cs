@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using Choop.Compiler.BlockModel;
 using Newtonsoft.Json;
 
@@ -78,6 +79,12 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         [JsonProperty("watchers")]
         public Collection<StageMonitor> Watchers { get; } = new Collection<StageMonitor>();
+
+        /// <summary>
+        /// Gets the image used for the base pen layer.
+        /// </summary>
+        [JsonIgnore]
+        public Image PenLayerImage { get; set; } = new Bitmap(480, 360);
 
         #endregion
     }
