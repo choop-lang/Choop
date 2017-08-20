@@ -15,8 +15,28 @@
   ],
   "files": [
     {
+      "path": "Global.chs",
+      "buildAction": 1,
+      "attribution": ""
+    },
+    {
       "path": "MySprite.chs",
       "buildAction": 1,
+      "attribution": ""
+    },
+    {
+      "path": "MySprite.chd",
+      "buildAction": 2,
+      "attribution": ""
+    },
+    {
+      "path": "MyModule.chs",
+      "buildAction": 1,
+      "attribution": ""
+    },
+    {
+      "path": "stage.png",
+      "buildAction": 3,
       "attribution": ""
     }
   ],

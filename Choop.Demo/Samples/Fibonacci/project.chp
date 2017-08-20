@@ -13,12 +13,22 @@
       "name": "Stage" 
     }
   ],
-	"files": [
-		{
-			"path": "Fibonacci.chs",
-			"buildAction": 1,
-			"attribution": ""
-		}
-	],
+  "files": [
+    {
+      "path": "Fibonacci.chs",
+      "buildAction": 1,
+      "attribution": ""
+    },
+    {
+      "path": "Fibonacci.chd",
+      "buildAction": 2,
+      "attribution": ""
+    },
+    {
+      "path": "stage.png",
+      "buildAction": 3,
+      "attribution": ""
+    }
+  ],
 	"watchers": []
 }
