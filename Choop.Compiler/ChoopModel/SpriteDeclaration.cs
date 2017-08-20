@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
@@ -221,16 +222,31 @@ namespace Choop.Compiler.ChoopModel
             foreach (MethodDeclaration methodDeclaration in Methods)
                 sprite.Scripts.Add(methodDeclaration.Translate(newContext));
 
-            // Insert default costume
-            // TODO use metafile
-            sprite.Costumes.Add(new Costume
+            // Costumes
+            foreach (Asset costume in definitionFile.Costumes)
             {
-                Name = "costume1",
-                Id = 1,
-                Md5 = "09dc888b0b7df19f70d81588ae73420e.svg",
-                BitmapResolution = 1,
-                RotationCenter = new Point(47, 55)
-            });
+                // Find costume file
+                byte[] costumeData = context.ProjectAssets.CostumeFiles.FirstOrDefault(x => x.Key == costume.Path)
+                    .Value;
+
+                if (costumeData == null)
+                {
+                    context.ErrorList.Add(new CompilerError($"Costume '{costume.Path}' could not be found",
+                        ErrorType.FileNotFound, null, MetaFile));
+                    return null;
+                }
+
+                // Create costume
+                // TODO costume id and rotation centre
+                sprite.Costumes.Add(new Costume
+                {
+                    Name = costume.Name,
+                    Id = 1,
+                    BitmapResolution = 1,
+                    Md5 = costumeData.GetMd5Checksum() + Path.GetExtension(costume.Path),
+                    RotationCenter = Point.Empty
+                });
+            }
 
             return sprite;
         }
