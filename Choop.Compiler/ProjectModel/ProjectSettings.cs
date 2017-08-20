@@ -4,7 +4,7 @@ using System.Drawing;
 using Choop.Compiler.BlockModel;
 using Newtonsoft.Json;
 
-namespace Choop.Compiler.ChoopModel
+namespace Choop.Compiler.ProjectModel
 {
     /// <summary>
     /// Represents a Choop project settings file.

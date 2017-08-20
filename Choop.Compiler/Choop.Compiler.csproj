@@ -55,12 +55,12 @@
   <ItemGroup>
     <Compile Include="BlockModel\BlockDef.cs" />
     <Compile Include="BlockModel\ScriptTuple.cs" />
-    <Compile Include="ChoopModel\BuildAction.cs" />
-    <Compile Include="ChoopModel\ChoopFile.cs" />
+    <Compile Include="ProjectModel\BuildAction.cs" />
+    <Compile Include="ProjectModel\ChoopFile.cs" />
     <Compile Include="ChoopModel\Condition.cs" />
     <Compile Include="ChoopModel\IMethod.cs" />
-    <Compile Include="ChoopModel\ProjectSettings.cs" />
-    <Compile Include="ChoopModel\SpriteSettings.cs" />
+    <Compile Include="ProjectModel\ProjectSettings.cs" />
+    <Compile Include="ProjectModel\SpriteSettings.cs" />
     <Compile Include="ChoopModel\UsingStmt.cs" />
     <Compile Include="ChoopModel\TerminalType.cs" />
     <Compile Include="Interfaces\DiskFileProvider.cs" />
@@ -175,6 +175,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.ProjectModel;
 using Choop.Compiler.Properties;
 using Choop.Compiler.TranslationUtils;
 

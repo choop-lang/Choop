@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Choop.Compiler.ChoopModel
+namespace Choop.Compiler.ProjectModel
 {
     /// <summary>
     /// Represents a file inside a Choop project.

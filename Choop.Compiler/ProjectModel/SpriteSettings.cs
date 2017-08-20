@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Choop.Compiler.BlockModel;
 
-namespace Choop.Compiler.ChoopModel
+namespace Choop.Compiler.ProjectModel
 {
     /// <summary>
     /// Represents a Choop sprite settings file.

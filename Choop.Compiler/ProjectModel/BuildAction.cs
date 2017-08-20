@@ -1,4 +1,4 @@
-﻿namespace Choop.Compiler.ChoopModel
+﻿namespace Choop.Compiler.ProjectModel
 {
     /// <summary>
     /// Specifies the possible build actions for a file.
