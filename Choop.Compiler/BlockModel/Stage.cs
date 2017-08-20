@@ -65,7 +65,7 @@ namespace Choop.Compiler.BlockModel
         /// <summary>
         /// Gets or sets the MD5 hash name for the image of the pen trails.
         /// </summary>
-        public string PenLayerMd5 { get; set; } = "";
+        public string PenLayerMd5 { get; set; }
 
         /// <summary>
         /// Gets or sets the tempo of the project in bpm.

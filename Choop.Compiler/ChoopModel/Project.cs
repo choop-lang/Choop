@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
@@ -183,7 +185,14 @@ namespace Choop.Compiler.ChoopModel
                 spriteCount++;
             }
 
-            // Insert default costume
+            // Get pen layer md5
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Settings.PenLayerImage.Save(ms, ImageFormat.Png);
+                stage.PenLayerMd5 = ms.ToArray().GetMd5Checksum() + ".png";
+            }
+
+            // Insert default backdrop
             // TODO use meta file
             stage.Costumes.Add(new Costume
             {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Security.Cryptography;
+using System.Text;
 using Choop.Compiler.Antlr;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
@@ -83,6 +85,27 @@ namespace Choop.Compiler.TranslationUtils
                 default:
                     throw new ArgumentOutOfRangeException(nameof(rotationType), rotationType, null);
             }
+        }
+
+        // Byte[]
+
+        /// <summary>
+        /// Returns the md5 checksum of a byte array.
+        /// </summary>
+        /// <param name="bytes">The bytes to create the checksum of.</param>
+        /// <returns>The md5 checksum as a hexadecimal string.</returns>
+        public static string GetMd5Checksum(this byte[] bytes)
+        {
+            // Hash the bytes
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            byte[] hash = md5.ComputeHash(bytes);
+
+            // Convert to base 16 string
+            StringBuilder sb = new StringBuilder();
+            foreach (byte b in hash)
+                sb.Append(b.ToString("x2").ToLower());
+
+            return sb.ToString();
         }
 
         // DataType
