@@ -21,29 +21,6 @@ namespace Choop.Compiler
     /// </summary>
     public class ChoopCompiler : IDisposable
     {
-        #region Constants
-
-        /// <summary>
-        /// The file extension for Choop project files.
-        /// </summary>
-        public const string ChoopProjFileExt = ".chp";
-
-        /// <summary>
-        /// The file extension for Choop source files.
-        /// </summary>
-        public const string ChoopSourceFileExt = ".chs";
-
-        /// <summary>
-        /// The file extension for Choop definition files.
-        /// </summary>
-        public const string ChoopDefinitionFileExt = ".chd";
-
-        /// <summary>
-        /// The path of the project settings file.
-        /// </summary>
-        public const string ProjectSettingsFile = "project" + ChoopProjFileExt;
-
-        #endregion
 
         #region Fields
 
@@ -131,7 +108,7 @@ namespace Choop.Compiler
             _fileProvider.OpenProject(projectPath);
 
             // Get project.chp file
-            using (StreamReader projectReader = _fileProvider.GetFileReadStream(ProjectSettingsFile))
+            using (StreamReader projectReader = _fileProvider.GetFileReadStream(Settings.ProjectSettingsFile))
             {
                 // Deserialise file
                 ChoopProject.Settings = JsonConvert.DeserializeObject<ProjectSettings>(projectReader.ReadToEnd());
