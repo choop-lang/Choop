@@ -89,10 +89,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Samples\Fibonacci\circle.svg" />
-    <Content Include="Samples\Fibonacci\stage.png" />
-    <Content Include="Samples\SyntaxDemo\circle.svg" />
-    <Content Include="Samples\SyntaxDemo\stage.png" />
+    <Content Include="Samples\Fibonacci\circle.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\Fibonacci\stage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\SyntaxDemo\circle.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\SyntaxDemo\stage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
