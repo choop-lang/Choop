@@ -13,7 +13,7 @@ namespace Choop.Demo
         private static void Main(string[] args)
         {
             const string inputProject = @"Samples\Fibonacci\";
-            const string outputFile = @"Output\project.json";
+            const string outputFile = @"Output\project.sb2";
 
             // Create compiler instance
             using (ChoopCompiler compiler = new ChoopCompiler(inputProject, new DiskFileProvider()))

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.IO.Compression;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using Choop.Compiler.Antlr;
@@ -297,11 +300,18 @@ namespace Choop.Compiler
             if (!Compiled) throw new InvalidOperationException("Project not compiled");
             if (HasErrors) throw new InvalidOperationException("Project has compiler errors");
 
-            // TODO: generate + save entire sb2
-
-            using (StreamWriter writer = new StreamWriter(filepath, false))
+            // Create zip file
+            using (FileStream fs = File.Create(filepath))
+            using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Create, true))
             {
-                writer.Write(ProjectJson.ToString());
+                // Save project.json
+                using (Stream jsonStream = archive.CreateEntry("project.json", CompressionLevel.Optimal).Open())
+                using (StreamWriter writer = new StreamWriter(jsonStream))
+                    writer.Write(ProjectJson.ToString());
+
+                // Save pen layer
+                using (Stream penLayerStream = archive.CreateEntry("0.png", CompressionLevel.Fastest).Open())
+                    ChoopProject.Settings.PenLayerImage.Save(penLayerStream, ImageFormat.Png);
             }
         }
 
