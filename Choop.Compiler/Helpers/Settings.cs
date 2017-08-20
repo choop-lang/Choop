@@ -16,22 +16,22 @@ namespace Choop.Compiler.Helpers
         public const StringComparison IdentifierComparisonMode = StringComparison.CurrentCulture;
 
         /// <summary>
-        /// Gets the name of the stage.
+        ///The name of the stage.
         /// </summary>
         public const string StageName = "Stage";
 
         /// <summary>
-        /// Gets the name of the stack reference parameter.
+        /// The name of the stack reference parameter.
         /// </summary>
         public const string StackRefParam = "@stackRef";
 
         /// <summary>
-        /// Gets the name of the stack offset parameter.
+        /// The name of the stack offset parameter.
         /// </summary>
         public const string StackOffsetParam = "@stackOffset";
 
         /// <summary>
-        /// Gets the name of the current stack variable.
+        /// The name of the current stack variable.
         /// </summary>
         public const string CurrentStackVar = "@CurrentStack";
 
