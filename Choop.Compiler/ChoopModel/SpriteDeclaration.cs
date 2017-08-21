@@ -231,11 +231,11 @@ namespace Choop.Compiler.ChoopModel
                 }
 
                 // Create costume
-                // TODO costume id and rotation centre
+                // TODO rotation centre
                 sprite.Costumes.Add(new Costume
                 {
                     Name = costume.Name,
-                    Id = 1,
+                    Id = costumeData.Id,
                     BitmapResolution = 1,
                     Md5 = costumeData.Contents.GetMd5Checksum() + costumeData.Extension,
                     RotationCenter = Point.Empty
