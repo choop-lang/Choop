@@ -226,11 +226,11 @@ namespace Choop.Compiler.ChoopModel
                 {
                     context.ErrorList.Add(new CompilerError($"Costume '{costume.Path}' could not be found",
                         ErrorType.FileNotFound, null, DefinitionFile));
-                    return null;
+                    break;
                 }
 
                 // Create costume
-                // TODO rotation centre
+                // TODO resolution, rotation centre
                 sprite.Costumes.Add(new Costume
                 {
                     Name = costume.Name,
@@ -249,7 +249,7 @@ namespace Choop.Compiler.ChoopModel
                 {
                     context.ErrorList.Add(new CompilerError($"Sound '{sound.Path}' could not be found",
                         ErrorType.FileNotFound, null, DefinitionFile));
-                    return null;
+                    break;
                 }
 
                 // Create sound
