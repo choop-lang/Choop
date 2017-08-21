@@ -98,6 +98,9 @@
     <Content Include="Samples\SyntaxDemo\circle.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Samples\SyntaxDemo\pling.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Samples\SyntaxDemo\stage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

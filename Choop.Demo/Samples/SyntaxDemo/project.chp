@@ -43,6 +43,11 @@
       "path": "circle.svg",
       "buildAction": 3,
       "attribution": ""
+    },
+    {
+      "path": "pling.wav",
+      "buildAction": 4,
+      "attribution": "http://soundbible.com/1645-Pling.html, KevanGC (Public Domain)"
     }
   ],
   "watchers": []
