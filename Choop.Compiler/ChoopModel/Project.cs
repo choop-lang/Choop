@@ -175,10 +175,8 @@ namespace Choop.Compiler.ChoopModel
             // Translate sprites and get statistics
             int spriteCount = 0;
             int scriptCount = 0;
-            foreach (SpriteDeclaration spriteDeclaration in Sprites)
+            foreach (Sprite translated in Sprites.Select(x => x.Translate(newContext)))
             {
-                // Translate sprite
-                Sprite translated = spriteDeclaration.Translate(newContext);
                 stage.Children.Add(translated);
 
                 // Update statistics

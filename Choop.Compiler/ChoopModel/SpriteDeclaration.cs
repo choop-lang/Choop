@@ -208,9 +208,8 @@ namespace Choop.Compiler.ChoopModel
                 sprite.Lists.Add(globalListDeclaration.Translate(newContext));
 
             // Events
-            foreach (EventHandler eventHandler in EventHandlers)
+            foreach (ScriptTuple[] translated in EventHandlers.Select(x => x.Translate(newContext)))
             {
-                ScriptTuple[] translated = eventHandler.Translate(newContext);
                 sprite.Scripts.Add(translated[0]);
                 sprite.Scripts.Add(translated[1]);
             }
