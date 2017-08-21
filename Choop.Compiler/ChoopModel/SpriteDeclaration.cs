@@ -7,6 +7,7 @@ using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.Helpers;
 using Choop.Compiler.ProjectModel;
+using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.ChoopModel
 {
@@ -175,7 +176,8 @@ namespace Choop.Compiler.ChoopModel
         public Sprite Translate(TranslationContext context)
         {
             // Find definition file
-            if (!context.ProjectAssets.SpriteDefinitionFiles.TryGetValue(DefinitionFile, out SpriteSettings definitionFile))
+            if (!context.ProjectAssets.SpriteDefinitionFiles.TryGetValue(DefinitionFile,
+                out SpriteSettings definitionFile))
             {
                 context.ErrorList.Add(new CompilerError($"Definition file '{DefinitionFile}' could not be found",
                     ErrorType.FileNotFound, ErrorToken, FileName));
@@ -230,14 +232,16 @@ namespace Choop.Compiler.ChoopModel
                 }
 
                 // Create costume
-                // TODO resolution, rotation centre
+
+                // TODO resolution
+                dynamic rotationCenter = costume.Attributes.rotationCenter;
                 sprite.Costumes.Add(new Costume
                 {
                     Name = costume.Name,
                     Id = costumeData.Id,
                     BitmapResolution = 1,
                     Md5 = costumeData.Contents.GetMd5Checksum() + costumeData.Extension,
-                    RotationCenter = Point.Empty
+                    RotationCenter = new Point((int)rotationCenter.x.Value, (int)rotationCenter.y.Value)
                 });
             }
 

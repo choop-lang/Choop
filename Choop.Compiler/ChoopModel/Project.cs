@@ -203,14 +203,15 @@ namespace Choop.Compiler.ChoopModel
                 }
 
                 // Create backdrop
-                // TODO bitmap resolution, rotation centre
+                // TODO bitmap resolution
+                dynamic rotationCenter = backdrop.Attributes.rotationCenter;
                 stage.Costumes.Add(new Costume
                 {
                     Name = backdrop.Name,
                     Id = backdropData.Id,
                     BitmapResolution = 1,
                     Md5 = backdropData.Contents.GetMd5Checksum() + backdropData.Extension,
-                    RotationCenter = Point.Empty
+                    RotationCenter = new Point((int)rotationCenter.x.Value, (int)rotationCenter.y.Value)
                 });
             }
 
