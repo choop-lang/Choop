@@ -193,6 +193,29 @@ namespace Choop.Compiler.ChoopModel
                 stage.PenLayerMd5 = ms.ToArray().GetMd5Checksum() + Helpers.Settings.PngExtension;
             }
 
+            // Backdrops
+            foreach (Asset backdrop in Settings.Backdrops)
+            {
+                // Find backdrop file
+                if (!context.ProjectAssets.CostumeFiles.TryGetValue(backdrop.Path, out LoadedAsset backdropData))
+                {
+                    context.ErrorList.Add(new CompilerError($"Backdrop '{backdrop.Path}' could not be found",
+                        ErrorType.FileNotFound, null, Helpers.Settings.ProjectSettingsFile));
+                    return null;
+                }
+
+                // Create backdrop
+                // TODO bitmap resolution, rotation centre
+                stage.Costumes.Add(new Costume
+                {
+                    Name = backdrop.Name,
+                    Id = backdropData.Id,
+                    BitmapResolution = 1,
+                    Md5 = backdropData.Contents.GetMd5Checksum() + backdropData.Extension,
+                    RotationCenter = Point.Empty
+                });
+            }
+
             // Insert default backdrop
             // TODO use meta file
             stage.Costumes.Add(new Costume
