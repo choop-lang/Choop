@@ -22,9 +22,9 @@ namespace Choop.Compiler.ChoopModel
         public string Name { get; }
 
         /// <summary>
-        /// Gets the filepath of the Sprite metadata file for this sprite.
+        /// Gets the filepath of the sprite definition file for this sprite.
         /// </summary>
-        public string MetaFile { get; }
+        public string DefinitionFile { get; }
 
         /// <summary>
         /// Gets the collection of names of modules imported by the sprite.
@@ -74,13 +74,13 @@ namespace Choop.Compiler.ChoopModel
         /// Creates a new instance of the <see cref="SpriteDeclaration"/> class.
         /// </summary>
         /// <param name="name">The name of the sprite.</param>
-        /// <param name="metaFile">The file path to the metadata file for this sprite.</param>
+        /// <param name="definitionFile">The file path to the definition file for this sprite.</param>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="errorToken">The token to report any compiler errors to.</param>
-        public SpriteDeclaration(string name, string metaFile, string fileName, IToken errorToken)
+        public SpriteDeclaration(string name, string definitionFile, string fileName, IToken errorToken)
         {
             Name = name;
-            MetaFile = metaFile;
+            DefinitionFile = definitionFile;
             FileName = fileName;
             ErrorToken = errorToken;
         }
@@ -174,9 +174,9 @@ namespace Choop.Compiler.ChoopModel
         public Sprite Translate(TranslationContext context)
         {
             // Find definition file
-            if (!context.ProjectAssets.SpriteDefinitionFiles.TryGetValue(MetaFile, out SpriteSettings definitionFile))
+            if (!context.ProjectAssets.SpriteDefinitionFiles.TryGetValue(DefinitionFile, out SpriteSettings definitionFile))
             {
-                context.ErrorList.Add(new CompilerError($"Definition file '{MetaFile}' could not be found",
+                context.ErrorList.Add(new CompilerError($"Definition file '{DefinitionFile}' could not be found",
                     ErrorType.FileNotFound, ErrorToken, FileName));
                 return null;
             }
@@ -224,7 +224,7 @@ namespace Choop.Compiler.ChoopModel
                 if (!context.ProjectAssets.CostumeFiles.TryGetValue(costume.Path, out LoadedAsset costumeData))
                 {
                     context.ErrorList.Add(new CompilerError($"Costume '{costume.Path}' could not be found",
-                        ErrorType.FileNotFound, null, MetaFile));
+                        ErrorType.FileNotFound, null, DefinitionFile));
                     return null;
                 }
 
