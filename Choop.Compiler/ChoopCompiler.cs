@@ -217,24 +217,6 @@ namespace Choop.Compiler
         }
 
         /// <summary>
-        /// Injects the specified sprite into the Choop project.
-        /// </summary>
-        /// <param name="sprite">The sprite to inject.</param>
-        public void InjectSprite(SpriteDeclaration sprite)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Injects the specified module into the Choop project.
-        /// </summary>
-        /// <param name="sprite">The module to inject.</param>
-        public void InjectModule(ModuleDeclaration sprite)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Injects the specified image asset.
         /// </summary>
         /// <param name="path">The file path used to reference the asset.</param>
