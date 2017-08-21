@@ -133,9 +133,8 @@ namespace Choop.Compiler
                         break;
 
                     case BuildAction.SpriteDefinition:
-                        using (StreamReader reader = new StreamReader(_fileProvider.GetFileReadStream(file.Path)))
-                            _assets.SpriteDefinitionFiles.Add(file.Path,
-                                JsonConvert.DeserializeObject<SpriteSettings>(reader.ReadToEnd()));
+                        using (Stream stream = _fileProvider.GetFileReadStream(file.Path))
+                            InjectSpriteDefinition(file.Path, stream);
                         break;
 
                     case BuildAction.CostumeAsset:
@@ -215,6 +214,21 @@ namespace Choop.Compiler
             // Add to the global internal code representation
             _builder.FileName = fileName;
             ParseTreeWalker.Default.Walk(_builder, root);
+        }
+
+        /// <summary>
+        /// Injects the specified sprite definition file.
+        /// </summary>
+        /// <param name="path">The file path used to reference the definition file.</param>
+        /// <param name="source">The source stream of the definition file.</param>
+        public void InjectSpriteDefinition(string path, Stream source)
+        {
+            // Check if already compiled
+            if (Compiled) throw new InvalidOperationException("Project already compiled");
+
+            using (StreamReader reader = new StreamReader(source))
+                _assets.SpriteDefinitionFiles.Add(path,
+                    JsonConvert.DeserializeObject<SpriteSettings>(reader.ReadToEnd()));
         }
 
         /// <summary>
