@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
@@ -240,7 +241,31 @@ namespace Choop.Compiler.ChoopModel
                 });
             }
 
-            // TODO: Sounds
+            // Sounds
+            foreach (Asset sound in definitionFile.Sounds)
+            {
+                // Find sound file
+                if (!context.ProjectAssets.SoundFiles.TryGetValue(sound.Path, out LoadedAsset soundData))
+                {
+                    context.ErrorList.Add(new CompilerError($"Sound '{sound.Path}' could not be found",
+                        ErrorType.FileNotFound, null, DefinitionFile));
+                    return null;
+                }
+
+                // Create sound
+                int sampleRate = BitConverter.ToInt32(soundData.Contents, 24);
+                int bytesPerSample = BitConverter.ToInt16(soundData.Contents, 34) / 8;
+                int sampleCount = BitConverter.ToInt32(soundData.Contents, 40) / bytesPerSample;
+
+                sprite.Sounds.Add(new Sound
+                {
+                    Name = sound.Name,
+                    Id = soundData.Id,
+                    Md5 = soundData.Contents.GetMd5Checksum() + soundData.Extension,
+                    Rate = sampleRate,
+                    SampleCount = sampleCount
+                });
+            }
 
             return sprite;
         }
