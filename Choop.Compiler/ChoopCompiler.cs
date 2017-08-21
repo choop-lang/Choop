@@ -245,7 +245,7 @@ namespace Choop.Compiler
             {
                 source.CopyTo(ms);
                 _assets.CostumeFiles.Add(path,
-                    new LoadedAsset(ms.ToArray(), Path.GetExtension(path), _assets.CostumeFiles.Count));
+                    new LoadedAsset(ms.ToArray(), Path.GetExtension(path), _assets.CostumeFiles.Count + 1));
             }
         }
 
