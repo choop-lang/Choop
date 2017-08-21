@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using Antlr4.Runtime.Tree;
 using Choop.Compiler.ChoopModel;
@@ -80,7 +81,7 @@ namespace Choop.Compiler.Antlr
 
             // Get basic info
             string name = context.Name.Text;
-            string metaFile = name + Settings.ChoopDefinitionFileExt;
+            string metaFile = Path.GetFileNameWithoutExtension(FileName) + Settings.ChoopDefinitionFileExt;
 
             if (context.MetaAttr != null)
             {
