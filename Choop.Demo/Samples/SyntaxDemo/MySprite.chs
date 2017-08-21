@@ -1,4 +1,4 @@
-﻿[MetaFile("MySprite.sm")]
+﻿[MetaFile("MySprite.chd")]
 sprite MySprite {
 	using MyModule;
 
