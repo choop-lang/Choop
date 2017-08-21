@@ -184,7 +184,7 @@ namespace Choop.Compiler
         private void InjectCode(ICharStream input, string fileName)
         {
             // Check if already compiled
-            if (Compiled) throw new InvalidOperationException();
+            if (Compiled) throw new InvalidOperationException("Project already compiled");
 
             // Create temporary compiler error list
             Collection<CompilerError> compilerErrorsTemp = new Collection<CompilerError>();
@@ -224,6 +224,9 @@ namespace Choop.Compiler
         /// <param name="source">The source stream for the asset.</param>
         public void InjectCostume(string path, Stream source)
         {
+            // Check if already compiled
+            if (Compiled) throw new InvalidOperationException("Project already compiled");
+
             using (MemoryStream ms = new MemoryStream())
             {
                 source.CopyTo(ms);
@@ -238,6 +241,9 @@ namespace Choop.Compiler
         /// <param name="source">The source stream for the asset.</param>
         public void InjectSound(string path, Stream source)
         {
+            // Check if already compiled
+            if (Compiled) throw new InvalidOperationException("Project already compiled");
+
             using (MemoryStream ms = new MemoryStream())
             {
                 source.CopyTo(ms);
