@@ -234,7 +234,8 @@ stmtNoTerminator
     ;
 
 varDeclaration
-    : ( DeclVar
+    : UnsafeTag?
+	  ( DeclVar
       | Type = typeSpecifier
       )
       Name = Identifier
