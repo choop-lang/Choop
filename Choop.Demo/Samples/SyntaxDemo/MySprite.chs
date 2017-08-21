@@ -1,18 +1,4 @@
-﻿// This is a single-line comment
-
-/* This
-   is
-   a
-   multiline
-   comment
-*/
-
-var globalVar = true;
-const Pi = 3.141593;
-array[3] globalArray = {1, "test", 3};
-list[] globalList;
-
-[MetaFile("MySprite.sm")]
+﻿[MetaFile("MySprite.sm")]
 sprite MySprite {
 	using MyModule;
 
@@ -183,28 +169,4 @@ sprite MySprite {
 
 	event VideoMotionGreaterThan<30>() {
 	}
-}
-
-module MyModule {
-	const e = 2.718;
-
-	num Diff(input1, input2) {
-		if (input2 > input1) {
-			return input2 - input1;
-		} else {
-			return input1 - input2;
-		}
-	}
-
-	string Concat(string input1, string input2) {
-		return input1 . input2;
-	}
-
-	bool IsGreaterThan(num input1, num input2) {
-		return input1 > input2;
-	}
-}
-
-sprite Other {
-
 }
