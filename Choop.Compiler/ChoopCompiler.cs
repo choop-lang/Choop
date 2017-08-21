@@ -161,7 +161,7 @@ namespace Choop.Compiler
         /// </summary>
         /// <param name="input">The input stream containing the raw Choop code to compile.</param>
         /// <param name="fileName">The name of the file the source code came from, used for error messages. Optional.</param>
-        public void InjectCode(Stream input, string fileName = "")
+        public void InjectCode(Stream input, string fileName = null)
         {
             InjectCode(new AntlrInputStream(input), fileName);
         }
@@ -171,7 +171,7 @@ namespace Choop.Compiler
         /// </summary>
         /// <param name="input">The raw Choop code to compile.</param>
         /// <param name="fileName">The name of the file the source code came from, used for error messages. Optional.</param>
-        public void InjectCode(string input, string fileName = "")
+        public void InjectCode(string input, string fileName = null)
         {
             InjectCode(new AntlrInputStream(input), fileName);
         }
