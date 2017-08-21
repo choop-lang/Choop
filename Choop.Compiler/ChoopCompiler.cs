@@ -321,10 +321,8 @@ namespace Choop.Compiler
                     ChoopProject.Settings.PenLayerImage.Save(penLayerStream, ImageFormat.Png);
 
                 // Save costumes
-                int id = 0;
-
                 foreach (LoadedAsset costumeFile in _assets.CostumeFiles.Values)
-                    using (Stream costumeStream = archive.CreateEntry(++id + costumeFile.Extension).Open())
+                    using (Stream costumeStream = archive.CreateEntry(costumeFile.Id + costumeFile.Extension).Open())
                     using (BinaryWriter writer = new BinaryWriter(costumeStream))
                         writer.Write(costumeFile.Contents);
             }
