@@ -378,12 +378,12 @@ caseHead
 	;
 
 caseExpression
-	:       constant #caseEqual
-	| OpGT  constant #caseGT
-	| OpLT  constant #caseLT
-	| OpGTE constant #caseGTE
-	| OpLTE constant #caseLTE
-	| OpNE  constant #caseNE
+	:           constant #caseEqual
+	| OpGT      constant #caseGT
+	| OpLT      constant #caseLT
+	| OpGTE     constant #caseGTE
+	| OpLTE     constant #caseLTE
+	| OpNEquals constant #caseNE
 	;
 
 defaultCaseHead
