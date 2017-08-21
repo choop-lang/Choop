@@ -216,17 +216,6 @@ namespace Choop.Compiler.ChoopModel
                 });
             }
 
-            // Insert default backdrop
-            // TODO use meta file
-            stage.Costumes.Add(new Costume
-            {
-                Name = "backdrop1",
-                Id = 3,
-                Md5 = "739b5e2a2435f6e1ec2993791b423146.png",
-                BitmapResolution = 1,
-                RotationCenter = new Point(240, 180)
-            });
-
             // Store project info / stats
             stage.Info = new ProjectInfo
             {
