@@ -78,6 +78,11 @@
         /// <summary>
         /// Indicates that a file referenced was not found.
         /// </summary>
-        FileNotFound
+        FileNotFound,
+
+        /// <summary>
+        /// Indicates that a loaded file had an invalid format that could not be understood.
+        /// </summary>
+        InvalidFormat
     }
 }
