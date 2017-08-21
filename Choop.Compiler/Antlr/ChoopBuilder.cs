@@ -83,7 +83,10 @@ namespace Choop.Compiler.Antlr
             string metaFile = name + Settings.ChoopDefinitionFileExt;
 
             if (context.MetaAttr != null)
-                metaFile = context.MetaAttr.FileName.Text;
+            {
+                string rawText = context.MetaAttr.FileName.Text;
+                metaFile = rawText.Substring(1, rawText.Length - 2);
+            }
 
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) != null)
