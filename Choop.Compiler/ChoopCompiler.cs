@@ -244,7 +244,8 @@ namespace Choop.Compiler
             using (MemoryStream ms = new MemoryStream())
             {
                 source.CopyTo(ms);
-                _assets.CostumeFiles.Add(path, ms.ToArray());
+                _assets.CostumeFiles.Add(path,
+                    new LoadedAsset(ms.ToArray(), Path.GetExtension(path), _assets.CostumeFiles.Count));
             }
         }
 
@@ -261,7 +262,8 @@ namespace Choop.Compiler
             using (MemoryStream ms = new MemoryStream())
             {
                 source.CopyTo(ms);
-                _assets.SoundFiles.Add(path, ms.ToArray());
+                _assets.SoundFiles.Add(path,
+                    new LoadedAsset(ms.ToArray(), Path.GetExtension(path), _assets.SoundFiles.Count));
             }
         }
 
@@ -308,21 +310,23 @@ namespace Choop.Compiler
             using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Create, true))
             {
                 // Save project.json
-                using (Stream jsonStream = archive.CreateEntry(Settings.ScratchJsonFile, CompressionLevel.Optimal).Open())
+                using (Stream jsonStream = archive.CreateEntry(Settings.ScratchJsonFile, CompressionLevel.Optimal)
+                    .Open())
                 using (StreamWriter writer = new StreamWriter(jsonStream))
                     writer.Write(ProjectJson.ToString());
 
                 // Save pen layer
-                using (Stream penLayerStream = archive.CreateEntry(ScratchProject.PenLayer + Settings.PngExtension, CompressionLevel.Fastest).Open())
+                using (Stream penLayerStream = archive
+                    .CreateEntry(ScratchProject.PenLayer + Settings.PngExtension, CompressionLevel.Fastest).Open())
                     ChoopProject.Settings.PenLayerImage.Save(penLayerStream, ImageFormat.Png);
 
                 // Save costumes
                 int id = 0;
 
-                foreach (KeyValuePair<string, byte[]> costumeFile in _assets.CostumeFiles)
-                    using (Stream costumeStream = archive.CreateEntry(++id + Path.GetExtension(costumeFile.Key)).Open())
+                foreach (LoadedAsset costumeFile in _assets.CostumeFiles.Values)
+                    using (Stream costumeStream = archive.CreateEntry(++id + costumeFile.Extension).Open())
                     using (BinaryWriter writer = new BinaryWriter(costumeStream))
-                        writer.Write(costumeFile.Value);
+                        writer.Write(costumeFile.Contents);
             }
         }
 

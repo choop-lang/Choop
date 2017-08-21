@@ -223,7 +223,7 @@ namespace Choop.Compiler.ChoopModel
             foreach (Asset costume in definitionFile.Costumes)
             {
                 // Find costume file
-                if (!context.ProjectAssets.CostumeFiles.TryGetValue(costume.Path, out byte[] costumeData))
+                if (!context.ProjectAssets.CostumeFiles.TryGetValue(costume.Path, out LoadedAsset costumeData))
                 {
                     context.ErrorList.Add(new CompilerError($"Costume '{costume.Path}' could not be found",
                         ErrorType.FileNotFound, null, MetaFile));
@@ -237,7 +237,7 @@ namespace Choop.Compiler.ChoopModel
                     Name = costume.Name,
                     Id = 1,
                     BitmapResolution = 1,
-                    Md5 = costumeData.GetMd5Checksum() + Path.GetExtension(costume.Path),
+                    Md5 = costumeData.Contents.GetMd5Checksum() + costumeData.Extension,
                     RotationCenter = Point.Empty
                 });
             }

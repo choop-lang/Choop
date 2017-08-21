@@ -13,12 +13,12 @@ namespace Choop.Compiler.Helpers
         /// <summary>
         /// The collection of costume files, with their path and file contents.
         /// </summary>
-        public Dictionary<string, byte[]> CostumeFiles { get; } = new Dictionary<string, byte[]>();
+        public Dictionary<string, LoadedAsset> CostumeFiles { get; } = new Dictionary<string, LoadedAsset>();
 
         /// <summary>
         /// The collection of sound files, with their path and file contents.
         /// </summary>
-        public Dictionary<string, byte[]> SoundFiles { get; } = new Dictionary<string, byte[]>();
+        public Dictionary<string, LoadedAsset> SoundFiles { get; } = new Dictionary<string, LoadedAsset>();
 
         /// <summary>
         /// The collection of sprite definition files, with their path and their deserialized file contents.
