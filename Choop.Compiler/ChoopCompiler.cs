@@ -128,7 +128,8 @@ namespace Choop.Compiler
                         break;
 
                     case BuildAction.SourceCode:
-                        InjectCode(new AntlrInputStream(_fileProvider.GetFileReadStream(file.Path)), file.Path);
+                        using (Stream stream = _fileProvider.GetFileReadStream(file.Path))
+                            InjectCode(stream, file.Path);
                         break;
 
                     case BuildAction.SpriteDefinition:
