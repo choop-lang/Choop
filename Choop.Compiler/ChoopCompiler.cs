@@ -325,6 +325,12 @@ namespace Choop.Compiler
                     using (Stream costumeStream = archive.CreateEntry(costumeFile.Id + costumeFile.Extension).Open())
                     using (BinaryWriter writer = new BinaryWriter(costumeStream))
                         writer.Write(costumeFile.Contents);
+
+                // Save sounds
+                foreach (LoadedAsset soundFile in _assets.SoundFiles.Values)
+                    using (Stream soundStream = archive.CreateEntry(soundFile.Id + soundFile.Extension).Open())
+                    using (BinaryWriter writer = new BinaryWriter(soundStream))
+                        writer.Write(soundFile.Contents);
             }
         }
 
