@@ -139,20 +139,12 @@ namespace Choop.Compiler
 
                     case BuildAction.CostumeAsset:
                         using (Stream stream = _fileProvider.GetFileReadStream(file.Path))
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            stream.CopyTo(ms);
-                            _assets.CostumeFiles.Add(file.Path, ms.ToArray());
-                        }
+                            InjectCostume(file.Path, stream);
                         break;
 
                     case BuildAction.SoundAsset:
                         using (Stream stream = _fileProvider.GetFileReadStream(file.Path))
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            stream.CopyTo(ms);
-                            _assets.SoundFiles.Add(file.Path, ms.ToArray());
-                        }
+                            InjectSound(file.Path, stream);
                         break;
 
                     default:
@@ -243,23 +235,31 @@ namespace Choop.Compiler
         }
 
         /// <summary>
-        /// Injects the specified image asset and return the internal file name of the asset.
+        /// Injects the specified image asset.
         /// </summary>
+        /// <param name="path">The file path used to reference the asset.</param>
         /// <param name="source">The source stream for the asset.</param>
-        /// <returns>The internal file name of the asset.</returns>
-        public string InjectCostume(Stream source)
+        public void InjectCostume(string path, Stream source)
         {
-            throw new NotImplementedException();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                source.CopyTo(ms);
+                _assets.CostumeFiles.Add(path, ms.ToArray());
+            }
         }
 
         /// <summary>
-        /// Injects the specified sound asset and return the internal file name of the asset.
+        /// Injects the specified sound asset.
         /// </summary>
+        /// <param name="path">The file path used to reference the asset.</param>
         /// <param name="source">The source stream for the asset.</param>
-        /// <returns>The internal file name of the asset.</returns>
-        public string InjectSound(Stream source)
+        public void InjectSound(string path, Stream source)
         {
-            throw new NotImplementedException();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                source.CopyTo(ms);
+                _assets.SoundFiles.Add(path, ms.ToArray());
+            }
         }
 
         /// <summary>
@@ -305,14 +305,12 @@ namespace Choop.Compiler
             using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Create, true))
             {
                 // Save project.json
-                using (Stream jsonStream = archive.CreateEntry(Settings.ScratchJsonFile, CompressionLevel.Optimal)
-                    .Open())
+                using (Stream jsonStream = archive.CreateEntry(Settings.ScratchJsonFile, CompressionLevel.Optimal).Open())
                 using (StreamWriter writer = new StreamWriter(jsonStream))
                     writer.Write(ProjectJson.ToString());
 
                 // Save pen layer
-                using (Stream penLayerStream = archive
-                    .CreateEntry(ScratchProject.PenLayer + Settings.PngExtension, CompressionLevel.Fastest).Open())
+                using (Stream penLayerStream = archive.CreateEntry(ScratchProject.PenLayer + Settings.PngExtension, CompressionLevel.Fastest).Open())
                     ChoopProject.Settings.PenLayerImage.Save(penLayerStream, ImageFormat.Png);
 
                 // Save costumes
