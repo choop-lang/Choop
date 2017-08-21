@@ -22,7 +22,6 @@ namespace Choop.Compiler
     /// </summary>
     public class ChoopCompiler : IDisposable
     {
-
         #region Fields
 
         /// <summary>
@@ -114,7 +113,8 @@ namespace Choop.Compiler
             _fileProvider.OpenProject(projectPath);
 
             // Get project.chp file
-            using (StreamReader projectReader = new StreamReader(_fileProvider.GetFileReadStream(Settings.ProjectSettingsFile)))
+            using (StreamReader projectReader =
+                new StreamReader(_fileProvider.GetFileReadStream(Settings.ProjectSettingsFile)))
             {
                 // Deserialise file
                 ChoopProject.Settings = JsonConvert.DeserializeObject<ProjectSettings>(projectReader.ReadToEnd());
@@ -305,13 +305,23 @@ namespace Choop.Compiler
             using (ZipArchive archive = new ZipArchive(fs, ZipArchiveMode.Create, true))
             {
                 // Save project.json
-                using (Stream jsonStream = archive.CreateEntry(Settings.ScratchJsonFile, CompressionLevel.Optimal).Open())
+                using (Stream jsonStream = archive.CreateEntry(Settings.ScratchJsonFile, CompressionLevel.Optimal)
+                    .Open())
                 using (StreamWriter writer = new StreamWriter(jsonStream))
                     writer.Write(ProjectJson.ToString());
 
                 // Save pen layer
-                using (Stream penLayerStream = archive.CreateEntry(ScratchProject.PenLayer + Settings.PngExtension, CompressionLevel.Fastest).Open())
+                using (Stream penLayerStream = archive
+                    .CreateEntry(ScratchProject.PenLayer + Settings.PngExtension, CompressionLevel.Fastest).Open())
                     ChoopProject.Settings.PenLayerImage.Save(penLayerStream, ImageFormat.Png);
+
+                // Save costumes
+                int id = 0;
+
+                foreach (KeyValuePair<string, byte[]> costumeFile in _assets.CostumeFiles)
+                    using (Stream costumeStream = archive.CreateEntry(++id + Path.GetExtension(costumeFile.Key)).Open())
+                    using (BinaryWriter writer = new BinaryWriter(costumeStream))
+                        writer.Write(costumeFile.Value);
             }
         }
 
