@@ -17,7 +17,7 @@ namespace Choop.Compiler.ProjectModel
         /// Gets or sets the index of the current costume.
         /// </summary>
         [JsonProperty("costumeIndex")]
-        public int CostumeIndex { get; set; } = 0;
+        public int CostumeIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the sprite.
@@ -47,7 +47,7 @@ namespace Choop.Compiler.ProjectModel
         /// Gets or sets whether the sprite is draggable in the player. (Default is false)
         /// </summary>
         [JsonProperty("draggable")]
-        public bool Draggable { get; set; } = false;
+        public bool Draggable { get; set; }
 
         /// <summary>
         /// Gets or sets whether the sprite is visible. (Default is true)

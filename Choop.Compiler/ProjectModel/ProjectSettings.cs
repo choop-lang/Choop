@@ -60,7 +60,7 @@ namespace Choop.Compiler.ProjectModel
         /// Gets or sets whether the webcam feed is on.
         /// </summary>
         [JsonProperty("videoOn")]
-        public bool VideoOn { get; set; } = false;
+        public bool VideoOn { get; set; }
 
         /// <summary>
         /// Gets the collection of files to use as backdrops.
