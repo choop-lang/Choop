@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Choop.Compiler.ProjectModel
 {
@@ -21,6 +22,12 @@ namespace Choop.Compiler.ProjectModel
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the attributes of the asset.
+        /// </summary>
+        [JsonProperty("attributes", DefaultValueHandling = DefaultValueHandling.Ignore)]
+        public dynamic Attributes { get; set; }
 
         #endregion
     }
