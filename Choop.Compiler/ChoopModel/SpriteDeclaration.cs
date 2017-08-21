@@ -242,6 +242,8 @@ namespace Choop.Compiler.ChoopModel
                 });
             }
 
+            // TODO: Sounds
+
             return sprite;
         }
 
