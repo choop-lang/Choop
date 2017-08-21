@@ -9,7 +9,13 @@
   "costumes": [
     {
       "path": "circle.svg",
-      "name": "Circle"
+      "name": "Circle",
+      "attributes": {
+        "rotationCenter": {
+          "x": 240,
+          "y": 180
+        }
+      }
     }
   ],
   "sounds": []

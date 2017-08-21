@@ -10,7 +10,13 @@
   "backdrops": [
     {
       "path": "stage.png",
-      "name": "Stage"
+      "name": "Stage",
+      "attributes": {
+        "rotationCenter": {
+          "x": 240,
+          "y": 180
+        }
+      }
     }
   ],
   "files": [
