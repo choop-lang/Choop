@@ -94,14 +94,14 @@ sprite MySprite {
 	atomic void Test2(bool param1) {
 		var test = Test4(3, Test4(2, 5));
 
-		{
+		unsafe {
 			// Mini-scope
 			num testscope = 3;
 		}
 	}
 
 	void Test3(param1, string param2 = "test1") {
-		var simple = Test4(1);
+		unsafe var simple = Test4(1);
 	}
 
 	atomic function Test4(param1, num param2 = 3, num param3 = -4e2) {
