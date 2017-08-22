@@ -114,7 +114,7 @@ namespace Choop.Compiler.Helpers
                 throw new ArgumentException("Length of initial values does not match length of datum");
 
             // Use stack
-            if (!Scope.Unsafe)
+            if (!Unsafe)
                 return initalValues.SelectMany(x => new BlockBuilder(BlockSpecs.AddToList, context)
                     .AddParam(x).AddParam(Settings.StackIdentifier).Create()).ToArray();
 
@@ -143,7 +143,7 @@ namespace Choop.Compiler.Helpers
             if (initalValues.Length != StackSpace)
                 throw new ArgumentException("Length of initial values does not match length of datum");
 
-            if (Scope.Unsafe)
+            if (Unsafe)
             {
                 // Variable
                 if (StackSpace == 1)
@@ -170,43 +170,34 @@ namespace Choop.Compiler.Helpers
         /// Returns the code for a variable lookup.
         /// </summary>
         /// <returns>The code for a variable lookup.</returns>
-        public Block CreateVariableLookup()
-        {
-            return Scope.Unsafe
-                ? new Block(BlockSpecs.GetVariable, GetUnsafeName())
-                : new Block(BlockSpecs.GetItemOfList,
-                    new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart),
-                    Settings.StackIdentifier);
-        }
+        public Block CreateVariableLookup() => Unsafe
+            ? new Block(BlockSpecs.GetVariable, GetUnsafeName())
+            : new Block(BlockSpecs.GetItemOfList,
+                new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart),
+                Settings.StackIdentifier);
 
         /// <summary>
         /// Returns the code for an array lookup.
         /// </summary>
         /// <param name="index">The expression for the index to look up.</param>
         /// <returns>The code for an array lookup.</returns>
-        public Block CreateArrayLookup(object index)
-        {
-            return Scope.Unsafe
-                ? new Block(BlockSpecs.GetItemOfList, index, GetUnsafeName())
-                : new Block(BlockSpecs.GetItemOfList,
-                    new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier,
-                        new Block(BlockSpecs.Add, StackStart, index)),
-                    Settings.StackIdentifier);
-        }
+        public Block CreateArrayLookup(object index) => Unsafe
+            ? new Block(BlockSpecs.GetItemOfList, index, GetUnsafeName())
+            : new Block(BlockSpecs.GetItemOfList,
+                new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier,
+                    new Block(BlockSpecs.Add, StackStart, index)),
+                Settings.StackIdentifier);
 
         /// <summary>
         /// Returns the code for a variable assignment.
         /// </summary>
         /// <param name="value">The expression for the value to assign to the variable.</param>
         /// <returns>The code for a variable assignment.</returns>
-        public Block CreateVariableAssignment(object value)
-        {
-            return Scope.Unsafe
-                ? new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), value)
-                : new Block(BlockSpecs.ReplaceItemOfList,
-                    new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart), Settings.StackIdentifier,
-                    value);
-        }
+        public Block CreateVariableAssignment(object value) => Unsafe
+            ? new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), value)
+            : new Block(BlockSpecs.ReplaceItemOfList,
+                new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart), Settings.StackIdentifier,
+                value);
 
         /// <summary>
         /// Returns the code to increase the variable by the specified amount.
@@ -216,7 +207,7 @@ namespace Choop.Compiler.Helpers
         public Block CreateVariableIncrement(object value)
         {
             // TODO: Optimise for when value is negative
-            return Scope.Unsafe
+            return Unsafe
                 ? new Block(BlockSpecs.ChangeVarBy, GetUnsafeName(), value)
                 : new Block(BlockSpecs.ReplaceItemOfList,
                     new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart), Settings.StackIdentifier,
@@ -229,14 +220,11 @@ namespace Choop.Compiler.Helpers
         /// <param name="value">The expression for the value to assign to the array.</param>
         /// <param name="index">The index of the item to assign.</param>
         /// <returns>The code for an array assignment.</returns>
-        public Block CreateArrayAssignment(object value, object index)
-        {
-            return Scope.Unsafe
-                ? new Block(BlockSpecs.ReplaceItemOfList, index, GetUnsafeName(), value)
-                : new Block(BlockSpecs.ReplaceItemOfList,
-                    new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, new Block(BlockSpecs.Add, StackStart, index)),
-                    Settings.StackIdentifier, value);
-        }
+        public Block CreateArrayAssignment(object value, object index) => Unsafe
+            ? new Block(BlockSpecs.ReplaceItemOfList, index, GetUnsafeName(), value)
+            : new Block(BlockSpecs.ReplaceItemOfList,
+                new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, new Block(BlockSpecs.Add, StackStart, index)),
+                Settings.StackIdentifier, value);
 
         /// <summary>
         /// Creates the code to delete the variable from the stack, if necessary.
@@ -244,7 +232,7 @@ namespace Choop.Compiler.Helpers
         /// <returns>The code to delete the variable from the stack or an empty array if unsafe.</returns>
         public Block[] CreateDestruction()
         {
-            if (Scope.Unsafe)
+            if (Unsafe)
                 return new Block[0];
 
             Block[] result = new Block[StackSpace];
