@@ -88,6 +88,7 @@ namespace Choop.Compiler.ChoopModel
                 return new Block[0];
             }
 
+            // TODO: Value created before any method values
             StackValue variable = GetStackRef();
             context.CurrentScope.StackValues.Add(variable);
 
