@@ -75,7 +75,7 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The stack reference for this array.</returns>
         public StackValue GetStackRef()
         {
-            return new StackValue(Name, Type, Length);
+            return new StackValue(Name, Type, false, Length);
         }
 
         /// <summary>

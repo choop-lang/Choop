@@ -96,7 +96,7 @@ namespace Choop.Compiler.ChoopModel
             TranslationContext newContext = new TranslationContext(newScope, context);
 
             // Create counter variable
-            StackValue counter = new StackValue(Variable, VarType);
+            StackValue counter = new StackValue(Variable, VarType, false);
             newScope.StackValues.Add(counter);
 
             // Create main loop contents

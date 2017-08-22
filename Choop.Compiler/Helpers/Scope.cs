@@ -131,11 +131,12 @@ namespace Choop.Compiler.Helpers
         /// <summary>
         /// Creates a <see cref="StackValue"/> instance with a unique name, to be used for a compiler generated variable.
         /// </summary>
+        /// <param name="unsafe">Whether the value is unsafe.</param>
         /// <param name="stackSpace">The number of items the value should take up on the stack.</param>
         /// <returns>The created <see cref="StackValue"/>.</returns>
-        public StackValue CreateStackValue(int stackSpace = 1)
+        public StackValue CreateStackValue(bool @unsafe = false, int stackSpace = 1)
         {
-            StackValue value = new StackValue("@" + _nextStackID++, DataType.Object, stackSpace);
+            StackValue value = new StackValue("@" + _nextStackID++, DataType.Object, @unsafe, stackSpace);
             StackValues.Add(value);
             return value;
         }

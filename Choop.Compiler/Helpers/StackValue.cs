@@ -17,6 +17,11 @@ namespace Choop.Compiler.Helpers
         /// </summary>
         private bool _registered;
 
+        /// <summary>
+        /// Whether this single StackValue is unsafe, compared to the rest of the scope.
+        /// </summary>
+        private bool _uniqueUnsafe;
+
         #endregion
 
         #region Properties
@@ -42,6 +47,11 @@ namespace Choop.Compiler.Helpers
         public int StackSpace { get; }
 
         /// <summary>
+        /// Gets whether this stack value is unsafe.
+        /// </summary>
+        public bool Unsafe => _uniqueUnsafe || Scope.Unsafe;
+
+        /// <summary>
         /// Gets the scope of the datum.
         /// </summary>
         public Scope Scope { get; private set; }
@@ -51,16 +61,18 @@ namespace Choop.Compiler.Helpers
         #region Constructor
 
         /// <summary>
-        /// Creates a new instance of the <see cref="StackValue"/> class. 
+        /// Creates a new instance of the <see cref="StackValue"/> class.
         /// </summary>
         /// <param name="name">The name of the datum.</param>
         /// <param name="type">The type of the data stored within each stack item.</param>
+        /// <param name="unsafe">Whether this scope value has been marked as unsafe.</param>
         /// <param name="stackSpace">The number of items within the stack that the datum occupies.</param>
-        public StackValue(string name, DataType type, int stackSpace = 1)
+        public StackValue(string name, DataType type, bool @unsafe, int stackSpace = 1)
         {
             Name = name;
             Type = type;
             StackSpace = stackSpace;
+            _uniqueUnsafe = @unsafe;
         }
 
         #endregion

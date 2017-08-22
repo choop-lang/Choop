@@ -516,7 +516,7 @@ namespace Choop.Compiler.Antlr
 
             // Create declaration
             ScopedVarDeclaration varDeclaration =
-                new ScopedVarDeclaration(name, type, expression, FileName, context.Name);
+                new ScopedVarDeclaration(name, type, context.UnsafeTag() == null, expression, FileName, context.Name);
 
             _currentBlocks.Peek().Statements.Add(varDeclaration);
         }

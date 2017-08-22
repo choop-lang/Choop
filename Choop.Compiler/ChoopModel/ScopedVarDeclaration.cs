@@ -27,6 +27,11 @@ namespace Choop.Compiler.ChoopModel
         public IExpression Value { get; }
 
         /// <summary>
+        /// Gets whether the variable was marked as unsafe at declaration.
+        /// </summary>
+        public bool UnsafeDeclaration { get; }
+
+        /// <summary>
         /// Gets the token to report any compiler errors to.
         /// </summary>
         public IToken ErrorToken { get; }
@@ -45,13 +50,15 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="name">The name of the variable.</param>
         /// <param name="type">The data type of the variable.</param>
+        /// <param name="unsafeDeclaration">Whether the variable was marked as unsafe at declaration.</param>
         /// <param name="value">The initial value of the variable.</param>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="errorToken">The token to report any compiler errors to.</param>
-        public ScopedVarDeclaration(string name, DataType type, IExpression value, string fileName, IToken errorToken)
+        public ScopedVarDeclaration(string name, DataType type, bool unsafeDeclaration, IExpression value, string fileName, IToken errorToken)
         {
             Name = name;
             Type = type;
+            UnsafeDeclaration = unsafeDeclaration;
             Value = value;
             FileName = fileName;
             ErrorToken = errorToken;
@@ -67,7 +74,7 @@ namespace Choop.Compiler.ChoopModel
         /// <returns>The stack reference for this variable.</returns>
         public StackValue GetStackRef()
         {
-            return new StackValue(Name, Type);
+            return new StackValue(Name, Type, UnsafeDeclaration);
         }
 
         /// <summary>
@@ -84,7 +91,7 @@ namespace Choop.Compiler.ChoopModel
                 return new Block[0];
             }
 
-            StackValue variable = new StackValue(Name, Type);
+            StackValue variable = GetStackRef();
             context.CurrentScope.StackValues.Add(variable);
 
             return variable.CreateDeclaration(context, Value);

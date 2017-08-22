@@ -89,7 +89,7 @@ namespace Choop.Compiler.ChoopModel
             output.AddRange(internalCounter.CreateDeclaration(1));
 
             // Create item variable
-            StackValue itemVar = new StackValue(Variable, VarType);
+            StackValue itemVar = new StackValue(Variable, VarType, false);
             innerScope.StackValues.Add(itemVar);
             output.AddRange(itemVar.CreateDeclaration(VarType.GetDefault()));
 
