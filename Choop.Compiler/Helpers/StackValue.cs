@@ -20,7 +20,7 @@ namespace Choop.Compiler.Helpers
         /// <summary>
         /// Whether this single StackValue is unsafe, compared to the rest of the scope.
         /// </summary>
-        private bool _uniqueUnsafe;
+        private readonly bool _uniqueUnsafe;
 
         #endregion
 
