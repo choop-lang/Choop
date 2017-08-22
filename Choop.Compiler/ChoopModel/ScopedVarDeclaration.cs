@@ -72,10 +72,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the stack reference for this variable.
         /// </summary>
         /// <returns>The stack reference for this variable.</returns>
-        public StackValue GetStackRef()
-        {
-            return new StackValue(Name, Type, UnsafeDeclaration);
-        }
+        public StackValue GetStackRef() => new StackValue(Name, Type, UnsafeDeclaration);
 
         /// <summary>
         /// Gets the translated code for the grammar structure.

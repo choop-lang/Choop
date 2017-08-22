@@ -73,10 +73,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the stack reference for this array.
         /// </summary>
         /// <returns>The stack reference for this array.</returns>
-        public StackValue GetStackRef()
-        {
-            return new StackValue(Name, Type, false, Length);
-        }
+        public StackValue GetStackRef() => new StackValue(Name, Type, false, Length);
 
         /// <summary>
         /// Gets the translated code for the grammar structure.
