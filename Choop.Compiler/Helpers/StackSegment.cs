@@ -91,7 +91,7 @@ namespace Choop.Compiler.Helpers
             StackValue last = _base[_base.Count - 1];
 
             // Return value
-            return last.StackStart + last.StackSpace;
+            return last.StackStart + (last.Unsafe ? 0 : last.StackSpace);
         }
 
         /// <summary>
