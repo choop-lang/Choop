@@ -245,7 +245,8 @@ varDeclaration
     ;
 
 arrayDeclaration
-    : ( DeclArray
+    : UnsafeTag?
+	  ( DeclArray
       | Type = typeSpecifier
       )
       SquareOpen
