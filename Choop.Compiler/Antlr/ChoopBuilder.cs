@@ -531,7 +531,7 @@ namespace Choop.Compiler.Antlr
 
             // Create declaration
             ScopedArrayDeclaration arrayDeclaration =
-                new ScopedArrayDeclaration(name, type, FileName, context.Name);
+                new ScopedArrayDeclaration(name, type, context.UnsafeTag() != null, FileName, context.Name);
             _currentBlocks.Peek().Statements.Add(arrayDeclaration);
 
             // Get bounds

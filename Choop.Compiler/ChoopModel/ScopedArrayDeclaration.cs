@@ -35,6 +35,11 @@ namespace Choop.Compiler.ChoopModel
         public Collection<IExpression> Value { get; } = new Collection<IExpression>();
 
         /// <summary>
+        /// Gets whether the variable was marked as unsafe at declaration.
+        /// </summary>
+        public bool UnsafeDeclaration { get; }
+
+        /// <summary>
         /// Gets the token to report any compiler errors to.
         /// </summary>
         public IToken ErrorToken { get; }
@@ -55,12 +60,14 @@ namespace Choop.Compiler.ChoopModel
         /// </summary>
         /// <param name="name">The name of the array.</param>
         /// <param name="type">The data type of items inside the array.</param>
+        /// <param name="unsafeDeclaration">Whether the array was marked unsafe at declaration.</param>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="errorToken">The token to report any compiler errors to.</param>
-        public ScopedArrayDeclaration(string name, DataType type, string fileName, IToken errorToken)
+        public ScopedArrayDeclaration(string name, DataType type, bool unsafeDeclaration, string fileName, IToken errorToken)
         {
             Name = name;
             Type = type;
+            UnsafeDeclaration = unsafeDeclaration;
             FileName = fileName;
             ErrorToken = errorToken;
         }
@@ -73,7 +80,7 @@ namespace Choop.Compiler.ChoopModel
         /// Gets the stack reference for this array.
         /// </summary>
         /// <returns>The stack reference for this array.</returns>
-        public StackValue GetStackRef() => new StackValue(Name, Type, false, Length);
+        public StackValue GetStackRef() => new StackValue(Name, Type, UnsafeDeclaration, Length);
 
         /// <summary>
         /// Gets the translated code for the grammar structure.
