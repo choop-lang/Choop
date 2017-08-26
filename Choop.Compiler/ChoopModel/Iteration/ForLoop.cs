@@ -5,7 +5,7 @@ using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Expressions;
 using Choop.Compiler.Helpers;
 
-namespace Choop.Compiler.ChoopModel
+namespace Choop.Compiler.ChoopModel.Iteration
 {
     /// <summary>
     /// Represents a for loop.

@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.ChoopModel.Expressions;
 using Choop.Compiler.Helpers;
 
 namespace Choop.Compiler.ChoopModel.Assignments

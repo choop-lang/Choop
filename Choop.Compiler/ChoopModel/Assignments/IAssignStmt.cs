@@ -1,4 +1,6 @@
-﻿namespace Choop.Compiler.ChoopModel.Assignments
+﻿using Choop.Compiler.ChoopModel.Expressions;
+
+namespace Choop.Compiler.ChoopModel.Assignments
 {
     /// <summary>
     /// Represents a generic assignment.

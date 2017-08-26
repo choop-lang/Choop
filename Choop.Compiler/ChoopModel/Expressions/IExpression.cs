@@ -1,4 +1,4 @@
-﻿namespace Choop.Compiler.ChoopModel
+﻿namespace Choop.Compiler.ChoopModel.Expressions
 {
     /// <summary>
     /// Represents an expression that can be evaluated to produce a value.
