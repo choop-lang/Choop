@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
+using Choop.Compiler.ChoopModel.Methods;
+using Choop.Compiler.ChoopModel.Sprites;
 
 namespace Choop.Compiler.Helpers
 {

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
+using Choop.Compiler.ChoopModel.Methods;
 
 namespace Choop.Compiler.Helpers
 {

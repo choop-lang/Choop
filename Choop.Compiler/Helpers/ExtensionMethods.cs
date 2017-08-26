@@ -4,6 +4,7 @@ using System.Text;
 using Choop.Compiler.Antlr;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
+using Choop.Compiler.ChoopModel.Assignments;
 
 namespace Choop.Compiler.Helpers
 {

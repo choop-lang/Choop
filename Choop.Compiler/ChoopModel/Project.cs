@@ -8,9 +8,13 @@ using System.IO;
 using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.ChoopModel.Declarations;
+using Choop.Compiler.ChoopModel.Methods;
+using Choop.Compiler.ChoopModel.Sprites;
 using Choop.Compiler.Helpers;
 using Choop.Compiler.ProjectModel;
 using Choop.Compiler.Properties;
+using EventHandler = Choop.Compiler.ChoopModel.Methods.EventHandler;
 
 namespace Choop.Compiler.ChoopModel
 {

@@ -5,8 +5,15 @@ using System.IO;
 using System.Linq;
 using Antlr4.Runtime.Tree;
 using Choop.Compiler.ChoopModel;
+using Choop.Compiler.ChoopModel.Assignments;
+using Choop.Compiler.ChoopModel.Declarations;
+using Choop.Compiler.ChoopModel.Expressions;
+using Choop.Compiler.ChoopModel.Iteration;
+using Choop.Compiler.ChoopModel.Methods;
+using Choop.Compiler.ChoopModel.Selection;
+using Choop.Compiler.ChoopModel.Sprites;
 using Choop.Compiler.Helpers;
-using EventHandler = Choop.Compiler.ChoopModel.EventHandler;
+using EventHandler = Choop.Compiler.ChoopModel.Methods.EventHandler;
 
 namespace Choop.Compiler.Antlr
 {
