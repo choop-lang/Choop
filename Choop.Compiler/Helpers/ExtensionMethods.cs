@@ -5,6 +5,7 @@ using Choop.Compiler.Antlr;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 using Choop.Compiler.ChoopModel.Assignments;
+using Choop.Compiler.ChoopModel.Expressions;
 
 namespace Choop.Compiler.Helpers
 {
@@ -162,6 +163,33 @@ namespace Choop.Compiler.Helpers
                     return BlockSpecs.InputBool;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        // TerminalType
+
+        /// <summary>
+        /// Returns the simplified output type of the specified terminal type.
+        /// </summary>
+        /// <param name="type">The terminal type to get the output type of.</param>
+        public static DataType GetOutputType(this TerminalType type)
+        {
+            switch (type)
+            {
+                case TerminalType.Bool:
+                    return DataType.Boolean;
+
+                case TerminalType.String:
+                    return DataType.String;
+
+                case TerminalType.Hex:
+                case TerminalType.Scientific:
+                case TerminalType.Decimal:
+                case TerminalType.Int:
+                    return DataType.Number;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type));
             }
         }
 
