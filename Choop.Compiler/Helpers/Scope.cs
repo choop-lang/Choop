@@ -120,8 +120,10 @@ namespace Choop.Compiler.Helpers
         {
             // Loop through stack values in this scope
             foreach (StackValue value in StackValues)
+            {
                 if (value.Name.Equals(name, Settings.IdentifierComparisonMode))
                     return value; // Match found
+            }
 
             if (!recursive || Parent == null) return null;
 

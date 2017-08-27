@@ -278,8 +278,10 @@ namespace Choop.Compiler.Antlr
                 else
                 {
                     for (int i = 0; i < bounds; i++)
+                    {
                         arrayDeclaration.Value.Add(
                             new TerminalExpression("\"\"", TerminalType.String));
+                    }
                 }
             }
             else
@@ -328,8 +330,10 @@ namespace Choop.Compiler.Antlr
                 else
                 {
                     for (int i = 0; i < bounds; i++)
+                    {
                         listDeclaration.Value.Add(
                             new TerminalExpression("\"\"", TerminalType.String));
+                    }
                 }
             }
             else
@@ -498,8 +502,10 @@ namespace Choop.Compiler.Antlr
             if (modifier.Length <= 1) return;
 
             for (int i = 1; i < modifier.Length; i++)
+            {
                 _compilerErrors.Add(new CompilerError($"Duplicate '{name}' modifier",
                     ErrorType.ExtraneousToken, modifier[i].Symbol, FileName));
+            }
         }
 
         #endregion
@@ -571,8 +577,10 @@ namespace Choop.Compiler.Antlr
             else
             {
                 for (int i = 0; i < bounds; i++)
+                {
                     arrayDeclaration.Value.Add(
                         new TerminalExpression("\"\"", TerminalType.String));
+                }
             }
         }
 

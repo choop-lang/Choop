@@ -113,14 +113,11 @@ namespace Choop.Compiler
             _fileProvider.OpenProject(projectPath);
 
             // Get project.chp file
-            using (StreamReader projectReader =
-                new StreamReader(_fileProvider.GetFileReadStream(Settings.ProjectSettingsFile)))
-            {
-                // Deserialise file
+            using (StreamReader projectReader = new StreamReader(_fileProvider.GetFileReadStream(Settings.ProjectSettingsFile)))
                 ChoopProject.Settings = JsonConvert.DeserializeObject<ProjectSettings>(projectReader.ReadToEnd());
-            }
 
             foreach (ChoopFile file in ChoopProject.Settings.Files)
+            {
                 switch (file.BuildAction)
                 {
                     case BuildAction.Ignore:
@@ -150,6 +147,7 @@ namespace Choop.Compiler
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+            }
 
             // Close file provider
             _fileProvider.CloseProject();
@@ -227,8 +225,10 @@ namespace Choop.Compiler
             if (Compiled) throw new InvalidOperationException("Project already compiled");
 
             using (StreamReader reader = new StreamReader(source))
+            {
                 _assets.SpriteDefinitionFiles.Add(path,
                     JsonConvert.DeserializeObject<SpriteSettings>(reader.ReadToEnd()));
+            }
         }
 
         /// <summary>
@@ -322,15 +322,19 @@ namespace Choop.Compiler
 
                 // Save costumes
                 foreach (LoadedAsset costumeFile in _assets.CostumeFiles.Values)
+                {
                     using (Stream costumeStream = archive.CreateEntry(costumeFile.Id + costumeFile.Extension).Open())
                     using (BinaryWriter writer = new BinaryWriter(costumeStream))
                         writer.Write(costumeFile.Contents);
+                }
 
                 // Save sounds
                 foreach (LoadedAsset soundFile in _assets.SoundFiles.Values)
+                {
                     using (Stream soundStream = archive.CreateEntry(soundFile.Id + soundFile.Extension).Open())
                     using (BinaryWriter writer = new BinaryWriter(soundStream))
                         writer.Write(soundFile.Contents);
+                }
             }
         }
 
