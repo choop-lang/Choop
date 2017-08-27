@@ -19,6 +19,8 @@ namespace Choop.Compiler.Helpers
         public const string WaitUntil = "WaitUntil";
         public const string CreateCloneOf = "CreateCloneOf";
         public const string DeleteThisClone = "DeleteThisClone";
+        public const string StopAll = "StopAll";
+        public const string StopOtherScriptsInSprite = "StopOtherScriptsInSprite";
 
         // Sensing
         public const string Touching = "Touching";
@@ -48,6 +50,20 @@ namespace Choop.Compiler.Helpers
         public const string StringLength = "StringLength";
         public const string Round = "Round";
         public const string ComputeFunction = "ComputeFunction";
+        public const string Abs = "Abs";
+        public const string Floor = "Floor";
+        public const string Ceiling = "Ceiling";
+        public const string Sqrt = "Sqrt";
+        public const string Sin = "Sin";
+        public const string Cos = "Cos";
+        public const string Tan = "Tan";
+        public const string Asin = "Asin";
+        public const string Acos = "Acos";
+        public const string Atan = "Atan";
+        public const string Ln = "Ln";
+        public const string Log = "Log";
+        public const string PowE = "PowE";
+        public const string Pow10 = "Pow10";
 
         // Motion
         public const string MoveSteps = "MoveSteps";
@@ -140,7 +156,6 @@ namespace Choop.Compiler.Helpers
         public const string HideList = "HideList";
 
         #endregion
-
 
         #region Inbuilt Dictionary
 
