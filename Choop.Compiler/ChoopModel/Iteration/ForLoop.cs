@@ -116,7 +116,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
                     CompoundOperator.Divide,
                     new CompoundExpression(CompoundOperator.Minus, End,
                         startTranslated is Block
-                            ? new LookupExpression(counter.Name, FileName, ErrorToken)
+                            ? new LookupExpression(counter, FileName, ErrorToken)
                             : Start, FileName, ErrorToken),
                     Step,
                     FileName,
