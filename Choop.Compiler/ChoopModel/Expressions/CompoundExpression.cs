@@ -104,7 +104,10 @@ namespace Choop.Compiler.ChoopModel.Expressions
 
         #region Methods
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Balances the binary trees within the expression.
+        /// </summary>
+        /// <returns>The balanced expression.</returns>
         public IExpression Balance()
         {
             if (_balanced) return this;
@@ -116,6 +119,42 @@ namespace Choop.Compiler.ChoopModel.Expressions
             GetChainedValues(this, chain);
 
             return Rebuild(chain, Operator, inverseOp);
+        }
+
+        /// <summary>
+        /// Returns the output type of the translated expression.
+        /// </summary>
+        /// <param name="context">The current translation state.</param>
+        public DataType GetReturnType(TranslationContext context)
+        {
+            switch (Operator)
+            {
+                case CompoundOperator.Pow:
+                case CompoundOperator.Multiply:
+                case CompoundOperator.Divide:
+                case CompoundOperator.Mod:
+                case CompoundOperator.Plus:
+                case CompoundOperator.Minus:
+                case CompoundOperator.LShift:
+                case CompoundOperator.RShift:
+                    return DataType.Number;
+
+                case CompoundOperator.Concat:
+                    return DataType.String;
+
+                case CompoundOperator.LessThan:
+                case CompoundOperator.GreaterThan:
+                case CompoundOperator.LessThanEq:
+                case CompoundOperator.GreaterThanEq:
+                case CompoundOperator.Equal:
+                case CompoundOperator.NotEqual:
+                case CompoundOperator.And:
+                case CompoundOperator.Or:
+                    return DataType.Boolean;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Operator));
+            }
         }
 
         /// <summary>

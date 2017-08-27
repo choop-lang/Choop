@@ -56,8 +56,36 @@ namespace Choop.Compiler.ChoopModel.Expressions
 
         #region Methods
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Balances the binary trees within the expression.
+        /// </summary>
+        /// <returns>The balanced expression.</returns>
         public IExpression Balance() => this;
+
+        /// <summary>
+        /// Returns the output type of the translated expression.
+        /// </summary>
+        /// <param name="context">The current translation state.</param>
+        public DataType GetReturnType(TranslationContext context)
+        {
+            switch (LiteralType)
+            {
+                case TerminalType.Bool:
+                    return DataType.Boolean;
+
+                case TerminalType.String:
+                    return DataType.String;
+
+                case TerminalType.Hex:
+                case TerminalType.Scientific:
+                case TerminalType.Decimal:
+                case TerminalType.Int:
+                    return DataType.Number;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(LiteralType));
+            }
+        }
 
         /// <summary>
         /// Parses the literal into an object.

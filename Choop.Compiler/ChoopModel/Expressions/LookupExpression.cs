@@ -69,8 +69,18 @@ namespace Choop.Compiler.ChoopModel.Expressions
 
         #region Methods
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Balances the binary trees within the expression.
+        /// </summary>
+        /// <returns>The balanced expression.</returns>
         public virtual IExpression Balance() => this;
+
+        /// <summary>
+        /// Returns the output type of the translated expression.
+        /// </summary>
+        /// <param name="context">The current translation state.</param>
+        public DataType GetReturnType(TranslationContext context) =>
+            (context.GetDeclaration(IdentifierName) as ITypedDeclaration)?.Type ?? DataType.Object;
 
         /// <summary>
         /// Gets the translated code for the grammar structure.
@@ -82,7 +92,8 @@ namespace Choop.Compiler.ChoopModel.Expressions
             {
                 IDeclaration identifier = context.GetDeclaration(IdentifierName);
 
-                if (identifier is StackValue || identifier is ParamDeclaration || identifier is GlobalVarDeclaration || identifier is ConstDeclaration)
+                if (identifier is StackValue || identifier is ParamDeclaration || identifier is GlobalVarDeclaration ||
+                    identifier is ConstDeclaration)
                 {
                     Variable = (ITypedDeclaration) identifier;
                 }
@@ -104,7 +115,7 @@ namespace Choop.Compiler.ChoopModel.Expressions
 
             GlobalVarDeclaration globalVarDeclaration = Variable as GlobalVarDeclaration;
             if (globalVarDeclaration != null)
-                 return new Block(BlockSpecs.GetVariable, IdentifierName);
+                return new Block(BlockSpecs.GetVariable, IdentifierName);
 
             ConstDeclaration constDeclaration = Variable as ConstDeclaration;
             if (constDeclaration != null)

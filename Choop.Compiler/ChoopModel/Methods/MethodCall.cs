@@ -74,9 +74,28 @@ namespace Choop.Compiler.ChoopModel.Methods
 
         #region Methods
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Balances the binary trees within the expression.
+        /// </summary>
+        /// <returns>The balanced expression.</returns>
         public IExpression Balance() => new MethodCall(MethodName, FileName, ErrorToken,
             Parameters.Select(x => x.Balance()).ToArray());
+
+        /// <summary>
+        /// Returns the output type of the translated expression.
+        /// </summary>
+        /// <param name="context">The current translation state.</param>
+        public DataType GetReturnType(TranslationContext context)
+        {
+            throw new NotImplementedException();
+
+            //MethodDeclaration customMethod = context.CurrentSprite.GetMethod(MethodName, Parameters.Count);
+
+            //if (customMethod != null) return customMethod.Type;
+
+            //if (BlockSpecs.Inbuilt.TryGetValue(MethodName, out MethodSignature inbuiltMethod))
+            //    return inbuiltMethod.Type;
+        }
 
         /// <summary>
         /// Gets the translated code for the grammar structure.

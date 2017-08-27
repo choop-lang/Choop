@@ -55,8 +55,28 @@ namespace Choop.Compiler.ChoopModel.Expressions
 
         #region Methods
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Balances the binary trees within the expression.
+        /// </summary>
+        /// <returns>The balanced expression.</returns>
         public IExpression Balance() => new UnaryExpression(Expression.Balance(), Operator, FileName, ErrorToken);
+
+        /// <summary>
+        /// Returns the output type of the translated expression.
+        /// </summary>
+        /// <param name="context">The current translation state.</param>
+        public DataType GetReturnType(TranslationContext context)
+        {
+            switch (Operator)
+            {
+                case UnaryOperator.Minus:
+                    return DataType.Number;
+                case UnaryOperator.Not:
+                    return DataType.Boolean;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Operator));
+            }
+        }
 
         /// <summary>
         /// Gets the translated code for the grammar structure.

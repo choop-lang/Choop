@@ -1,4 +1,6 @@
-﻿namespace Choop.Compiler.ChoopModel.Expressions
+﻿using Choop.Compiler.Helpers;
+
+namespace Choop.Compiler.ChoopModel.Expressions
 {
     /// <summary>
     /// Represents an expression that can be evaluated to produce a value.
@@ -10,5 +12,11 @@
         /// </summary>
         /// <returns>The balanced expression.</returns>
         IExpression Balance();
+
+        /// <summary>
+        /// Returns the output type of the translated expression.
+        /// </summary>
+        /// <param name="context">The current translation state.</param>
+        DataType GetReturnType(TranslationContext context);
     }
 }
