@@ -42,7 +42,9 @@ namespace Choop.Compiler.ChoopModel.Expressions
         /// <returns>The translated code for the grammar structure.</returns>
         public override object Translate(TranslationContext context)
         {
-            return new Block(BlockSpecs.GetItemOfList, Index.Translate(context), IdentifierName);
+            ITypedDeclaration value = GetDeclaration(context);
+
+            return new Block(BlockSpecs.GetItemOfList, Index.Translate(context), value.Name);
         }
 
         #endregion

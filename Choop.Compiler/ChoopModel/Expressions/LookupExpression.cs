@@ -12,12 +12,21 @@ namespace Choop.Compiler.ChoopModel.Expressions
     /// </summary>
     public class LookupExpression : IExpression
     {
-        #region Properties
+        #region Fields
 
         /// <summary>
-        /// Gets the name of the identifier being looked up.
+        /// The name of the identifier to look up.
         /// </summary>
-        public string IdentifierName { get; }
+        private readonly string _identifierName;
+
+        /// <summary>
+        /// The declaration of the variable being looked up.
+        /// </summary>
+        private readonly ITypedDeclaration _variable;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Gets the token to report any compiler errors to.
@@ -28,11 +37,6 @@ namespace Choop.Compiler.ChoopModel.Expressions
         /// Gets the file name where the grammar structure was found.
         /// </summary>
         public string FileName { get; }
-
-        /// <summary>
-        /// Gets the variable being looked up.
-        /// </summary>
-        protected ITypedDeclaration Variable { get; set; }
 
         #endregion
 
@@ -46,7 +50,7 @@ namespace Choop.Compiler.ChoopModel.Expressions
         /// <param name="errorToken">The token to report any compiler errors to.</param>
         public LookupExpression(string identifierName, string fileName, IToken errorToken)
         {
-            IdentifierName = identifierName;
+            _identifierName = identifierName;
             FileName = fileName;
             ErrorToken = errorToken;
         }
@@ -59,8 +63,8 @@ namespace Choop.Compiler.ChoopModel.Expressions
         /// <param name="errorToken">The token to report any compiler errors to.</param>
         public LookupExpression(ITypedDeclaration variable, string fileName, IToken errorToken)
         {
-            Variable = variable;
-            IdentifierName = variable.Name;
+            _variable = variable;
+            _identifierName = variable.Name;
             FileName = fileName;
             ErrorToken = errorToken;
         }
@@ -80,7 +84,7 @@ namespace Choop.Compiler.ChoopModel.Expressions
         /// </summary>
         /// <param name="context">The current translation state.</param>
         public DataType GetReturnType(TranslationContext context) =>
-            (context.GetDeclaration(IdentifierName) as ITypedDeclaration)?.Type ?? DataType.Object;
+            (context.GetDeclaration(_identifierName) as ITypedDeclaration)?.Type ?? DataType.Object;
 
         /// <summary>
         /// Gets the translated code for the grammar structure.
@@ -88,41 +92,58 @@ namespace Choop.Compiler.ChoopModel.Expressions
         /// <returns>The translated code for the grammar structure.</returns>
         public virtual object Translate(TranslationContext context)
         {
-            if (Variable == null)
-            {
-                IDeclaration identifier = context.GetDeclaration(IdentifierName);
+            ITypedDeclaration variable = GetDeclaration(context);
 
-                if (identifier is StackValue || identifier is ParamDeclaration || identifier is GlobalVarDeclaration ||
-                    identifier is ConstDeclaration)
-                {
-                    Variable = (ITypedDeclaration)identifier;
-                }
-                else
-                {
-                    context.ErrorList.Add(new CompilerError($"'{IdentifierName}' is not a variable",
-                        ErrorType.ImproperUsage, ErrorToken, FileName));
+            switch (variable)
+            {
+                case null:
+                    // Error already processed
                     return null;
-                }
-            }
 
-            switch (Variable)
-            {
                 case StackValue stackValue:
                     return stackValue.CreateVariableLookup();
 
                 case ParamDeclaration _:
-                    return new Block(BlockSpecs.GetParameter, Variable.Name);
+                    return new Block(BlockSpecs.GetParameter, variable.Name);
 
                 case GlobalVarDeclaration _:
-                    return new Block(BlockSpecs.GetVariable, Variable.Name);
+                    return new Block(BlockSpecs.GetVariable, variable.Name);
 
                 case ConstDeclaration constDeclaration:
                     return constDeclaration.Value.Value;
 
                 default:
-                    // Should not happen - throw error
-                    throw new Exception("Unknown identifier type");
+                    context.ErrorList.Add(new CompilerError($"'{_identifierName}' is not a variable",
+                        ErrorType.ImproperUsage, ErrorToken, FileName));
+                    return null;
             }
+        }
+
+        /// <summary>
+        /// Returns the declaration for the variable to look up.
+        /// </summary>
+        protected ITypedDeclaration GetDeclaration(TranslationContext context)
+        {
+            // Try pre-found declaration
+            if (_variable != null)
+                return _variable;
+
+            // Search for declaration
+            IDeclaration declaration = context.GetDeclaration(_identifierName);
+
+            if (declaration == null)
+            {
+                context.ErrorList.Add(new CompilerError($"Variable '{_identifierName}' is not defined", ErrorType.NotDefined, ErrorToken, FileName));
+                return null;
+            }
+
+            // Check declaration is a value
+            if (declaration is ITypedDeclaration typedDeclaration)
+                return typedDeclaration;
+
+            context.ErrorList.Add(new CompilerError($"'{_identifierName}' is not a value",
+                ErrorType.ImproperUsage, ErrorToken, FileName));
+            return null;
         }
 
         #endregion
