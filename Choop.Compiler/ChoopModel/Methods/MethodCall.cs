@@ -248,7 +248,7 @@ namespace Choop.Compiler.ChoopModel.Methods
         {
             switch (MethodName)
             {
-                case "StopAll":
+                case InbuiltMethods.StopAll:
                     if (isFunctionCall)
                     {
                         context.ErrorList.Add(new CompilerError($"'{MethodName}' does not return a value",
@@ -261,7 +261,7 @@ namespace Choop.Compiler.ChoopModel.Methods
                     context.ErrorList.Add(new CompilerError($"Expected no parameters on method '{MethodName}'",
                         ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
-                case "StopOtherScriptsInSprite":
+                case InbuiltMethods.StopOtherScriptsInSprite:
                     if (isFunctionCall)
                     {
                         context.ErrorList.Add(new CompilerError($"'{MethodName}' does not return a value",
@@ -274,33 +274,33 @@ namespace Choop.Compiler.ChoopModel.Methods
                     context.ErrorList.Add(new CompilerError($"Expected no parameters on method '{MethodName}'",
                         ErrorType.InvalidArgument, ErrorToken, FileName));
                     return new Block(null);
-                case "Abs":
+                case InbuiltMethods.Abs:
                     return TranslateMathsFunction(context, "abs", isFunctionCall, Math.Abs);
-                case "Floor":
+                case InbuiltMethods.Floor:
                     return TranslateMathsFunction(context, "floor", isFunctionCall, Math.Floor);
-                case "Ceiling":
+                case InbuiltMethods.Ceiling:
                     return TranslateMathsFunction(context, "ceiling", isFunctionCall, Math.Ceiling);
-                case "Sqrt":
+                case InbuiltMethods.Sqrt:
                     return TranslateMathsFunction(context, "sqrt", isFunctionCall, Math.Sqrt);
-                case "Sin":
+                case InbuiltMethods.Sin:
                     return TranslateMathsFunction(context, "sin", isFunctionCall, x => Math.Atan(x * Math.PI / 180));
-                case "Cos":
+                case InbuiltMethods.Cos:
                     return TranslateMathsFunction(context, "cos", isFunctionCall, x => Math.Atan(x * Math.PI / 180));
-                case "Tan":
+                case InbuiltMethods.Tan:
                     return TranslateMathsFunction(context, "tan", isFunctionCall, x => Math.Atan(x * Math.PI / 180));
-                case "Asin":
+                case InbuiltMethods.Asin:
                     return TranslateMathsFunction(context, "asin", isFunctionCall, x => Math.Asin(x) * 180 / Math.PI);
-                case "Acos":
+                case InbuiltMethods.Acos:
                     return TranslateMathsFunction(context, "acos", isFunctionCall, x => Math.Acos(x) * 180 / Math.PI);
-                case "Atan":
+                case InbuiltMethods.Atan:
                     return TranslateMathsFunction(context, "atan", isFunctionCall, x => Math.Atan(x) * 180 / Math.PI);
-                case "Ln":
+                case InbuiltMethods.Ln:
                     return TranslateMathsFunction(context, "ln", isFunctionCall, Math.Log);
-                case "Log":
+                case InbuiltMethods.Log:
                     return TranslateMathsFunction(context, "log", isFunctionCall, Math.Log10);
-                case "PowE":
+                case InbuiltMethods.PowE:
                     return TranslateMathsFunction(context, "e ^", isFunctionCall, x => Math.Pow(Math.E, x));
-                case "Pow10":
+                case InbuiltMethods.Pow10:
                     return TranslateMathsFunction(context, "10 ^", isFunctionCall, x => Math.Pow(10, x));
                 default:
                     return null;
