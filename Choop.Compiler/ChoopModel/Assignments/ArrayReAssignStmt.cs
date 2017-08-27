@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.ChoopModel.Declarations;
 using Choop.Compiler.ChoopModel.Expressions;
 using Choop.Compiler.Helpers;
 
@@ -65,20 +66,57 @@ namespace Choop.Compiler.ChoopModel.Assignments
         /// </remarks>
         public Block[] Translate(TranslationContext context)
         {
-            // TODO get declaration, stack values
+            // Find declaration
 
-            List<Block> blocks = new List<Block>(1 + Items.Count)
+            IDeclaration declaration = context.GetDeclaration(ArrayName);
+
+            if (declaration == null)
+            {
+                context.ErrorList.Add(new CompilerError($"Array '{ArrayName}' is not defined", ErrorType.NotDefined, ErrorToken, FileName));
+                return new Block[0];
+            }
+
+            // Try as scoped array
+
+            if (declaration is StackValue scopedArray)
+            {
+                if (scopedArray.StackSpace == 1)
+                {
+                    context.ErrorList.Add(new CompilerError($"Object '{ArrayName}' is not an array", ErrorType.ImproperUsage, ErrorToken, FileName));
+                    return new Block[0];
+                }
+
+                List<Block> scopedBlocks = new List<Block>(Items.Count);
+
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    //TODO translate items
+                }
+
+                return scopedBlocks.ToArray();
+            }
+
+            // Try as global list
+
+            if (!(declaration is GlobalListDeclaration))
+            {
+                // Neither scoped array or global list
+                context.ErrorList.Add(new CompilerError($"Object '{ArrayName}' is not an array", ErrorType.ImproperUsage, ErrorToken, FileName));
+                return new Block[0];
+            }
+
+            List<Block> globalBlocks = new List<Block>(1 + Items.Count)
             {
                 new Block(BlockSpecs.DeleteItemOfList, "all", ArrayName)
             };
 
             foreach (IExpression item in Items)
-                blocks.AddRange(new BlockBuilder(BlockSpecs.AddToList, context)
+                globalBlocks.AddRange(new BlockBuilder(BlockSpecs.AddToList, context)
                     .AddParam(item)
                     .AddParam(ArrayName)
                     .Create());
 
-            return blocks.ToArray();
+            return globalBlocks.ToArray();
         }
 
         #endregion
