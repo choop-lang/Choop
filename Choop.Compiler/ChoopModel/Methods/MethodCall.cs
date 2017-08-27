@@ -87,14 +87,18 @@ namespace Choop.Compiler.ChoopModel.Methods
         /// <param name="context">The current translation state.</param>
         public DataType GetReturnType(TranslationContext context)
         {
-            throw new NotImplementedException();
+            // Custom method
+            MethodDeclaration customMethod = context.CurrentSprite.GetMethod(MethodName, Parameters.Count);
 
-            //MethodDeclaration customMethod = context.CurrentSprite.GetMethod(MethodName, Parameters.Count);
+            if (customMethod != null) return customMethod.Type;
 
-            //if (customMethod != null) return customMethod.Type;
+            // Inbuilt method
+            if (InbuiltMethods.StandardMethods.TryGetValue(MethodName, out MethodSignature inbuiltMethod) ||
+                InbuiltMethods.NonStandardMethods.TryGetValue(MethodName, out inbuiltMethod))
+                return inbuiltMethod.Type;
 
-            //if (BlockSpecs.Inbuilt.TryGetValue(MethodName, out MethodSignature inbuiltMethod))
-            //    return inbuiltMethod.Type;
+            // Not found
+            return DataType.Object;
         }
 
         /// <summary>
