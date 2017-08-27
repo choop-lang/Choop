@@ -183,8 +183,7 @@ namespace Choop.Compiler.Antlr
             if (Project.GetDeclaration(name) == null)
             {
                 // Create declaration
-                ConstDeclaration constDeclaration =
-                    new ConstDeclaration(name, type, expression, FileName, context.Name);
+                ConstDeclaration constDeclaration = new ConstDeclaration(name, type, expression);
 
                 _currentSprite.Constants.Add(constDeclaration);
             }
