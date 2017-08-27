@@ -76,7 +76,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BlockBuilder.cs" />
-    <Compile Include="Helpers\BlockSpecs.cs" />
+    <Compile Include="BlockModel\BlockSpecs.cs" />
     <Compile Include="BlockModel\Comment.cs" />
     <Compile Include="BlockModel\IJsonConvertable.cs" />
     <Compile Include="BlockModel\Sound.cs" />

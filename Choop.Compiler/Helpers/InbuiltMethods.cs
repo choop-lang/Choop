@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
 
 namespace Choop.Compiler.Helpers
