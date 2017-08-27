@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.ChoopModel.Declarations;
 using Choop.Compiler.Helpers;
 
 namespace Choop.Compiler.ChoopModel.Expressions
@@ -44,7 +45,28 @@ namespace Choop.Compiler.ChoopModel.Expressions
         {
             ITypedDeclaration value = GetDeclaration(context);
 
-            return new Block(BlockSpecs.GetItemOfList, Index.Translate(context), value.Name);
+            switch (value)
+            {
+                case null:
+                    // Error already processed
+                    return null;
+
+                case GlobalListDeclaration _:
+                    return new Block(BlockSpecs.GetItemOfList, Index.Balance().Translate(context), value.Name);
+
+                case StackValue scopedArray:
+                    if (scopedArray.StackSpace == 1)
+                        return scopedArray.CreateArrayLookup(Index.Balance().Translate(context));
+
+                    context.ErrorList.Add(new CompilerError($"'{value.Name}' is not an array",
+                        ErrorType.ImproperUsage, ErrorToken, FileName));
+                    return null;
+
+                default:
+                    context.ErrorList.Add(new CompilerError($"'{value.Name}' is not an array",
+                        ErrorType.ImproperUsage, ErrorToken, FileName));
+                    return null;
+            }
         }
 
         #endregion
