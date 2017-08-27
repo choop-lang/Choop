@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Expressions;
@@ -53,15 +54,15 @@ namespace Choop.Compiler.ChoopModel.Methods
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             if (Value == null)
-                return context.CurrentScope.CreateCleanUp().Concat(new[] {new Block(BlockSpecs.Stop, "this script")}).ToArray();
+                return context.CurrentScope.CreateCleanUp().Concat(new[] {new Block(BlockSpecs.Stop, "this script")});
 
             return new BlockBuilder(BlockSpecs.SetVariableTo, context)
                 .AddParam(((MethodDeclaration) context.CurrentScope.Method).GetReturnVariableName()).AddParam(Value).Create()
                 .Concat(context.CurrentScope.CreateCleanUp())
-                .Concat(new[] {new Block(BlockSpecs.Stop, "this script")}).ToArray();
+                .Concat(new[] {new Block(BlockSpecs.Stop, "this script")});
         }
 
         #endregion

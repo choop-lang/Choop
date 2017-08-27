@@ -88,7 +88,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             // Create new scope
             Scope newScope = new Scope(context.CurrentScope);
@@ -124,7 +124,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
                 ).Translate(newContext), loopContents.ToArray()));
             output.AddRange(newScope.CreateCleanUp());
 
-            return output.ToArray();
+            return output;
         }
 
         #endregion

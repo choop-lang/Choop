@@ -74,7 +74,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             List<Block> output = new List<Block>();
 
@@ -125,7 +125,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
             loopContents.Add(internalCounter.CreateVariableIncrement(1));
 
             // Translate loop main body
-            foreach (Block[] translated in Statements.Select(x => x.Translate(newContext)))
+            foreach (IEnumerable<Block> translated in Statements.Select(x => x.Translate(newContext)))
                 loopContents.AddRange(translated);
 
             // Create loop Scratch block
@@ -137,7 +137,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
             output.AddRange(internalCounter.CreateDestruction());
             output.AddRange(itemVar.CreateDestruction());
 
-            return output.ToArray();
+            return output;
         }
 
         #endregion

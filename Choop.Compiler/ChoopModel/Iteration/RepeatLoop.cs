@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Expressions;
@@ -68,7 +67,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             // Create new translation context
             TranslationContext newContext = new TranslationContext(new Scope(context.CurrentScope), context);
@@ -78,7 +77,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
                 loopContents.AddRange(statement.Translate(newContext));
 
             if (!Inline)
-                return new BlockBuilder(BlockSpecs.Repeat, context).AddParam(Iterations).AddParam(loopContents.ToArray()).Create().ToArray();
+                return new BlockBuilder(BlockSpecs.Repeat, context).AddParam(Iterations).AddParam(loopContents.ToArray()).Create();
 
             TerminalExpression tIterations = Iterations as TerminalExpression;
             if (tIterations == null || tIterations.Type != DataType.Number)
@@ -96,7 +95,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
             for (int i = 0; i < repetitions; i++)
                 inlinedLoopContents.AddRange(loopContents);
 
-            return inlinedLoopContents.ToArray();
+            return inlinedLoopContents;
         }
 
         #endregion

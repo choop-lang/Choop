@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Antlr4.Runtime;
@@ -61,15 +62,14 @@ namespace Choop.Compiler.ChoopModel.Selection
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             // Create variable holder
             StackValue variable = context.CurrentScope.CreateStackValue();
-            Block[] declaration = variable.CreateDeclaration(context, Variable);
+            IEnumerable<Block> declaration = variable.CreateDeclaration(context, Variable);
 
             // Translate main switch
-            return declaration.Concat(BuildIfElse(context, new LookupExpression(variable, FileName, ErrorToken), 0))
-                .ToArray();
+            return declaration.Concat(BuildIfElse(context, new LookupExpression(variable, FileName, ErrorToken), 0));
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Choop.Compiler.ChoopModel.Selection
         /// <param name="variable">The translated variable to compare to.</param>
         /// <param name="element">The current block.</param>
         /// <returns>The translated if-else statement.</returns>
-        private Block[] BuildIfElse(TranslationContext context, IExpression variable, int element)
+        private IEnumerable<Block> BuildIfElse(TranslationContext context, IExpression variable, int element)
         {
             if (element == Blocks.Count)
                 throw new IndexOutOfRangeException("Element is out of range");
@@ -89,7 +89,7 @@ namespace Choop.Compiler.ChoopModel.Selection
                     .AddParam(BuildCondition(Blocks[element].Conditions, variable))
                     .AddParam(Blocks[element].Translate(context))
                     .AddParam(BuildIfElse(context, variable, element + 1))
-                    .Create().ToArray();
+                    .Create();
 
             if (Blocks[element].IsDefault)
                 return Blocks[element].Translate(context);
@@ -97,7 +97,7 @@ namespace Choop.Compiler.ChoopModel.Selection
             return new BlockBuilder(BlockSpecs.IfThen, context)
                 .AddParam(BuildCondition(Blocks[element].Conditions, variable))
                 .AddParam(Blocks[element].Translate(context))
-                .Create().ToArray();
+                .Create();
         }
 
         /// <summary>

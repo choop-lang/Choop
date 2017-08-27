@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.Helpers;
@@ -53,10 +53,7 @@ namespace Choop.Compiler.ChoopModel.Selection
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
-        {
-            return BuildIfElse(context, 0);
-        }
+        public IEnumerable<Block> Translate(TranslationContext context) => BuildIfElse(context, 0);
 
         /// <summary>
         /// Recursively builds an if-else statement.
@@ -64,7 +61,7 @@ namespace Choop.Compiler.ChoopModel.Selection
         /// <param name="context">The context of the translation.</param>
         /// <param name="element">The current block.</param>
         /// <returns>The translated if-else statement.</returns>
-        private Block[] BuildIfElse(TranslationContext context, int element)
+        private IEnumerable<Block> BuildIfElse(TranslationContext context, int element)
         {
             if (element == Blocks.Count)
                 throw new IndexOutOfRangeException("Element is out of range");
@@ -74,7 +71,7 @@ namespace Choop.Compiler.ChoopModel.Selection
                     .AddParam(Blocks[element].Conditions[0].Expression)
                     .AddParam(Blocks[element].Translate(context))
                     .AddParam(BuildIfElse(context, element + 1))
-                    .Create().ToArray();
+                    .Create();
 
             if (Blocks[element].IsDefault)
                 return Blocks[element].Translate(context);
@@ -82,7 +79,7 @@ namespace Choop.Compiler.ChoopModel.Selection
             return new BlockBuilder(BlockSpecs.IfThen, context)
                 .AddParam(Blocks[element].Conditions[0].Expression)
                 .AddParam(Blocks[element].Translate(context))
-                .Create().ToArray();
+                .Create();
         }
 
         #endregion

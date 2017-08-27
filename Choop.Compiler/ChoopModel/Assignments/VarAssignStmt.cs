@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Declarations;
@@ -73,7 +73,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             // Get variable
             IDeclaration variable = context.GetDeclaration(VariableName);
@@ -129,30 +129,29 @@ namespace Choop.Compiler.ChoopModel.Assignments
                 {
                     case AssignOperator.Equals:
                         return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(VariableName)
-                            .AddParam(Value).Create().ToArray();
+                            .AddParam(Value).Create();
 
                     case AssignOperator.AddEquals:
                         return new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(VariableName).AddParam(Value)
-                            .Create().ToArray();
+                            .Create();
 
                     case AssignOperator.MinusEquals:
                         return new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(VariableName)
-                            .AddParam(new UnaryExpression(Value, UnaryOperator.Minus, FileName, ErrorToken)).Create()
-                            .ToArray();
+                            .AddParam(new UnaryExpression(Value, UnaryOperator.Minus, FileName, ErrorToken)).Create();
 
                     case AssignOperator.DotEquals:
                         return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(VariableName).AddParam(
                             new CompoundExpression(CompoundOperator.Concat,
                                 new LookupExpression(globalVarDeclaration, FileName, ErrorToken), Value, FileName,
-                                ErrorToken)).Create().ToArray();
+                                ErrorToken)).Create();
 
                     case AssignOperator.PlusPlus:
                         return new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(VariableName).AddParam(1)
-                            .Create().ToArray();
+                            .Create();
 
                     case AssignOperator.MinusMinus:
                         return new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(VariableName).AddParam(-1)
-                            .Create().ToArray();
+                            .Create();
 
                     default:
                         throw new ArgumentOutOfRangeException();

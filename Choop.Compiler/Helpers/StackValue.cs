@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
@@ -108,7 +109,7 @@ namespace Choop.Compiler.Helpers
         /// <param name="context">The context for translating the expressions.</param>
         /// <param name="initalValues">The initial value(s) for the <see cref="StackValue"/></param>
         /// <returns>The declaration for the <see cref="StackValue"/>.</returns>
-        public Block[] CreateDeclaration(TranslationContext context, params IExpression[] initalValues)
+        public IEnumerable<Block> CreateDeclaration(TranslationContext context, params IExpression[] initalValues)
         {
             // Validate inital values
             if (initalValues.Length != StackSpace)
@@ -117,7 +118,7 @@ namespace Choop.Compiler.Helpers
             // Use stack
             if (!Unsafe)
                 return initalValues.SelectMany(x => new BlockBuilder(BlockSpecs.AddToList, context)
-                    .AddParam(x, Type).AddParam(Settings.StackIdentifier).Create()).ToArray();
+                    .AddParam(x, Type).AddParam(Settings.StackIdentifier).Create());
 
             // Unsafe variable
             if (StackSpace == 1)
@@ -125,14 +126,14 @@ namespace Choop.Compiler.Helpers
                 // TODO: include var def in json
                 //context.CurrentSprite.Variables.Add(new GlobalVarDeclaration(GetUnsafeName(), Type, "", null, null));
                 return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(GetUnsafeName())
-                    .AddParam(initalValues[0], Type).Create().ToArray();
+                    .AddParam(initalValues[0], Type).Create();
             }
 
             // Unsafe list
             // TODO: include list def in json
             //context.CurrentSprite.Lists.Add(new GlobalListDeclaration(GetUnsafeName(), Type, true, null, null));
             return initalValues.SelectMany((x, i) => new BlockBuilder(BlockSpecs.ReplaceItemOfList, context).AddParam(i)
-                .AddParam(GetUnsafeName()).AddParam(x, Type).Create()).ToArray();
+                .AddParam(GetUnsafeName()).AddParam(x, Type).Create());
         }
 
         /// <summary>
@@ -140,7 +141,7 @@ namespace Choop.Compiler.Helpers
         /// </summary>
         /// <param name="initalValues">The initial value(s) for the <see cref="StackValue"/></param>
         /// <returns>The declaration for the <see cref="StackValue"/>.</returns>
-        public Block[] CreateDeclaration(params object[] initalValues)
+        public IEnumerable<Block> CreateDeclaration(params object[] initalValues)
         {
             if (initalValues.Length != StackSpace)
                 throw new ArgumentException("Length of initial values does not match length of datum");
@@ -207,12 +208,12 @@ namespace Choop.Compiler.Helpers
         /// <param name="context">The context to translate the expression with.</param>
         /// <param name="value">The expression for the value to be assigned.</param>
         /// <returns>The code for a variable assignment.</returns>
-        public Block[] CreateVariableAssignment(TranslationContext context, IExpression value) => Unsafe
+        public IEnumerable<Block> CreateVariableAssignment(TranslationContext context, IExpression value) => Unsafe
             ? new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(GetUnsafeName()).AddParam(value, Type)
-                .Create().ToArray()
+                .Create()
             : new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
                 .AddParam(new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart)).AddParam(value, Type)
-                .Create().ToArray();
+                .Create();
 
         /// <summary>
         /// Returns the code to increase the variable by the specified amount.
@@ -235,15 +236,14 @@ namespace Choop.Compiler.Helpers
         /// <param name="context">The context to translate the expression with.</param>
         /// <param name="value">The expression for the value to increment by.</param>
         /// <returns>The code to increase the variable by the specified amount.</returns>
-        public Block[] CreateVariableIncrement(TranslationContext context, IExpression value) => Unsafe
-            ? new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(GetUnsafeName()).AddParam(value, Type)
-                .Create().ToArray()
+        public IEnumerable<Block> CreateVariableIncrement(TranslationContext context, IExpression value) => Unsafe
+            ? new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(GetUnsafeName()).AddParam(value, Type).Create()
             : new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
                 .AddParam(new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart))
                 .AddParam(new CompoundExpression(CompoundOperator.Plus,
                     new LookupExpression(this, string.Empty, null),
                     value, string.Empty, null))
-                .Create().ToArray();
+                .Create();
 
         /// <summary>
         /// Returns the code for an array assignment.
@@ -264,24 +264,25 @@ namespace Choop.Compiler.Helpers
         /// <param name="value">The expression for the value to assign to the array.</param>
         /// <param name="index">The index of the item to assign.</param>
         /// <returns>The code for an array assignment.</returns>
-        public Block[] CreateArrayAssignment(TranslationContext context, IExpression value, IExpression index)
+        public IEnumerable<Block> CreateArrayAssignment(TranslationContext context, IExpression value, IExpression index)
         {
             if (Unsafe)
-                return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context).AddParam(index).AddParam(GetUnsafeName()).AddParam(value, Type).Create().ToArray();
+                return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
+                    .AddParam(index).AddParam(GetUnsafeName()).AddParam(value, Type).Create();
 
             return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
                 .AddParam(ctx => new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier,
                     new CompoundExpression(CompoundOperator.Plus, new TerminalExpression(StackStart), index,
                         string.Empty, null).Balance().Translate(ctx)))
                 .AddParam(value, Type)
-                .Create().ToArray();
+                .Create();
         }
 
         /// <summary>
         /// Creates the code to delete the variable from the stack, if necessary.
         /// </summary>
         /// <returns>The code to delete the variable from the stack or an empty array if unsafe.</returns>
-        public Block[] CreateDestruction()
+        public IEnumerable<Block> CreateDestruction()
         {
             if (Unsafe)
                 return new Block[0];

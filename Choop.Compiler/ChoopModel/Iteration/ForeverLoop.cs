@@ -51,7 +51,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             List<Block> blocks = new List<Block>();
             Scope newScope = new Scope(context.CurrentScope);

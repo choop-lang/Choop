@@ -87,7 +87,7 @@ namespace Choop.Compiler.ChoopModel.Declarations
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             if (context.GetDeclaration(Name) != null)
             {

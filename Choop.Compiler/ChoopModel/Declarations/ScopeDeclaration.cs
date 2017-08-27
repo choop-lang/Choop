@@ -58,7 +58,7 @@ namespace Choop.Compiler.ChoopModel.Declarations
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             // Create new translation context
             TranslationContext newContext = new TranslationContext(new Scope(context.CurrentScope, Unsafe), context);
@@ -68,7 +68,7 @@ namespace Choop.Compiler.ChoopModel.Declarations
             foreach (IStatement statement in Statements)
                 translated.AddRange(statement.Translate(newContext));
 
-            return translated.ToArray();
+            return translated;
         }
 
         #endregion

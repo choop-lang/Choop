@@ -64,7 +64,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
         /// Uses the delete and add method, as demonstrated in this project:
         /// https://scratch.mit.edu/projects/118629266/
         /// </remarks>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             // Find declaration
 
@@ -91,7 +91,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
                 for (int i = 0; i < Items.Count; i++)
                     scopedBlocks.AddRange(scopedArray.CreateArrayAssignment(context, Items[i], new TerminalExpression(i)));
 
-                return scopedBlocks.ToArray();
+                return scopedBlocks;
             }
 
             // Try as global list
@@ -114,7 +114,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
                     .AddParam(ArrayName)
                     .Create());
 
-            return globalBlocks.ToArray();
+            return globalBlocks;
         }
 
         #endregion

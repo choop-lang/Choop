@@ -105,7 +105,7 @@ namespace Choop.Compiler.ChoopModel.Methods
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             // Find method
             MethodDeclaration customMethod = context.CurrentSprite.GetMethod(MethodName, Parameters.Count);
@@ -202,7 +202,7 @@ namespace Choop.Compiler.ChoopModel.Methods
                 context.Before.Add(new Block(BlockSpecs.CustomMethodCall, translatedParams.ToArray()));
                 StackValue returnValue = context.CurrentScope.CreateStackValue();
                 context.Before.Add(returnValue.CreateDeclaration(new Block(BlockSpecs.GetVariable,
-                    customMethod.GetReturnVariableName()))[0]);
+                    customMethod.GetReturnVariableName())).First());
 
                 return returnValue.CreateVariableLookup();
             }

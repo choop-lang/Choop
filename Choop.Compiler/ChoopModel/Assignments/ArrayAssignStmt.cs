@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Expressions;
@@ -78,7 +78,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Block[] Translate(TranslationContext context)
+        public IEnumerable<Block> Translate(TranslationContext context)
         {
             IExpression value;
 
@@ -121,7 +121,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
                 .AddParam(Index)
                 .AddParam(ArrayName)
                 .AddParam(value)
-                .Create().ToArray();
+                .Create();
         }
 
         #endregion
