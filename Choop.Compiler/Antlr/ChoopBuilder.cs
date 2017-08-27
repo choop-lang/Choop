@@ -440,7 +440,7 @@ namespace Choop.Compiler.Antlr
             if (Project.GetDeclaration(name) == null)
             {
                 // Create parameter declaration
-                ParamDeclaration param = new ParamDeclaration(name, type, FileName, context.Name, expression.Literal);
+                ParamDeclaration param = new ParamDeclaration(name, type, FileName, context.Name, expression.Parse());
 
                 method.Params.Add(param);
             }
