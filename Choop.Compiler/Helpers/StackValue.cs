@@ -114,22 +114,10 @@ namespace Choop.Compiler.Helpers
             if (initalValues.Length != StackSpace)
                 throw new ArgumentException("Length of initial values does not match length of datum");
 
-            // Validate param types
-            foreach (IExpression value in initalValues)
-            {
-                if (value == null) continue;
-
-                DataType valueType = value.GetReturnType(context);
-                if (!Type.IsCompatible(valueType))
-                    context.ErrorList.Add(new CompilerError(
-                        $"Expected value of type '{Type}' but instead found value of type '{valueType}'",
-                        ErrorType.TypeMismatch, value.ErrorToken, value.FileName));
-            }
-
             // Use stack
             if (!Unsafe)
                 return initalValues.SelectMany(x => new BlockBuilder(BlockSpecs.AddToList, context)
-                    .AddParam(x).AddParam(Settings.StackIdentifier).Create()).ToArray();
+                    .AddParam(x, Type).AddParam(Settings.StackIdentifier).Create()).ToArray();
 
             // Unsafe variable
             if (StackSpace == 1)
@@ -137,14 +125,14 @@ namespace Choop.Compiler.Helpers
                 // TODO: include var def in json
                 //context.CurrentSprite.Variables.Add(new GlobalVarDeclaration(GetUnsafeName(), Type, "", null, null));
                 return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(GetUnsafeName())
-                    .AddParam(initalValues[0]).Create().ToArray();
+                    .AddParam(initalValues[0], Type).Create().ToArray();
             }
 
             // Unsafe list
             // TODO: include list def in json
             //context.CurrentSprite.Lists.Add(new GlobalListDeclaration(GetUnsafeName(), Type, true, null, null));
             return initalValues.SelectMany((x, i) => new BlockBuilder(BlockSpecs.ReplaceItemOfList, context).AddParam(i)
-                .AddParam(GetUnsafeName()).AddParam(x).Create()).ToArray();
+                .AddParam(GetUnsafeName()).AddParam(x, Type).Create()).ToArray();
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.ChoopModel;
 using Choop.Compiler.ChoopModel.Expressions;
 
 namespace Choop.Compiler.Helpers
@@ -72,10 +73,23 @@ namespace Choop.Compiler.Helpers
         /// Adds a parameter value to the block.
         /// </summary>
         /// <param name="expressionParam">The parameter to add, which has neither been balanced or translated.</param>
+        /// <param name="expectedType">The expected output type of the expression.</param>
         /// <returns>The current instance, after the parameter has been added.</returns>
-        public BlockBuilder AddParam(IExpression expressionParam)
+        public BlockBuilder AddParam(IExpression expressionParam, DataType expectedType = DataType.Object)
         {
-            Args.Add(expressionParam != null ? expressionParam.Balance().Translate(_context) : "");
+            if (expressionParam == null)
+            {
+                Args.Add(expectedType.GetDefault());
+                return this;
+            }
+
+            DataType valueType = expressionParam.GetReturnType(_context);
+            if (!expectedType.IsCompatible(valueType))
+                _context.ErrorList.Add(new CompilerError(
+                    $"Expected value of type '{expectedType}' but instead found value of type '{valueType}'",
+                    ErrorType.TypeMismatch, expressionParam.ErrorToken, expressionParam.FileName));
+
+            Args.Add(expressionParam.Balance().Translate(_context));
 
             return this;
         }
