@@ -193,13 +193,25 @@ namespace Choop.Compiler.Helpers
         /// <summary>
         /// Returns the code for a variable assignment.
         /// </summary>
-        /// <param name="value">The expression for the value to assign to the variable.</param>
+        /// <param name="value">The translated expression for the value to be assigned.</param>
         /// <returns>The code for a variable assignment.</returns>
         public Block CreateVariableAssignment(object value) => Unsafe
             ? new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), value)
             : new Block(BlockSpecs.ReplaceItemOfList,
                 new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart), Settings.StackIdentifier,
                 value);
+
+        /// <summary>
+        /// Returns the code for a variable assignment.
+        /// </summary>
+        /// <param name="context">The context to translate the expression with.</param>
+        /// <param name="value">The expression for the value to be assigned.</param>
+        /// <returns>The code for a variable assignment.</returns>
+        public Block[] CreateVariableAssignment(TranslationContext context, IExpression value) => Unsafe
+            ? new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(value, Type).Create().ToArray()
+            : new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
+                .AddParam(new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart)).AddParam(value, Type)
+                .Create().ToArray();
 
         /// <summary>
         /// Returns the code to increase the variable by the specified amount.

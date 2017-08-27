@@ -92,7 +92,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
                 switch (Operator)
                 {
                     case AssignOperator.Equals:
-                        return new[] {stackValue.CreateVariableAssignment(Value.Balance().Translate(context))};
+                        return stackValue.CreateVariableAssignment(context, Value);
                     case AssignOperator.AddEquals:
                         return new[] {stackValue.CreateVariableIncrement(Value.Balance().Translate(context))};
                     case AssignOperator.MinusEquals:
@@ -102,12 +102,8 @@ namespace Choop.Compiler.ChoopModel.Assignments
                                 ErrorToken).Balance().Translate(context))
                         };
                     case AssignOperator.DotEquals:
-                        return new[]
-                        {
-                            stackValue.CreateVariableAssignment(new CompoundExpression(CompoundOperator.Concat,
-                                    new LookupExpression(stackValue, FileName, ErrorToken), Value, FileName, ErrorToken)
-                                .Balance().Translate(context))
-                        };
+                        return stackValue.CreateVariableAssignment(context, new CompoundExpression(CompoundOperator.Concat,
+                            new LookupExpression(stackValue, FileName, ErrorToken), Value, FileName, ErrorToken));
                     case AssignOperator.PlusPlus:
                         return new[] {stackValue.CreateVariableIncrement(1)};
                     case AssignOperator.MinusMinus:
