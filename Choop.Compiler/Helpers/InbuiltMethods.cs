@@ -320,7 +320,7 @@ namespace Choop.Compiler.Helpers
                 {Ln, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
                 {Log, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
                 {PowE, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
-                {Pow10, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Pow10, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") }
             };
 
         #endregion

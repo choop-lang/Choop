@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Choop.Compiler.Helpers;
 
 namespace Choop.Compiler.BlockModel
 {
