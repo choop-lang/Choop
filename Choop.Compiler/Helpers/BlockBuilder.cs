@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Choop.Compiler.BlockModel;
@@ -85,6 +86,18 @@ namespace Choop.Compiler.Helpers
                     ErrorType.TypeMismatch, expressionParam.ErrorToken, expressionParam.FileName));
 
             Args.Add(expressionParam.Balance().Translate(_context));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a parameter value to the block.
+        /// </summary>
+        /// <param name="mixedParam">The partially translated parameter, to translate using the current context.</param>
+        /// <returns>The current instance, after the parameter has been added.</returns>
+        public BlockBuilder AddParam(Func<TranslationContext, object> mixedParam)
+        {
+            Args.Add(mixedParam.Invoke(_context));
 
             return this;
         }
