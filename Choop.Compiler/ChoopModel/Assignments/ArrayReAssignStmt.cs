@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Expressions;
@@ -64,12 +65,20 @@ namespace Choop.Compiler.ChoopModel.Assignments
         /// </remarks>
         public Block[] Translate(TranslationContext context)
         {
-            Block[] blocks = new Block[1 + Items.Count];
-            blocks[0] = new Block(BlockSpecs.DeleteItemOfList, "all", ArrayName);
-            for (int i = 0; i < Items.Count; i++)
-                blocks[i + 1] = new Block(BlockSpecs.AddToList, Items[i].Balance().Translate(context), ArrayName);
+            // TODO get declaration, stack values
 
-            return blocks;
+            List<Block> blocks = new List<Block>(1 + Items.Count)
+            {
+                new Block(BlockSpecs.DeleteItemOfList, "all", ArrayName)
+            };
+
+            foreach (IExpression item in Items)
+                blocks.AddRange(new BlockBuilder(BlockSpecs.AddToList, context)
+                    .AddParam(item)
+                    .AddParam(ArrayName)
+                    .Create());
+
+            return blocks.ToArray();
         }
 
         #endregion
