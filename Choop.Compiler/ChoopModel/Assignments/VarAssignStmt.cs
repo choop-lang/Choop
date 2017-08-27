@@ -89,6 +89,9 @@ namespace Choop.Compiler.ChoopModel.Assignments
             // Try as stack variable
             StackValue stackValue = variable as StackValue;
             if (stackValue != null && stackValue.StackSpace == 1)
+            {
+                CheckOperator(stackValue.Type, context);
+
                 switch (Operator)
                 {
                     case AssignOperator.Equals:
@@ -114,10 +117,14 @@ namespace Choop.Compiler.ChoopModel.Assignments
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+            }
 
             // Try as global variable
             GlobalVarDeclaration globalVarDeclaration = variable as GlobalVarDeclaration;
             if (globalVarDeclaration != null)
+            {
+                CheckOperator(globalVarDeclaration.Type, context);
+
                 switch (Operator)
                 {
                     case AssignOperator.Equals:
@@ -150,6 +157,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+            }
 
             // Try as any readonly type
             if (variable is ParamDeclaration || variable is ConstDeclaration)
@@ -163,6 +171,37 @@ namespace Choop.Compiler.ChoopModel.Assignments
             context.ErrorList.Add(new CompilerError($"'{VariableName}' is not a variable", ErrorType.ImproperUsage,
                 ErrorToken, FileName));
             return new Block[0];
+        }
+
+        private void CheckOperator(DataType type, TranslationContext context)
+        {
+            switch (Operator)
+            {
+                case AssignOperator.Equals:
+                    return;
+
+                case AssignOperator.AddEquals:
+                case AssignOperator.MinusEquals:
+                case AssignOperator.PlusPlus:
+                case AssignOperator.MinusMinus:
+
+                    if (!DataType.Number.IsCompatible(type))
+                        context.ErrorList.Add(new CompilerError(
+                            $"Cannot use operator '{Operator}' on a value of type '{type}'",
+                            ErrorType.TypeMismatch, ErrorToken, FileName));
+                    return;
+
+                case AssignOperator.DotEquals:
+
+                    if (!DataType.String.IsCompatible(type))
+                        context.ErrorList.Add(new CompilerError(
+                            $"Cannot use operator '{Operator}' on a value of type '{type}'",
+                            ErrorType.TypeMismatch, ErrorToken, FileName));
+                    return;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(Operator), Operator, null);
+            }
         }
 
         #endregion
