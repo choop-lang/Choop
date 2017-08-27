@@ -896,9 +896,8 @@ namespace Choop.Compiler.Antlr
                 // Step value was specified
                 step = _currentExpressions.Pop() as TerminalExpression;
                 if (step == null) throw new InvalidOperationException();
-                if (!(step.LiteralType == TerminalType.Int || step.LiteralType == TerminalType.Decimal ||
-                      step.LiteralType == TerminalType.Hex || step.LiteralType == TerminalType.Scientific))
-                    _compilerErrors.Add(new CompilerError("Step value must be a number", ErrorType.InvalidArgument,
+                if (step.GetReturnType(null) != DataType.Number)
+                    _compilerErrors.Add(new CompilerError("Step value must be a number", ErrorType.TypeMismatch,
                         context.Step.start, FileName));
             }
 
