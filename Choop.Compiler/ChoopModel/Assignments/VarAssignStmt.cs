@@ -93,21 +93,24 @@ namespace Choop.Compiler.ChoopModel.Assignments
                 {
                     case AssignOperator.Equals:
                         return stackValue.CreateVariableAssignment(context, Value);
+
                     case AssignOperator.AddEquals:
-                        return new[] {stackValue.CreateVariableIncrement(Value.Balance().Translate(context))};
+                        return stackValue.CreateVariableIncrement(context, Value);
+
                     case AssignOperator.MinusEquals:
-                        return new[]
-                        {
-                            stackValue.CreateVariableIncrement(new UnaryExpression(Value, UnaryOperator.Minus, FileName,
-                                ErrorToken).Balance().Translate(context))
-                        };
+                        return stackValue.CreateVariableIncrement(context, new UnaryExpression(Value, UnaryOperator.Minus, FileName,
+                            ErrorToken));
+
                     case AssignOperator.DotEquals:
                         return stackValue.CreateVariableAssignment(context, new CompoundExpression(CompoundOperator.Concat,
                             new LookupExpression(stackValue, FileName, ErrorToken), Value, FileName, ErrorToken));
+
                     case AssignOperator.PlusPlus:
                         return new[] {stackValue.CreateVariableIncrement(1)};
+
                     case AssignOperator.MinusMinus:
                         return new[] {stackValue.CreateVariableIncrement(-1)};
+
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Linq;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
@@ -227,6 +228,22 @@ namespace Choop.Compiler.Helpers
                     new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart), Settings.StackIdentifier,
                     new Block(BlockSpecs.Add, CreateVariableLookup(), value));
         }
+
+        /// <summary>
+        /// Returns the code to increase the variable by the specified amount.
+        /// </summary>
+        /// <param name="context">The context to translate the expression with.</param>
+        /// <param name="value">The expression for the value to increment by.</param>
+        /// <returns>The code to increase the variable by the specified amount.</returns>
+        public Block[] CreateVariableIncrement(TranslationContext context, IExpression value) => Unsafe
+            ? new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(GetUnsafeName()).AddParam(value, Type)
+                .Create().ToArray()
+            : new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
+                .AddParam(new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart))
+                .AddParam(new CompoundExpression(CompoundOperator.Plus,
+                    new LookupExpression(this, string.Empty, null),
+                    value, string.Empty, null))
+                .Create().ToArray();
 
         /// <summary>
         /// Returns the code for an array assignment.
