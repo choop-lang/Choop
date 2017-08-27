@@ -178,6 +178,13 @@ namespace Choop.Compiler.Antlr
             TerminalExpression expression = _currentExpressions.Pop() as TerminalExpression;
             if (expression == null) throw new InvalidOperationException();
 
+            // Check expression type is correct
+            DataType literalType = expression.GetReturnType(null);
+            if (!type.IsCompatible(literalType))
+                _compilerErrors.Add(new CompilerError(
+                    $"Expected value of type '{type}' but instead found value of type '{literalType}'",
+                    ErrorType.TypeMismatch, expression.ErrorToken, expression.FileName));
+
             // TODO: move to after module imports
             // Check anything with same name hasn't already been declared
             if (Project.GetDeclaration(name) == null)
