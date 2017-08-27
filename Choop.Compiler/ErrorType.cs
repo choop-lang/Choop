@@ -66,7 +66,7 @@
         ValueIsReadonly,
 
         /// <summary>
-        /// A declaration of method is being used in an invalid way.
+        /// A declaration is being used in an invalid way.
         /// </summary>
         ImproperUsage,
 
