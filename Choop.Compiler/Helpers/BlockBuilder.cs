@@ -17,26 +17,21 @@ namespace Choop.Compiler.Helpers
         /// <summary>
         /// The context for translating expressions.
         /// </summary>
-        private TranslationContext _context;
+        private readonly TranslationContext _context;
 
         /// <summary>
         /// The primary block being produced.
         /// </summary>
-        private Block _block;
+        private readonly Block _block;
 
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Gets the opcode of the block being constructed.
-        /// </summary>
-        public string Opcode => _block.Opcode;
-
-        /// <summary>
         /// Gets the collection of translated args.
         /// </summary>
-        public Collection<object> Args => _block.Args;
+        private Collection<object> Args => _block.Args;
 
         #endregion
 
