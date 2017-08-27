@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Expressions;
@@ -115,10 +116,12 @@ namespace Choop.Compiler.ChoopModel.Assignments
             }
 
             // TODO stack arrays
-            return new[]
-            {
-                new Block(BlockSpecs.ReplaceItemOfList, Index.Balance().Translate(context), ArrayName, value.Balance().Translate(context))
-            };
+
+            return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
+                .AddParam(Index)
+                .AddParam(ArrayName)
+                .AddParam(value)
+                .Create().ToArray();
         }
 
         #endregion
