@@ -89,9 +89,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
                 List<Block> scopedBlocks = new List<Block>(Items.Count);
 
                 for (int i = 0; i < Items.Count; i++)
-                {
-                    //TODO translate items
-                }
+                    scopedBlocks.AddRange(scopedArray.CreateArrayAssignment(context, Items[i], new TerminalExpression(i)));
 
                 return scopedBlocks.ToArray();
             }
