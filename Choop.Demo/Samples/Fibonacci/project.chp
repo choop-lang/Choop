@@ -31,6 +31,11 @@
       "attribution": ""
     },
     {
+      "path": "FibCalculator.chs",
+      "buildAction": 1,
+      "attribution": ""
+    },
+    {
       "path": "stage.png",
       "buildAction": 3,
       "attribution": ""

@@ -57,6 +57,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Samples\Fibonacci\FibCalculator.chs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Samples\Fibonacci\Fibonacci.chs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
