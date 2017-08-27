@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Choop.Compiler.ChoopModel;
 
 namespace Choop.Compiler.Helpers
@@ -157,12 +158,13 @@ namespace Choop.Compiler.Helpers
 
         #endregion
 
-        #region Inbuilt Dictionary
+        #region Dictionaries
 
         /// <summary>
-        /// Represents the mapping from Choop methods to inbuilt common Scratch blocks.
+        /// Represents the mapping from Choop methods to standard Scratch blocks.
         /// </summary>
-        public static readonly Dictionary<string, MethodSignature> StandardMethods = new Dictionary<string, MethodSignature>
+        public static readonly Dictionary<string, MethodSignature> StandardMethods =
+            new Dictionary<string, MethodSignature>
         {
             // Events
             {Broadcast, new MethodSignature(BlockSpecs.Broadcast, false, DataType.Object, "message")},
@@ -293,6 +295,33 @@ namespace Choop.Compiler.Helpers
             {ShowList, new MethodSignature(BlockSpecs.ShowList, false, DataType.Object, "list") },
             {HideList, new MethodSignature(BlockSpecs.HideList, false, DataType.Object, "list") }
         };
+
+        /// <summary>
+        /// Represents the mapping from Choop methods to inbuilt non-standard Scratch blocks.
+        /// </summary>
+        public static readonly Dictionary<string, MethodSignature> NonStandardMethods =
+            new Dictionary<string, MethodSignature>
+            {
+                // Control
+                {StopAll, new MethodSignature(BlockSpecs.Stop, false, DataType.Object)},
+                {StopOtherScriptsInSprite, new MethodSignature(BlockSpecs.Stop, false, DataType.Object) },
+
+                // Operators
+                {Abs, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Floor, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Ceiling, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Sqrt, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Sin, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Cos, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Tan, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Asin, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Acos, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Atan, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Ln, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Log, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {PowE, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+                {Pow10, new MethodSignature(BlockSpecs.ComputeFunction, true, DataType.Number, "value") },
+            };
 
         #endregion
     }
