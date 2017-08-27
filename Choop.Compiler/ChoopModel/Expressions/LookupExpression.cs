@@ -95,34 +95,34 @@ namespace Choop.Compiler.ChoopModel.Expressions
                 if (identifier is StackValue || identifier is ParamDeclaration || identifier is GlobalVarDeclaration ||
                     identifier is ConstDeclaration)
                 {
-                    Variable = (ITypedDeclaration) identifier;
+                    Variable = (ITypedDeclaration)identifier;
                 }
                 else
                 {
                     context.ErrorList.Add(new CompilerError($"'{IdentifierName}' is not a variable",
-                        ErrorType.InvalidArgument, ErrorToken, FileName));
+                        ErrorType.ImproperUsage, ErrorToken, FileName));
                     return null;
                 }
             }
 
-            StackValue stackValue = Variable as StackValue;
-            if (stackValue != null)
-                return stackValue.CreateVariableLookup();
+            switch (Variable)
+            {
+                case StackValue stackValue:
+                    return stackValue.CreateVariableLookup();
 
-            ParamDeclaration paramDeclaration = Variable as ParamDeclaration;
-            if (paramDeclaration != null)
-                return new Block(BlockSpecs.GetParameter, paramDeclaration.Name);
+                case ParamDeclaration _:
+                    return new Block(BlockSpecs.GetParameter, Variable.Name);
 
-            GlobalVarDeclaration globalVarDeclaration = Variable as GlobalVarDeclaration;
-            if (globalVarDeclaration != null)
-                return new Block(BlockSpecs.GetVariable, IdentifierName);
+                case GlobalVarDeclaration _:
+                    return new Block(BlockSpecs.GetVariable, Variable.Name);
 
-            ConstDeclaration constDeclaration = Variable as ConstDeclaration;
-            if (constDeclaration != null)
-                return constDeclaration.Value.Value;
+                case ConstDeclaration constDeclaration:
+                    return constDeclaration.Value.Value;
 
-            // Should not happen - throw error
-            throw new Exception("Unknown identifier type");
+                default:
+                    // Should not happen - throw error
+                    throw new Exception("Unknown identifier type");
+            }
         }
 
         #endregion
