@@ -209,7 +209,8 @@ namespace Choop.Compiler.Helpers
         /// <param name="value">The expression for the value to be assigned.</param>
         /// <returns>The code for a variable assignment.</returns>
         public Block[] CreateVariableAssignment(TranslationContext context, IExpression value) => Unsafe
-            ? new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(value, Type).Create().ToArray()
+            ? new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(GetUnsafeName()).AddParam(value, Type)
+                .Create().ToArray()
             : new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
                 .AddParam(new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart)).AddParam(value, Type)
                 .Create().ToArray();
