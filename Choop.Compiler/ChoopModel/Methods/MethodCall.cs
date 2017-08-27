@@ -126,7 +126,7 @@ namespace Choop.Compiler.ChoopModel.Methods
             }
 
             // Custom method doesn't exist, so search inbuilt methods
-            if (BlockSpecs.Inbuilt.TryGetValue(MethodName, out MethodSignature inbuiltMethod))
+            if (InbuiltMethods.StandardMethods.TryGetValue(MethodName, out MethodSignature inbuiltMethod))
             {
                 // Inbuilt method found
 
@@ -204,7 +204,7 @@ namespace Choop.Compiler.ChoopModel.Methods
             }
 
             // Custom method doesn't exist, so search inbuilt methods
-            if (BlockSpecs.Inbuilt.TryGetValue(MethodName, out MethodSignature inbuiltMethod))
+            if (InbuiltMethods.StandardMethods.TryGetValue(MethodName, out MethodSignature inbuiltMethod))
             {
                 // Inbuilt method found
 
