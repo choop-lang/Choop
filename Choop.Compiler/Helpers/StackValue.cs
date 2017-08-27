@@ -273,7 +273,7 @@ namespace Choop.Compiler.Helpers
                 .AddParam(ctx => new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier,
                     new CompoundExpression(CompoundOperator.Plus, new TerminalExpression(StackStart), index,
                         string.Empty, null).Balance().Translate(ctx)))
-                .AddParam(value)
+                .AddParam(value, Type)
                 .Create().ToArray();
         }
 
