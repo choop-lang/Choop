@@ -258,6 +258,26 @@ namespace Choop.Compiler.Helpers
                 Settings.StackIdentifier, value);
 
         /// <summary>
+        /// Returns the code for an array assignment.
+        /// </summary>
+        /// <param name="context">The context for translation.</param>
+        /// <param name="value">The expression for the value to assign to the array.</param>
+        /// <param name="index">The index of the item to assign.</param>
+        /// <returns>The code for an array assignment.</returns>
+        public Block[] CreateArrayAssignment(TranslationContext context, IExpression value, IExpression index)
+        {
+            if (Unsafe)
+                return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context).AddParam(index).AddParam(GetUnsafeName()).AddParam(value, Type).Create().ToArray();
+
+            return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
+                .AddParam(ctx => new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier,
+                    new CompoundExpression(CompoundOperator.Plus, new TerminalExpression(StackStart), index,
+                        string.Empty, null).Balance().Translate(ctx)))
+                .AddParam(value)
+                .Create().ToArray();
+        }
+
+        /// <summary>
         /// Creates the code to delete the variable from the stack, if necessary.
         /// </summary>
         /// <returns>The code to delete the variable from the stack or an empty array if unsafe.</returns>
