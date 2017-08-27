@@ -118,22 +118,29 @@ namespace Choop.Compiler.Helpers
             // Use stack
             if (!Unsafe)
                 return initalValues.SelectMany(x => new BlockBuilder(BlockSpecs.AddToList, context)
-                    .AddParam(x, Type).AddParam(Settings.StackIdentifier).Create());
+                    .AddParam(x, Type)
+                    .AddParam(Settings.StackIdentifier)
+                    .Create());
 
             // Unsafe variable
             if (StackSpace == 1)
             {
                 // TODO: include var def in json
                 //context.CurrentSprite.Variables.Add(new GlobalVarDeclaration(GetUnsafeName(), Type, "", null, null));
-                return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(GetUnsafeName())
-                    .AddParam(initalValues[0], Type).Create();
+                return new BlockBuilder(BlockSpecs.SetVariableTo, context)
+                    .AddParam(GetUnsafeName())
+                    .AddParam(initalValues[0], Type)
+                    .Create();
             }
 
             // Unsafe list
             // TODO: include list def in json
             //context.CurrentSprite.Lists.Add(new GlobalListDeclaration(GetUnsafeName(), Type, true, null, null));
-            return initalValues.SelectMany((x, i) => new BlockBuilder(BlockSpecs.ReplaceItemOfList, context).AddParam(i)
-                .AddParam(GetUnsafeName()).AddParam(x, Type).Create());
+            return initalValues.SelectMany((x, i) => new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
+                .AddParam(i)
+                .AddParam(GetUnsafeName())
+                .AddParam(x, Type)
+                .Create());
         }
 
         /// <summary>
@@ -173,34 +180,46 @@ namespace Choop.Compiler.Helpers
         /// Returns the code for a variable lookup.
         /// </summary>
         /// <returns>The code for a variable lookup.</returns>
-        public Block CreateVariableLookup() => Unsafe
-            ? new Block(BlockSpecs.GetVariable, GetUnsafeName())
-            : new Block(BlockSpecs.GetItemOfList,
+        public Block CreateVariableLookup()
+        {
+            if (Unsafe)
+                return new Block(BlockSpecs.GetVariable, GetUnsafeName());
+
+            return new Block(BlockSpecs.GetItemOfList,
                 new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart),
                 Settings.StackIdentifier);
+        }
 
         /// <summary>
         /// Returns the code for an array lookup.
         /// </summary>
         /// <param name="index">The expression for the index to look up.</param>
         /// <returns>The code for an array lookup.</returns>
-        public Block CreateArrayLookup(object index) => Unsafe
-            ? new Block(BlockSpecs.GetItemOfList, index, GetUnsafeName())
-            : new Block(BlockSpecs.GetItemOfList,
+        public Block CreateArrayLookup(object index)
+        {
+            if (Unsafe)
+                return new Block(BlockSpecs.GetItemOfList, index, GetUnsafeName());
+
+            return new Block(BlockSpecs.GetItemOfList,
                 new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier,
                     new Block(BlockSpecs.Add, StackStart, index)),
                 Settings.StackIdentifier);
+        }
 
         /// <summary>
         /// Returns the code for a variable assignment.
         /// </summary>
         /// <param name="value">The translated expression for the value to be assigned.</param>
         /// <returns>The code for a variable assignment.</returns>
-        public Block CreateVariableAssignment(object value) => Unsafe
-            ? new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), value)
-            : new Block(BlockSpecs.ReplaceItemOfList,
+        public Block CreateVariableAssignment(object value)
+        {
+            if (Unsafe)
+                return new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), value);
+
+            return new Block(BlockSpecs.ReplaceItemOfList,
                 new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart), Settings.StackIdentifier,
                 value);
+        }
 
         /// <summary>
         /// Returns the code for a variable assignment.
@@ -208,12 +227,19 @@ namespace Choop.Compiler.Helpers
         /// <param name="context">The context to translate the expression with.</param>
         /// <param name="value">The expression for the value to be assigned.</param>
         /// <returns>The code for a variable assignment.</returns>
-        public IEnumerable<Block> CreateVariableAssignment(TranslationContext context, IExpression value) => Unsafe
-            ? new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(GetUnsafeName()).AddParam(value, Type)
-                .Create()
-            : new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
-                .AddParam(new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart)).AddParam(value, Type)
+        public IEnumerable<Block> CreateVariableAssignment(TranslationContext context, IExpression value)
+        {
+            if (Unsafe)
+                return new BlockBuilder(BlockSpecs.SetVariableTo, context)
+                    .AddParam(GetUnsafeName())
+                    .AddParam(value, Type)
+                    .Create();
+
+            return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
+                .AddParam(new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart))
+                .AddParam(value, Type)
                 .Create();
+        }
 
         /// <summary>
         /// Returns the code to increase the variable by the specified amount.
@@ -236,14 +262,21 @@ namespace Choop.Compiler.Helpers
         /// <param name="context">The context to translate the expression with.</param>
         /// <param name="value">The expression for the value to increment by.</param>
         /// <returns>The code to increase the variable by the specified amount.</returns>
-        public IEnumerable<Block> CreateVariableIncrement(TranslationContext context, IExpression value) => Unsafe
-            ? new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(GetUnsafeName()).AddParam(value, Type).Create()
-            : new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
+        public IEnumerable<Block> CreateVariableIncrement(TranslationContext context, IExpression value)
+        {
+            if (Unsafe)
+                return new BlockBuilder(BlockSpecs.ChangeVarBy, context)
+                    .AddParam(GetUnsafeName())
+                    .AddParam(value, Type)
+                    .Create();
+
+            return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
                 .AddParam(new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, StackStart))
                 .AddParam(new CompoundExpression(CompoundOperator.Plus,
                     new LookupExpression(this, string.Empty, null),
                     value, string.Empty, null))
                 .Create();
+        }
 
         /// <summary>
         /// Returns the code for an array assignment.
@@ -251,11 +284,16 @@ namespace Choop.Compiler.Helpers
         /// <param name="value">The expression for the value to assign to the array.</param>
         /// <param name="index">The index of the item to assign.</param>
         /// <returns>The code for an array assignment.</returns>
-        public Block CreateArrayAssignment(object value, object index) => Unsafe
-            ? new Block(BlockSpecs.ReplaceItemOfList, index, GetUnsafeName(), value)
-            : new Block(BlockSpecs.ReplaceItemOfList,
-                new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier, new Block(BlockSpecs.Add, StackStart, index)),
+        public Block CreateArrayAssignment(object value, object index)
+        {
+            if (Unsafe)
+                return new Block(BlockSpecs.ReplaceItemOfList, index, GetUnsafeName(), value);
+
+            return new Block(BlockSpecs.ReplaceItemOfList,
+                new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier,
+                    new Block(BlockSpecs.Add, StackStart, index)),
                 Settings.StackIdentifier, value);
+        }
 
         /// <summary>
         /// Returns the code for an array assignment.
@@ -268,7 +306,10 @@ namespace Choop.Compiler.Helpers
         {
             if (Unsafe)
                 return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
-                    .AddParam(index).AddParam(GetUnsafeName()).AddParam(value, Type).Create();
+                    .AddParam(index)
+                    .AddParam(GetUnsafeName())
+                    .AddParam(value, Type)
+                    .Create();
 
             return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
                 .AddParam(ctx => new Block(BlockSpecs.Add, Settings.StackOffsetIdentifier,
@@ -287,17 +328,14 @@ namespace Choop.Compiler.Helpers
             if (Unsafe)
                 return new Block[0];
 
-            Block[] result = new Block[StackSpace];
-            for (int i = 0; i < StackSpace; i++)
-                result[i] = new Block(BlockSpecs.DeleteItemOfList, "last", Settings.StackIdentifier);
-            return result;
+            return Enumerable.Repeat(
+                new Block(BlockSpecs.DeleteItemOfList, "last", Settings.StackIdentifier), StackSpace);
         }
 
         /// <summary>
-        /// Gets the unique name to use when this value is unsafe.
+        /// Returns the unique name to use when this value is unsafe.
         /// </summary>
-        /// <returns>The unique name to use when this value is unsafe.</returns>
-        public string GetUnsafeName() => $"{Scope.ID}: {Name}";
+        private string GetUnsafeName() => $"{Scope.ID}: {Name}";
 
         #endregion
     }
