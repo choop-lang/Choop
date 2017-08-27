@@ -81,7 +81,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
                 return new BlockBuilder(BlockSpecs.Repeat, context).AddParam(Iterations).AddParam(loopContents.ToArray()).Create().ToArray();
 
             TerminalExpression tIterations = Iterations as TerminalExpression;
-            if (tIterations == null || tIterations.GetReturnType(null) != DataType.Number)
+            if (tIterations == null || tIterations.Type != DataType.Number)
             {
                 context.ErrorList.Add(new CompilerError("Loop cannot be inlined", ErrorType.InvalidArgument, ErrorToken,
                     FileName));
@@ -89,7 +89,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
             }
 
             // Inline loop
-            int repetitions = (int)Math.Floor((double)tIterations.Parse());
+            int repetitions = (int)Math.Floor((double)tIterations.Value);
 
             List<Block> inlinedLoopContents = new List<Block>();
 

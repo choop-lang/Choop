@@ -101,7 +101,7 @@ namespace Choop.Compiler.ChoopModel.Declarations
             List result = new List(Name);
 
             foreach (TerminalExpression expression in Value)
-                result.Contents.Add(expression.Parse());
+                result.Contents.Add(expression.Value);
 
             return result;
         }

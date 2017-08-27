@@ -119,7 +119,7 @@ namespace Choop.Compiler.ChoopModel.Expressions
 
             ConstDeclaration constDeclaration = Variable as ConstDeclaration;
             if (constDeclaration != null)
-                return constDeclaration.Value.Parse();
+                return constDeclaration.Value.Value;
 
             // Should not happen - throw error
             throw new Exception("Unknown identifier type");

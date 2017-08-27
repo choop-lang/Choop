@@ -77,7 +77,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
             End = end;
             FileName = fileName;
             ErrorToken = errorToken;
-            Step = step ?? new TerminalExpression("1", TerminalType.Int);
+            Step = step ?? new TerminalExpression(1, DataType.Number);
         }
 
         #endregion

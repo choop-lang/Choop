@@ -179,7 +179,7 @@ namespace Choop.Compiler.Antlr
             if (expression == null) throw new InvalidOperationException();
 
             // Check expression type is correct
-            DataType literalType = expression.GetReturnType(null);
+            DataType literalType = expression.Type;
             if (!type.IsCompatible(literalType))
                 _compilerErrors.Add(new CompilerError(
                     $"Expected value of type '{type}' but instead found value of type '{literalType}'",
@@ -284,10 +284,7 @@ namespace Choop.Compiler.Antlr
                 else
                 {
                     for (int i = 0; i < bounds; i++)
-                    {
-                        arrayDeclaration.Value.Add(
-                            new TerminalExpression("\"\"", TerminalType.String));
-                    }
+                        arrayDeclaration.Value.Add(new TerminalExpression(""));
                 }
             }
             else
@@ -336,10 +333,7 @@ namespace Choop.Compiler.Antlr
                 else
                 {
                     for (int i = 0; i < bounds; i++)
-                    {
-                        listDeclaration.Value.Add(
-                            new TerminalExpression("\"\"", TerminalType.String));
-                    }
+                        listDeclaration.Value.Add(new TerminalExpression(""));
                 }
             }
             else
@@ -440,7 +434,7 @@ namespace Choop.Compiler.Antlr
             if (Project.GetDeclaration(name) == null)
             {
                 // Create parameter declaration
-                ParamDeclaration param = new ParamDeclaration(name, type, FileName, context.Name, expression.Parse());
+                ParamDeclaration param = new ParamDeclaration(name, type, FileName, context.Name, expression.Value);
 
                 method.Params.Add(param);
             }
@@ -583,10 +577,7 @@ namespace Choop.Compiler.Antlr
             else
             {
                 for (int i = 0; i < bounds; i++)
-                {
-                    arrayDeclaration.Value.Add(
-                        new TerminalExpression("\"\"", TerminalType.String));
-                }
+                    arrayDeclaration.Value.Add(new TerminalExpression(""));
             }
         }
 
@@ -896,7 +887,7 @@ namespace Choop.Compiler.Antlr
                 // Step value was specified
                 step = _currentExpressions.Pop() as TerminalExpression;
                 if (step == null) throw new InvalidOperationException();
-                if (step.GetReturnType(null) != DataType.Number)
+                if (step.Type != DataType.Number)
                     _compilerErrors.Add(new CompilerError("Step value must be a number", ErrorType.TypeMismatch,
                         context.Step.start, FileName));
             }
@@ -1167,8 +1158,8 @@ namespace Choop.Compiler.Antlr
         {
             base.EnterPrimaryNameOf(context);
 
-            _currentExpressions.Push(new TerminalExpression($"\"{context.Name.Text}\"",
-                TerminalType.String, FileName, context.Name));
+            // TODO validate declaration
+            _currentExpressions.Push(new TerminalExpression(context.Name.Text, DataType.String, FileName, context.Name));
         }
 
         #endregion

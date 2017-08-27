@@ -265,13 +265,13 @@ namespace Choop.Compiler.ChoopModel.Expressions
                 case CompoundOperator.LShift:
                     return new CompoundExpression(CompoundOperator.Multiply, First,
                         new CompoundExpression(CompoundOperator.Pow,
-                            new TerminalExpression("2", TerminalType.Int),
+                            new TerminalExpression(2, DataType.Number),
                             Second, FileName, ErrorToken), FileName, ErrorToken).Translate(context);
 
                 case CompoundOperator.RShift:
                     return new CompoundExpression(CompoundOperator.Divide, First,
                         new CompoundExpression(CompoundOperator.Pow,
-                            new TerminalExpression("2", TerminalType.Int),
+                            new TerminalExpression(2, DataType.Number),
                             Second, FileName, ErrorToken), FileName, ErrorToken).Translate(context);
 
                 case CompoundOperator.LessThan:
