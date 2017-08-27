@@ -114,6 +114,18 @@ namespace Choop.Compiler.Helpers
             if (initalValues.Length != StackSpace)
                 throw new ArgumentException("Length of initial values does not match length of datum");
 
+            // Validate param types
+            foreach (IExpression value in initalValues)
+            {
+                if (value == null) continue;
+
+                DataType valueType = value.GetReturnType(context);
+                if (!Type.IsCompatible(valueType))
+                    context.ErrorList.Add(new CompilerError(
+                        $"Expected value of type '{Type}' but instead found value of type '{valueType}'",
+                        ErrorType.TypeMismatch, value.ErrorToken, value.FileName));
+            }
+
             // Use stack
             if (!Unsafe)
                 return initalValues.SelectMany(x => new BlockBuilder(BlockSpecs.AddToList, context)
@@ -124,7 +136,8 @@ namespace Choop.Compiler.Helpers
             {
                 // TODO: include var def in json
                 //context.CurrentSprite.Variables.Add(new GlobalVarDeclaration(GetUnsafeName(), Type, "", null, null));
-                return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(GetUnsafeName()).AddParam(initalValues[0]).Create().ToArray();
+                return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(GetUnsafeName())
+                    .AddParam(initalValues[0]).Create().ToArray();
             }
 
             // Unsafe list
@@ -148,7 +161,7 @@ namespace Choop.Compiler.Helpers
             {
                 // Variable
                 if (StackSpace == 1)
-                    return new[] { new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), initalValues[0]) };
+                    return new[] {new Block(BlockSpecs.SetVariableTo, GetUnsafeName(), initalValues[0])};
 
                 // List
                 Block[] blocks = new Block[StackSpace + 1];
