@@ -129,29 +129,41 @@ namespace Choop.Compiler.ChoopModel.Assignments
                 switch (Operator)
                 {
                     case AssignOperator.Equals:
-                        return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(VariableName)
-                            .AddParam(Value, globalVarDeclaration.Type).Create();
+                        return new BlockBuilder(BlockSpecs.SetVariableTo, context)
+                            .AddParam(VariableName)
+                            .AddParam(Value, globalVarDeclaration.Type)
+                            .Create();
 
                     case AssignOperator.AddEquals:
-                        return new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(VariableName).AddParam(Value)
+                        return new BlockBuilder(BlockSpecs.ChangeVarBy, context)
+                            .AddParam(VariableName)
+                            .AddParam(Value)
                             .Create();
 
                     case AssignOperator.MinusEquals:
-                        return new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(VariableName)
-                            .AddParam(new UnaryExpression(Value, UnaryOperator.Minus, FileName, ErrorToken)).Create();
+                        return new BlockBuilder(BlockSpecs.ChangeVarBy, context)
+                            .AddParam(VariableName)
+                            .AddParam(new UnaryExpression(Value, UnaryOperator.Minus, FileName, ErrorToken))
+                            .Create();
 
                     case AssignOperator.DotEquals:
-                        return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(VariableName).AddParam(
-                            new CompoundExpression(CompoundOperator.Concat,
-                                new LookupExpression(globalVarDeclaration, FileName, ErrorToken), Value, FileName,
-                                ErrorToken)).Create();
+                        return new BlockBuilder(BlockSpecs.SetVariableTo, context)
+                            .AddParam(VariableName).AddParam(
+                                new CompoundExpression(CompoundOperator.Concat,
+                                    new LookupExpression(globalVarDeclaration, FileName, ErrorToken),
+                                Value, FileName, ErrorToken))
+                            .Create();
 
                     case AssignOperator.PlusPlus:
-                        return new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(VariableName).AddParam(1)
+                        return new BlockBuilder(BlockSpecs.ChangeVarBy, context)
+                            .AddParam(VariableName)
+                            .AddParam(1)
                             .Create();
 
                     case AssignOperator.MinusMinus:
-                        return new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(VariableName).AddParam(-1)
+                        return new BlockBuilder(BlockSpecs.ChangeVarBy, context)
+                            .AddParam(VariableName)
+                            .AddParam(-1)
                             .Create();
 
                     default:
