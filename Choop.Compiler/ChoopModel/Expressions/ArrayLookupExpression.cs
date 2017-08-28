@@ -33,6 +33,18 @@ namespace Choop.Compiler.ChoopModel.Expressions
             Index = index;
         }
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="ArrayLookupExpression"/> class.
+        /// </summary>
+        /// <param name="declaration">The array declaration.</param>
+        /// <param name="index">The expression for the index of the item being looked up.</param>
+        /// <param name="fileName">The name of the file.</param>
+        /// <param name="errorToken">The token to report any compiler errors to.</param>
+        public ArrayLookupExpression(ITypedDeclaration declaration, IExpression index, string fileName, IToken errorToken) : base(declaration, fileName, errorToken)
+        {
+            Index = index;
+        }
+
         #endregion
 
         #region Methods
