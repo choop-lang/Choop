@@ -97,7 +97,9 @@ namespace Choop.Compiler.ChoopModel.Assignments
 
             // Try as global list
 
-            if (!(declaration is GlobalListDeclaration))
+            GlobalListDeclaration globalList = declaration as GlobalListDeclaration;
+
+            if (globalList == null)
             {
                 // Neither scoped array or global list
                 context.ErrorList.Add(new CompilerError($"Object '{ArrayName}' is not an array", ErrorType.ImproperUsage, ErrorToken, FileName));
@@ -111,7 +113,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
 
             foreach (IExpression item in Items)
                 globalBlocks.AddRange(new BlockBuilder(BlockSpecs.AddToList, context)
-                    .AddParam(item)
+                    .AddParam(item, globalList.Type)
                     .AddParam(ArrayName)
                     .Create());
 
