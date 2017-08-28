@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Declarations;
@@ -83,7 +84,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
             {
                 context.ErrorList.Add(new CompilerError($"Variable '{VariableName}' was not defined",
                     ErrorType.NotDefined, ErrorToken, FileName));
-                return new Block[0];
+                return Enumerable.Empty<Block>();
             }
 
             // Try as stack variable
@@ -163,13 +164,13 @@ namespace Choop.Compiler.ChoopModel.Assignments
             {
                 context.ErrorList.Add(new CompilerError($"Value '{VariableName}' is read-only", ErrorType.ValueIsReadonly,
                     ErrorToken, FileName));
-                return new Block[0];
+                return Enumerable.Empty<Block>();
             }
 
             // Fail
             context.ErrorList.Add(new CompilerError($"'{VariableName}' is not a variable", ErrorType.ImproperUsage,
                 ErrorToken, FileName));
-            return new Block[0];
+            return Enumerable.Empty<Block>();
         }
 
         private void CheckOperator(DataType type, TranslationContext context)

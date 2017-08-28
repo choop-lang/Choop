@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Expressions;
@@ -84,7 +85,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
             {
                 context.ErrorList.Add(new CompilerError("Loop cannot be inlined", ErrorType.InvalidArgument, ErrorToken,
                     FileName));
-                return new Block[0];
+                return Enumerable.Empty<Block>();
             }
 
             // Inline loop

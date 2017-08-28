@@ -140,7 +140,7 @@ namespace Choop.Compiler.ChoopModel.Methods
                     context.ErrorList.Add(new CompilerError(
                         $"The inbuilt method '{MethodName}' can only be used as an input", ErrorType.ImproperUsage,
                         ErrorToken, FileName));
-                    return new Block[0];
+                    return Enumerable.Empty<Block>();
                 }
 
                 // Check parameter count is valid
@@ -154,7 +154,7 @@ namespace Choop.Compiler.ChoopModel.Methods
                 context.ErrorList.Add(new CompilerError(
                     $"Expected inputs '{string.Join("', '", inbuiltMethod.Inputs)}'", ErrorType.InvalidArgument,
                     ErrorToken, FileName));
-                return new Block[0];
+                return Enumerable.Empty<Block>();
             }
 
             // Try non standard blocks
@@ -164,7 +164,7 @@ namespace Choop.Compiler.ChoopModel.Methods
             // Error - nethod not found
             context.ErrorList.Add(new CompilerError($"Method '{MethodName}' is not defined", ErrorType.NotDefined,
                 ErrorToken, FileName));
-            return new Block[0];
+            return Enumerable.Empty<Block>();
         }
 
         /// <summary>

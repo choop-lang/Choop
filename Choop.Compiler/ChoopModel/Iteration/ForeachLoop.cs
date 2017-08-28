@@ -115,7 +115,7 @@ namespace Choop.Compiler.ChoopModel.Iteration
                 {
                     context.ErrorList.Add(new CompilerError($"Array '{SourceName}' is not defined", ErrorType.NotDefined,
                         ErrorToken, FileName));
-                    return new Block[0];
+                    return Enumerable.Empty<Block>();
                 }
 
                 loopContents.Add(itemVar.CreateVariableAssignment(arrayValue.CreateArrayLookup(internalCounter.CreateVariableLookup())));

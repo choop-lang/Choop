@@ -326,7 +326,7 @@ namespace Choop.Compiler.Helpers
         public IEnumerable<Block> CreateDestruction()
         {
             if (Unsafe)
-                return new Block[0];
+                return Enumerable.Empty<Block>();
 
             return Enumerable.Repeat(
                 new Block(BlockSpecs.DeleteItemOfList, "last", Settings.StackIdentifier), StackSpace);

@@ -94,7 +94,7 @@ namespace Choop.Compiler.ChoopModel.Declarations
                 // Declaration already exits
                 context.ErrorList.Add(new CompilerError($"Project already contains a definition for '{Name}'",
                     ErrorType.DuplicateDeclaration, ErrorToken, FileName));
-                return new Block[0];
+                return Enumerable.Empty<Block>();
             }
 
             // Add to stack

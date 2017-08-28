@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Expressions;
@@ -87,7 +88,7 @@ namespace Choop.Compiler.ChoopModel.Declarations
                 // Declaration already exits
                 context.ErrorList.Add(new CompilerError($"Project already contains a definition for '{Name}'",
                     ErrorType.DuplicateDeclaration, ErrorToken, FileName));
-                return new Block[0];
+                return Enumerable.Empty<Block>();
             }
 
             // TODO: Value created before any method values
