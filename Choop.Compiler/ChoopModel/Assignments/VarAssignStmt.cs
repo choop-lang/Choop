@@ -130,7 +130,7 @@ namespace Choop.Compiler.ChoopModel.Assignments
                 {
                     case AssignOperator.Equals:
                         return new BlockBuilder(BlockSpecs.SetVariableTo, context).AddParam(VariableName)
-                            .AddParam(Value).Create();
+                            .AddParam(Value, globalVarDeclaration.Type).Create();
 
                     case AssignOperator.AddEquals:
                         return new BlockBuilder(BlockSpecs.ChangeVarBy, context).AddParam(VariableName).AddParam(Value)
