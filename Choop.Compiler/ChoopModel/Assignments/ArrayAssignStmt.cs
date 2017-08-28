@@ -157,6 +157,12 @@ namespace Choop.Compiler.ChoopModel.Assignments
             switch (Operator)
             {
                 case AssignOperator.Equals:
+                    DataType valueType = Value.GetReturnType(context);
+                    if (!globalArray.Type.IsCompatible(valueType))
+                        context.ErrorList.Add(new CompilerError(
+                            $"Expected value of type '{globalArray.Type}' but instead found value of type '{valueType}'",
+                            ErrorType.TypeMismatch, Value.ErrorToken, Value.FileName));
+
                     value = Value;
                     break;
 
