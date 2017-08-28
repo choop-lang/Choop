@@ -67,8 +67,18 @@ namespace Choop.Compiler.ChoopModel.Declarations
         /// Gets the translated code for the grammar structure.
         /// </summary>
         /// <returns>The translated code for the grammar structure.</returns>
-        public Variable Translate(TranslationContext context) =>
-            new Variable(Name, Value?.Value ?? Type.GetDefault());
+        public Variable Translate(TranslationContext context)
+        {
+            if (Value == null)
+                return new Variable(Name, Type.GetDefault());
+
+            if (!Type.IsCompatible(Value.Type))
+                context.ErrorList.Add(new CompilerError(
+                    $"Expected value of type '{Type}' but instead found value of type '{Value.Type}'",
+                    ErrorType.TypeMismatch, Value.ErrorToken, Value.FileName));
+
+            return new Variable(Name, Value.Value);
+        }
 
         #endregion
     }
