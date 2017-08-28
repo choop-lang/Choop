@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
+using Choop.Compiler.ChoopModel.Declarations;
 using Choop.Compiler.ChoopModel.Expressions;
 using Choop.Compiler.Helpers;
 
@@ -81,6 +82,8 @@ namespace Choop.Compiler.ChoopModel.Assignments
         /// <returns>The translated code for the grammar structure.</returns>
         public IEnumerable<Block> Translate(TranslationContext context)
         {
+            // Get generic declaration
+
             IDeclaration declaration = context.GetDeclaration(ArrayName);
 
             if (declaration == null)
@@ -90,8 +93,12 @@ namespace Choop.Compiler.ChoopModel.Assignments
                 return Enumerable.Empty<Block>();
             }
 
+            // Scoped arrays
+
             if (declaration is StackValue scopedArray)
             {
+                Operator.TestCompatible(scopedArray.Type, context, FileName, ErrorToken);
+
                 switch (Operator)
                 {
                     case AssignOperator.Equals:
@@ -131,6 +138,19 @@ namespace Choop.Compiler.ChoopModel.Assignments
                         throw new ArgumentOutOfRangeException();
                 }
             }
+
+            // Global arrays
+
+            GlobalListDeclaration globalArray = declaration as GlobalListDeclaration;
+
+            if (globalArray == null)
+            {
+                // Not an array
+                context.ErrorList.Add(new CompilerError($"Object '{ArrayName}' is not an array", ErrorType.ImproperUsage, ErrorToken, FileName));
+                return Enumerable.Empty<Block>();
+            }
+
+            Operator.TestCompatible(globalArray.Type, context, FileName, ErrorToken);
 
             IExpression value;
 
