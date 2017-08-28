@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Antlr4.Runtime;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel.Expressions;
@@ -80,6 +81,57 @@ namespace Choop.Compiler.ChoopModel.Assignments
         /// <returns>The translated code for the grammar structure.</returns>
         public IEnumerable<Block> Translate(TranslationContext context)
         {
+            IDeclaration declaration = context.GetDeclaration(ArrayName);
+
+            if (declaration == null)
+            {
+                context.ErrorList.Add(new CompilerError($"'{ArrayName}' is not defined", ErrorType.NotDefined,
+                    ErrorToken, FileName));
+                return Enumerable.Empty<Block>();
+            }
+
+            if (declaration is StackValue scopedArray)
+            {
+                switch (Operator)
+                {
+                    case AssignOperator.Equals:
+                        return scopedArray.CreateArrayAssignment(context, Value, Index);
+
+                    case AssignOperator.AddEquals:
+                        return scopedArray.CreateArrayAssignment(context,
+                            new CompoundExpression(CompoundOperator.Plus,
+                                new ArrayLookupExpression(scopedArray, Index, FileName, ErrorToken), Value, FileName,
+                                ErrorToken), Index);
+
+                    case AssignOperator.MinusEquals:
+                        return scopedArray.CreateArrayAssignment(context,
+                            new CompoundExpression(CompoundOperator.Minus,
+                                new ArrayLookupExpression(scopedArray, Index, FileName, ErrorToken), Value, FileName,
+                                ErrorToken), Index);
+
+                    case AssignOperator.DotEquals:
+                        return scopedArray.CreateArrayAssignment(context,
+                            new CompoundExpression(CompoundOperator.Concat,
+                                new ArrayLookupExpression(scopedArray, Index, FileName, ErrorToken), Value, FileName,
+                                ErrorToken), Index);
+
+                    case AssignOperator.PlusPlus:
+                        return scopedArray.CreateArrayAssignment(context,
+                            new CompoundExpression(CompoundOperator.Plus,
+                                new ArrayLookupExpression(scopedArray, Index, FileName, ErrorToken), new TerminalExpression(1, DataType.Number),
+                                FileName, ErrorToken), Index);
+
+                    case AssignOperator.MinusMinus:
+                        return scopedArray.CreateArrayAssignment(context,
+                            new CompoundExpression(CompoundOperator.Minus,
+                                new ArrayLookupExpression(scopedArray, Index, FileName, ErrorToken), new TerminalExpression(1, DataType.Number),
+                                FileName, ErrorToken), Index);
+
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
             IExpression value;
 
             switch (Operator)
@@ -87,35 +139,39 @@ namespace Choop.Compiler.ChoopModel.Assignments
                 case AssignOperator.Equals:
                     value = Value;
                     break;
+
                 case AssignOperator.AddEquals:
                     value = new CompoundExpression(CompoundOperator.Plus,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
                         Value, FileName, ErrorToken);
                     break;
+
                 case AssignOperator.MinusEquals:
                     value = new CompoundExpression(CompoundOperator.Minus,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
                         Value, FileName, ErrorToken);
                     break;
+
                 case AssignOperator.DotEquals:
                     value = new CompoundExpression(CompoundOperator.Multiply,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken), Value, FileName, ErrorToken);
                     break;
+
                 case AssignOperator.PlusPlus:
                     value = new CompoundExpression(CompoundOperator.Plus,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
                         new TerminalExpression(1, DataType.Number), FileName, ErrorToken);
                     break;
+
                 case AssignOperator.MinusMinus:
                     value = new CompoundExpression(CompoundOperator.Minus,
                         new ArrayLookupExpression(ArrayName, Index, FileName, ErrorToken),
                         new TerminalExpression(1, DataType.Number), FileName, ErrorToken);
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            // TODO stack arrays
 
             return new BlockBuilder(BlockSpecs.ReplaceItemOfList, context)
                 .AddParam(Index)
