@@ -101,7 +101,14 @@ namespace Choop.Compiler.ChoopModel.Declarations
             List result = new List(Name);
 
             foreach (TerminalExpression expression in Value)
+            {
+                if (!Type.IsCompatible(expression.Type))
+                    context.ErrorList.Add(new CompilerError(
+                        $"Expected value of type '{Type}' but instead found value of type '{expression.Type}'",
+                        ErrorType.TypeMismatch, expression.ErrorToken, expression.FileName));
+
                 result.Contents.Add(expression.Value);
+            }
 
             return result;
         }
