@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using Antlr4.Runtime;
 using Choop.Compiler.Antlr;
 using Choop.Compiler.BlockModel;
 using Choop.Compiler.ChoopModel;
@@ -64,6 +65,47 @@ namespace Choop.Compiler.Helpers
                     return AssignOperator.DotEquals;
                 default:
                     throw new ArgumentException("Unknown type", nameof(assignOpAst));
+            }
+        }
+
+        // AssignOperator
+
+        /// <summary>
+        /// Creates a compiler warning if the specified assignment operator cannot be used with the specified data type.
+        /// </summary>
+        /// <param name="operator">The assignment operator.</param>
+        /// <param name="type">The target data type.</param>
+        /// <param name="context">The translation context.</param>
+        /// <param name="filename">The current file name.</param>
+        /// <param name="errorToken">The token to report errors at.</param>
+        public static void TestCompatible(this AssignOperator @operator, DataType type, TranslationContext context, string filename, IToken errorToken)
+        {
+            switch (@operator)
+            {
+                case AssignOperator.Equals:
+                    return;
+
+                case AssignOperator.AddEquals:
+                case AssignOperator.MinusEquals:
+                case AssignOperator.PlusPlus:
+                case AssignOperator.MinusMinus:
+
+                    if (!DataType.Number.IsCompatible(type))
+                        context.ErrorList.Add(new CompilerError(
+                            $"Cannot use operator '{@operator}' on a value of type '{type}'",
+                            ErrorType.TypeMismatch, errorToken, filename));
+                    return;
+
+                case AssignOperator.DotEquals:
+
+                    if (!DataType.String.IsCompatible(type))
+                        context.ErrorList.Add(new CompilerError(
+                            $"Cannot use operator '{@operator}' on a value of type '{type}'",
+                            ErrorType.TypeMismatch, errorToken, filename));
+                    return;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(@operator), @operator, null);
             }
         }
 
