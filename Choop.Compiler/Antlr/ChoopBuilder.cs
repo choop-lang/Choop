@@ -284,7 +284,7 @@ namespace Choop.Compiler.Antlr
                 else
                 {
                     for (int i = 0; i < bounds; i++)
-                        arrayDeclaration.Value.Add(new TerminalExpression(""));
+                        arrayDeclaration.Value.Add(new TerminalExpression(type.GetDefault(), type));
                 }
             }
             else
@@ -333,7 +333,7 @@ namespace Choop.Compiler.Antlr
                 else
                 {
                     for (int i = 0; i < bounds; i++)
-                        listDeclaration.Value.Add(new TerminalExpression(""));
+                        listDeclaration.Value.Add(new TerminalExpression(type.GetDefault(), type));
                 }
             }
             else
@@ -577,7 +577,7 @@ namespace Choop.Compiler.Antlr
             else
             {
                 for (int i = 0; i < bounds; i++)
-                    arrayDeclaration.Value.Add(new TerminalExpression(""));
+                    arrayDeclaration.Value.Add(new TerminalExpression(type.GetDefault(), type));
             }
         }
 
