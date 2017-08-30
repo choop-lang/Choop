@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="BlockModel\BlockDef.cs" />
     <Compile Include="BlockModel\ScriptTuple.cs" />
+    <Compile Include="ChoopModel\Expressions\NameOfExpression.cs" />
     <Compile Include="Helpers\AssetCollection.cs" />
     <Compile Include="Helpers\InbuiltMethods.cs" />
     <Compile Include="Helpers\LoadedAsset.cs" />
