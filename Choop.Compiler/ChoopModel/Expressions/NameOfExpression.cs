@@ -68,10 +68,7 @@ namespace Choop.Compiler.ChoopModel.Expressions
         /// Returns the output type of the translated expression.
         /// </summary>
         /// <param name="context">The current translation state.</param>
-        public DataType GetReturnType(TranslationContext context)
-        {
-            throw new System.NotImplementedException();
-        }
+        public DataType GetReturnType(TranslationContext context) => DataType.String;
 
         #endregion
     }
