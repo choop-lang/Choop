@@ -1158,8 +1158,7 @@ namespace Choop.Compiler.Antlr
         {
             base.EnterPrimaryNameOf(context);
 
-            // TODO validate declaration
-            _currentExpressions.Push(new TerminalExpression(context.Name.Text, DataType.String, FileName, context.Name));
+            _currentExpressions.Push(new NameOfExpression(context.Name.Text, FileName, context.Name));
         }
 
         #endregion
